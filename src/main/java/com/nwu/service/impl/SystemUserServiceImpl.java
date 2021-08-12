@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author dynamic
  * @since 2021-08-10
  */
-@Service
+//@Service
 public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemUser> implements SystemUserService {
 
 }
