@@ -16,7 +16,7 @@ public class Apply implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id; //申请表id
-    private String tutorID;  //导师工号
+    private String tutorId;  //导师工号
     private int applyId;   //申请的类别 id
     private int status;  //当前申请的状态
     private int subject;  //分科，文科或理科

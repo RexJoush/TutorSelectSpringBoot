@@ -18,7 +18,7 @@ mybatis:
 #  mapper-locations: classpath:mapper/**/*Mapper.xml
   mapper-locations: classpath:mapper/xml/*.xml
   # 配置 pojo 别名
-  type-aliases-package: com.nwu.entities
+  type-aliases-package: com.nwu.entity
 
   # 配置下划线自动转驼峰命名
   configuration:
