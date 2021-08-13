@@ -19,8 +19,8 @@ public class ApplyTypeController {
 
     @GetMapping("/getApplyType")
     public Result getApplyType(){
-//        List<ApplyType> list = applyTypeService.list();
-       List<ApplyType> list =  applyTypeService.getAll();
+        List<ApplyType> list = applyTypeService.list();
+//       List<ApplyType> list =  applyTypeService.getAll();
         System.out.println("+++++++++++"+list);
         return new Result(ResultCode.SUCCESS,list);
 
