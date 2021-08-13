@@ -1,10 +1,9 @@
 package com.nwu.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.nwu.entity.SystemTime;
+import com.nwu.entities.SystemTime;
 import com.nwu.mapper.SystemTimeMapper;
 import com.nwu.service.SystemTimeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**

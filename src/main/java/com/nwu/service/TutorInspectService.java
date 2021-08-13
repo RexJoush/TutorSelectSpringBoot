@@ -1,6 +1,6 @@
 package com.nwu.service;
 
-import com.nwu.entity.TutorInspect;
+import com.nwu.entities.TutorInspect;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -1,6 +1,6 @@
 package com.nwu.mapper;
 
-import com.nwu.entity.SystemUser;
+import com.nwu.entities.SystemUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

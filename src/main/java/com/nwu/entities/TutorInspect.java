@@ -1,4 +1,4 @@
-package com.nwu.entity;
+package com.nwu.entities;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

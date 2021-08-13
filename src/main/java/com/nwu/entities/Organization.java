@@ -1,4 +1,4 @@
-package com.nwu.entity;
+package com.nwu.entities;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -15,20 +15,20 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author dynamic
- * @since 2021-08-09
+ * @since 2021-08-10
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Role对象", description="")
-public class Role implements Serializable {
+@ApiModel(value="Organization对象", description="")
+public class Organization implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "role_id", type = IdType.ID_WORKER)
-    private Integer roleId;
+    @TableId(value = "organization_id", type = IdType.ID_WORKER)
+    private Integer organizationId;
 
-    private String roleDescribe;
+    private String organizationName;
 
     private String col1;
 

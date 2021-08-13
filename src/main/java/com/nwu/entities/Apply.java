@@ -1,4 +1,4 @@
-package com.nwu.entity;
+package com.nwu.entities;
 
 
 import io.swagger.annotations.ApiModel;

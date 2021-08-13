@@ -1,7 +1,7 @@
 package com.nwu.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.nwu.entity.SystemTime;
+import com.nwu.entities.SystemTime;
 
 /**
  * <p>

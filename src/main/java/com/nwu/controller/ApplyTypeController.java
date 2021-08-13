@@ -1,6 +1,6 @@
 package com.nwu.controller;
 
-import com.nwu.entity.ApplyType;
+import com.nwu.entities.ApplyType;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.impl.ApplyTypeServiceImpl;

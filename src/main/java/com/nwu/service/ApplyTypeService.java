@@ -1,7 +1,7 @@
 package com.nwu.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.nwu.entity.ApplyType;
+import com.nwu.entities.ApplyType;
 
 import java.util.List;
 

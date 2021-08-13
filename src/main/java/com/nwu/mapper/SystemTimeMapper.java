@@ -1,7 +1,7 @@
 package com.nwu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.nwu.entity.SystemTime;
+import com.nwu.entities.SystemTime;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

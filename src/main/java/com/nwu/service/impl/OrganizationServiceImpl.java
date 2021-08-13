@@ -1,6 +1,6 @@
 package com.nwu.service.impl;
 
-import com.nwu.entity.Organization;
+import com.nwu.entities.Organization;
 import com.nwu.mapper.OrganizationMapper;
 import com.nwu.service.OrganizationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

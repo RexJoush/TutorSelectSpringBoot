@@ -1,6 +1,6 @@
 package com.nwu.mapper;
 
-import com.nwu.entity.Organization;
+import com.nwu.entities.Organization;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

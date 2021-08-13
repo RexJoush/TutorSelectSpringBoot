@@ -1,6 +1,6 @@
 package com.nwu.service.impl;
 
-import com.nwu.entity.Role;
+import com.nwu.entities.Role;
 import com.nwu.mapper.RoleMapper;
 import com.nwu.service.RoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

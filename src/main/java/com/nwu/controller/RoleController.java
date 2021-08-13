@@ -1,7 +1,7 @@
 package com.nwu.controller;
 
 
-import com.nwu.entity.Role;
+import com.nwu.entities.Role;
 import com.nwu.service.impl.RoleServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

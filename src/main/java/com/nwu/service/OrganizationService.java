@@ -1,6 +1,6 @@
 package com.nwu.service;
 
-import com.nwu.entity.Organization;
+import com.nwu.entities.Organization;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

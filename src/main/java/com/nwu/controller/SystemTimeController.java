@@ -1,7 +1,7 @@
 package com.nwu.controller;
 
 
-import com.nwu.entity.SystemTime;
+import com.nwu.entities.SystemTime;
 import com.nwu.service.impl.SystemTimeServiceImpl;
 import com.nwu.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;

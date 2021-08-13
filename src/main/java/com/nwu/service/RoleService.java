@@ -1,6 +1,6 @@
 package com.nwu.service;
 
-import com.nwu.entity.Role;
+import com.nwu.entities.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.stereotype.Service;
 

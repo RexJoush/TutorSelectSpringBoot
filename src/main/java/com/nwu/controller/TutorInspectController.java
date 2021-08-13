@@ -1,8 +1,7 @@
 package com.nwu.controller;
 
 
-import com.nwu.entity.Role;
-import com.nwu.entity.TutorInspect;
+import com.nwu.entities.TutorInspect;
 import com.nwu.service.impl.TutorInspectServiceImpl;
 import com.nwu.vo.UserVo;
 import io.swagger.annotations.ApiOperation;

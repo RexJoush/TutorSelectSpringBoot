@@ -1,6 +1,6 @@
 package com.nwu.mapper;
 
-import com.nwu.entity.Role;
+import com.nwu.entities.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
