@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface testMapper extends BaseMapper<Role> {
-    Role getroleById(@Param("id") String id);
+    Role getRoleById(@Param("id") String id);
 }

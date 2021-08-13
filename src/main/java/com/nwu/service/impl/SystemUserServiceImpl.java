@@ -2,7 +2,7 @@ package com.nwu.service.impl;
 
 import com.nwu.entities.SystemUser;
 import com.nwu.mapper.SystemUserMapper;
-import com.nwu.service.SystemUserService;
+import com.nwu.service.common.SystemUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**

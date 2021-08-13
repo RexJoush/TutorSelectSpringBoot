@@ -1,10 +1,8 @@
 package com.nwu.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nwu.entity.query.QueryDepartmentSecretaryInit;
-import com.nwu.mapper.QueryDepartmentSecretaryMapper;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.impl.QueryDepartmentSecretaryServiceImpl;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @RequestMapping("/department-secretary")

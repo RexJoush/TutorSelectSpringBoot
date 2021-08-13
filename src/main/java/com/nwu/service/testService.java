@@ -4,5 +4,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.nwu.entities.Role;
 
 public interface testService extends IService<Role> {
-     Role getroleById(String id);
+     Role getRoleById(String id);
 }

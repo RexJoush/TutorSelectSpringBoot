@@ -3,7 +3,7 @@ package com.nwu.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nwu.entities.SystemTime;
 import com.nwu.mapper.SystemTimeMapper;
-import com.nwu.service.SystemTimeService;
+import com.nwu.service.common.SystemTimeService;
 import org.springframework.stereotype.Service;
 
 /**

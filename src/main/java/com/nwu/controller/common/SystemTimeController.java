@@ -1,4 +1,4 @@
-package com.nwu.controller;
+package com.nwu.controller.common;
 
 
 import com.nwu.entities.SystemTime;

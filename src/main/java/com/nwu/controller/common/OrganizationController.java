@@ -1,4 +1,4 @@
-package com.nwu.controller;
+package com.nwu.controller.common;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

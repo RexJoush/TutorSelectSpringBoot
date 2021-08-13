@@ -1,4 +1,4 @@
-package com.nwu.entity.query;
+package com.nwu.entities.query;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

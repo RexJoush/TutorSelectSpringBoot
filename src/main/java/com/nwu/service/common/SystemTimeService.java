@@ -1,7 +1,7 @@
-package com.nwu.service;
+package com.nwu.service.common;
 
-import com.nwu.entities.SystemUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.nwu.entities.SystemTime;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author dynamic
  * @since 2021-08-10
  */
-public interface SystemUserService extends IService<SystemUser> {
+public interface SystemTimeService extends IService<SystemTime> {
 
 }

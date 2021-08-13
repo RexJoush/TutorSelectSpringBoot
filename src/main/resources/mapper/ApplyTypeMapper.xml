@@ -4,7 +4,6 @@
 
     <select id="getAll" resultType="com.nwu.entities.ApplyType">
         select *
-        from
-             apply_type
+        from apply_type
     </select>
 </mapper>

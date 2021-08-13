@@ -15,8 +15,8 @@ public class testServiceImpl extends ServiceImpl<testMapper,Role> implements tes
     testMapper testMapper;
 
     @Override
-    public Role getroleById(String id) {
-        return testMapper.getroleById(id);
+    public Role getRoleById(String id) {
+        return testMapper.getRoleById(id);
     }
 
 
