@@ -8,3 +8,7 @@
 * 2021.08.10 **dynamic10**
     * 修改数据库表system_time中字段time_id为int类型，自增
     * 添加数据库表system_user，存储使用该系统用户的学工号，角色名称，用户状态，院系名称，以及系统用户的创建时间
+
+* 2021.08.13 **Rex Joush**
+    * 规范后端代码的文件目录结构
+    * 新建 controller 和 service 层的文件夹并附带 readme.md 说明
