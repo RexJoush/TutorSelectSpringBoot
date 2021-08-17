@@ -1,15 +1,18 @@
 package com.nwu.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.TutorInspect;
+import com.nwu.results.Result;
+import com.nwu.results.ResultCode;
 import com.nwu.service.impl.TutorInspectServiceImpl;
-import com.nwu.vo.UserVo;
+import com.nwu.vo.TutorQuery;
+import com.nwu.vo.UserQuery;
 import io.swagger.annotations.ApiOperation;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,23 +32,22 @@ public class TutorInspectController {
     private TutorInspectServiceImpl tutorInspectService;
     @ApiOperation(value = "获取所有用户")
     @GetMapping("/getAll")
-    public List<UserVo> getAll() {
-        List<TutorInspect>  list = tutorInspectService.list(null);
-        List<UserVo> userVos = new ArrayList<>();
-        if(list!=null) {
-            for (TutorInspect tutorInspect : list) {
-                UserVo userVo = new UserVo();
-                userVo.setUserId(tutorInspect.getNumber());
-                userVo.setUserName(tutorInspect.getName());
-                userVo.setUserRole("秘书");
-                userVo.setStatus("1");
-                userVo.setCreateTime("1");
-                userVo.setMr("mr");
-                userVo.setOrganization("信科");
-                userVos.add(userVo);
-            }
-        }
-        return userVos;
+    public Result getAll(TutorQuery tutorQuery) {
+//    public List<TutorInspect> getAll(@RequestParam("pageNum") int pageNum,
+//                                     @RequestParam("pageSize") int pageSize) {
+
+        System.out.println("getAll");
+    System.out.println("TutorQuery: " + tutorQuery.toString());
+//    System.out.println("pageSize: " + pageSize);
+       List<TutorInspect> list = tutorInspectService.getTutorByQuery(tutorQuery);
+       System.out.println(list.size());
+    return new Result(ResultCode.SUCCESS,list);
+    }
+
+    @GetMapping("/getAll1")
+    public String getAll1(@RequestBody UserQuery tutorQuery) {
+        System.out.println(111);
+        return "200";
     }
 }
 

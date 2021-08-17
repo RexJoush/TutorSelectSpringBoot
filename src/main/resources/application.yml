@@ -18,10 +18,8 @@ mybatis:
   mapper-locations: classpath:mapper/**/*Mapper.xml
   # 配置 pojo 别名
   type-aliases-package: com.nwu.entity
-
   # 配置下划线自动转驼峰命名
   configuration:
     map-underscore-to-camel-case: true
-
 server:
   port: 8081

@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nwu.mapper.TutorInspectMapper">
+<select id="selectByQuery" resultType="com.nwu.entities.TutorInspect" parameterType="com.nwu.vo.TutorQuery">
+    SELECT *
+    FROM `tutor_inspect` t,`apply` a
 
+    WHERE a.tutor_id = t.number
+        <if test="userId !=null and userId.length >0 ">
+            AND a.tutor_id = #{userId}
+        </if>
+        <if test="applyType !=null and applyType.length >0">
+            AND a.apply_id = #{applyType}
+        </if>
+        <if test="applyStatus !=null and applyStatus.length >0">
+            AND a.status = #{applyStatus}
+        </if>
+        <if test="subjectType !=null and subjectType.length >0">
+            AND a.subject = #{subjectType}
+        </if>
+        <if test="organization !=null and organization.length >0">
+            AND t.organization_id = #{organization}
+        </if>
+        <if test="userName !=null and userName.length >0">
+            AND t.name = #{userName}
+        </if>
+        <if test="subjectName !=null and subjectName.length >0">
+            AND t.applied_subject_code = #{subjectName}
+        </if>
+
+</select>
 </mapper>
