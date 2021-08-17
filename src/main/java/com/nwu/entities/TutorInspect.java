@@ -29,25 +29,25 @@ public class TutorInspect implements Serializable {
     private String tutorId;
 
     private String number;
-
+    // 姓名
     private String name;
-
+    // 所在单位
     private Integer organizationId;
-
+    // 性别
     private String gender;
-
+    // 出生年月
     private String birthday;
 
     private String image;
-
+    // 证件号码
     private String identity;
-
+    // 联系电话
     private String phone;
-
+    // 电子邮箱
     private String email;
-
+    // 最后学位
     private String finalDegree;
-
+    //授予单位及时间
     private String awardingUnitTime;
 
     private String researchDirections;
@@ -55,11 +55,11 @@ public class TutorInspect implements Serializable {
     private String academicGroupsJobs;
 
     private String titlesOfExpert;
-
+    //职称
     private String title;
 
     private String professionalTitle;
-
+    // 评定时间
     private String evaluateTime;
 
     private String sourceUnitName;
