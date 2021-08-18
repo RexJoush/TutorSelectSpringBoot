@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dynamic
@@ -25,12 +25,10 @@ public class SystemUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "tutor表对应id")
-    private Integer tutorId;
-
     @ApiModelProperty(value = "学工号")
-    private Integer number;
-
+    private String number;
+    @ApiModelProperty(value = "用户姓名")
+    private String userName;
     @ApiModelProperty(value = "角色名称")
     private String roleName;
 

@@ -9,8 +9,6 @@ import java.util.HashMap;
 @RequestMapping("/user")
 public class testController {
 
-
-
     @PostMapping("/login")
     public String login(){
         HashMap<String, Object> response = new HashMap<>();

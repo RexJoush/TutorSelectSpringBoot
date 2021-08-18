@@ -1,4 +1,4 @@
-package com.nwu.service.impl;
+package com.nwu.service.common.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nwu.entities.SystemTime;
