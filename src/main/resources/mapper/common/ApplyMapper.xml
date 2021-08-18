@@ -8,7 +8,7 @@
             status = #{status}
         </set>
         where
-        tutor_id = #{number}
+            tutor_id = #{number}
         and apply_id = #{applyId}
     </update>
 </mapper>

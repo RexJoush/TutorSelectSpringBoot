@@ -22,6 +22,11 @@ public class UpdataStatusController {
     //更新操作，修改状态
     @PostMapping("/update")
     public Result updateStatusByDepartmentSecretary(@RequestBody List<updateStatus> list)throws Exception{
+        System.out.println("++++"+list);
+//        String number = "202032972";
+//        Integer applyId = 3;
+//       Integer status = 12;
+//        int i = applyService.updateApplyStatus(number,applyId,status);
         if (list.size() > 0) {
             for (updateStatus s: list) {
                 System.out.println(s);
