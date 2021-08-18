@@ -1,10 +1,10 @@
 package com.nwu.mapper.DoctorTutorInspectMapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.nwu.entities.TutorInspect;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface FirstApplyDoctorMapper {
-    //保存申请的导师数据
-    int SaveBaseInfo(TutorInspect tutorInspect);
+public interface FirstApplyDoctorMapper extends BaseMapper<TutorInspect> {
+
 }

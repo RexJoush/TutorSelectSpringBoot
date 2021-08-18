@@ -12,3 +12,6 @@
 * 2021.08.13 **Rex Joush**
     * 规范后端代码的文件目录结构
     * 新建 controller 和 service 层的文件夹并附带 readme.md 说明
+ * 2021.08.18 **zjz**
+    * ResultCode成功统一返回20000 失败20001
+    * 数据库apply表 id主键改为自增

@@ -1,6 +1,8 @@
 package com.nwu.entities;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +17,8 @@ import java.io.Serializable;
 public class Apply implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int id; //申请表id
+    @TableId(type = IdType.AUTO)
+    private int id; //申请表id 自增
     private String tutorId;  //导师工号
     private int applyId;   //申请的类别 id
     private int status;  //当前申请的状态
