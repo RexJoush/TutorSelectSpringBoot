@@ -25,7 +25,6 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleServiceImpl roleService;
-
     @ApiOperation(value = "获取所有角色")
     @GetMapping("/getAll")
     public List<Role> getAll() {

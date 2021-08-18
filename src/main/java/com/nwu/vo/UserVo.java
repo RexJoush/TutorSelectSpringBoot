@@ -18,7 +18,7 @@ public class UserVo {
     // 院系
     private String organization;
     // 状态
-    private String status;
+    private int status;
     // 创建时间
     private String createTime;
     // 管理员角色
