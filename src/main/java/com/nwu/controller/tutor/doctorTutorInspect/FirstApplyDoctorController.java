@@ -1,10 +1,9 @@
-package com.nwu.controller.tutor.DoctorTutorInspect;
+package com.nwu.controller.tutor.doctorTutorInspect;
 
 import com.alibaba.fastjson.JSON;
 import com.nwu.entities.Apply;
 import com.nwu.entities.TutorInspect;
 import com.nwu.results.Result;
-import com.nwu.results.ResultCode;
 import com.nwu.service.tutor.DoctorTutorInspect.FirstApplyDoctorService;
 
 
@@ -38,27 +37,7 @@ public class FirstApplyDoctorController {
     @Autowired
     MyApplyMapperServiceImpl myapplyMapperService;
 
-    @ApiOperation("是否申请过此岗位")
-    @GetMapping("/ifapply")
-    public Result IfApply(@RequestParam("tutorId") String tutorId ,@RequestParam("applyId") String applyId){
-        System.out.println(tutorId+applyId);
-        if (tutorId != "" && applyId != ""){
-            //根据tutorId和applyid和status查询是否申请过
-            Apply apply = myapplyMapperService.GetApplyInfoByTutorIdAndApplyId(tutorId, Integer.valueOf(applyId));
-            if (apply!=null){
-                //申请过此岗位
-                return new Result(ResultCode.SUCCESS,"100");
-            }
-            else
-            {
-                //没有申请过此岗位
-                return new Result(ResultCode.SUCCESS,"101");
-            }
-        }
-        //返回失败
-        return Result.FAIL();
 
-    }
 
     @ApiOperation("保存博士基本信息")
     @PostMapping("/savebaseinfo")

@@ -15,22 +15,27 @@ public class MyApplyMapperServiceImpl implements MyApplyMapperService {
     MyApplyMapper myApplyMapper;
 
     @Override
-    public int GetApplyByTutorIdService(String tutorId) {
-        return myApplyMapper.GetApplyByTutorId(tutorId);
+    public int getApplyByTutorIdService(String tutorId) {
+        return myApplyMapper.getApplyByTutorId(tutorId);
     }
 
     @Override
-    public Apply GetApplyInfoByTutorIdAndApplyId(String tutorId, Integer applyId) {
-        return myApplyMapper.GetApplyInfoByTutorIdAndApplyId(tutorId, applyId);
+    public Apply getApplyInfoByTutorIdAndApplyId(String tutorId, Integer applyId) {
+        return myApplyMapper.getApplyInfoByTutorIdAndApplyId(tutorId, applyId);
     }
 
     @Override
-    public int SaveApplyInfo(Apply apply) {
-        return myApplyMapper.SaveApplyInfo(apply);
+    public Apply getApplyByTutorIdAndApplyIdAndStatus(String tutorId, Integer applyId) {
+        return myApplyMapper.getApplyByTutorIdAndApplyIdAndStatus(tutorId, applyId);
     }
 
     @Override
-    public int GetIdByTutorIdAndApplyId(String tutorId, Integer applyId) {
-        return myApplyMapper.GetIdByTutorIdAndApplyId(tutorId,applyId);
+    public int saveApplyInfo(Apply apply) {
+        return myApplyMapper.saveApplyInfo(apply);
+    }
+
+    @Override
+    public int getIdByTutorIdAndApplyId(String tutorId, Integer applyId) {
+        return myApplyMapper.getIdByTutorIdAndApplyId(tutorId,applyId);
     }
 }
