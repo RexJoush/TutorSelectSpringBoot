@@ -1,6 +1,6 @@
 package com.nwu.controller.common;
 
-import com.nwu.entities.query.updateStatus;
+import com.nwu.vo.updateStatus;
 import com.nwu.results.Result;
 import com.nwu.service.common.ApplyService;
 import org.springframework.web.bind.annotation.PostMapping;
