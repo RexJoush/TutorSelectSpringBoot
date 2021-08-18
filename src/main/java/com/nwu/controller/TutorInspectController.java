@@ -7,7 +7,6 @@ import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.impl.TutorInspectServiceImpl;
 import com.nwu.vo.TutorQuery;
-import com.nwu.vo.UserQuery;
 import io.swagger.annotations.ApiOperation;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +41,6 @@ public class TutorInspectController {
        List<TutorInspect> list = tutorInspectService.getTutorByQuery(tutorQuery);
        System.out.println(list.size());
     return new Result(ResultCode.SUCCESS,list);
-    }
-
-    @GetMapping("/getAll1")
-    public String getAll1(@RequestBody UserQuery tutorQuery) {
-        System.out.println(111);
-        return "200";
     }
 }
 
