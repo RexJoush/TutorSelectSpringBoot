@@ -1,4 +1,4 @@
-package com.nwu.service.DoctorTutorInspect;
+package com.nwu.service.tutor.DoctorTutorInspect;
 
 import com.nwu.entities.Apply;
 
@@ -16,7 +16,7 @@ public interface MyApplyMapperService {
      * @param applyId 申请类别
      * @return
      */
-    Apply GetApplyInfoBytutorIdAndApplyId(String tutorId, Integer applyId );
+    Apply GetApplyInfoByTutorIdAndApplyId(String tutorId, Integer applyId );
 
     /**
      * 存储apply表

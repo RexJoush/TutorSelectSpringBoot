@@ -20,7 +20,7 @@ public interface MyApplyMapper {
      * @param applyId
      * @return
      */
-    Apply GetApplyInfoBytutorIdAndApplyId(@Param("tutorId") String tutorId, @Param("applyId") Integer applyId );
+    Apply GetApplyInfoByTutorIdAndApplyId(@Param("tutorId") String tutorId, @Param("applyId") Integer applyId );
 
     /**
      * 添加tutor_id apply_id status

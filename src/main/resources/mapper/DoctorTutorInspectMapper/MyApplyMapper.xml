@@ -6,7 +6,7 @@
     <select id="GetApplyByTutorId" parameterType="string" resultType="integer">
         SELECT COUNT(*) FROM apply WHERE tutor_id=#{tutorId};
     </select>
-    <select id="GetApplyInfoBytutorIdAndApplyId" resultType="com.nwu.entities.Apply">
+    <select id="GetApplyInfoByTutorIdAndApplyId" resultType="com.nwu.entities.Apply">
         SELECT * FROM apply WHERE tutor_id=#{tutorId} AND apply_id=#{applyId};
     </select>
     <insert id="SaveApplyInfo" parameterType="com.nwu.entities.Apply">

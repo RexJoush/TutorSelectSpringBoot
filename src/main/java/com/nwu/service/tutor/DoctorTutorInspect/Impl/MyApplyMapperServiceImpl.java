@@ -1,8 +1,8 @@
-package com.nwu.service.DoctorTutorInspect.Impl;
+package com.nwu.service.tutor.DoctorTutorInspect.Impl;
 
 import com.nwu.entities.Apply;
 import com.nwu.mapper.DoctorTutorInspectMapper.MyApplyMapper;
-import com.nwu.service.DoctorTutorInspect.MyApplyMapperService;
+import com.nwu.service.tutor.DoctorTutorInspect.MyApplyMapperService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,8 +20,8 @@ public class MyApplyMapperServiceImpl implements MyApplyMapperService {
     }
 
     @Override
-    public Apply GetApplyInfoBytutorIdAndApplyId(String tutorId, Integer applyId) {
-        return myApplyMapper.GetApplyInfoBytutorIdAndApplyId(tutorId, applyId);
+    public Apply GetApplyInfoByTutorIdAndApplyId(String tutorId, Integer applyId) {
+        return myApplyMapper.GetApplyInfoByTutorIdAndApplyId(tutorId, applyId);
     }
 
     @Override
