@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/scientificResearchManager") // 可以建多个 controller，但需要每个与导师相关的控制器均添加此 mapper 前缀
+@RequestMapping("/scientificResearchManager") // 可以建多个 controller，但需要每个与科研处管理员相关的控制器均添加此 mapper 前缀
 public class XxxController {
     
     /*

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nwu.mapper.DoctorTutorInspectMapper.MyApplyMapper">
+    <select id="GetApplyByTutorId" parameterType="string" resultType="integer">
+        SELECT COUNT(*) FROM apply WHERE tutor_id=#{tutorId};
+    </select>
+    <select id="GetApplyInfoByTutorIdAndApplyId" resultType="com.nwu.entities.Apply">
+        SELECT * FROM apply WHERE tutor_id=#{tutorId} AND apply_id=#{applyId};
+    </select>
+    <insert id="SaveApplyInfo" parameterType="com.nwu.entities.Apply">
+        INSERT INTO apply (tutor_id,apply_id,`status`) VALUES (#{apply.tutorId},#{apply.applyId},#{apply.status});
+    </insert>
+    <select id="GetIdByTutorIdAndApplyId" resultType="int">
+        SELECT id FROM apply WHERE tutor_id=#{tutorId} AND apply_id=#{applyId};
+    </select>
+</mapper>

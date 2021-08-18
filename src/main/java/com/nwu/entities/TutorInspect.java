@@ -37,7 +37,7 @@ public class TutorInspect implements Serializable {
     private String gender;
     // 出生年月
     private String birthday;
-
+    //图片
     private String image;
     // 证件号码
     private String identity;
