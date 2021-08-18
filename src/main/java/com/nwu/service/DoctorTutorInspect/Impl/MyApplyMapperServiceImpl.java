@@ -1,36 +1,36 @@
 package com.nwu.service.DoctorTutorInspect.Impl;
 
 import com.nwu.entities.Apply;
-import com.nwu.mapper.DoctorTutorInspectMapper.ApplyMapper;
-import com.nwu.service.DoctorTutorInspect.ApplyMapperService;
+import com.nwu.mapper.DoctorTutorInspectMapper.MyApplyMapper;
+import com.nwu.service.DoctorTutorInspect.MyApplyMapperService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 
 @Service
-public class ApplyMapperServiceImpl implements ApplyMapperService {
+public class MyApplyMapperServiceImpl implements MyApplyMapperService {
 
     @Resource
-    ApplyMapper applyMapper;
+    MyApplyMapper myApplyMapper;
 
     @Override
     public int GetApplyByTutorIdService(String tutorId) {
-        return applyMapper.GetApplyByTutorId(tutorId);
+        return myApplyMapper.GetApplyByTutorId(tutorId);
     }
 
     @Override
     public Apply GetApplyInfoBytutorIdAndApplyId(String tutorId, Integer applyId) {
-        return applyMapper.GetApplyInfoBytutorIdAndApplyId(tutorId, applyId);
+        return myApplyMapper.GetApplyInfoBytutorIdAndApplyId(tutorId, applyId);
     }
 
     @Override
     public int SaveApplyInfo(Apply apply) {
-        return applyMapper.SaveApplyInfo(apply);
+        return myApplyMapper.SaveApplyInfo(apply);
     }
 
     @Override
     public int GetIdByTutorIdAndApplyId(String tutorId, Integer applyId) {
-        return applyMapper.GetIdByTutorIdAndApplyId(tutorId,applyId);
+        return myApplyMapper.GetIdByTutorIdAndApplyId(tutorId,applyId);
     }
 }

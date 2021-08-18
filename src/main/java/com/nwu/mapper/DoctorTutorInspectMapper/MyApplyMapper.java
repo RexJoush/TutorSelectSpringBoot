@@ -3,11 +3,10 @@ package com.nwu.mapper.DoctorTutorInspectMapper;
 import com.nwu.entities.Apply;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 @Mapper
-public interface ApplyMapper {
+public interface MyApplyMapper {
     /**
      * 查询教师工号查询tutor_id是否存在
      * @param tutorId

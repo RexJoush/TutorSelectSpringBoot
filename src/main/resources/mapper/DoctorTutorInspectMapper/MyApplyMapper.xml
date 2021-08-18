@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nwu.mapper.DoctorTutorInspectMapper.ApplyMapper">
+<mapper namespace="com.nwu.mapper.DoctorTutorInspectMapper.MyApplyMapper">
     <select id="GetApplyByTutorId" parameterType="string" resultType="integer">
         SELECT COUNT(*) FROM apply WHERE tutor_id=#{tutorId};
     </select>

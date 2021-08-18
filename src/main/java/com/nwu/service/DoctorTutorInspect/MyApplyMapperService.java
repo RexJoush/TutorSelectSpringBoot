@@ -1,11 +1,8 @@
 package com.nwu.service.DoctorTutorInspect;
 
 import com.nwu.entities.Apply;
-import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
-public interface ApplyMapperService {
+public interface MyApplyMapperService {
     /**
      * 查询是否存在相应的申请记录
      * @param tutorId

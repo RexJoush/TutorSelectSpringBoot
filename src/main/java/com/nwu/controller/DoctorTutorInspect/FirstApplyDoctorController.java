@@ -8,8 +8,8 @@ import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.DoctorTutorInspect.FirstApplyDoctorService;
 
-import com.nwu.service.DoctorTutorInspect.Impl.ApplyMapperServiceImpl;
-import com.nwu.service.TutorInspectService;
+
+import com.nwu.service.DoctorTutorInspect.Impl.MyApplyMapperServiceImpl;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +36,14 @@ public class FirstApplyDoctorController {
 
     //申请表
     @Autowired
-    ApplyMapperServiceImpl applyMapperService;
+    MyApplyMapperServiceImpl myapplyMapperService;
 
     @ApiOperation("是否申请过此岗位")
     @GetMapping("/ifapply")
     public Result IfApply(@RequestParam("tutorId") String tutorId ,@RequestParam("applyId") String applyId){
         System.out.println(tutorId+applyId);
         if (tutorId != "" && applyId != ""){
-            Apply apply = applyMapperService.GetApplyInfoBytutorIdAndApplyId(tutorId, Integer.valueOf(applyId));
+            Apply apply = myapplyMapperService.GetApplyInfoBytutorIdAndApplyId(tutorId, Integer.valueOf(applyId));
             if (apply!=null){
 
                 //申请过此岗位
@@ -65,7 +65,7 @@ public class FirstApplyDoctorController {
     public Result SaveOrUpdateApplyDoctor(@RequestBody TutorInspect tutorInspect){
         //根据tutorId和appply_id先判断apply表里有没有对应的申请的信息，没有就认为是新申请，进行字段添加
         if (tutorInspect.getTutorId()!=""){
-            Apply apply=applyMapperService.GetApplyInfoBytutorIdAndApplyId(tutorInspect.getTutorId(),3);
+            Apply apply=myapplyMapperService.GetApplyInfoBytutorIdAndApplyId(tutorInspect.getTutorId(),3);
             if (apply!=null){
                 //有数据，根据申请的apply_id查询出对应的apply中的id字段，根据id和tutor_id修改教师基本信息
                 UpdateWrapper<TutorInspect> wrapper=new UpdateWrapper();
@@ -83,10 +83,10 @@ public class FirstApplyDoctorController {
                 apply1.setApplyId(4);
                 apply1.setStatus(10);
                 //将申请表添加
-                int i = applyMapperService.SaveApplyInfo(apply1);
+                int i = myapplyMapperService.SaveApplyInfo(apply1);
                 if (i>0){
                     //获取当前的apply中的id值
-                    int id = applyMapperService.GetIdByTutorIdAndApplyId(apply1.getTutorId(), apply1.getApplyId());
+                    int id = myapplyMapperService.GetIdByTutorIdAndApplyId(apply1.getTutorId(), apply1.getApplyId());
                     //根据apply中的id值教师基本信息添加
                     tutorInspect.setTutorId(String.valueOf(id));
                     boolean save = firstApplyDoctorService.save(tutorInspect);
