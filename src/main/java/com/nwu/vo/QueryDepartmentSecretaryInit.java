@@ -1,4 +1,4 @@
-package com.nwu.entities.query;
+package com.nwu.vo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -99,4 +99,6 @@ public class QueryDepartmentSecretaryInit implements Serializable{
 //    private int codeId; //状态码（申请状态）
     private String codeDescribe;    //申请状态码全称
     private String inspectDescribe;     //申请状态码简称
+    //负责院系表
+    private String organizationName;
 }

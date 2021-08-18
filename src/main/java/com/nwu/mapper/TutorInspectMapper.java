@@ -2,7 +2,10 @@ package com.nwu.mapper;
 
 import com.nwu.entities.TutorInspect;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.nwu.vo.TutorQuery;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
 
+    List<TutorInspect> selectByQuery(TutorQuery tutorQuery);
 }

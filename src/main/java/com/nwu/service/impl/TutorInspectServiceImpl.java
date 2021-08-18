@@ -4,7 +4,11 @@ import com.nwu.entities.TutorInspect;
 import com.nwu.mapper.TutorInspectMapper;
 import com.nwu.service.TutorInspectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.nwu.vo.TutorQuery;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +21,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, TutorInspect> implements TutorInspectService {
 
+    @Autowired
+    private TutorInspectMapper tutorInspectMapper;
+    @Override
+    public List<TutorInspect> getTutorByQuery(TutorQuery tutorQuery) {
+        return tutorInspectMapper.selectByQuery(tutorQuery);
+    }
 }
