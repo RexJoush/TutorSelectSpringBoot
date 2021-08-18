@@ -1,4 +1,4 @@
-package com.nwu.service;
+package com.nwu.service.common;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nwu.entities.ApplyType;
