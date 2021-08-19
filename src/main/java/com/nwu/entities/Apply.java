@@ -28,5 +28,6 @@ public class Apply implements Serializable {
     private int status;  //当前申请的状态
     private int subject;  //分科，文科或理科
     private int professional;  //专硕或学硕
+    private String commit;      // 备注字段
 
 }

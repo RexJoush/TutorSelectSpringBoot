@@ -32,7 +32,7 @@ public class FirstApplyMasterController {
         System.out.println(inspect);
 
         // 添加申请表
-        Apply apply = new Apply(0, tutorId, applyId, 0, 0, 0);
+        Apply apply = new Apply(0, tutorId, applyId, 0, 0, 0, "");
         myApplyMapperService.saveApplyInfo(apply);
 
         System.out.println(apply.getApplyId());
