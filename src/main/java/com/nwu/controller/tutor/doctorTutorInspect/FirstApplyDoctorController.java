@@ -35,13 +35,29 @@ public class FirstApplyDoctorController {
 
     //申请表
     @Autowired
-    MyApplyMapperServiceImpl myapplyMapperService;
+    MyApplyMapperServiceImpl myApplyMapperService;
 
 
 
-    @ApiOperation("保存博士基本信息")
-    @PostMapping("/savebaseinfo")
-    public Result SaveOrUpdateApplyDoctor(@RequestBody List<Map<String,Object>> list){
+    @ApiOperation("保存博士基本信息和申请类别表")
+    @PostMapping("/savebaseinfo/{applyId}")
+    public Result SaveOrUpdateApplyDoctor(@RequestBody TutorInspect tutorInspect,@PathVariable("applyId") Integer applyId){
+
+        String tutorId = "202032978";
+
+        if (!"".equals(tutorId)){
+//            Apply apply = new Apply();
+//            apply.setTutorId(tutorId);
+//            apply.setApplyId(applyId);
+//            apply.setStatus(0);
+//            myApplyMapperService.saveApplyInfo(apply);
+//            //返回当前的主键id
+//            System.out.println(apply.getId());
+            //添加教师信息表
+
+
+        }
+
         //根据tutorId和appply_id先判断apply表里有没有对应的申请的信息，没有就认为是新申请，进行字段添加
 //        if (tutorInspect.getTutorId()!=""){
 //            Apply apply=myapplyMapperService.GetApplyInfoBytutorIdAndApplyId(tutorInspect.getTutorId(),3);
@@ -81,12 +97,12 @@ public class FirstApplyDoctorController {
 //        }
         //1.保存 apply表
         //将map集合转为实体类
-        Apply apply =JSON.parseObject(JSON.toJSONString(list.get(0)),Apply.class);
-        TutorInspect tutorInspect=JSON.parseObject(JSON.toJSONString(list.get(1)),TutorInspect.class);
+//        Apply apply =JSON.parseObject(JSON.toJSONString(list.get(0)),Apply.class);
+//        TutorInspect tutorInspect=JSON.parseObject(JSON.toJSONString(list.get(1)),TutorInspect.class);
 //        int i = myapplyMapperService.SaveApplyInfo(apply);
 
 
-        System.out.println(tutorInspect);
+//        System.out.println(tutorInspect);
 //        int i = myapplyMapperService.SaveApplyInfo(apply);
 //        if (i>0){
 //            //保存成功

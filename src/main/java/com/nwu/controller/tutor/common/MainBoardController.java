@@ -27,17 +27,22 @@ public class MainBoardController {
     @ApiOperation("是否申请过此岗位")
     @GetMapping("/firstApply/{applyId}")
     public Result firstApply(@PathVariable("applyId") int applyId) {
-
         String tutorId = "202032978";
-
-        // System.out.println(tutorId+applyId);
-
         if (!"".equals(tutorId)) {
-            //根据tutorId和applyId和status查询是否申请过
+            //根据tutorId和applyId
             Apply apply = myApplyMapperService.getApplyInfoByTutorIdAndApplyId(tutorId, applyId);
             if (apply != null) {
-                //申请过此岗位
-                return new Result(ResultCode.SUCCESS, "100");
+                //申请过此岗位 有数据 但不知道其状态
+                if (apply.getStatus()==0){
+                    //查询出来的状态为0 ，老师可以进去修改
+                    return new Result(ResultCode.SUCCESS, "101");
+                }
+                else
+                {
+                    //老师已提交 申请过此岗位
+                    return new Result(ResultCode.SUCCESS, "100");
+                }
+
             } else {
                 //没有申请过此岗位
                 return new Result(ResultCode.SUCCESS, "101");
