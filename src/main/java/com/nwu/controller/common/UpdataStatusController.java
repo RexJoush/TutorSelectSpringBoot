@@ -32,7 +32,7 @@ public class UpdataStatusController {
                 Integer applyId = s.getApplyId_1();
                 Integer status = s.getStatus_1();
                 String commit = s.getCommit_1();
-                int i = applyService.updateApplyStatus(number,applyId,status,commit,id);
+                int i = applyService.updateApplyStatus(id,number,applyId,status,commit);
             }
         }
         return Result.SUCCESS();

@@ -41,7 +41,7 @@ public class TutorInspectController {
         Map<String,Object> res = new HashMap<>();
         res.put("data",list);
         res.put("total",list.size());
-        res.put("code",10000);
+        res.put("code",20000);
     return res;
     }
 
