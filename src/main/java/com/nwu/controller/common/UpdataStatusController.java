@@ -3,6 +3,7 @@ package com.nwu.controller.common;
 import com.nwu.vo.updateStatus;
 import com.nwu.results.Result;
 import com.nwu.service.common.ApplyService;
+import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +27,12 @@ public class UpdataStatusController {
         if (list.size() > 0) {
             for (updateStatus s: list) {
                 System.out.println(s);
+                Integer id = s.getId_1();
                 String number = s.getNumber_1();
                 Integer applyId = s.getApplyId_1();
                 Integer status = s.getStatus_1();
                 String commit = s.getCommit_1();
-                int i = applyService.updateApplyStatus(number,applyId,status,commit);
+                int i = applyService.updateApplyStatus(number,applyId,status,commit,id);
             }
         }
         return Result.SUCCESS();
