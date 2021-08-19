@@ -42,10 +42,9 @@ public class MainBoardController {
                     //老师已提交 申请过此岗位
                     return new Result(ResultCode.SUCCESS, "100");
                 }
-
             } else {
                 //没有申请过此岗位
-                return new Result(ResultCode.SUCCESS, "101");
+                return new Result(ResultCode.SUCCESS, "102");
             }
         }
         //返回失败

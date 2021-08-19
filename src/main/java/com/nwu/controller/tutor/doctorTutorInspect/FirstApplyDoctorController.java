@@ -1,7 +1,5 @@
 package com.nwu.controller.tutor.doctorTutorInspect;
 
-import com.alibaba.fastjson.JSON;
-import com.nwu.entities.Apply;
 import com.nwu.entities.TutorInspect;
 import com.nwu.results.Result;
 import com.nwu.service.tutor.DoctorTutorInspect.FirstApplyDoctorService;
@@ -13,8 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -26,10 +22,9 @@ import java.util.Map;
  */
 @RestController
 @ApiModel("首次申请博士导师岗位")
-@RequestMapping("/tutor/firstapplydoctor")
+@RequestMapping("/tutor/firstApplyDoctor")
 public class FirstApplyDoctorController {
     //saveOrUpdate() 这个方法是更新或者插入，有主键就执行更新，如果没有主键就执行插入。
-
     @Autowired
     FirstApplyDoctorService firstApplyDoctorService;
 
@@ -37,26 +32,45 @@ public class FirstApplyDoctorController {
     @Autowired
     MyApplyMapperServiceImpl myApplyMapperService;
 
-
-
     @ApiOperation("保存博士基本信息和申请类别表")
-    @PostMapping("/savebaseinfo/{applyId}")
-    public Result SaveOrUpdateApplyDoctor(@RequestBody TutorInspect tutorInspect,@PathVariable("applyId") Integer applyId){
-
+    @PostMapping("/saveBaseInfo/{applyId}/{applyCondition}")
+    public Result SaveOrUpdateApplyDoctor(@RequestBody TutorInspect tutorInspect,@PathVariable("applyId") Integer applyId, @PathVariable("applyCondition") Integer applyCondition){
         String tutorId = "202032978";
+//        System.out.println(applyCondition);
+        //没有申请过和正在申请中都进来 根据applyCondition判断是插入还是修改apply
+        if (!"".equals(tutorId) && !"".equals(applyCondition.toString()))
+        {
+            if (applyCondition == 100 )
+            {
+                //apply表插入，教师表插入
+                System.out.println(applyCondition);
 
-        if (!"".equals(tutorId)){
+            }
+            else if (applyCondition==101)
+            {
+                //根据apply表去修改教师申请表 查询出tutor_id查出tutor inspect的id
+
+
+
+            }
+            else
+            {
+
+            }
+        }
+
+//        if (!"".equals(tutorId)){
 //            Apply apply = new Apply();
 //            apply.setTutorId(tutorId);
 //            apply.setApplyId(applyId);
 //            apply.setStatus(0);
 //            myApplyMapperService.saveApplyInfo(apply);
-//            //返回当前的主键id
-//            System.out.println(apply.getId());
-            //添加教师信息表
-
-
-        }
+////            //返回当前的主键id
+////            System.out.println(apply.getId());
+//            //添加教师信息表
+//
+//
+//        }
 
         //根据tutorId和appply_id先判断apply表里有没有对应的申请的信息，没有就认为是新申请，进行字段添加
 //        if (tutorInspect.getTutorId()!=""){
