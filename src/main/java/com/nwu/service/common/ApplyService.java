@@ -6,5 +6,5 @@ import com.nwu.entities.Organization;
 import org.apache.ibatis.annotations.Param;
 
 public interface ApplyService extends IService<Apply> {
-    int updateApplyStatus(String number,Integer applyId,Integer status);
+    int updateApplyStatus(String number,Integer applyId,Integer status,String commit);
 }

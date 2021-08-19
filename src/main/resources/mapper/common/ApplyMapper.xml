@@ -2,10 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nwu.mapper.ApplyMapper">
 
-    <update id="updateApplyStatus">
+    <update id="updateApplyStatus" parameterType="com.nwu.vo.updateStatus">
         update apply
         <set>
-            status = #{status}
+            <if test="status != null and status != '' ">
+               status = #{status},
+            </if>
+            <if test="commit != null and commit !='' ">
+                commit = #{commit}
+            </if>
+
         </set>
         where
             tutor_id = #{number}

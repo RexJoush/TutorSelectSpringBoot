@@ -15,8 +15,8 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
 
     @Resource
     ApplyMapper applyMapper;
-    public int updateApplyStatus(@Param("number") String number, @Param("applyId") Integer applyId, @Param("status") Integer status){
-        applyMapper.updateApplyStatus(number,applyId,status);
+    public int updateApplyStatus(String number,Integer applyId,Integer status,String commit){
+        applyMapper.updateApplyStatus(number,applyId,status,commit);
         return 1;
     }
 }
