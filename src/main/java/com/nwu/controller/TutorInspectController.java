@@ -14,7 +14,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -31,16 +33,16 @@ public class TutorInspectController {
     private TutorInspectServiceImpl tutorInspectService;
     @ApiOperation(value = "获取所有用户")
     @GetMapping("/getAll")
-    public Result getAll(TutorQuery tutorQuery) {
-//    public List<TutorInspect> getAll(@RequestParam("pageNum") int pageNum,
-//                                     @RequestParam("pageSize") int pageSize) {
-
+    public Map<String,Object> getAll(TutorQuery tutorQuery) {
         System.out.println("getAll");
-    System.out.println("TutorQuery: " + tutorQuery.toString());
-//    System.out.println("pageSize: " + pageSize);
+        System.out.println("TutorQuery: " + tutorQuery.toString());
        List<TutorInspect> list = tutorInspectService.getTutorByQuery(tutorQuery);
        System.out.println(list.size());
-    return new Result(ResultCode.SUCCESS,list);
+        Map<String,Object> res = new HashMap<>();
+        res.put("data",list);
+        res.put("total",list.size());
+        res.put("code",10000);
+    return res;
     }
 
 }

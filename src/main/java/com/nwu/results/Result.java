@@ -1,5 +1,10 @@
 package com.nwu.results;
 
+import com.alibaba.fastjson.JSON;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Result {
     private boolean success;//是否成功
     private Integer code;// 返回码
@@ -31,6 +36,30 @@ public class Result {
 
     public static Result FAIL(){
         return new Result(ResultCode.FAIL);
+    }
+
+    public static String ok(int code, String message, Object data){
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", code);
+        result.put("message", message);
+        result.put("data", data);
+
+        return JSON.toJSONString(result);
+    }
+    public static String ok(int code, String message){
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", code);
+        result.put("message", message);
+
+        return JSON.toJSONString(result);
+    }
+
+    public static String error(int code, String message){
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", code);
+        result.put("message", message);
+
+        return JSON.toJSONString(result);
     }
 
     public boolean isSuccess() {
