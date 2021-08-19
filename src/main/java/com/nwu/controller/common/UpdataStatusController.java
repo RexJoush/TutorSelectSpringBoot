@@ -22,18 +22,15 @@ public class UpdataStatusController {
     //更新操作，修改状态
     @PostMapping("/update")
     public Result updateStatusByDepartmentSecretary(@RequestBody List<updateStatus> list)throws Exception{
-        System.out.println("++++"+list);
-//        String number = "202032972";
-//        Integer applyId = 3;
-//       Integer status = 12;
-//        int i = applyService.updateApplyStatus(number,applyId,status);
+        System.out.println(list);
         if (list.size() > 0) {
             for (updateStatus s: list) {
                 System.out.println(s);
                 String number = s.getNumber_1();
                 Integer applyId = s.getApplyId_1();
                 Integer status = s.getStatus_1();
-                int i = applyService.updateApplyStatus(number,applyId,status);
+                String commit = s.getCommit_1();
+                int i = applyService.updateApplyStatus(number,applyId,status,commit);
             }
         }
         return Result.SUCCESS();

@@ -27,7 +27,7 @@ import java.util.Map;
  * @since 2021-08-09
  */
 @RestController
-@RequestMapping("/tutor-inspect")
+@RequestMapping("tutor-inspect")
 public class TutorInspectController {
     @Autowired
     private TutorInspectServiceImpl tutorInspectService;
@@ -44,5 +44,6 @@ public class TutorInspectController {
         res.put("code",10000);
     return res;
     }
+
 }
 
