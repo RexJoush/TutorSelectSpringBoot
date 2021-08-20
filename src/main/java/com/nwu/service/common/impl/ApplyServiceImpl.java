@@ -15,8 +15,15 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
 
     @Resource
     ApplyMapper applyMapper;
-    public int updateApplyStatus(Integer id,String number,Integer applyId,Integer status,String commit){
-        applyMapper.updateApplyStatus(id,number,applyId,status,commit);
+
+    @Override
+    public int updateApplyStatus(Integer id, Integer status, String commit) {
+        applyMapper.updateApplyStatus(id,status,commit);
         return 1;
     }
+
+    /*public int updateApplyStatus(Integer id,String number,Integer applyId,Integer status,String commit){
+        applyMapper.updateApplyStatus(id,number,applyId,status,commit);
+        return 1;
+    }*/
 }

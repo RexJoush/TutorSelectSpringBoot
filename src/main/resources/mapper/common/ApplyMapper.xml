@@ -15,7 +15,5 @@
         </set>
         where
             id = #{id}
-        and tutor_id = #{number}
-        and apply_id = #{applyId}
     </update>
 </mapper>

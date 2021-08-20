@@ -28,11 +28,12 @@ public class UpdataStatusController {
             for (updateStatus s: list) {
                 System.out.println(s);
                 Integer id = s.getId_1();
-                String number = s.getNumber_1();
-                Integer applyId = s.getApplyId_1();
+//                String number = s.getNumber_1();
+//                Integer applyId = s.getApplyId_1();
                 Integer status = s.getStatus_1();
                 String commit = s.getCommit_1();
-                int i = applyService.updateApplyStatus(id,number,applyId,status,commit);
+//                int i = applyService.updateApplyStatus(id,number,applyId,status,commit);
+                int i = applyService.updateApplyStatus(id,status,commit);
             }
         }
         return Result.SUCCESS();
