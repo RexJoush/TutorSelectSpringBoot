@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nwu.mapper.doctorTutorInspectMapper.MyApplyMapper">
+
+    <select id="getApplyByTutorId" parameterType="string" resultType="integer">
+        SELECT COUNT(*)
+        FROM apply
+        WHERE tutor_id = #{tutorId};
+    </select>
+    <select id="getApplyInfoByTutorIdAndApplyId" resultType="com.nwu.entities.Apply">
+        SELECT *
+        FROM apply
+        WHERE tutor_id = #{tutorId}
+          AND apply_id = #{applyId};
+    </select>
+
+    <select id="getApplyByTutorIdAndApplyIdAndStatus" resultType="com.nwu.entities.Apply">
+        SELECT *
+        FROM apply
+        WHERE tutor_id = #{tutorId}
+          AND apply_id = #{applyId}
+          AND status = 0;
+    </select>
+
+    <insert id="saveApplyInfo" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.nwu.entities.Apply">
+        INSERT INTO apply (tutor_id, apply_id, `status`)
+        VALUES (#{apply.tutorId}, #{apply.applyId}, #{apply.status});
+    </insert>
+
+    <select id="getIdByTutorIdAndApplyId" resultType="int">
+        SELECT id
+        FROM apply
+        WHERE tutor_id = #{tutorId}
+          AND apply_id = #{applyId};
+    </select>
+
+    <select id="getApplyIdByTutorIdAndStatus" resultType="int">
+        SELECT id FROM apply WHERE tutor_id=#{tutorId} AND status=#{status};
+    </select>
+</mapper>

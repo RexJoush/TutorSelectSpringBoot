@@ -3,7 +3,7 @@ package com.nwu.controller.tutor.common;
 import com.nwu.entities.Apply;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
-import com.nwu.service.tutor.DoctorTutorInspect.Impl.MyApplyMapperServiceImpl;
+import com.nwu.service.tutor.doctorTutorInspect.Impl.MyApplyMapperServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

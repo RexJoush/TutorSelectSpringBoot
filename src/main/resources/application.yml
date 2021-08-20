@@ -25,4 +25,4 @@ server:
   port: 8081
 logging:
   level:
-    com.nwu.mapper: debug
+    com.nwu.mapper.common: debug
