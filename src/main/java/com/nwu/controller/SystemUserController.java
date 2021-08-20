@@ -110,9 +110,9 @@ public class SystemUserController {
         queryWrapper.eq("number",userVo.getUserId());
         boolean res = systemUserService.update(user,queryWrapper);
         if(res) {
-            return "200";
+            return "20000";
         }else{
-            return "201";
+            return "20001";
         }
     }
     @ApiOperation("删除系统用户状态")
@@ -122,9 +122,9 @@ public class SystemUserController {
         queryWrapper.eq("number",userId);
         boolean res = systemUserService.remove(queryWrapper);
         if(res) {
-            return "200";
+            return "20000";
         }else{
-            return "201";
+            return "20001";
         }
     }
     @Transactional
@@ -138,9 +138,9 @@ public class SystemUserController {
             res =  systemUserService.remove(queryWrapper);
         }
         if(res) {
-            return "200";
+            return "20000";
         }else{
-            return "201";
+            return "20001";
         }
     }
 }
