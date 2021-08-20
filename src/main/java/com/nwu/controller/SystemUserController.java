@@ -1,4 +1,4 @@
-package com.nwu.controller.common;
+package com.nwu.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -25,7 +25,7 @@ import java.util.*;
  * @since 2021-08-10
  */
 @RestController
-@RequestMapping("/system-user")
+@RequestMapping("/graduate/system-user")
 public class SystemUserController {
     @Autowired
     private SystemUserServiceImpl systemUserService;

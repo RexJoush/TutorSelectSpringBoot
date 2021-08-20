@@ -15,7 +15,6 @@
 * 2021.08.18 **dynamic**
     * 规范学科属性代码 ：文科1 理科2 交叉学科3
     * 修改获取导师列表返回值
-
  * 2021.08.18 **zjz**
     * ResultCode成功统一返回20000 失败20001
     * 数据库apply表 id主键改为自增
@@ -25,3 +24,6 @@
     查询出来的状态为0 ，老师可以进去修改 101
     没有申请过此岗位  102
     老师已提交 申请过此岗位 100
+ * 2021.08.20 **dynamic**
+    给公共方法TutorInspectController，getALL ,请求路径添加/admin前缀 
+    给研究生管理员SystemUserController，请求路径添加/graduate前缀 

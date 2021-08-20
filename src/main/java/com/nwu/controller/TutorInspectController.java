@@ -27,17 +27,17 @@ import java.util.Map;
  * @since 2021-08-09
  */
 @RestController
-@RequestMapping("tutor-inspect")
+@RequestMapping("/tutor-inspect")
 public class TutorInspectController {
     @Autowired
     private TutorInspectServiceImpl tutorInspectService;
     @ApiOperation(value = "获取所有用户")
-    @GetMapping("/getAll")
+    @GetMapping("/admin/getAll")
     public Map<String,Object> getAll(TutorQuery tutorQuery) {
         System.out.println("getAll");
         System.out.println("TutorQuery: " + tutorQuery.toString());
-       List<TutorInspect> list = tutorInspectService.getTutorByQuery(tutorQuery);
-       System.out.println(list.size());
+        List<TutorInspect> list = tutorInspectService.getTutorByQuery(tutorQuery);
+        System.out.println(list.size());
         Map<String,Object> res = new HashMap<>();
         res.put("data",list);
         res.put("total",list.size());
