@@ -1,9 +1,8 @@
 package com.nwu.controller.common;
 
-import com.nwu.vo.updateStatus;
+import com.nwu.vo.UpdateStatus;
 import com.nwu.results.Result;
 import com.nwu.service.common.ApplyService;
-import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +21,10 @@ public class UpdataStatusController {
     public ApplyService applyService;
     //更新操作，修改状态
     @PostMapping("/update")
-    public Result updateStatusByDepartmentSecretary(@RequestBody List<updateStatus> list)throws Exception{
+    public Result updateStatusByDepartmentSecretary(@RequestBody List<UpdateStatus> list)throws Exception{
         System.out.println(list);
         if (list.size() > 0) {
-            for (updateStatus s: list) {
+            for (UpdateStatus s: list) {
                 System.out.println(s);
                 Integer id = s.getId_1();
 //                String number = s.getNumber_1();
