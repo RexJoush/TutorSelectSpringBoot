@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author dynamic
@@ -29,20 +29,22 @@ import java.util.Map;
 @RestController
 @RequestMapping("/tutor-inspect")
 public class TutorInspectController {
+
     @Autowired
     private TutorInspectServiceImpl tutorInspectService;
+
     @ApiOperation(value = "获取所有用户")
     @GetMapping("/admin/getAll")
-    public Map<String,Object> getAll(TutorQuery tutorQuery) {
+    public Map<String, Object> getAll(TutorQuery tutorQuery) {
         System.out.println("getAll");
         System.out.println("TutorQuery: " + tutorQuery.toString());
         List<TutorInspect> list = tutorInspectService.getTutorByQuery(tutorQuery);
         System.out.println(list.size());
-        Map<String,Object> res = new HashMap<>();
-        res.put("data",list);
-        res.put("total",list.size());
-        res.put("code",20000);
-    return res;
+        Map<String, Object> res = new HashMap<>();
+        res.put("data", list);
+        res.put("total", list.size());
+        res.put("code", 20000);
+        return res;
     }
 
 }

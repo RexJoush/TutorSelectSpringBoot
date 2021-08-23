@@ -4,7 +4,7 @@ import com.nwu.entities.Apply;
 import com.nwu.entities.TutorInspect;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
-import com.nwu.service.common.MyTutorInspectService;
+import com.nwu.service.tutor.common.MyTutorInspectService;
 import com.nwu.service.tutor.doctorTutorInspect.MyApplyMapperService;
 import org.springframework.web.bind.annotation.*;
 
