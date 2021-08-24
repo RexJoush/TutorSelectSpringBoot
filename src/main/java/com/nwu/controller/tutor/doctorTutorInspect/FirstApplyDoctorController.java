@@ -35,12 +35,11 @@ public class FirstApplyDoctorController {
     @Resource
     private TutorInspectService tutorInspectService;
 
+
+    public static String tutorId="202032978";
     @ApiOperation("保存博士基本信息和申请类别表")
     @PostMapping("/saveBaseInfo/{applyId}/{applyCondition}")
     public Result SaveOrUpdateApplyDoctor(@RequestBody TutorInspect tutorInspect, @PathVariable("applyId") Integer applyId, @PathVariable("applyCondition") Integer applyCondition) {
-        String tutorId = "202032978";
-//        System.out.println(tutorInspect);
-        // System.out.println(applyCondition);
 
         // 没有申请过和正在申请中都进来 根据applyCondition判断是插入还是修改apply
         if (applyCondition == 102) {
