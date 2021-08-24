@@ -1,6 +1,7 @@
-package com.nwu.service.tutor.DoctorTutorInspect;
+package com.nwu.service.tutor.doctorTutorInspect;
 
 import com.nwu.entities.Apply;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -42,4 +43,12 @@ public interface MyApplyMapperService {
      * @return
      */
     int getIdByTutorIdAndApplyId(String tutorId,Integer applyId);
+
+    /**
+     * 查询主键id
+     * @param tutorId
+     * @param status
+     * @return
+     */
+    int getApplyIdByTutorIdAndStatus(String tutorId, Integer status);
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 角色前端控制器
  * </p>
  *
  * @author dynamic
@@ -25,10 +25,11 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleServiceImpl roleService;
+
     @ApiOperation(value = "获取所有角色")
     @GetMapping("/getAll")
     public List<Role> getAll() {
-     return roleService.list(null);
+        return roleService.list(null);
     }
 }
 
