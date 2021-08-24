@@ -32,3 +32,10 @@
 * 2021.08.20 **dynamic**
    * 给公共方法TutorInspectController，getALL ,请求路径添加/admin前缀 
    * 给研究生管理员SystemUserController，请求路径添加/graduate前缀 
+
+* 2021.08.24 **wsl**
+  * 给VO包下的QueryDepartmentSecretaryInit实体类中的申请表部分添加字段commit
+  * 给对应的xml中 添加a.commit,返回给前端
+  * 数据库status_code表 将 13 院系秘书待复审，院系主管通过 对应的inspect_describe修改为同意上分会
+    (22 院系主管通过 对应的改为不同意上分会)
+    
