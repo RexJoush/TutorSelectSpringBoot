@@ -5,7 +5,7 @@
     <update id="updateApplyStatus" parameterType="com.nwu.vo.UpdateStatus">
         update apply
         <set>
-            <if test="status != null and status != '' ">
+            <if test="status != null  ">
                status = #{status},
             </if>
             <if test="commit != null and commit !='' ">

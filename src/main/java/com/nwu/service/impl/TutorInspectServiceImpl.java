@@ -1,6 +1,7 @@
 package com.nwu.service.impl;
 
 import com.nwu.entities.TutorInspect;
+import com.nwu.entities.tutor.FirstPage;
 import com.nwu.mapper.TutorInspectMapper;
 import com.nwu.service.TutorInspectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -30,7 +31,7 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     }
 
     @Override
-    public int updateTutorInspect(TutorInspect inspect) {
-        return tutorInspectMapper.updateTutorInspect(inspect);
+    public int saveTutorInspectBaseInfo(FirstPage firstPage) {
+        return tutorInspectMapper.saveTutorInspectBaseInfo(firstPage);
     }
 }

@@ -9,6 +9,7 @@
         FROM apply
         WHERE tutor_id = #{tutorId};
     </select>
+
     <select id="getApplyInfoByTutorIdAndApplyId" resultType="com.nwu.entities.Apply">
         SELECT *
         FROM apply
@@ -24,7 +25,8 @@
           AND status = 0;
     </select>
 
-    <insert id="saveApplyInfo" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.nwu.entities.Apply">
+    <insert id="saveApplyInfo" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.nwu.entities.Apply">
         INSERT INTO apply (tutor_id, apply_id, `status`)
         VALUES (#{apply.tutorId}, #{apply.applyId}, #{apply.status});
     </insert>
@@ -37,6 +39,9 @@
     </select>
 
     <select id="getApplyIdByTutorIdAndStatus" resultType="int">
-        SELECT id FROM apply WHERE tutor_id=#{tutorId} AND status=#{status};
+        SELECT id
+        FROM apply
+        WHERE tutor_id = #{tutorId}
+          AND status = #{status};
     </select>
 </mapper>

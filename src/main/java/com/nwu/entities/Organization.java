@@ -26,7 +26,7 @@ public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "organization_id", type = IdType.ID_WORKER)
-    private Integer organizationId;
+    private int organizationId;
 
     private String organizationName;
 

@@ -56,6 +56,7 @@ public class ResultClient {
             Object data = JSON.parseObject(dataInfo).get("data");
             JSONArray roWs = JSON.parseArray(JSON.parseObject(data.toString()).get("Rows").toString());
             return roWs.getObject(0, TeacherInfo.class);
+
         } catch (IOException e) {
             e.printStackTrace();
             return null;

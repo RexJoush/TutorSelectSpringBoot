@@ -25,6 +25,14 @@ public interface TutorApplyMapper {
     Apply getApplyInfoByTutorIdAndApplyId(@Param("tutorId") String tutorId, @Param("applyId") Integer applyId);
 
     /**
+     * 根据导师工号和申请类别查询出对应的apply信息
+     * @param tutorId
+     * @param applyId
+     * @return
+     */
+    Apply getApplyByTutorIdAndApplyIdAndStatus(@Param("tutorId") String tutorId, @Param("applyId") Integer applyId);
+
+    /**
      * 添加tutor_id apply_id status
      *
      * @param apply 申请信息
@@ -40,8 +48,6 @@ public interface TutorApplyMapper {
      */
     int getIdByTutorIdAndApplyId(@Param("tutorId") String tutorId, @Param("applyId") Integer applyId);
 
-
-    Apply getApplyByTutorIdAndApplyIdAndStatus(@Param("tutorId") String tutorId, @Param("applyId") Integer applyId);
 
     /**
      * 根据教师工号和申请状态查询主键id
