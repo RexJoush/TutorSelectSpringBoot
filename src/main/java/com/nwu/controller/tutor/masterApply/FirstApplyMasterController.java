@@ -3,7 +3,6 @@ package com.nwu.controller.tutor.masterApply;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.Apply;
 import com.nwu.entities.Organization;
-import com.nwu.entities.TutorInspect;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.SecondPage;
 import com.nwu.results.Result;
@@ -102,7 +101,7 @@ public class FirstApplyMasterController {
 
 /*
 SecondPage(
-applySubject=文史,
+applySubject=1,
 doctoralMasterApplicationSubjectUnit=地质学系,
 doctoralMasterSubjectCodeName=0818 地质资源与地质工程,
 major=12345676879876543,

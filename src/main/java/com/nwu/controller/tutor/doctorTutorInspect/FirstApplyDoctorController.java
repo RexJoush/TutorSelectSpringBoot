@@ -3,7 +3,6 @@ package com.nwu.controller.tutor.doctorTutorInspect;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.Apply;
 import com.nwu.entities.Organization;
-import com.nwu.entities.TutorInspect;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.results.Result;
 
