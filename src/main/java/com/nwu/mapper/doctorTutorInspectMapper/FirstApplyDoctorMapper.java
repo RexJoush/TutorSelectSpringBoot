@@ -1,4 +1,4 @@
-package com.nwu.mapper.doctorTutorInspectMapper;
+package com.nwu.mapper.DoctorTutorInspectMapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.nwu.entities.TutorInspect;
