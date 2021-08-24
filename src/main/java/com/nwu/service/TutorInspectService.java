@@ -3,6 +3,7 @@ package com.nwu.service;
 import com.nwu.entities.TutorInspect;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nwu.entities.tutor.FirstPage;
+import com.nwu.entities.tutor.SecondPage;
 import com.nwu.vo.TutorQuery;
 
 import java.util.List;
@@ -30,4 +31,12 @@ public interface TutorInspectService extends IService<TutorInspect> {
       * @return 修改条数
       */
      int saveTutorInspectBaseInfo(FirstPage firstPage);
+
+     /**
+      * 更新第二页的导师信息
+      * @param id tutor_inspect 表的主键
+      * @param secondPage 信息
+      * @return 修改条数
+      */
+     int updateTutorInspectSecond(int id, SecondPage secondPage);
 }

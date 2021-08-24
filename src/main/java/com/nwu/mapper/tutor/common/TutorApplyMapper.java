@@ -40,13 +40,15 @@ public interface TutorApplyMapper {
      */
     int saveApplyInfo(@Param("apply") Apply apply);
 
+    int updateApplySubject(int id, int applySubject);
+
     /**
-     * 根据tutorId获取当前申请的id主键
+     * 根据工号和申请类别，申请状态查询对应的主键id
      *
      * @param tutorId 教师工号
-     * @return 影响的行数
+     * @return 申请的 id
      */
-    int getIdByTutorIdAndApplyId(@Param("tutorId") String tutorId, @Param("applyId") Integer applyId);
+    int getId(String tutorId, int applyId, int status);
 
 
     /**

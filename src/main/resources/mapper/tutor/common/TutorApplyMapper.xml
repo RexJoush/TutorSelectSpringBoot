@@ -31,11 +31,18 @@
         VALUES (#{apply.tutorId}, #{apply.applyId}, #{apply.status});
     </insert>
 
-    <select id="getIdByTutorIdAndApplyId" resultType="int">
+    <update id="updateApplySubject">
+        UPDATE apply
+        SET subject = #{applySubject}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getId" resultType="int">
         SELECT id
         FROM apply
         WHERE tutor_id = #{tutorId}
-          AND apply_id = #{applyId};
+          AND apply_id = #{applyId}
+          AND status = #{status};
     </select>
 
     <select id="getApplyIdByTutorIdAndStatus" resultType="int">

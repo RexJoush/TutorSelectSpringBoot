@@ -28,7 +28,7 @@
         <if test="applyStatus !=null and applyStatus.length >0">
             AND a.status in
             <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
-            ${status}
+                ${status}
             </foreach>
         </if>
         <if test="subjectType !=null and subjectType.length >0">
@@ -74,4 +74,15 @@
                 #{firstPage.title},
                 #{firstPage.evaluateTime}, #{firstPage.finalDegree}, #{firstPage.awardingUnitTime});
     </insert>
+
+    <update id="updateTutorInspectSecond" parameterType="com.nwu.entities.tutor.SecondPage">
+        UPDATE tutor_inspect
+        SET research_directions                      = #{secondPage.major},
+            academic_groups_jobs                     = #{secondPage.groupsOrPartTimeJobsJson},
+            titles_of_expert                         = #{secondPage.expertTitlesJson},
+            doctoral_master_application_subject_unit = #{secondPage.doctoralMasterApplicationSubjectUnit},
+            doctoral_master_subject_code             = #{secondPage.doctoralMasterSubjectCode},
+            doctoral_master_subject_name             = #{secondPage.doctoralMasterSubjectName}
+        WHERE tutor_id = #{id}
+    </update>
 </mapper>
