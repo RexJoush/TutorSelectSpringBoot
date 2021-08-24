@@ -15,5 +15,18 @@ import java.util.List;
  * @since 2021-08-09
  */
 public interface TutorInspectService extends IService<TutorInspect> {
+
+     /**
+      * 获取导师申请信息
+      * @param tutorQuery 查询条件
+      * @return 信息列表
+      */
      List<TutorInspect> getTutorByQuery(TutorQuery tutorQuery);
+
+     /**
+      * 更新申请导师信息
+      * @param inspect 信息
+      * @return 修改条数
+      */
+     int updateTutorInspect(TutorInspect inspect);
 }

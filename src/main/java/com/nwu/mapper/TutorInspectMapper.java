@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ *  导师非免审信息表 Mapper 接口
  * </p>
  *
  * @author dynamic
@@ -19,4 +19,8 @@ import java.util.List;
 public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
 
     List<TutorInspect> selectByQuery(TutorQuery tutorQuery);
+
+    int updateTutorInspect(TutorInspect inspect);
+
+    int saveTutorInspectBaseInfo();
 }
