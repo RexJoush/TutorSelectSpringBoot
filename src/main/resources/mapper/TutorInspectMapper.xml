@@ -24,8 +24,12 @@
         <if test="applyType !=null and applyType.length >0">
             AND a.apply_id = #{applyType}
         </if>
+
         <if test="applyStatus !=null and applyStatus.length >0">
-            AND a.status = #{applyStatus}
+            AND a.status in
+            <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
+            ${status}
+            </foreach>
         </if>
         <if test="subjectType !=null and subjectType.length >0">
             AND a.subject = #{subjectType}

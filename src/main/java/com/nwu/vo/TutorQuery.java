@@ -3,6 +3,8 @@ package com.nwu.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @program: TutorSelectSpringBoot
  * @description: 管理员筛选查询条件
@@ -27,7 +29,8 @@ public class TutorQuery {
     private String subjectName;
     //申请状态
     private String applyStatus;
-
+    //申请状态码数组
+    private List<String> applyStatuss;
     public TutorQuery(int pageNum, int pageSize){
         this.pageNum = pageNum;
         this.pageSize = pageSize;

@@ -38,6 +38,14 @@ public class TutorInspectController {
     public Map<String, Object> getAll(TutorQuery tutorQuery) {
         System.out.println("getAll");
         System.out.println("TutorQuery: " + tutorQuery.toString());
+        List<String> status = new ArrayList<>();
+        if(tutorQuery!=null&&tutorQuery.getApplyStatus()!=null) {
+            String[] split = tutorQuery.getApplyStatus().split("-");
+            for (String s : split) {
+                status.add(s);
+            }
+        }
+        tutorQuery.setApplyStatuss(status);
         List<TutorInspect> list = tutorInspectService.getTutorByQuery(tutorQuery);
         System.out.println(list.size());
         Map<String, Object> res = new HashMap<>();
