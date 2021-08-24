@@ -53,7 +53,7 @@ public class FirstApplyDoctorController {
             int id = mainBoardService.getApplyIdByTutorIdAndStatus(tutorId, 0);
             tutorInspect.setTutorId("13");
             System.out.println(tutorInspect);
-            tutorInspectService.updateTutorInspect(tutorInspect);
+            // tutorInspectService.saveTutorInspectBaseInfo(tutorInspect);
 
 
         }

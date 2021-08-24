@@ -2,8 +2,10 @@ package com.nwu.mapper;
 
 import com.nwu.entities.TutorInspect;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.nwu.entities.tutor.FirstPage;
 import com.nwu.vo.TutorQuery;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,7 +22,6 @@ public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
 
     List<TutorInspect> selectByQuery(TutorQuery tutorQuery);
 
-    int updateTutorInspect(TutorInspect inspect);
+    int saveTutorInspectBaseInfo(@Param("firstPage") FirstPage firstPage);
 
-    int saveTutorInspectBaseInfo();
 }

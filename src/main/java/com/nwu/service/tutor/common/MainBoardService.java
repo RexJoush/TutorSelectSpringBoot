@@ -9,7 +9,7 @@ public interface MainBoardService {
      * @param tutorId 教师工号
      * @return 行数
      */
-    int getApplyByTutorIdService(String tutorId);
+    // int getApplyByTutorIdService(String tutorId);
 
     /**
      * 查询 apply 信息
@@ -28,7 +28,7 @@ public interface MainBoardService {
     Apply getApplyByTutorIdAndApplyIdAndStatus(String tutorId, Integer applyId);
 
     /**
-     * 存储apply表
+     * 存储 apply 表
      * @param apply 申请信息
      * @return int 影响的行数
      */
@@ -40,10 +40,10 @@ public interface MainBoardService {
      * @param applyId 申请类别
      * @return 查询主键
      */
-    int getIdByTutorIdAndApplyId(String tutorId,Integer applyId);
+    // int getIdByTutorIdAndApplyId(String tutorId,Integer applyId);
 
     /**
-     * 查询主键id
+     * 查询主键 id
      * @param tutorId 教师 id
      * @param status 申请状态
      * @return 主键

@@ -1,0 +1,27 @@
+package com.nwu.entities.tutor;
+
+/**
+ * @author Rex Joush
+ * @time 2021.08.24 16:05
+ */
+
+import com.nwu.entities.tutor.childSubject.ExpertTitle;
+import com.nwu.entities.tutor.childSubject.GroupsOrPartTimeJob;
+import lombok.Data;
+
+import java.util.List;
+
+/**
+ * 添加表格的第二页研究信息
+ */
+@Data
+public class SecondPage {
+
+    private String applySubject;    // 申请学科
+    private String doctoralMasterApplicationSubjectUnit;    // 申请学科负责单位
+    private String doctoralMasterSubjectCodeName;   // 一级学科代码 + " " + 名称
+    private String major;           // 主要研究方向的内容及其意义
+    private List<GroupsOrPartTimeJob> groupsOrPartTimeJobs;    // 何时参加何种学术团体、任何种职务，有何社会兼职列表
+    private List<ExpertTitle> expertTitles;    // 获何专家称号及时间列表
+
+}
