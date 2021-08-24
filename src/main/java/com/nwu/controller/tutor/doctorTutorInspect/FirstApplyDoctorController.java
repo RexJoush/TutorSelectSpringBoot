@@ -26,8 +26,8 @@ import javax.annotation.Resource;
 @RequestMapping("/tutor/firstApplyDoctor")
 public class FirstApplyDoctorController {
     // saveOrUpdate() 这个方法是更新或者插入，有主键就执行更新，如果没有主键就执行插入。
-    @Resource
-    private FirstApplyDoctorService firstApplyDoctorService;
+//    @Resource
+//    private FirstApplyDoctorService firstApplyDoctorService;
     // 申请表
     @Resource
     private MainBoardService mainBoardService;
