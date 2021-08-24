@@ -26,8 +26,8 @@ import javax.annotation.Resource;
 @RequestMapping("/tutor/firstApplyDoctor")
 public class FirstApplyDoctorController {
     // saveOrUpdate() 这个方法是更新或者插入，有主键就执行更新，如果没有主键就执行插入。
-    @Resource
-    private FirstApplyDoctorService firstApplyDoctorService;
+//    @Resource
+//    private FirstApplyDoctorService firstApplyDoctorService;
     // 申请表
     @Resource
     private MainBoardService mainBoardService;
@@ -35,12 +35,11 @@ public class FirstApplyDoctorController {
     @Resource
     private TutorInspectService tutorInspectService;
 
+
+    public static String tutorId="202032978";
     @ApiOperation("保存博士基本信息和申请类别表")
     @PostMapping("/saveBaseInfo/{applyId}/{applyCondition}")
     public Result SaveOrUpdateApplyDoctor(@RequestBody TutorInspect tutorInspect, @PathVariable("applyId") Integer applyId, @PathVariable("applyCondition") Integer applyCondition) {
-        String tutorId = "202032978";
-//        System.out.println(tutorInspect);
-        // System.out.println(applyCondition);
 
         // 没有申请过和正在申请中都进来 根据applyCondition判断是插入还是修改apply
         if (applyCondition == 102) {
