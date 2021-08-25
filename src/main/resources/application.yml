@@ -1,10 +1,11 @@
 
 spring:
   datasource:
-    url: jdbc:mysql://www.rexjoush.com:3306/tutor_select?serverTimezong=UTC
+    url: jdbc:mysql://www.rexjoush.com:3306/tutor_select?serverTimezong=UTC&allowMultiQueries=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: tutor
     password: tutor123
+
 
   # 配置上传文件大小
   servlet:
@@ -21,8 +22,9 @@ mybatis:
   # 配置下划线自动转驼峰命名
   configuration:
     map-underscore-to-camel-case: true
+
 server:
   port: 8081
 logging:
   level:
-    com.nwu.mapper.common: debug
+    com.nwu.mapper: debug

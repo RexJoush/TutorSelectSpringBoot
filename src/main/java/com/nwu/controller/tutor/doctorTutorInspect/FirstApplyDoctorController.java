@@ -80,7 +80,6 @@ public class FirstApplyDoctorController {
             //System.out.println(tutorInspect);
 //          tutorInspectService.updateTutorInspect(tutorInspect);
 
-
         }
         return Result.FAIL();
 

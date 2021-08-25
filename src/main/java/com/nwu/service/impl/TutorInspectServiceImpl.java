@@ -5,6 +5,7 @@ import com.nwu.entities.tutor.FirstPage;
 import com.nwu.mapper.TutorInspectMapper;
 import com.nwu.service.TutorInspectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.TutorQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     private TutorInspectMapper tutorInspectMapper;
 
     @Override
-    public List<TutorInspect> getTutorByQuery(TutorQuery tutorQuery) {
+    public List<Object> getTutorByQuery(TutorQuery tutorQuery) {
         return tutorInspectMapper.selectByQuery(tutorQuery);
     }
 
