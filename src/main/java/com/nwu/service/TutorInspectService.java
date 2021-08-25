@@ -26,11 +26,18 @@ public interface TutorInspectService extends IService<TutorInspect> {
      List<TutorInspect> getTutorByQuery(TutorQuery tutorQuery);
 
      /**
-      * 更新申请导师信息
+      * 更新第一页申请导师信息
       * @param firstPage 信息
       * @return 修改条数
       */
      int saveTutorInspectBaseInfo(FirstPage firstPage);
+
+     /**
+      * 获取第二页的导师信息
+      * @param id tutor_inspect 表的主键
+      * @return 第二页信息
+      */
+     SecondPage getTutorInspectSecond(int id);
 
      /**
       * 更新第二页的导师信息
