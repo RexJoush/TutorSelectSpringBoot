@@ -32,3 +32,6 @@
 * 2021.08.20 **dynamic**
    * 给公共方法TutorInspectController，getALL ,请求路径添加/admin前缀 
    * 给研究生管理员SystemUserController，请求路径添加/graduate前缀 
+
+* 2021.08.25 **yl**
+  * test
