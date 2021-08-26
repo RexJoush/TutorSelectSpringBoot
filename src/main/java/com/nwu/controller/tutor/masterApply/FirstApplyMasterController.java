@@ -6,6 +6,7 @@ import com.nwu.entities.Apply;
 import com.nwu.entities.Organization;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.SecondPage;
+import com.nwu.entities.tutor.childSubject.ExpertTitle;
 import com.nwu.entities.tutor.childSubject.GroupsOrPartTimeJob;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
@@ -54,7 +55,11 @@ public class FirstApplyMasterController {
         // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
         if (applyCondition == 101) {
             int id = mainBoardService.getId(firstPage.getNumber(), 4, 0);
-            return new Result(ResultCode.SUCCESS, id);
+            SecondPage secondPage = tutorInspectService.getTutorInspectSecond(id);
+            secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
+            secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
+            secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
+            return new Result(ResultCode.SUCCESS, secondPage);
         }
 
         // 首次申请，添加申请表
@@ -83,7 +88,13 @@ public class FirstApplyMasterController {
         // 插入数据库
         tutorInspectService.saveTutorInspectBaseInfo(firstPage);
 
-        return new Result(ResultCode.SUCCESS, apply.getId());
+        // 读取第二页信息
+        SecondPage secondPage = tutorInspectService.getTutorInspectSecond(apply.getId());
+        secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
+        secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
+        secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
+
+        return new Result(ResultCode.SUCCESS, secondPage);
 
     }
 
