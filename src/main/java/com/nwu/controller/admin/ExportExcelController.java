@@ -13,6 +13,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/*
+*  管理员后端excel导出控制层
+*/
+
 @RestController
 @RequestMapping("/export")
 public class ExportExcelController {
@@ -22,7 +26,7 @@ public class ExportExcelController {
 
     @GetMapping("/sfh")
     public Result exportSFH(HttpServletResponse response, TutorQuery tutorQuery) {
-        //TODO 用户保存excel路径，前端还需传学校名和部门名
+        //TODO 用户保存excel路径，前端需传 学校名、部门名、符合条件的状态码（一个或多个）
         //1.查询数据
         List<QueryDepartmentSecretaryInit> list = exportExcelService.getTutorByQuery(tutorQuery);
         //2.输出Excel

@@ -50,53 +50,69 @@ public class TutorInspect implements Serializable {
     //授予单位及时间
     private String awardingUnitTime;
 
-    private String researchDirections;
+    private String researchDirections; //主要研究方向的内容及其意义
 
-    private String academicGroupsJobs;
+    private String academicGroupsJobs; //何时参加何种学术 团体、任何种职务有何社会兼职
 
-    private String titlesOfExpert;
+    private String titlesOfExpert; //获何专家称号及时间
     //职称
-    private String title;
+    private String title; // 职称
 
-    private String professionalTitle;
+    private String professionalTitle; // 现任专业技术职位，首次专硕，专硕增岗
     // 评定时间
-    private String evaluateTime;
+    private String evaluateTime; //评定时间
 
-    private String sourceUnitName;
+    /* 外单位调入填写 */
 
-    private String transferInTime;
+    private String sourceUnitName; //原单位名称
 
-    private String doctoralTutorOnDuty;
+    private String transferInTime; //调入时间
 
-    private String doctoralStartTime;
+    /* 博导增岗 */
 
-    private String firstDoctoralFirstTimeTutor;
+    private String doctoralTutorOnDuty; //博导在岗学科
 
-    private String firstDoctoralFirstDiscipline;
+    private String doctoralStartTime; //上岗时间
 
-    private String masterDegreeIncreaseTutorOnDuty;
+    /* 首次博导 */
+    private String firstDoctoralFirstTimeTutor; // 任硕导时间
 
-    private String masterDegreeIncreaseTutorStartTime;
+    private String firstDoctoralFirstDiscipline; // 任硕导一级学科
 
-    private String doctoralMasterApplicationSubjectUnit;
+    /* 首次学硕 */
 
-    private String doctoralMasterSubjectCode;
+    /* 学硕增岗 */
+    private String masterDegreeIncreaseTutorOnDuty;//硕导在岗学科
 
-    private String doctoralMasterSubjectName;
+    private String masterDegreeIncreaseTutorStartTime;//上岗时间
 
-    private String professionalMasterOnDuty;
+    /* 博导，学硕的公共部分 */
 
-    private String professionalMasterStartTime;
+    private String doctoralMasterApplicationSubjectUnit; //申请学科负责单位
 
-    private String professionalApplicationSubjectUnit;
+    private String doctoralMasterSubjectCode;//一级学科代码
 
-    private String professionalApplicationSubjectCode;
+    private String doctoralMasterSubjectName;//一级学科名称
 
-    private String professionalApplicationSubjectName;
+    /* 首次专硕 */
 
-    private String professionalFieldCode;
+    /* 专硕增岗 */
 
-    private String professionalFieldName;
+    private String professionalMasterOnDuty;//硕导在岗类别
+
+    private String professionalMasterStartTime;//上岗时间
+
+    /* 专硕的公共部分 */
+
+    private String professionalApplicationSubjectUnit; //申请类别负责单位
+
+    private String professionalApplicationSubjectCode; //类别代码
+
+    private String professionalApplicationSubjectName; //类别名称
+
+    private String professionalFieldCode; //领域代码
+
+    private String professionalFieldName; // 领域名称
 
     private String col1;
 

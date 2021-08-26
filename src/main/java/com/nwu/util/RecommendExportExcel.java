@@ -6,7 +6,6 @@ import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.alibaba.excel.write.style.column.SimpleColumnWidthStyleStrategy;
 import com.google.common.collect.Lists;
-import com.nwu.entities.TutorInspect;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
@@ -62,6 +61,7 @@ public class RecommendExportExcel {
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         String name = this.schoolName + this.year + "年" + this.departmentName + "学位评定分委员会推荐汇总表";
         String fileName = URLEncoder.encode(name, "UTF-8").replaceAll("\\+", "%20");
+        //TODO fileName打印出来是加密后的
         System.out.println(fileName);
         this.response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
     }
@@ -96,13 +96,14 @@ public class RecommendExportExcel {
         for (QueryDepartmentSecretaryInit queryDepartmentSecretaryInit : list) {
             this.contentList.add(
                     Lists.newArrayList(
-                            String.valueOf(i++),
-                            queryDepartmentSecretaryInit.getName(),
-                            queryDepartmentSecretaryInit.getBirthday(),
-                            queryDepartmentSecretaryInit.getFinalDegree(),
-                            queryDepartmentSecretaryInit.getProfessionalTitle(),
-                            queryDepartmentSecretaryInit.getProfessional(),
-                            queryDepartmentSecretaryInit.getApplyName()
+                            String.valueOf(i++),  //序号
+                            queryDepartmentSecretaryInit.getName(),  //姓名
+                            queryDepartmentSecretaryInit.getBirthday(), //出生年月
+                            queryDepartmentSecretaryInit.getFinalDegree(), //最后学位
+                            queryDepartmentSecretaryInit.getTitle(), //职称
+                            //TODO 申请学科或类别及代码需要进行判断和拼接
+                            queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别及代码
+                            queryDepartmentSecretaryInit.getApplyName() //导师上岗类别
                     )
             );
         }
