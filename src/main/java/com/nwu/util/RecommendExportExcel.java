@@ -32,7 +32,10 @@ public class RecommendExportExcel {
     private List<List<String>> headData;
     private String year;
 
-    public RecommendExportExcel(HttpServletResponse response, String schoolName, String departmentName, List<QueryDepartmentSecretaryInit> originList) {
+    public RecommendExportExcel(HttpServletResponse response,
+                                String schoolName,
+                                String departmentName,
+                                List<QueryDepartmentSecretaryInit> originList) {
         //1、生成年份
         Calendar instance = Calendar.getInstance();
         this.year = instance.get(Calendar.YEAR) + "";
@@ -50,20 +53,22 @@ public class RecommendExportExcel {
         this.exchangeData(this.originList);
         this.tableStyle();
         EasyExcel.write(response.getOutputStream())
-                .head(this.headData)
-                .registerWriteHandler(this.horizontalCellStyleStrategy).registerWriteHandler(new SimpleColumnWidthStyleStrategy(18)).sheet().doWrite(contentList);
+                .head(this.headData).autoCloseStream(Boolean.FALSE)
+                .registerWriteHandler(this.horizontalCellStyleStrategy)
+                .registerWriteHandler(new SimpleColumnWidthStyleStrategy(18))
+                .sheet().doWrite(contentList);
     }
 
     private void setResponse() throws UnsupportedEncodingException {
-//        this.response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-//        this.response.setCharacterEncoding("utf-8");
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
 
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         String name = this.schoolName + this.year + "年" + this.departmentName + "学位评定分委员会推荐汇总表";
-        String fileName = URLEncoder.encode(name, "UTF-8").replaceAll("\\+", "%20");
-        //TODO fileName打印出来是加密后的
-        System.out.println(fileName);
-        this.response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+        response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(name, "UTF-8") + ".xlsx");
+
     }
 
 
@@ -87,6 +92,7 @@ public class RecommendExportExcel {
         headTitles.add(Lists.newArrayList(firstRow, secondRow, "学位评定委员会审议情况", "表决结果", "同意/不同意/弃权"));
         //第11列
         headTitles.add(Lists.newArrayList(firstRow, secondRow, "备注", "备注", "备注"));
+
         this.headData = headTitles;
     }
 
