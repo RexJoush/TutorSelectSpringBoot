@@ -9,7 +9,6 @@
     <select id="selectByQuery" resultMap="QueryDepartmentSecretaryInit,total"
             parameterType="com.nwu.vo.TutorQuery">
         SELECT
-        sql_calc_found_rows
         t.*,
         a2.apply_name as applyName,
         a.status,
@@ -46,8 +45,6 @@
         <if test="subjectName !=null and subjectName.length >0">
             AND t.applied_subject_code = #{subjectName}
         </if>
-         limit #{pageNum},#{pageSize};
-        SELECT FOUND_ROWS() AS total;
     </select>
 
     <update id="updateTutorInspect" parameterType="com.nwu.entities.TutorInspect">

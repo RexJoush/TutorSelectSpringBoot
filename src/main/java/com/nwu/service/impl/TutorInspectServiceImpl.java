@@ -28,7 +28,7 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     private TutorInspectMapper tutorInspectMapper;
 
     @Override
-    public List<Object> getTutorByQuery(TutorQuery tutorQuery) {
+    public List<QueryDepartmentSecretaryInit> getTutorByQuery(TutorQuery tutorQuery) {
         return tutorInspectMapper.selectByQuery(tutorQuery);
     }
 
