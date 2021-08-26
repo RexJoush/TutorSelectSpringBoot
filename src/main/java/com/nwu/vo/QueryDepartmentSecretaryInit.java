@@ -1,5 +1,6 @@
 package com.nwu.vo;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,6 +15,7 @@ public class QueryDepartmentSecretaryInit implements Serializable{
 
     //导师非免审申请表
     private String tutorId;  //教师id
+
     private String number;  //教师工号
 
     private String name;
@@ -101,5 +103,5 @@ public class QueryDepartmentSecretaryInit implements Serializable{
     private String codeDescribe;    //申请状态码全称
     private String inspectDescribe;     //申请状态码简称
     //负责院系表
-    private String organizationName;
+    private String organizationName;  //院系名称
 }

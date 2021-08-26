@@ -13,6 +13,7 @@ public interface MainBoardService {
 
     /**
      * 查询 apply 信息
+     *
      * @param tutorId 导师工号
      * @param applyId 申请类别
      * @return apply 信息
@@ -21,6 +22,7 @@ public interface MainBoardService {
 
     /**
      * 查询 apply 信息
+     *
      * @param tutorId 导师工号
      * @param applyId 申请类别
      * @return apply 信息
@@ -29,23 +31,36 @@ public interface MainBoardService {
 
     /**
      * 存储 apply 表
+     *
      * @param apply 申请信息
-     * @return int 影响的行数
+     * @return 影响的行数
      */
     int saveApplyInfo(Apply apply);
 
     /**
-     * 根据工号和申请类别查询对应的主键id
+     * 更新第一页的申请学科
+     *
+     * @param id           申请表的主键
+     * @param applySubject 申请学科代码，1 文史， 2 理工， 3 交叉学科
+     * @return 影响的行数
+     */
+    int updateApplySubject(int id, int applySubject);
+
+    /**
+     * 根据工号和申请类别，申请状态查询对应的主键id
+     *
      * @param tutorId 教师工号
      * @param applyId 申请类别
+     * @param status  申请表的状态
      * @return 查询主键
      */
-    // int getIdByTutorIdAndApplyId(String tutorId,Integer applyId);
+    int getId(String tutorId, int applyId, int status);
 
     /**
      * 查询主键 id
+     *
      * @param tutorId 教师 id
-     * @param status 申请状态
+     * @param status  申请状态
      * @return 主键
      */
     int getApplyIdByTutorIdAndStatus(String tutorId, Integer status);

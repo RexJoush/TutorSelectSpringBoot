@@ -19,6 +19,8 @@ import javax.annotation.Resource;
 @RequestMapping("/tutor")
 public class MainBoardController {
 
+    public final String tutorId = "20133220";
+
     // 申请表
     @Resource
     private MainBoardService mainBoardService;
@@ -30,8 +32,6 @@ public class MainBoardController {
     @ApiOperation("是否申请过此岗位")
     @GetMapping("/firstApply/{applyId}")
     public Result firstApply(@PathVariable("applyId") int applyId) {
-
-        String tutorId = "202032978";
 
         if (!"".equals(tutorId)) {
             /*
@@ -72,7 +72,6 @@ public class MainBoardController {
     @GetMapping("/addApply/{applyId}")
     public Result addApply(@PathVariable("applyId") int applyId) {
 
-        String tutorId = "202032978";
 
         if (!"".equals(tutorId)) {
             // 根据 tutorId 和 applyId 和 status 查询是否申请过
@@ -95,12 +94,9 @@ public class MainBoardController {
     @GetMapping("/getTeacherInfo")
     public Result getTeacherInfo(){
 
-        String tutorId = "20133220"; // 吴老师
         ResultClient client = new ResultClient();
         // TeacherInfo teacherInfo = client.getDataInfo(tutorId);
         TeacherInfo teacherInfo = new TeacherInfo();
-
-
         teacherInfo.setXM("吴昊");
         teacherInfo.setSFZJH("420111197209287319");
         teacherInfo.setXB("男");
@@ -118,4 +114,6 @@ public class MainBoardController {
         }
         return new Result(ResultCode.SUCCESS, teacherInfo);
     }
+
+
 }
