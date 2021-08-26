@@ -6,6 +6,8 @@ import com.nwu.entities.Apply;
 import com.nwu.entities.Organization;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.SecondPage;
+import com.nwu.entities.tutor.childSubject.ExpertTitle;
+import com.nwu.entities.tutor.childSubject.GroupsOrPartTimeJob;
 import com.nwu.results.Result;
 
 import com.nwu.results.ResultCode;
@@ -49,7 +51,6 @@ public class FirstApplyDoctorController {
     @ApiOperation("保存博士基本信息和申请类别表")
     @PostMapping("/saveBaseInfo/{applyId}/{applyCondition}")
     public Result SaveOrUpdateApplyDoctor(@RequestBody FirstPage firstPage, @PathVariable("applyId") int applyId, @PathVariable("applyCondition") int applyCondition) {
-
         // 没有申请过和正在申请中都进来 根据applyCondition判断是插入还是修改apply
         if (applyCondition == 102) {
             // 没有申请过此岗位apply表插入
@@ -74,17 +75,19 @@ public class FirstApplyDoctorController {
 
             return new Result(ResultCode.SUCCESS, apply.getId());
 
-
         } else if (applyCondition == 101) {
             // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
             //根据填写信息查询出对应的主键id
             int id = mainBoardService.getId(firstPage.getNumber(), 1, 0);
-            System.out.println(id);
-            return new Result(ResultCode.SUCCESS,id);
+            //返回给前端第二页的数据
+            SecondPage secondPage = tutorInspectService.getTutorInspectSecond(id);
+            System.out.println(secondPage);
+            secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
+            secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
+            secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode()+" "+ secondPage.getDoctoralMasterSubjectName());
+            return new Result(ResultCode.SUCCESS,secondPage);
         }
         return Result.FAIL();
-
-
     }
 
 
@@ -94,17 +97,29 @@ public class FirstApplyDoctorController {
         //根据主键更新第二页信息
         if (!"".equals(id) && !"".equals(secondPage.getApplySubject()))
         {
-            //设置json传送到数据库中   设置专家称号的字符串
-            secondPage.setExpertTitlesJson(JSON.toJSONString(secondPage.getExpertTitles()));
-            // 设置学术团体、任何种职务，有何社会兼职的字符串
-            secondPage.setGroupsOrPartTimeJobsJson(JSON.toJSONString(secondPage.getGroupsOrPartTimeJobsJson()));
+            if (secondPage.getExpertTitles() == null){
+                secondPage.setExpertTitlesJson("[]");
+            }
+            else {
+                //设置json传送到数据库中   设置专家称号的字符串
+                secondPage.setExpertTitlesJson(JSON.toJSONString(secondPage.getExpertTitles()));
+            }
+
+            if (secondPage.getGroupsOrPartTimeJobs() == null){
+                secondPage.setGroupsOrPartTimeJobsJson("[]");
+            }
+            else{
+                // 设置学术团体、任何种职务，有何社会兼职的字符串
+                secondPage.setGroupsOrPartTimeJobsJson(JSON.toJSONString(secondPage.getGroupsOrPartTimeJobs()));
+            }
+
             // 分别设置一级学科代码和名称  doctoralMasterSubjectCodeName=0818 地质资源与地质工程,
             secondPage.setDoctoralMasterSubjectCode(secondPage.getDoctoralMasterSubjectCodeName().split(" ")[0]);
             //名称
-            secondPage.setDoctoralMasterSubjectName(secondPage.getDoctoralMasterSubjectCodeName().split("")[1]);
+            secondPage.setDoctoralMasterSubjectName(secondPage.getDoctoralMasterSubjectCodeName().split(" ")[1]);
             //更新学科信息
             mainBoardService.updateApplySubject(id, Integer.parseInt(secondPage.getApplySubject()));
-            // 更新第二页信息
+            //更新第二页信息
             tutorInspectService.updateTutorInspectSecond(id, secondPage);
             //返回成功信息
             return new Result(ResultCode.SUCCESS);
