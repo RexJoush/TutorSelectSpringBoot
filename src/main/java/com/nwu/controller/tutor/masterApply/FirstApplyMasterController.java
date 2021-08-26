@@ -1,10 +1,13 @@
 package com.nwu.controller.tutor.masterApply;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.Apply;
 import com.nwu.entities.Organization;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.SecondPage;
+import com.nwu.entities.tutor.childSubject.ExpertTitle;
+import com.nwu.entities.tutor.childSubject.GroupsOrPartTimeJob;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.OrganizationService;
@@ -13,6 +16,8 @@ import com.nwu.service.tutor.common.MainBoardService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author Rex Joush
@@ -49,7 +54,12 @@ public class FirstApplyMasterController {
 
         // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
         if (applyCondition == 101) {
-            return new Result(ResultCode.SUCCESS);
+            int id = mainBoardService.getId(firstPage.getNumber(), 4, 0);
+            SecondPage secondPage = tutorInspectService.getTutorInspectSecond(id);
+            secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
+            secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
+            secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
+            return new Result(ResultCode.SUCCESS, secondPage);
         }
 
         // 首次申请，添加申请表
@@ -78,7 +88,13 @@ public class FirstApplyMasterController {
         // 插入数据库
         tutorInspectService.saveTutorInspectBaseInfo(firstPage);
 
-        return new Result(ResultCode.SUCCESS, apply.getId());
+        // 读取第二页信息
+        SecondPage secondPage = tutorInspectService.getTutorInspectSecond(apply.getId());
+        secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
+        secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
+        secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
+
+        return new Result(ResultCode.SUCCESS, secondPage);
 
     }
 
@@ -88,11 +104,25 @@ public class FirstApplyMasterController {
                              @RequestBody SecondPage secondPage){
 
         System.out.println(applyId);    // 申请类型
-        System.out.println(id); // 第一页添加的 id
+        System.out.println(id);         // 第一页添加的 id
 
         System.out.println(secondPage); // 第二页信息
 
+        // 设置学术团体、任何种职务，有何社会兼职的字符串
+        secondPage.setGroupsOrPartTimeJobsJson(JSON.toJSONString(secondPage.getGroupsOrPartTimeJobs()));
 
+        // 设置专家称号的字符串
+        secondPage.setExpertTitlesJson(JSON.toJSONString(secondPage.getExpertTitles()));
+
+        // 分别设置一级学科代码和名称
+        secondPage.setDoctoralMasterSubjectCode(secondPage.getDoctoralMasterSubjectCodeName().split(" ")[0]);
+        secondPage.setDoctoralMasterSubjectName(secondPage.getDoctoralMasterSubjectCodeName().split(" ")[1]);
+
+        // 更新第二页信息
+        tutorInspectService.updateTutorInspectSecond(id, secondPage);
+
+        // 更新第一页申请学科信息
+        mainBoardService.updateApplySubject(id, Integer.parseInt(secondPage.getApplySubject()));
 
         return new Result(ResultCode.SUCCESS);
     }
@@ -116,9 +146,9 @@ groupsOrPartTimeJobs=
         groups=1234,
         job=32435),
     GroupsOrPartTimeJob(
-    time=2021-02,
-    groups=2134,
-    job=32435)
+        time=2021-02,
+        groups=2134,
+        job=32435)
     ],
 expertTitles=
     [

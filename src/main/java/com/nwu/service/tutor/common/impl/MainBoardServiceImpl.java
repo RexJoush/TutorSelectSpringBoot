@@ -12,12 +12,7 @@ import javax.annotation.Resource;
 public class MainBoardServiceImpl implements MainBoardService {
 
     @Resource
-    TutorApplyMapper tutorApplyMapper;
-
-//    @Override
-//    public int getApplyByTutorIdService(String tutorId) {
-//        return tutorApplyMapper.getApplyByTutorId(tutorId);
-//    }
+    private TutorApplyMapper tutorApplyMapper;
 
     @Override
     public Apply getApplyInfoByTutorIdAndApplyId(String tutorId, Integer applyId) {
@@ -34,10 +29,16 @@ public class MainBoardServiceImpl implements MainBoardService {
         return tutorApplyMapper.saveApplyInfo(apply);
     }
 
-//    @Override
-//    public int getIdByTutorIdAndApplyId(String tutorId, Integer applyId) {
-//        return tutorApplyMapper.getIdByTutorIdAndApplyId(tutorId,applyId);
-//    }
+    @Override
+    public int updateApplySubject(int id, int applySubject) {
+        return tutorApplyMapper.updateApplySubject(id, applySubject);
+    }
+
+    @Override
+    public int getId(String tutorId, int applyId, int status) {
+        return tutorApplyMapper.getId(tutorId, applyId, status);
+    }
+
 
     @Override
     public int getApplyIdByTutorIdAndStatus(String tutorId, Integer status) {

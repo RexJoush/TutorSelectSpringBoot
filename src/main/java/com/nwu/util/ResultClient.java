@@ -50,8 +50,6 @@ public class ResultClient {
             HttpResponse result = httpClient.execute(method);
             HttpEntity ret = result.getEntity();
             // return EntityUtils.toString(ret);
-
-
             String dataInfo = EntityUtils.toString(ret);
             Object data = JSON.parseObject(dataInfo).get("data");
             JSONArray roWs = JSON.parseArray(JSON.parseObject(data.toString()).get("Rows").toString());
