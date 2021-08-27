@@ -1,6 +1,6 @@
 package com.nwu.mapper;
 
-import com.nwu.entities.AcademicPaper;
+import com.nwu.entities.ResearchProject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Anna
- * @since 2021-08-26
+ * @since 2021-08-27
  */
-public interface AcademicPaperMapper extends BaseMapper<AcademicPaper> {
+public interface ResearchProjectMapper extends BaseMapper<ResearchProject> {
 
 }

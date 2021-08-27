@@ -1,6 +1,6 @@
 package com.nwu.service.scientificResearchManager;
 
-import com.nwu.entities.AcademicPaper;
+import com.nwu.entities.ResearchProject;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author Anna
- * @since 2021-08-26
+ * @since 2021-08-27
  */
-public interface AcademicPaperService extends IService<AcademicPaper> {
+public interface ResearchProjectService extends IService<ResearchProject> {
 
 }
