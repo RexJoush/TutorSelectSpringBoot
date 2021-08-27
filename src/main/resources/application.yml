@@ -6,6 +6,7 @@ spring:
     username: tutor
     password: tutor123
 
+
   # 配置上传文件大小
   servlet:
     multipart:
@@ -21,8 +22,11 @@ mybatis:
   # 配置下划线自动转驼峰命名
   configuration:
     map-underscore-to-camel-case: true
+
 server:
   port: 8081
 logging:
   level:
-    com.nwu.mapper.common: debug
+    com.nwu.mapper: debug
+
+

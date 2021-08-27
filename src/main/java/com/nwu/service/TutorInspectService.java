@@ -3,7 +3,11 @@ package com.nwu.service;
 import com.nwu.entities.TutorInspect;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nwu.entities.tutor.FirstPage;
+
+import com.nwu.vo.QueryDepartmentSecretaryInit;
+
 import com.nwu.entities.tutor.SecondPage;
+
 import com.nwu.vo.TutorQuery;
 
 import java.util.List;
@@ -23,7 +27,7 @@ public interface TutorInspectService extends IService<TutorInspect> {
       * @param tutorQuery 查询条件
       * @return 信息列表
       */
-     List<TutorInspect> getTutorByQuery(TutorQuery tutorQuery);
+     List<QueryDepartmentSecretaryInit> getTutorByQuery(TutorQuery tutorQuery);
 
      /**
       * 更新第一页申请导师信息

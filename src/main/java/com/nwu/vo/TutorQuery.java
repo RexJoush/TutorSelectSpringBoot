@@ -31,7 +31,8 @@ public class TutorQuery {
     private String applyStatus;
     //申请状态码数组
     private List<String> applyStatuss;
-    public TutorQuery(int pageNum, int pageSize){
+
+    public TutorQuery(int pageNum, int pageSize) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }

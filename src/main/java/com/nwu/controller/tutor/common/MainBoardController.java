@@ -97,8 +97,6 @@ public class MainBoardController {
         ResultClient client = new ResultClient();
         // TeacherInfo teacherInfo = client.getDataInfo(tutorId);
         TeacherInfo teacherInfo = new TeacherInfo();
-
-
         teacherInfo.setXM("吴昊");
         teacherInfo.setSFZJH("420111197209287319");
         teacherInfo.setXB("男");
@@ -116,4 +114,6 @@ public class MainBoardController {
         }
         return new Result(ResultCode.SUCCESS, teacherInfo);
     }
+
+
 }
