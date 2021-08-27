@@ -4,7 +4,7 @@ package com.nwu.controller;
 import com.nwu.entities.Organization;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
-import com.nwu.service.impl.OrganizationServiceImpl;
+import com.nwu.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/organization")
 public class OrganizationController {
     @Autowired
-    private OrganizationServiceImpl organizationService;
+    private OrganizationService organizationService;
 
     @GetMapping("/getAll")
     public Result getOrganization() {
