@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dynamic
@@ -24,7 +24,7 @@ import java.io.Serializable;
 public class SystemTime implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId(value = "time_id",type = IdType.AUTO)
     private Integer timeId;
 
     private Integer organizationId;

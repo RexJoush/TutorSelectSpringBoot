@@ -102,6 +102,5 @@ public class QueryDepartmentSecretaryInit implements Serializable{
     private String inspectDescribe;     //申请状态码简称
     //负责院系表
     private String organizationName;
-    //总记录数
-    private int total;
+
 }
