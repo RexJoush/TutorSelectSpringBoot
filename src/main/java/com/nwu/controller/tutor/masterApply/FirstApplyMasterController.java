@@ -16,8 +16,6 @@ import com.nwu.service.tutor.common.MainBoardService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author Rex Joush
@@ -109,10 +107,18 @@ public class FirstApplyMasterController {
         System.out.println(secondPage); // 第二页信息
 
         // 设置学术团体、任何种职务，有何社会兼职的字符串
-        secondPage.setGroupsOrPartTimeJobsJson(JSON.toJSONString(secondPage.getGroupsOrPartTimeJobs()));
+        if (secondPage.getGroupsOrPartTimeJobs() != null) {
+            secondPage.setGroupsOrPartTimeJobsJson(JSON.toJSONString(secondPage.getGroupsOrPartTimeJobs()));
+        } else {
+            secondPage.setGroupsOrPartTimeJobsJson("[]");
+        }
 
         // 设置专家称号的字符串
-        secondPage.setExpertTitlesJson(JSON.toJSONString(secondPage.getExpertTitles()));
+        if (secondPage.getExpertTitles() != null) {
+            secondPage.setExpertTitlesJson(JSON.toJSONString(secondPage.getExpertTitles()));
+        } else {
+            secondPage.setExpertTitlesJson("[]");
+        }
 
         // 分别设置一级学科代码和名称
         secondPage.setDoctoralMasterSubjectCode(secondPage.getDoctoralMasterSubjectCodeName().split(" ")[0]);
