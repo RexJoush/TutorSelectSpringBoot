@@ -1,22 +1,24 @@
 package com.nwu;
 
-import com.nwu.entities.tutor.SecondPage;
-import com.nwu.mapper.TutorInspectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
 
 @SpringBootTest
 class TutorSelectSpringBootApplicationTests {
 
-    @Resource
-    private TutorInspectMapper tutorInspectMapper;
 
     @Test
     void contextLoads() {
-        SecondPage tutorInspectSecond = tutorInspectMapper.getTutorInspectSecond(66);
-        System.out.println(tutorInspectSecond);
+
+        File desktopDir = FileSystemView.getFileSystemView() .getHomeDirectory();
+
+        String desktopPath = desktopDir.getAbsolutePath();
+
+        System.out.println(desktopPath);
+
     }
 
 }
