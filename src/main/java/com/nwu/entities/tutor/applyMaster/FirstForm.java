@@ -1,4 +1,4 @@
-package com.nwu.entities.tutor.firstApplyMaster;
+package com.nwu.entities.tutor.applyMaster;
 
 /**
  * @author Rex Joush

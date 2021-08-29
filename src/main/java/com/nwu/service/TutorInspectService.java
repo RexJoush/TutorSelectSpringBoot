@@ -4,6 +4,7 @@ import com.nwu.entities.TutorInspect;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nwu.entities.tutor.FirstPage;
 
+import com.nwu.entities.tutor.ThirdPage;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 
 import com.nwu.entities.tutor.SecondPage;
@@ -14,7 +15,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author dynamic
@@ -22,32 +23,43 @@ import java.util.List;
  */
 public interface TutorInspectService extends IService<TutorInspect> {
 
-     /**
-      * 获取导师申请信息
-      * @param tutorQuery 查询条件
-      * @return 信息列表
-      */
-     List<QueryDepartmentSecretaryInit> getTutorByQuery(TutorQuery tutorQuery);
+    /**
+     * 获取导师申请信息
+     *
+     * @param tutorQuery 查询条件
+     * @return 信息列表
+     */
+    List<QueryDepartmentSecretaryInit> getTutorByQuery(TutorQuery tutorQuery);
 
-     /**
-      * 更新第一页申请导师信息
-      * @param firstPage 信息
-      * @return 修改条数
-      */
-     int saveTutorInspectBaseInfo(FirstPage firstPage);
+    /**
+     * 更新第一页申请导师信息
+     *
+     * @param firstPage 信息
+     * @return 修改条数
+     */
+    int saveTutorInspectBaseInfo(FirstPage firstPage);
 
-     /**
-      * 获取第二页的导师信息
-      * @param id tutor_inspect 表的主键
-      * @return 第二页信息
-      */
-     SecondPage getTutorInspectSecond(int id);
+    /**
+     * 获取第二页的导师信息
+     *
+     * @param id tutor_inspect 表的主键
+     * @return 第二页信息
+     */
+    SecondPage getTutorInspectSecond(int id);
 
-     /**
-      * 更新第二页的导师信息
-      * @param id tutor_inspect 表的主键
-      * @param secondPage 信息
-      * @return 修改条数
-      */
-     int updateTutorInspectSecond(int id, SecondPage secondPage);
+    /**
+     * 更新第二页的导师信息
+     *
+     * @param id         tutor_inspect 表的主键
+     * @param secondPage 信息
+     * @return 修改条数
+     */
+    int updateTutorInspectSecond(int id, SecondPage secondPage);
+
+    /**
+     * @param id
+     * @param thirdPage
+     * @return
+     */
+    // int updateTutorInspectThird(int id, ThirdPage thirdPage);
 }
