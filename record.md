@@ -41,3 +41,8 @@
 
 * 2021.08.25 **yl**
   * test
+
+* 2021.08.29 **Rex Joush**
+  * TeachAwards, ResearchProject, AcademicPaper, AcademicWorks 表的 id 字段改为自增
+  * 新建 Summary(汇总信息), InventionPatent(发明专利) 表
+  * 在 `service.scientificResearchManager(社科处管理员) ` 包下新建 InventionPatentService(发明专利服务类)

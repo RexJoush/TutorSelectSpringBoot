@@ -1,4 +1,4 @@
-package com.nwu.controller.tutor.masterApply;
+package com.nwu.controller.tutor.applyMaster;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -6,6 +6,7 @@ import com.nwu.entities.Apply;
 import com.nwu.entities.Organization;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.SecondPage;
+import com.nwu.entities.tutor.ThirdPage;
 import com.nwu.entities.tutor.childSubject.ExpertTitle;
 import com.nwu.entities.tutor.childSubject.GroupsOrPartTimeJob;
 import com.nwu.results.Result;
@@ -13,6 +14,8 @@ import com.nwu.results.ResultCode;
 import com.nwu.service.OrganizationService;
 import com.nwu.service.TutorInspectService;
 import com.nwu.service.tutor.common.MainBoardService;
+import com.nwu.service.tutor.common.SecondService;
+import com.nwu.service.tutor.common.ThirdService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,6 +32,8 @@ import javax.annotation.Resource;
 @RequestMapping("/tutor/firstApplyMaster")
 public class FirstApplyMasterController {
 
+    public final String tutorId = "20133220";
+
     @Resource
     private MainBoardService mainBoardService;
 
@@ -38,17 +43,24 @@ public class FirstApplyMasterController {
     @Resource
     private OrganizationService organizationService;
 
+    @Resource
+    private SecondService secondService;
+
+    @Resource
+    private ThirdService thirdService;
+
     /**
      * 第一页信息的提交
-     * @param applyId           申请类型 id
-     * @param applyCondition    当前申请的状态
-     * @param firstPage         基本信息
-     * @return  结果
+     *
+     * @param applyId        申请类型 id
+     * @param applyCondition 当前申请的状态
+     * @param firstPage      基本信息
+     * @return 结果
      */
     @PostMapping("/first/{applyId}/{applyCondition}")
     public Result firstPage(@PathVariable("applyId") int applyId,
                             @PathVariable("applyCondition") int applyCondition,
-                            @RequestBody FirstPage firstPage){
+                            @RequestBody FirstPage firstPage) {
 
         // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
         if (applyCondition == 101) {
@@ -74,7 +86,7 @@ public class FirstApplyMasterController {
         firstPage.setTutorId(String.valueOf(apply.getId()));
         System.out.println(firstPage);
 
-        QueryWrapper<Organization> queryWrapper = new QueryWrapper();
+        QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("organization_name", firstPage.getOrganizationName());
         Organization one = organizationService.getOne(queryWrapper);
 
@@ -96,76 +108,61 @@ public class FirstApplyMasterController {
 
     }
 
+    /**
+     * 第二页信息的提交
+     *
+     * @param applyId       申请类型 id
+     * @param id            第一页添加的 apply 表的 id 值
+     * @param secondPage    基本信息
+     * @return 结果
+     */
     @PostMapping("/second/{applyId}/{id}")
     public Result secondPage(@PathVariable("applyId") int applyId,
                              @PathVariable("id") int id,
-                             @RequestBody SecondPage secondPage){
+                             @RequestBody SecondPage secondPage) {
 
         System.out.println(applyId);    // 申请类型
         System.out.println(id);         // 第一页添加的 id
 
-        System.out.println(secondPage); // 第二页信息
-
-        // 设置学术团体、任何种职务，有何社会兼职的字符串
-        if (secondPage.getGroupsOrPartTimeJobs() != null) {
-            secondPage.setGroupsOrPartTimeJobsJson(JSON.toJSONString(secondPage.getGroupsOrPartTimeJobs()));
-        } else {
-            secondPage.setGroupsOrPartTimeJobsJson("[]");
+        // 保存或更新第二页信息
+        try {
+            secondService.updateOrSaveSecond(id, tutorId, secondPage);
+        } catch (Exception e) {
+            // 出现异常
+            return new Result(ResultCode.FAIL, "1201");
         }
 
-        // 设置专家称号的字符串
-        if (secondPage.getExpertTitles() != null) {
-            secondPage.setExpertTitlesJson(JSON.toJSONString(secondPage.getExpertTitles()));
-        } else {
-            secondPage.setExpertTitlesJson("[]");
+        // 获取第三页信息并返回
+        ThirdPage thirdPage = thirdService.getThirdPage(id, tutorId);
+
+        return new Result(ResultCode.SUCCESS, thirdPage);
+    }
+
+    /**
+     * 第三页信息的提交
+     *
+     * @param id        第一页添加的 apply 表的 id 值
+     * @param thirdPage 基本信息
+     * @return 结果
+     */
+    @PostMapping("/third/{id}")
+    public Result thirdPage(@PathVariable("id") int id,
+                            @RequestBody ThirdPage thirdPage) {
+
+        System.out.println(id); // 第一页的 apply 表 id
+
+        // 存储第三页信息
+        try {
+            thirdService.updateOrSaveThirdPage(id, tutorId, thirdPage);
+        } catch (Exception e) {
+            // 出现异常
+            e.printStackTrace();
+            return new Result(ResultCode.FAIL, "1201");
         }
 
-        // 分别设置一级学科代码和名称
-        secondPage.setDoctoralMasterSubjectCode(secondPage.getDoctoralMasterSubjectCodeName().split(" ")[0]);
-        secondPage.setDoctoralMasterSubjectName(secondPage.getDoctoralMasterSubjectCodeName().split(" ")[1]);
-
-        // 更新第二页信息
-        tutorInspectService.updateTutorInspectSecond(id, secondPage);
-
-        // 更新第一页申请学科信息
-        mainBoardService.updateApplySubject(id, Integer.parseInt(secondPage.getApplySubject()));
-
+        // 返回第三页插入成功
         return new Result(ResultCode.SUCCESS);
+
     }
 
 }
-
-/*
-SecondPage(
-applySubject=1,
-doctoralMasterApplicationSubjectUnit=地质学系,
-doctoralMasterSubjectCodeName=0818 地质资源与地质工程,
-major=12345676879876543,
-groupsOrPartTimeJobs=
-    [
-    GroupsOrPartTimeJob(
-        time=2021-03,
-        groups=12324354,
-        job=324354),
-    GroupsOrPartTimeJob(
-        time=2021-02,
-        groups=1234,
-        job=32435),
-    GroupsOrPartTimeJob(
-        time=2021-02,
-        groups=2134,
-        job=32435)
-    ],
-expertTitles=
-    [
-    ExpertTitle(
-        time=2021-02,
-        title=2345),
-    ExpertTitle(
-        time=2021-02,
-        title=213454)
-    ]
-)
-
-
- */

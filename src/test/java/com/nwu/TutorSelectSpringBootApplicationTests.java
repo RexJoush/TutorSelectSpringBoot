@@ -1,23 +1,24 @@
 package com.nwu;
 
+import com.alibaba.fastjson.JSON;
+import com.nwu.entities.tutor.ThirdPage;
+import com.nwu.service.tutor.common.ThirdService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.swing.filechooser.FileSystemView;
-import java.io.File;
+import javax.annotation.Resource;
 
 @SpringBootTest
 class TutorSelectSpringBootApplicationTests {
 
+    @Resource
+    private ThirdService thirdService;
 
     @Test
     void contextLoads() {
 
-        File desktopDir = FileSystemView.getFileSystemView() .getHomeDirectory();
-
-        String desktopPath = desktopDir.getAbsolutePath();
-
-        System.out.println(desktopPath);
+        ThirdPage thirdPage = thirdService.getThirdPage(66, "20133220");
+        System.out.println(JSON.toJSONString(thirdPage));
 
     }
 

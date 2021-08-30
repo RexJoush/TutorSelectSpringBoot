@@ -1,4 +1,4 @@
-package com.nwu.service.tutor.masterApply;
+package com.nwu.service.tutor.applyMaster;
 
 /**
  * @author Rex Joush
