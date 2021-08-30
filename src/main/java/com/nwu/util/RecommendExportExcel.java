@@ -7,7 +7,10 @@ import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.alibaba.excel.write.style.column.SimpleColumnWidthStyleStrategy;
 import com.google.common.collect.Lists;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -109,7 +112,11 @@ public class RecommendExportExcel {
                             queryDepartmentSecretaryInit.getTitle(), //职称
                             //TODO 申请学科或类别及代码需要进行判断和拼接
                             queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别及代码
-                            queryDepartmentSecretaryInit.getApplyName() //导师上岗类别
+                            queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
+                            null,
+                            null,
+                            null,
+                            null
                     )
             );
         }
@@ -121,14 +128,37 @@ public class RecommendExportExcel {
         //背景
         headWriteCellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
         WriteFont headWriteFont = new WriteFont();
-        headWriteFont.setFontHeightInPoints((short) 10);
+        headWriteFont.setFontHeightInPoints((short) 12);
         headWriteCellStyle.setWriteFont(headWriteFont);
 
         //设置内容策略
         WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
+        // 设置自动换行
+        contentWriteCellStyle.setWrapped(true);
+        //设置 垂直居中
+        contentWriteCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+//        //设置 水平居中
+        contentWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        // 设置底边框;
+        contentWriteCellStyle.setBorderBottom(BorderStyle.THIN);
+        // 设置底边框颜色;
+        contentWriteCellStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        // 设置左边框;
+        contentWriteCellStyle.setBorderLeft(BorderStyle.THIN);
+        // 设置左边框颜色;
+        contentWriteCellStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+        // 设置右边框;
+        contentWriteCellStyle.setBorderRight(BorderStyle.THIN);
+        // 设置右边框颜色;
+        contentWriteCellStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+        // 设置顶边框;
+        contentWriteCellStyle.setBorderTop(BorderStyle.THIN);
+        // 设置顶边框颜色;
+        contentWriteCellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+
         //字体
 //        WriteFont contentWriteFont = new WriteFont();
-//        contentWriteFont.setFontHeightInPoints((short)20);
+//        contentWriteFont.setFontHeightInPoints((short)10);
         this.horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
     }
 }
