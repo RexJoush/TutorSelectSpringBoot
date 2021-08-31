@@ -77,7 +77,7 @@ public class MainBoardController {
 
         if (!"".equals(tutorId)) {
             // 根据 tutorId 和 applyId 和 status 查询是否申请过
-            Apply apply = mainBoardService.getApplyByTutorIdAndApplyIdAndStatus(tutorId, applyId);
+            Apply apply = mainBoardService.getApplyByTutorIdAndApplyTypeIdAndStatus(tutorId, applyId);
             if (apply != null) {
                 // 申请过此岗位
                 return new Result(ResultCode.SUCCESS, "100");

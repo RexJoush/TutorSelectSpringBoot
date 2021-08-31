@@ -23,7 +23,7 @@ public class SecondServiceImpl implements SecondService {
     MainBoardService mainBoardService;
 
     @Override
-    public void updateOrSaveSecond(int id, String tutorId, SecondPage secondPage) {
+    public void updateOrSaveSecond(int applyId, String tutorId, SecondPage secondPage) {
 
         // 设置学术团体、任何种职务，有何社会兼职的字符串
         if (secondPage.getGroupsOrPartTimeJobs() != null) {
@@ -46,9 +46,9 @@ public class SecondServiceImpl implements SecondService {
 
         try {
             // 更新第二页信息
-            tutorInspectService.updateTutorInspectSecond(id, secondPage);
+            tutorInspectService.updateTutorInspectSecond(applyId, secondPage);
             // 更新第一页申请学科信息
-            mainBoardService.updateApplySubject(id, Integer.parseInt(secondPage.getApplySubject()));
+            mainBoardService.updateApplySubject(applyId, Integer.parseInt(secondPage.getApplySubject()));
         } catch (Exception e) {
             throw new RuntimeException("信息填写出错，请重新尝试");
         }

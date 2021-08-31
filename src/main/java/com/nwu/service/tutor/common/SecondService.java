@@ -14,10 +14,10 @@ public interface SecondService {
 
     /**
      * 更新或保存第二页的信息
-     * @param id         第一页的申请表 id
+     * @param applyId    第一页的申请表 id
      * @param tutorId    教师工号
      * @param secondPage 第二页的信息
      */
-    void updateOrSaveSecond(int id, String tutorId, SecondPage secondPage);
+    void updateOrSaveSecond(int applyId, String tutorId, SecondPage secondPage);
 
 }

@@ -19,9 +19,9 @@ public interface FourthService {
 
     /**
      * 保存第四页的信息
-     * @param id 第一页的申请表 id
+     * @param applyId 第一页的申请表 id
      * @param tutorId 教师工号
      * @param fourthPage 第四页信息
      */
-    void updateOrSaveFourthPage(int id, String tutorId, FourthPage fourthPage);
+    void updateOrSaveFourthPage(int applyId, String tutorId, FourthPage fourthPage);
 }

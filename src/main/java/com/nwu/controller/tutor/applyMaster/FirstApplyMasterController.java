@@ -67,7 +67,7 @@ public class FirstApplyMasterController {
 
         // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
         if (applyCondition == 101) {
-            int id = mainBoardService.getId(firstPage.getNumber(), 4, 0);
+            int id = mainBoardService.getApplyId(firstPage.getTutorId(), 4, 0);
             SecondPage secondPage = tutorInspectService.getTutorInspectSecond(id);
             secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
             secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
@@ -76,7 +76,7 @@ public class FirstApplyMasterController {
         }
 
         // 首次申请，添加申请表
-        String tutorId = firstPage.getNumber();
+        String tutorId = firstPage.getTutorId();
         System.out.println(applyTypeId);
         System.out.println(applyCondition);
         System.out.println(firstPage);
@@ -127,18 +127,18 @@ public class FirstApplyMasterController {
      * 第二页信息的提交
      *
      * @param applyTypeId   申请类型 id
-     * @param id            第一页添加的 apply 表的 id 值
+     * @param applyId       第一页添加的 apply 表的 id 值
      * @param secondPage    基本信息
      * @return 结果
      */
-    @PostMapping("/second/{applyTypeId}/{id}/{applyCondition}")
+    @PostMapping("/second/{applyTypeId}/{applyId}/{applyCondition}")
     public Result secondPage(@PathVariable("applyTypeId") int applyTypeId,
-                             @PathVariable("id") int id,
+                             @PathVariable("applyId") int applyId,
                              @PathVariable("applyCondition") int applyCondition,
                              @RequestBody SecondPage secondPage) {
 
         System.out.println(applyTypeId);    // 申请类型
-        System.out.println(id);         // 第一页添加的 id
+        System.out.println(applyId);         // 第一页添加的 id
 
         // 没有申请过此岗位，直接返回，填写新值
         if (applyCondition == 102) {
@@ -147,7 +147,7 @@ public class FirstApplyMasterController {
 
         // 保存或更新第二页信息
         try {
-            secondService.updateOrSaveSecond(id, tutorId, secondPage);
+            secondService.updateOrSaveSecond(applyId, tutorId, secondPage);
         } catch (Exception e) {
             // 出现异常
             JSONObject jsonObject = new JSONObject();
@@ -158,7 +158,7 @@ public class FirstApplyMasterController {
         }
 
         // 获取第三页信息并返回
-        ThirdPage thirdPage = thirdService.getThirdPage(id, tutorId);
+        ThirdPage thirdPage = thirdService.getThirdPage(applyId, tutorId);
 
         return new Result(ResultCode.SUCCESS, thirdPage);
     }
@@ -166,16 +166,16 @@ public class FirstApplyMasterController {
     /**
      * 第三页信息的提交
      *
-     * @param id        第一页添加的 apply 表的 id 值
+     * @param applyId        第一页添加的 apply 表的 id 值
      * @param thirdPage 基本信息
      * @return 结果
      */
-    @PostMapping("/third/{id}/{applyCondition}")
-    public Result thirdPage(@PathVariable("id") int id,
+    @PostMapping("/third/{applyId}/{applyCondition}")
+    public Result thirdPage(@PathVariable("applyId") int applyId,
                             @PathVariable("applyCondition") int applyCondition,
                             @RequestBody ThirdPage thirdPage) {
 
-        System.out.println(id); // 第一页的 apply 表 id
+        System.out.println(applyId); // 第一页的 apply 表 id
 
         // 没有申请过此岗位，直接返回，填写新值
         FourthPage fourthPage = new FourthPage();
@@ -185,7 +185,7 @@ public class FirstApplyMasterController {
 
         // 存储第三页信息
         try {
-            thirdService.updateOrSaveThirdPage(id, tutorId, thirdPage);
+            thirdService.updateOrSaveThirdPage(applyId, tutorId, thirdPage);
         } catch (Exception e) {
             // 出现异常
             JSONObject jsonObject = new JSONObject();
@@ -196,7 +196,7 @@ public class FirstApplyMasterController {
         }
 
         // 获取第四页
-        fourthPage = fourthService.getFourthPage(id, tutorId);
+        fourthPage = fourthService.getFourthPage(applyId, tutorId);
 
         // 返回第三页插入成功，且包含第四页信息
         return new Result(ResultCode.SUCCESS, fourthPage);
@@ -206,19 +206,19 @@ public class FirstApplyMasterController {
     /**
      * 第四页信息的提交
      *
-     * @param id         第一页添加的 apply 表的 id 值
+     * @param applyId         第一页添加的 apply 表的 id 值
      * @param fourthPage 基本信息
      * @return 结果
      */
-    @PostMapping("/fourth/{id}")
-    public Result fourthPage(@PathVariable("id") int id,
+    @PostMapping("/fourth/{applyId}")
+    public Result fourthPage(@PathVariable("applyId") int applyId,
                              @RequestBody FourthPage fourthPage) {
 
-        System.out.println(id); // 第一页的 apply 表 id
+        System.out.println(applyId); // 第一页的 apply 表 id
         System.out.println(fourthPage);
         // 存储第四页信息
         try {
-            fourthService.updateOrSaveFourthPage(id, tutorId, fourthPage);
+            fourthService.updateOrSaveFourthPage(applyId, tutorId, fourthPage);
         } catch (Exception e) {
             // 出现异常
             JSONObject jsonObject = new JSONObject();
@@ -229,7 +229,7 @@ public class FirstApplyMasterController {
         }
 
         // 修改 apply 表
-        applyService.updateApplyStatus(id, 10, "");
+        applyService.updateApplyStatus(applyId, 10, "");
 
         // 返回第四页插入成功，且包含第四页信息
         return new Result(ResultCode.SUCCESS, 1200);

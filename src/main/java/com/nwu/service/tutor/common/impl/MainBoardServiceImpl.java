@@ -15,13 +15,13 @@ public class MainBoardServiceImpl implements MainBoardService {
     private TutorApplyMapper tutorApplyMapper;
 
     @Override
-    public Apply getApplyInfoByTutorIdAndApplyId(String tutorId, Integer applyId) {
-        return tutorApplyMapper.getApplyInfoByTutorIdAndApplyId(tutorId, applyId);
+    public Apply getApplyInfoByTutorIdAndApplyId(String tutorId, Integer applyTypeId) {
+        return tutorApplyMapper.getApplyInfoByTutorIdAndApplyTypeId(tutorId, applyTypeId);
     }
 
     @Override
-    public Apply getApplyByTutorIdAndApplyIdAndStatus(String tutorId, Integer applyId) {
-        return tutorApplyMapper.getApplyByTutorIdAndApplyIdAndStatus(tutorId, applyId);
+    public Apply getApplyByTutorIdAndApplyTypeIdAndStatus(String tutorId, Integer applyTypeId) {
+        return tutorApplyMapper.getApplyByTutorIdAndApplyTypeIdAndStatus(tutorId, applyTypeId);
     }
 
     @Override
@@ -35,8 +35,8 @@ public class MainBoardServiceImpl implements MainBoardService {
     }
 
     @Override
-    public int getId(String tutorId, int applyId, int status) {
-        return tutorApplyMapper.getId(tutorId, applyId, status);
+    public int getApplyId(String tutorId, int applyTypeId, int status) {
+        return tutorApplyMapper.getApplyId(tutorId, applyTypeId, status);
     }
 
 

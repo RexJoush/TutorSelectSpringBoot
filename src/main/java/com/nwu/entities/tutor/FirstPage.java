@@ -19,11 +19,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FirstPage {
 
-    @TableId(value = "tutor_id", type = IdType.ID_WORKER)
-    private String tutorId;
+    @TableId(value = "apply_id", type = IdType.ID_WORKER)
+    private String applyId;
 
     // 工号
-    private String number;
+    private String tutorId;
 
     // 姓名
     private String name;

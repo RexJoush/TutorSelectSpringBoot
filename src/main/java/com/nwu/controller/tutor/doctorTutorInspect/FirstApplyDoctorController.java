@@ -84,7 +84,7 @@ public class FirstApplyDoctorController {
         } else if (applyCondition == 101) {
             // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
             //根据填写信息查询出对应的主键id
-            int id = mainBoardService.getId(firstPage.getNumber(), 1, 0);
+            int id = mainBoardService.getApplyId(firstPage.getTutorId(), 1, 0);
             //返回给前端第二页的数据
             SecondPage secondPage = tutorInspectService.getTutorInspectSecond(id);
             System.out.println(secondPage);
