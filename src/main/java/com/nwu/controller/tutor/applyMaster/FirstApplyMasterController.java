@@ -67,8 +67,8 @@ public class FirstApplyMasterController {
 
         // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
         if (applyCondition == 101) {
-            int id = mainBoardService.getApplyId(firstPage.getTutorId(), 4, 0);
-            SecondPage secondPage = tutorInspectService.getTutorInspectSecond(id);
+            int applyId = mainBoardService.getApplyId(firstPage.getTutorId(), 4, 0);
+            SecondPage secondPage = tutorInspectService.getTutorInspectSecond(applyId);
             secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
             secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
             secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
@@ -166,7 +166,7 @@ public class FirstApplyMasterController {
     /**
      * 第三页信息的提交
      *
-     * @param applyId        第一页添加的 apply 表的 id 值
+     * @param applyId   第一页添加的 apply 表的 id 值
      * @param thirdPage 基本信息
      * @return 结果
      */
@@ -206,7 +206,7 @@ public class FirstApplyMasterController {
     /**
      * 第四页信息的提交
      *
-     * @param applyId         第一页添加的 apply 表的 id 值
+     * @param applyId    第一页添加的 apply 表的 id 值
      * @param fourthPage 基本信息
      * @return 结果
      */
