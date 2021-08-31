@@ -50,3 +50,9 @@
 * 2021.08.30 **Rex Joush**
   * guiding_student, course_teaching 表的 id 字段改为自增
   * 新建 GuidingStudent(指导学生), CourseTeaching(研究生课程教学情况) 实体
+
+* 2021.08.31 **Rex Joush**
+  * apply 表 id 字段改完 apply_id, apply_id 改完 apply_type_id
+  * apply_type 表 apply_id 字段改为 apply_type_id
+  * tutor_inspect, tutor_no_inspect 表 tutor_id 改完 apply_id, number 改为 tutor_id
+  * system_user 表 number 改为 tutor_id

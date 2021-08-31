@@ -66,7 +66,7 @@ public class FirstApplyDoctorController {
             apply.setApplyId(applyId);
             mainBoardService.saveApplyInfo(apply);
             //得到基本信息表要添加的主键id
-            firstPage.setTutorId(String.valueOf(apply.getId()));
+            firstPage.setTutorId(String.valueOf(apply.getApplyId()));
             //添加教师基本表
             QueryWrapper<Organization> queryWrapper = new QueryWrapper();
             queryWrapper.eq("organization_name", firstPage.getOrganizationName());
@@ -79,7 +79,7 @@ public class FirstApplyDoctorController {
             // 插入数据库
             tutorInspectService.saveTutorInspectBaseInfo(firstPage);
 
-            return new Result(ResultCode.SUCCESS, apply.getId());
+            return new Result(ResultCode.SUCCESS, apply.getApplyId());
 
         } else if (applyCondition == 101) {
             // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回

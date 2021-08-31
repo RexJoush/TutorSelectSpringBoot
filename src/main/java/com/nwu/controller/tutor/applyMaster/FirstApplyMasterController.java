@@ -55,13 +55,13 @@ public class FirstApplyMasterController {
     /**
      * 第一页信息的提交
      *
-     * @param applyId        申请类型 id
+     * @param applyTypeId    申请类型 id
      * @param applyCondition 当前申请的状态
      * @param firstPage      基本信息
      * @return 结果
      */
-    @PostMapping("/first/{applyId}/{applyCondition}")
-    public Result firstPage(@PathVariable("applyId") int applyId,
+    @PostMapping("/first/{applyTypeId}/{applyCondition}")
+    public Result firstPage(@PathVariable("applyTypeId") int applyTypeId,
                             @PathVariable("applyCondition") int applyCondition,
                             @RequestBody FirstPage firstPage) {
 
@@ -77,16 +77,16 @@ public class FirstApplyMasterController {
 
         // 首次申请，添加申请表
         String tutorId = firstPage.getNumber();
-        System.out.println(applyId);
+        System.out.println(applyTypeId);
         System.out.println(applyCondition);
         System.out.println(firstPage);
 
         // 添加申请表
-        Apply apply = new Apply(0, tutorId, applyId, 0, 0, 0, "");
+        Apply apply = new Apply(0, tutorId, applyTypeId, 0, 0, 0, "");
         mainBoardService.saveApplyInfo(apply);
 
         // 添加信息表
-        firstPage.setTutorId(String.valueOf(apply.getId()));
+        firstPage.setTutorId(String.valueOf(apply.getApplyId()));
         System.out.println(firstPage);
 
         QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
@@ -108,7 +108,7 @@ public class FirstApplyMasterController {
             if (applyCondition == 102) {
                 secondPage = new SecondPage();
             } else {
-                secondPage = tutorInspectService.getTutorInspectSecond(apply.getId());
+                secondPage = tutorInspectService.getTutorInspectSecond(apply.getApplyId());
                 secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
                 secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
                 secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
@@ -126,18 +126,18 @@ public class FirstApplyMasterController {
     /**
      * 第二页信息的提交
      *
-     * @param applyId       申请类型 id
+     * @param applyTypeId   申请类型 id
      * @param id            第一页添加的 apply 表的 id 值
      * @param secondPage    基本信息
      * @return 结果
      */
-    @PostMapping("/second/{applyId}/{id}/{applyCondition}")
-    public Result secondPage(@PathVariable("applyId") int applyId,
+    @PostMapping("/second/{applyTypeId}/{id}/{applyCondition}")
+    public Result secondPage(@PathVariable("applyTypeId") int applyTypeId,
                              @PathVariable("id") int id,
                              @PathVariable("applyCondition") int applyCondition,
                              @RequestBody SecondPage secondPage) {
 
-        System.out.println(applyId);    // 申请类型
+        System.out.println(applyTypeId);    // 申请类型
         System.out.println(id);         // 第一页添加的 id
 
         // 没有申请过此岗位，直接返回，填写新值
@@ -212,7 +212,7 @@ public class FirstApplyMasterController {
      */
     @PostMapping("/fourth/{id}")
     public Result fourthPage(@PathVariable("id") int id,
-                            @RequestBody FourthPage fourthPage) {
+                             @RequestBody FourthPage fourthPage) {
 
         System.out.println(id); // 第一页的 apply 表 id
         System.out.println(fourthPage);

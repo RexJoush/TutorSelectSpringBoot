@@ -64,7 +64,7 @@ public class SystemUserController {
         if (list != null) {
             for (SystemUser systemUser : list) {
                 UserVo userVo = new UserVo();
-                userVo.setUserId(systemUser.getNumber());
+                userVo.setUserId(systemUser.getTutorId());
                 userVo.setUserName(systemUser.getUserName());
                 userVo.setUserRole(systemUser.getRoleName());
                 userVo.setStatus(systemUser.getStatus());
@@ -86,7 +86,7 @@ public class SystemUserController {
     public String saveUser(@RequestBody UserVo userVo) {
         SystemUser user = new SystemUser();
         user.setUserName(userVo.getUserName());
-        user.setNumber(userVo.getUserId());
+        user.setTutorId(userVo.getUserId());
         user.setRoleName(userVo.getUserRole());
         user.setCreateTime(TimeUtils.sdf.format(new Date()));
         user.setStatus(0);
@@ -103,7 +103,7 @@ public class SystemUserController {
     public String updateUserStatus(@RequestBody UserVo userVo) {
         SystemUser user = new SystemUser();
         user.setUserName(userVo.getUserName());
-        user.setNumber(userVo.getUserId());
+        user.setTutorId(userVo.getUserId());
         user.setRoleName(userVo.getUserRole());
         user.setCreateTime(userVo.getCreateTime());
         user.setStatus(userVo.getStatus());

@@ -3,6 +3,8 @@ package com.nwu.entities;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,13 +22,14 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="SystemUser对象", description="")
+@TableName("system_user")
+@ApiModel(value="SystemUser对象")
 public class SystemUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "学工号")
-    private String number;
+    private String tutorId;
     @ApiModelProperty(value = "用户姓名")
     private String userName;
     @ApiModelProperty(value = "角色名称")
