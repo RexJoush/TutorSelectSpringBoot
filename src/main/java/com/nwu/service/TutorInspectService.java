@@ -56,10 +56,4 @@ public interface TutorInspectService extends IService<TutorInspect> {
      */
     int updateTutorInspectSecond(int id, SecondPage secondPage);
 
-    /**
-     * @param id
-     * @param thirdPage
-     * @return
-     */
-    // int updateTutorInspectThird(int id, ThirdPage thirdPage);
 }

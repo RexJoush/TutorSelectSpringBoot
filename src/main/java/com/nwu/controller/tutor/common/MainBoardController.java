@@ -1,5 +1,6 @@
 package com.nwu.controller.tutor.common;
 
+import com.alibaba.fastjson.JSONObject;
 import com.nwu.entities.Apply;
 import com.nwu.entities.tutor.TeacherInfo;
 import com.nwu.results.Result;
@@ -110,7 +111,10 @@ public class MainBoardController {
 
         // 查不到教师信息
         if (teacherInfo == null){
-            return Result.FAIL();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code", 1201);
+            jsonObject.put("message", "您不在此系统中，请联系系统管理员");
+            return new Result(ResultCode.SUCCESS, jsonObject);
         }
         return new Result(ResultCode.SUCCESS, teacherInfo);
     }

@@ -40,91 +40,121 @@ public class ThirdServiceImpl implements ThirdService {
     public void updateOrSaveThirdPage(int applyId, String tutorId, ThirdPage thirdPage) {
 
         // 设置论文
-        if (thirdPage.getAcademicPapers() != null) {
-            for (AcademicPaper academicPaper : thirdPage.getAcademicPapers()) {
-                academicPaper.setApplyId(applyId);
-                academicPaper.setTutorId(tutorId);
-                academicPaperService.saveOrUpdate(academicPaper);
+        try {
+            if (thirdPage.getAcademicPapers() != null) {
+                for (AcademicPaper academicPaper : thirdPage.getAcademicPapers()) {
+                    academicPaper.setApplyId(applyId);
+                    academicPaper.setTutorId(tutorId);
+                    academicPaperService.saveOrUpdate(academicPaper);
+                }
             }
+        } catch (Exception e) {
+            throw new RuntimeException("论文信息填写错误，请检查" + "-" + e.getMessage());
         }
 
         // 设置科研项目
-        if (thirdPage.getResearchProjects() != null) {
-            for (ResearchProject researchProject : thirdPage.getResearchProjects()) {
-                researchProject.setApplyId(applyId);
-                researchProject.setTutorId(tutorId);
-                researchProjectService.saveOrUpdate(researchProject);
+        try {
+            if (thirdPage.getResearchProjects() != null) {
+                for (ResearchProject researchProject : thirdPage.getResearchProjects()) {
+                    researchProject.setApplyId(applyId);
+                    researchProject.setTutorId(tutorId);
+                    researchProjectService.saveOrUpdate(researchProject);
+                }
             }
+        } catch (Exception e) {
+            throw new RuntimeException("科研项目填写错误，请检查" + "-" + e.getMessage());
         }
 
         // 设置教材或学术著作
-        if (thirdPage.getAcademicWorks() != null) {
-            for (AcademicWorks academicWork : thirdPage.getAcademicWorks()) {
-                academicWork.setApplyId(applyId);
-                academicWork.setTutorId(tutorId);
-                academicWorksService.saveOrUpdate(academicWork);
+        try {
+            if (thirdPage.getAcademicWorks() != null) {
+                for (AcademicWorks academicWork : thirdPage.getAcademicWorks()) {
+                    academicWork.setApplyId(applyId);
+                    academicWork.setTutorId(tutorId);
+                    academicWorksService.saveOrUpdate(academicWork);
+                }
             }
+        } catch (Exception e) {
+            throw new RuntimeException("教材或学术著作填写错误，请检查" + "-" + e.getMessage());
         }
 
         // 设置科研教学奖励
-        if (thirdPage.getTeachingAwards() != null) {
-            for (TeachingAwards teachingAward : thirdPage.getTeachingAwards()) {
-                teachingAward.setApplyId(applyId);
-                teachingAward.setTutorId(tutorId);
-                System.out.println(teachingAward);
-                teachingAwardsService.saveOrUpdate(teachingAward);
+        try {
+            if (thirdPage.getTeachingAwards() != null) {
+                for (TeachingAwards teachingAward : thirdPage.getTeachingAwards()) {
+                    teachingAward.setApplyId(applyId);
+                    teachingAward.setTutorId(tutorId);
+                    System.out.println(teachingAward);
+                    teachingAwardsService.saveOrUpdate(teachingAward);
+                }
             }
+        } catch (Exception e) {
+            throw new RuntimeException("科研教学奖励填写错误，请检查" + "-" + e.getMessage());
         }
 
         // 设置发明专利
-        if (thirdPage.getInventionPatents() != null) {
-            for (InventionPatent inventionPatent : thirdPage.getInventionPatents()) {
-                inventionPatent.setApplyId(applyId);
-                inventionPatent.setTutorId(tutorId);
-                inventionPatentService.saveOrUpdate(inventionPatent);
+        try {
+            if (thirdPage.getInventionPatents() != null) {
+                for (InventionPatent inventionPatent : thirdPage.getInventionPatents()) {
+                    inventionPatent.setApplyId(applyId);
+                    inventionPatent.setTutorId(tutorId);
+                    inventionPatentService.saveOrUpdate(inventionPatent);
+                }
             }
+        } catch (Exception e) {
+            throw new RuntimeException("发明专利填写错误，请检查" + "-" + e.getMessage());
         }
 
         // 设置成果汇总
-        Summary summary = thirdPage.getSummary();
-        summary.setApplyId(applyId);
-        summary.setTutorId(tutorId);
-        summaryService.saveOrUpdate(summary);
+        try {
+            Summary summary = thirdPage.getSummary();
+            summary.setApplyId(applyId);
+            summary.setTutorId(tutorId);
+            summaryService.saveOrUpdate(summary);
+        } catch (Exception e) {
+            throw new RuntimeException("成果汇总填写错误，请检查" + "-" + e.getMessage());
+        }
 
     }
 
     @Override
     public ThirdPage getThirdPage(int applyId, String tutorId) {
+
         ThirdPage thirdPage = new ThirdPage();
 
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("apply_id", applyId);
         queryWrapper.eq("tutor_id", tutorId);
 
-        // 获取学术论文
-        List<AcademicPaper> academicPapers = academicPaperService.list(queryWrapper);
-        thirdPage.setAcademicPapers(academicPapers);
+        try {
+            // 获取学术论文
+            List<AcademicPaper> academicPapers = academicPaperService.list(queryWrapper);
+            thirdPage.setAcademicPapers(academicPapers);
 
-        // 获取科研项目
-        List<ResearchProject> researchProjects = researchProjectService.list(queryWrapper);
-        thirdPage.setResearchProjects(researchProjects);
+            // 获取科研项目
+            List<ResearchProject> researchProjects = researchProjectService.list(queryWrapper);
+            thirdPage.setResearchProjects(researchProjects);
 
-        // 获取教材或学术著作
-        List<AcademicWorks> academicWorks = academicWorksService.list(queryWrapper);
-        thirdPage.setAcademicWorks(academicWorks);
+            // 获取教材或学术著作
+            List<AcademicWorks> academicWorks = academicWorksService.list(queryWrapper);
+            thirdPage.setAcademicWorks(academicWorks);
 
-        // 获取科研教学奖励
-        List<TeachingAwards> teachingAwards = teachingAwardsService.list(queryWrapper);
-        thirdPage.setTeachingAwards(teachingAwards);
+            // 获取科研教学奖励
+            List<TeachingAwards> teachingAwards = teachingAwardsService.list(queryWrapper);
+            thirdPage.setTeachingAwards(teachingAwards);
 
-        // 获取发明专利
-        List<InventionPatent> inventionPatents = inventionPatentService.list(queryWrapper);
-        thirdPage.setInventionPatents(inventionPatents);
+            // 获取发明专利
+            List<InventionPatent> inventionPatents = inventionPatentService.list(queryWrapper);
+            thirdPage.setInventionPatents(inventionPatents);
 
-        // 获取汇总信息
-        Summary summary = summaryService.getOne(queryWrapper);
-        thirdPage.setSummary(summary);
+            // 获取汇总信息,需要用户手动点击汇总信息，所以不查询数据库
+            Summary summary = new Summary();
+            thirdPage.setSummary(summary);
 
+        } catch (Exception e) {
+            // 出现异常则返回空信息
+            return new ThirdPage();
+        }
         return thirdPage;
     }
 }
