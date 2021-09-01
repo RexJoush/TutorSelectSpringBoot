@@ -47,31 +47,4 @@
 
     </select>
 
-    <!--    <update id="updateTutorInspect" parameterType="com.nwu.entities.TutorInspect">-->
-    <!--        UPDATE tutor_inspect-->
-    <!--        SET `name`            = #{tutorInspect.name},-->
-    <!--            gender            = #{tutorInspect.gender},-->
-    <!--            image= #{tutorInspect.image},-->
-    <!--            organization_id= #{tutorInspect.organizationId},-->
-    <!--            birthday=#{tutorInspect.birthday},-->
-    <!--            `identity`        = #{tutorInspect.identity},-->
-    <!--            phone= #{tutorInspect.phone},-->
-    <!--            email=#{tutorInspect.email},-->
-    <!--            title=#{tutorInspect.title},-->
-    <!--            evaluate_time=#{tutorInspect.evaluateTime},-->
-    <!--            final_degree=#{tutorInspect.finalDegree},-->
-    <!--            awarding_unit_time=#{tutorInspect.awardingUnitTime}-->
-    <!--        WHERE tutor_id = #{tutorInspect.tutorId};-->
-    <!--    </update>-->
-
-    <insert id="saveTutorInspectBaseInfo" parameterType="com.nwu.entities.tutor.FirstPage">
-        INSERT INTO tutor_inspect
-        (tutor_id, number, name, gender, organization_id, birthday, identity, phone, email, title, evaluate_time,
-         final_degree, awarding_unit_time)
-        VALUES (#{firstPage.tutorId}, #{firstPage.number}, #{firstPage.name}, #{firstPage.gender},
-                #{firstPage.organizationId},
-                #{firstPage.birthday}, #{firstPage.identity}, #{firstPage.phone}, #{firstPage.email},
-                #{firstPage.title},
-                #{firstPage.evaluateTime}, #{firstPage.finalDegree}, #{firstPage.awardingUnitTime});
-    </insert>
 </mapper>

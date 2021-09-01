@@ -67,9 +67,9 @@
 
     <insert id="saveTutorInspectBaseInfo" parameterType="com.nwu.entities.TutorInspect">
         INSERT INTO tutor_inspect
-        (apply_id, tutor_id, `name`, gender, organization_id, birthday, identity, phone, email, title, evaluate_time,
+        (tutor_id, number, `name`, gender, organization_id, birthday, identity, phone, email, title, evaluate_time,
          final_degree, awarding_unit_time)
-        VALUES (#{tutorInspect.applyId}, #{tutorInspect.tutorId}, #{tutorInspect.name}, #{tutorInspect.gender},
+        VALUES (#{tutorInspect.tutorId}, #{tutorInspect.number}, #{tutorInspect.name}, #{tutorInspect.gender},
                 #{tutorInspect.organizationId},
                 #{tutorInspect.birthday}, #{tutorInspect.identity}, #{tutorInspect.phone}, #{tutorInspect.email},
                 #{tutorInspect.title},
@@ -77,7 +77,7 @@
     </insert>
 
     <select id="getTutorInspectSecond" resultMap="secondInfo">
-        SELECT a.apply_id,
+        SELECT a.id,
                subject,
                research_directions,
                academic_groups_jobs,
@@ -86,11 +86,11 @@
                doctoral_master_subject_code,
                doctoral_master_subject_name
         FROM apply a
-                 LEFT JOIN tutor_inspect t ON a.apply_id = t.apply_id
-        WHERE a.apply_id = #{applyId}
+                 LEFT JOIN tutor_inspect t ON a.id = t.tutor_id
+        WHERE a.id = #{id}
     </select>
     <resultMap id="secondInfo" type="com.nwu.entities.tutor.SecondPage">
-        <id property="applyId" column="apply_id"></id>
+        <id property="id" column="id"></id>
         <!--  非主键  -->
         <result property="applySubject" column="subject"></result>
         <result property="major" column="research_directions"></result>
@@ -110,6 +110,6 @@
             doctoral_master_application_subject_unit = #{secondPage.doctoralMasterApplicationSubjectUnit},
             doctoral_master_subject_code             = #{secondPage.doctoralMasterSubjectCode},
             doctoral_master_subject_name             = #{secondPage.doctoralMasterSubjectName}
-        WHERE apply_id = #{applyId}
+        WHERE tutor_id = #{id}
     </update>
 </mapper>

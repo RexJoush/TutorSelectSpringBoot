@@ -19,9 +19,4 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
         applyMapper.updateApplyStatus(id,status,commit);
         return 1;
     }
-
-    /*public int updateApplyStatus(Integer id,String number,Integer applyId,Integer status,String commit){
-        applyMapper.updateApplyStatus(id,number,applyId,status,commit);
-        return 1;
-    }*/
 }

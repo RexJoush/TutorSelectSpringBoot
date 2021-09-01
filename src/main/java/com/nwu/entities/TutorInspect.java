@@ -28,8 +28,8 @@ public class TutorInspect implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "apply_id", type = IdType.ID_WORKER)
-    private String applyId;
+//    @TableId(value = "apply_id", type = IdType.ID_WORKER)
+//    private String applyId;
 
     private String tutorId;
     // 姓名
