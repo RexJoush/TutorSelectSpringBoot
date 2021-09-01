@@ -6,6 +6,7 @@ import com.nwu.entities.Apply;
 import com.nwu.entities.Organization;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.SecondPage;
+import com.nwu.entities.tutor.ThirdPage;
 import com.nwu.entities.tutor.childSubject.ExpertTitle;
 import com.nwu.entities.tutor.childSubject.GroupsOrPartTimeJob;
 import com.nwu.results.Result;
@@ -54,6 +55,13 @@ public class FirstApplyDoctorController {
 
     public final String tutorId = "20133220";
 
+    /**
+     *
+     * @param firstPage
+     * @param applyId 申请类别id 博士首次申请 1
+     * @param applyCondition 申请状态 101 102 100
+     * @return firstPAGE 主键id
+     */
     @ApiOperation("保存博士基本信息和申请类别表")
     @PostMapping("/saveBaseInfo/{applyId}/{applyCondition}")
     public Result SaveOrUpdateApplyDoctor(@RequestBody FirstPage firstPage, @PathVariable("applyId") int applyId, @PathVariable("applyCondition") int applyCondition) {
@@ -96,7 +104,13 @@ public class FirstApplyDoctorController {
         return Result.FAIL();
     }
 
-
+    /**
+     *
+     * @param secondPage
+     * @param applyId 申请类别id 博士首次申请 1
+     * @param id apply中id主键值
+     * @return
+     */
     @ApiOperation("更新第二页博士基本信息")
     @PostMapping("updateSecondPage/{applyId}/{id}")
     public Result updateSecondPage(@RequestBody SecondPage secondPage, @PathVariable("applyId") Integer applyId, @PathVariable("id") Integer id) {
@@ -126,14 +140,42 @@ public class FirstApplyDoctorController {
             tutorInspectService.updateTutorInspectSecond(id, secondPage);
             //返回成功信息
             return new Result(ResultCode.SUCCESS);
-
         }
         //失败
         return Result.FAIL();
     }
 
-    //文件上传controller
+    /**
+     *
+     * @param thirdPage 第三页表单
+     * @param applyId 首次申请博士
+     * @param id apply表中的主键id
+     * @return
+     */
+    @ApiOperation("更新第三页博士信息")
+    @PostMapping("updateThirdPage/{applyId}/{id}")
+    public Result updateThirdPage(@RequestBody ThirdPage thirdPage,@PathVariable("applyId") int applyId,@PathVariable("id") int id){
+        //更新学术论文表 academic_paper
 
+        //1.查找是否有此申请对应的学术论文
+
+        //2.无对应的论文进行插入操作
+
+        //3.有对应的论文 先批量删除后重新插入
+        //判断academic_paper是否有对应的数据，有更新，无插入
+
+        //更新科研项目表
+
+        //教材或学术著作表
+
+        //科研教学奖励
+
+        //发明专利
+
+        //汇总生成表
+        return Result.FAIL();
+    }
+    //文件上传controller
     @ApiOperation("文件上传")
     @PostMapping("/upload/{typeId}")
     public Result uploadFile(@RequestParam("material") MultipartFile uploadFile, @PathVariable("typeId") Integer typeId, HttpServletRequest req) {
