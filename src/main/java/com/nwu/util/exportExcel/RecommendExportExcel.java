@@ -1,4 +1,4 @@
-package com.nwu.util;
+package com.nwu.util.exportExcel;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/*
- *  学位评定分委员会推荐汇总表
+/**
+ * 学位评定分委员会推荐汇总表
  */
 
 public class RecommendExportExcel {
@@ -35,6 +35,13 @@ public class RecommendExportExcel {
     private List<List<String>> headData;
     private String year;
 
+    /**
+     *构造函数
+     * @param response 请求头
+     * @param schoolName 学校名字
+     * @param departmentName 院系名称
+     * @param originList 原始数据
+     */
     public RecommendExportExcel(HttpServletResponse response,
                                 String schoolName,
                                 String departmentName,
@@ -48,6 +55,10 @@ public class RecommendExportExcel {
         this.originList = originList;
     }
 
+    /**
+     * 执行函数，写入excel
+     * @throws IOException
+     */
 
     public void execute() throws IOException {
 
@@ -62,6 +73,10 @@ public class RecommendExportExcel {
                 .sheet().doWrite(contentList);
     }
 
+    /**
+     * 浏览器默认下载位置
+     * @throws UnsupportedEncodingException
+     */
     private void setResponse() throws UnsupportedEncodingException {
 
         response.setContentType("application/vnd.ms-excel");
@@ -75,7 +90,11 @@ public class RecommendExportExcel {
     }
 
 
-    //表1的表头
+    /**
+     * 创建表头
+     * @param schoolName 学校名称
+     * @param departmentName 院系名称
+     */
     private void setHead(String schoolName, String departmentName) {
 
         //2、构造表头
@@ -99,7 +118,10 @@ public class RecommendExportExcel {
         this.headData = headTitles;
     }
 
-    //将数据库查出的符合前端规则的数据，转换成Excel表格的数据格式。
+    /**
+     * 将数据库查出的符合前端规则的数据，转换成Excel表格的数据格式
+     * @param list 数据库查出符合的数据列表
+     */
     public void exchangeData(List<QueryDepartmentSecretaryInit> list) {
         int i = 1;
         for (QueryDepartmentSecretaryInit queryDepartmentSecretaryInit : list) {
@@ -113,16 +135,15 @@ public class RecommendExportExcel {
                             //TODO 申请学科或类别及代码需要进行判断和拼接
                             queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别及代码
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
-                            null,
-                            null,
-                            null,
-                            null
+                            null, null, null, null
                     )
             );
         }
     }
 
-    //表的格式定义
+    /**
+     * 表的格式定义
+     */
     private void tableStyle() {
         WriteCellStyle headWriteCellStyle = new WriteCellStyle();
         //背景
