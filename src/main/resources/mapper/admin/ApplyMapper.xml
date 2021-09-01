@@ -14,6 +14,6 @@
 
         </set>
         where
-            applyId = #{id}
+            apply_id = #{id}
     </update>
 </mapper>

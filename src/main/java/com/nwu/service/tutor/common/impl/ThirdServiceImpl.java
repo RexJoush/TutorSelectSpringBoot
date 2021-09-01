@@ -3,12 +3,14 @@ package com.nwu.service.tutor.common.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.*;
 import com.nwu.entities.tutor.ThirdPage;
+import com.nwu.entities.tutor.childSubject.DeleteItem;
 import com.nwu.service.scientificResearchManager.*;
 import com.nwu.service.tutor.SummaryService;
 import com.nwu.service.tutor.common.ThirdService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,7 +51,7 @@ public class ThirdServiceImpl implements ThirdService {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("论文信息填写错误，请检查" + "-" + e.getMessage());
+            throw new RuntimeException("论文信息填写错误，请检查" + "!" + e.getMessage());
         }
 
         // 设置科研项目
@@ -62,7 +64,7 @@ public class ThirdServiceImpl implements ThirdService {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("科研项目填写错误，请检查" + "-" + e.getMessage());
+            throw new RuntimeException("科研项目填写错误，请检查" + "!" + e.getMessage());
         }
 
         // 设置教材或学术著作
@@ -75,7 +77,7 @@ public class ThirdServiceImpl implements ThirdService {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("教材或学术著作填写错误，请检查" + "-" + e.getMessage());
+            throw new RuntimeException("教材或学术著作填写错误，请检查" + "!" + e.getMessage());
         }
 
         // 设置科研教学奖励
@@ -89,7 +91,7 @@ public class ThirdServiceImpl implements ThirdService {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("科研教学奖励填写错误，请检查" + "-" + e.getMessage());
+            throw new RuntimeException("科研教学奖励填写错误，请检查" + "!" + e.getMessage());
         }
 
         // 设置发明专利
@@ -102,7 +104,7 @@ public class ThirdServiceImpl implements ThirdService {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("发明专利填写错误，请检查" + "-" + e.getMessage());
+            throw new RuntimeException("发明专利填写错误，请检查" + "!" + e.getMessage());
         }
 
         // 设置成果汇总
@@ -112,7 +114,47 @@ public class ThirdServiceImpl implements ThirdService {
             summary.setTutorId(tutorId);
             summaryService.saveOrUpdate(summary);
         } catch (Exception e) {
-            throw new RuntimeException("成果汇总填写错误，请检查" + "-" + e.getMessage());
+            throw new RuntimeException("成果汇总填写错误，请检查" + "!" + e.getMessage());
+        }
+
+        // 删除信息
+        if (thirdPage.getDeleteItems() != null) {
+            for (DeleteItem deleteItem : thirdPage.getDeleteItems()) {
+            /*
+                1, 论文
+                2, 科研项目
+                3, 教材或学术著作
+                4, 科研或教学奖励
+                5, 发明专利
+             */
+                // 删除对应的数据库信息
+                if (deleteItem.getDeleteId() != -1) {
+                    // 获取 id 值
+                    int id = deleteItem.getDeleteId();
+                    switch (deleteItem.getDeleteType()) {
+                        case 1:
+                            academicPaperService.removeById(id);
+                            break;
+                        case 2:
+                            researchProjectService.removeById(id);
+                            break;
+                        case 3:
+                            academicWorksService.removeById(id);
+                            break;
+                        case 4:
+                            teachingAwardsService.removeById(id);
+                            break;
+                        case 5:
+                            inventionPatentService.removeById(id);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                // 删除文件
+                // todo 删除文件
+                String path = deleteItem.getDeletePath();
+            }
         }
 
     }
@@ -148,8 +190,11 @@ public class ThirdServiceImpl implements ThirdService {
             thirdPage.setInventionPatents(inventionPatents);
 
             // 获取汇总信息,需要用户手动点击汇总信息，所以不查询数据库
-            Summary summary = new Summary();
+            Summary summary = summaryService.getOne(queryWrapper);
             thirdPage.setSummary(summary);
+
+            // 添加删除空列表
+            thirdPage.setDeleteItems(new ArrayList<>());
 
         } catch (Exception e) {
             // 出现异常则返回空信息

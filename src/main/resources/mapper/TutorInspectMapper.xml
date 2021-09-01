@@ -12,21 +12,21 @@
         t.*,
         a2.apply_name as applyName,
         a.status,
-        a.apply_id,
+        a.apply_type_id,
         a.commit,
         s.inspect_describe as inspectDescribe,
         o.organization_name as organizationName
         FROM `tutor_inspect` t,`apply` a, `organization` o, `status_code` s,`apply_type` a2
         WHERE
-        a.id = t.tutor_id
+        a.apply_id = t.apply_id
         AND a.status = s.code_id
         AND t.organization_id = o.organization_id
-        AND a.apply_id = a2.apply_id
+        AND a.apply_type_id = a2.apply_type_id
         <if test="userId !=null and userId.length >0 ">
             AND a.tutor_id = #{userId}
         </if>
         <if test="applyType !=null and applyType.length >0">
-            AND a.apply_id = #{applyType}
+            AND a.apply_type_id = #{applyType}
         </if>
         <if test="applyStatus !=null and applyStatus.length >0">
             AND a.status in

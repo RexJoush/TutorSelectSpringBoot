@@ -29,6 +29,6 @@ logging:
   level:
     com.nwu.mapper: debug
 
-
-
+#上传文件路径
+FilePath: E://RARZIP/uploadFile/
 

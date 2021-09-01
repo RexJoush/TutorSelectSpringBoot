@@ -63,6 +63,7 @@ public class FtpUtil {
 
 
     //参数传过来了文件和文件的输入流
+
 //    public boolean uploadFile(String originFileName, InputStream input) {
 //        boolean success = false;
 //        FTPClient ftp = new FTPClient();//这是最开始引入的依赖里的方法
@@ -99,6 +100,7 @@ public class FtpUtil {
 //        }
 //        return success;
 //    }
+
 //}
 
 }

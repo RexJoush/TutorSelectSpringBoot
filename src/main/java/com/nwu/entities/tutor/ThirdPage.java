@@ -6,6 +6,7 @@ package com.nwu.entities.tutor;
  */
 
 import com.nwu.entities.*;
+import com.nwu.entities.tutor.childSubject.DeleteItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,4 +38,7 @@ public class ThirdPage {
 
     // 总结信息
     private Summary summary;
+
+    // 删除信息列表
+    private List<DeleteItem> deleteItems;
 }
