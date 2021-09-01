@@ -14,10 +14,14 @@ import java.util.Date;
  */
 @Component
 public class UpLoadFile {
+
     private static String FilePath;
     @Value(value = "${FilePath}")
     public void setFilePath(String realpath) {
         FilePath = realpath;
+    }
+    public String getFilePath() {
+        return FilePath;
     }
     /**
      *
@@ -38,7 +42,7 @@ public class UpLoadFile {
         String newName=oldName.substring(0,oldName.lastIndexOf(".")) + time + oldName.substring(oldName.lastIndexOf("."),oldName.length());
 
         try{
-            uploadFile.transferTo(new File(file,oldName));
+            uploadFile.transferTo(new File(file,newName));
             //String filePath= req.getScheme()+"://"+ req.getServerName() +":"+req.getServerPort()+"/uploadFile/"+format+"/"+oldName;
             // http://localhost:8081/upfile/uploadFile/20133220/%E5%AD%A6%E6%9C%AF%E8%AE%BA%E6%96%87/%E5%AF%BC%E5%B8%88%E9%81%B4%E9%80%89.rar
             String filePath= req.getScheme()+"://"+ req.getServerName() +":"+req.getServerPort()+"/downFile/uploadFile/"+format+"/"+newName;
@@ -49,23 +53,5 @@ public class UpLoadFile {
         }
         return "";
     }
-    //http://localhost:8081/downFile/uploadFile/20133220/学术论文/社科类论文/导师遴选.rar
-    /**
-     * 删除文件
-     * @param path 路径中的文件
-     * @return ok err
-     */
-    public String delFile(String path){
-        String realPath= FilePath + path.substring(42, path.length() - 1);
-        File file = new File(realPath);
-        if (file.exists()){
-            file.delete();
-            return "ok";
-        }
-        else
-        {
-            return "err";
-        }
 
-    }
 }

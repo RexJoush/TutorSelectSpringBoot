@@ -6,6 +6,7 @@ import com.nwu.entities.Apply;
 import com.nwu.entities.tutor.TeacherInfo;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
+import com.nwu.service.tutor.common.DeleteFileService;
 import com.nwu.service.tutor.common.MainBoardService;
 import com.nwu.util.ResultClient;
 import com.nwu.util.UpLoadFile;
@@ -32,6 +33,9 @@ public class MainBoardController {
     // 申请表
     @Resource
     private MainBoardService mainBoardService;
+    //删除文件
+    @Resource
+    private DeleteFileService deleteFileService;
 
     /*
         判断是否第一次申请
@@ -194,14 +198,9 @@ public class MainBoardController {
     @ApiOperation("文件删除")
     @PostMapping("/delFile")
     public Result delFile(@RequestBody String httpPath) throws UnsupportedEncodingException {
-
-        if (!"".equals(httpPath)){
-            //有路径
-            UpLoadFile loadFile = new UpLoadFile();
-            String res = loadFile.delFile(URLDecoder.decode(httpPath, "UTF-8"));
-            if ("ok".equals(res)){
-                return Result.SUCCESS();
-            }
+        String s = deleteFileService.delFile(httpPath);
+        if ("ok".equals(s)){
+            return Result.SUCCESS();
         }
         return Result.FAIL();
     }
