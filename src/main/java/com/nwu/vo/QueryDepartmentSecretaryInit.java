@@ -14,6 +14,7 @@ public class QueryDepartmentSecretaryInit implements Serializable{
     private static final long serialVersionUID = 1L;
 
     //导师非免审申请表
+    private  String applyId;  //申请表的id
     private String tutorId;  //教师id
 
     private String number;  //教师工号

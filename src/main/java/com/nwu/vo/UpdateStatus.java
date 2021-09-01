@@ -7,7 +7,7 @@ import lombok.Data;
 */
 @Data
 public class UpdateStatus {
-    private int id_1;
+    private int id_1; //id
     private int status_1;     //修改后的状态
     private String commit_1;   //审核完带回的备注
 }
