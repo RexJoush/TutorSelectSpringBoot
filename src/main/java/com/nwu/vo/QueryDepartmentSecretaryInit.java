@@ -10,11 +10,12 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class QueryDepartmentSecretaryInit implements Serializable{
+public class QueryDepartmentSecretaryInit implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //导师非免审申请表
-    private  String applyId;  //申请表的id
+    private String applyId;  //申请表的id
+
     private String tutorId;  //教师id
 
     private String number;  //教师工号
@@ -106,7 +107,7 @@ public class QueryDepartmentSecretaryInit implements Serializable{
 
     /* 申请表部分 */
 
-//  private int tutorId; // 导师工号
+    //  private int tutorId; // 导师工号
     private int applyTypeId; // 申请的类别 id
     private int status; // 此申请的状态
     private String commit; //备注
