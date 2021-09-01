@@ -56,7 +56,7 @@ public class UpLoadFile {
      * @return ok err
      */
     public String delFile(String path){
-        String realPath= "E://RARZIP/uploadFile/"+path.substring(42, path.length() - 1);
+        String realPath= FilePath + path.substring(42, path.length() - 1);
         File file = new File(realPath);
         if (file.exists()){
             file.delete();
