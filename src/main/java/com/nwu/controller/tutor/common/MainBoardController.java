@@ -8,10 +8,16 @@ import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.tutor.common.MainBoardService;
 import com.nwu.util.ResultClient;
+import com.nwu.util.UpLoadFile;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
 
 /**
  * @author Rex Joush
@@ -122,5 +128,82 @@ public class MainBoardController {
         return new Result(ResultCode.SUCCESS, teacherInfo);
     }
 
+    /**
+     * 文件上传controller
+     * @param uploadFile
+     * @param typeId 上传文件类别 学术论文/科研奖励等  11=博士首次申请+学术论文 41=硕士首次申请+学术论文
+     * @param req
+     * @return  path路径
+     */
+    @ApiOperation("文件上传")
+    @PostMapping("/upload/{typeId}")
+    public Result uploadFile(@RequestParam("material") MultipartFile uploadFile, @PathVariable("typeId") Integer typeId, HttpServletRequest req) {
+        UpLoadFile loadFile = new UpLoadFile();
+        String typeName = "";
+        if (!"".equals(typeId)) {
+            switch (typeId) {
+                case 1: {
+                    typeName = typeName + "学术论文/社科类论文";
+                    break;
+                }
+                case 2: {
+                    typeName = typeName + "学术论文/理工类论文";
+                    break;
+                }
+                case 3: {
+                    typeName = typeName + "科研项目";
+                    break;
+                }
+                case 4: {
+                    typeName = typeName + "教材或学术著作";
+                    break;
+                }
+                case 5: {
+                    typeName = typeName + "科研教学奖励";
+                    break;
+                }
+                case 6: {
+                    typeName = typeName + "发明专利";
+                    break;
+                }
+                default: {
+                    return Result.FAIL();
+                }
+            }
+            String path = loadFile.upload(uploadFile, req, typeName, tutorId);
+            System.out.println(path);
+            if (!"".equals(path)) {
+                //路径不为空
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("fileType",typeId);
+                map.put("path",path);
+                return new Result(ResultCode.SUCCESS, map);
+            } else {   //路径为空
+                return Result.FAIL();
+            }
+        }
+        return Result.FAIL();
+    }
+
+    /**
+     * 文件删除
+     * @param httpPath
+     * @return  Result.SUCCESS();  .FAIL()
+     * @throws UnsupportedEncodingException
+     */
+    @ApiOperation("文件删除")
+    @PostMapping("/delFile")
+    public Result delFile(@RequestBody String httpPath) throws UnsupportedEncodingException {
+
+        if (!"".equals(httpPath)){
+            //有路径
+            UpLoadFile loadFile = new UpLoadFile();
+            String res = loadFile.delFile(URLDecoder.decode(httpPath, "UTF-8"));
+            if ("ok".equals(res)){
+                return Result.SUCCESS();
+            }
+        }
+        return Result.FAIL();
+    }
 
 }
