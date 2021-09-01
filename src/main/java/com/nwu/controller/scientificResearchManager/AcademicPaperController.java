@@ -7,7 +7,9 @@ import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.scientificResearchManager.AcademicPaperService;
 import com.nwu.vo.PaperQuery;
+import com.nwu.vo.UpdatePaper;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +42,14 @@ public class AcademicPaperController {
         return new Result(ResultCode.SUCCESS,list);
     }
 
+    @PostMapping("/update")
+    public Result updatePaper(@RequestBody UpdatePaper updatePaper) throws  Exception {
+        System.out.println(updatePaper);
+        AcademicPaper academicPaper = new AcademicPaper();
+        BeanUtils.copyProperties(updatePaper, academicPaper);
+        academicPaperService.updateById(academicPaper);
+        return Result.SUCCESS();
+    }
 
 
 }

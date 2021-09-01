@@ -1,3 +1,4 @@
+
 //package com.nwu.util;
 //
 //import org.apache.commons.net.ftp.FTPClient;
@@ -31,6 +32,38 @@
 //
 //
 //    //参数传过来了文件和文件的输入流
+package com.nwu.util;
+
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * @author Rex Joush
+ * @time 2021.08.26 10:46
+ */
+@Component
+public class FtpUtil {
+
+    //ftp服务器ip地址
+    private static final String FTP_ADDRESS = "47.116.98.38";
+
+    //端口号
+    private static final int FTP_PORT = 21;
+
+    //用户名
+    private static final String FTP_USERNAME = "root";
+
+    //密码
+    private static final String FTP_PASSWORD = "liyihang123";
+
+    //路径都是/home/加上用户名
+    public final String FTP_BASEPATH = "/home/joush";
+
+
+    //参数传过来了文件和文件的输入流
+>>>>>>> 12e3b9b56b472b6f7ec016b9865fcf2c25d222cb
 //    public boolean uploadFile(String originFileName, InputStream input) {
 //        boolean success = false;
 //        FTPClient ftp = new FTPClient();//这是最开始引入的依赖里的方法
@@ -67,4 +100,8 @@
 //        }
 //        return success;
 //    }
+<<<<<<< HEAD
 //}
+=======
+}
+>>>>>>> 12e3b9b56b472b6f7ec016b9865fcf2c25d222cb

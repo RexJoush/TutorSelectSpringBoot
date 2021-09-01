@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 public class SecondPage {
 
-    private int id; // 申请 id
+    private int applyId; // 申请 id
     private String applySubject;    // 申请学科
     private String doctoralMasterApplicationSubjectUnit;    // 申请学科负责单位
     private String doctoralMasterSubjectCodeName;   // 一级学科代码 + " " + 名称

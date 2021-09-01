@@ -6,12 +6,10 @@ import com.nwu.entities.ResearchProject;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.scientificResearchManager.ResearchProjectService;
+import com.nwu.vo.UpdateProject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,6 +35,15 @@ public class ResearchProjectController {
         List<ResearchProject> list = researchProjectService.list(wrapper);
         System.out.println(list);
         return new Result(ResultCode.SUCCESS,list);
+    }
+
+    @PostMapping("/update")
+    public Result updateProject(@RequestBody UpdateProject updateProject) throws Exception {
+        System.out.println(updateProject);
+        ResearchProject researchProject = new ResearchProject();
+        BeanUtils.copyProperties(updateProject,researchProject);
+        researchProjectService.updateById(researchProject);
+        return Result.SUCCESS();
     }
 
 }

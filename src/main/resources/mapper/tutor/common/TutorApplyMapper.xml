@@ -10,43 +10,43 @@
         WHERE tutor_id = #{tutorId};
     </select>
 
-    <select id="getApplyInfoByTutorIdAndApplyId" resultType="com.nwu.entities.Apply">
+    <select id="getApplyInfoByTutorIdAndApplyTypeId" resultType="com.nwu.entities.Apply">
         SELECT *
         FROM apply
         WHERE tutor_id = #{tutorId}
-          AND apply_id = #{applyId};
+          AND apply_type_id = #{applyTypeId}
     </select>
 
-    <select id="getApplyByTutorIdAndApplyIdAndStatus" resultType="com.nwu.entities.Apply">
+    <select id="getApplyByTutorIdAndApplyTypeIdAndStatus" resultType="com.nwu.entities.Apply">
         SELECT *
         FROM apply
         WHERE tutor_id = #{tutorId}
-          AND apply_id = #{applyId}
+          AND apply_type_id = #{applyTypeId}
           AND status = 0;
     </select>
 
-    <insert id="saveApplyInfo" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+    <insert id="saveApplyInfo" useGeneratedKeys="true" keyColumn="apply_id" keyProperty="apply_id"
             parameterType="com.nwu.entities.Apply">
-        INSERT INTO apply (tutor_id, apply_id, `status`)
-        VALUES (#{apply.tutorId}, #{apply.applyId}, #{apply.status});
+        INSERT INTO apply (tutor_id, apply_type_id, status)
+        VALUES (#{apply.tutorId}, #{apply.applyTypeId}, #{apply.status});
     </insert>
 
     <update id="updateApplySubject">
         UPDATE apply
         SET subject = #{applySubject}
-        WHERE id = #{id}
+        WHERE apply_type_id = #{applyId}
     </update>
 
-    <select id="getId" resultType="int">
-        SELECT id
+    <select id="getApplyId" resultType="int">
+        SELECT apply_id
         FROM apply
         WHERE tutor_id = #{tutorId}
-          AND apply_id = #{applyId}
+          AND apply_type_id = #{applyTypeId}
           AND status = #{status};
     </select>
 
     <select id="getApplyIdByTutorIdAndStatus" resultType="int">
-        SELECT id
+        SELECT apply_id
         FROM apply
         WHERE tutor_id = #{tutorId}
           AND status = #{status};

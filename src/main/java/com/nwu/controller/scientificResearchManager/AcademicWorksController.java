@@ -6,12 +6,10 @@ import com.nwu.entities.AcademicWorks;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.scientificResearchManager.AcademicWorksService;
+import com.nwu.vo.UpdateWork;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,6 +35,15 @@ public class AcademicWorksController {
         List<AcademicWorks> list = academicWorksService.list(wrapper);
         System.out.println(list);
         return new Result(ResultCode.SUCCESS,list);
+    }
+
+    @PostMapping("/update")
+    public Result updateWork(@RequestBody UpdateWork updateWork) throws Exception {
+        System.out.println(updateWork);
+        AcademicWorks academicWorks = new AcademicWorks();
+        BeanUtils.copyProperties(updateWork, academicWorks);
+        academicWorksService.updateById(academicWorks);
+        return Result.SUCCESS();
     }
 
 }

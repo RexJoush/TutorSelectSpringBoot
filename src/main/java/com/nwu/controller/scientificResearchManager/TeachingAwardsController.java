@@ -2,16 +2,16 @@ package com.nwu.controller.scientificResearchManager;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.nwu.entities.AcademicPaper;
 import com.nwu.entities.TeachingAwards;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.scientificResearchManager.TeachingAwardsService;
+import com.nwu.vo.UpdateAward;
+import com.nwu.vo.UpdatePaper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +36,15 @@ public class TeachingAwardsController {
         List<TeachingAwards> list = teachingAwardsService.list(wrapper);
         System.out.println(list);
         return new Result(ResultCode.SUCCESS,list);
+    }
+
+    @PostMapping("/update")
+    public Result updateAward (@RequestBody UpdateAward updateAward) throws  Exception {
+        System.out.println(updateAward);
+        TeachingAwards teachingAwards =  new TeachingAwards();
+        BeanUtils.copyProperties(updateAward, teachingAwards);
+        teachingAwardsService.updateById(teachingAwards);
+        return Result.SUCCESS();
     }
 
 }

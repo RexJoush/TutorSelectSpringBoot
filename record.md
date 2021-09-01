@@ -43,6 +43,16 @@
   * test
 
 * 2021.08.29 **Rex Joush**
-  * TeachAwards, ResearchProject, AcademicPaper, AcademicWorks 表的 id 字段改为自增
-  * 新建 Summary(汇总信息), InventionPatent(发明专利) 表
+  * teaching_awards, research_project, academic_paper, academic_works 表的 id 字段改为自增
+  * 新建 Summary(汇总信息), InventionPatent(发明专利) 实体
   * 在 `service.scientificResearchManager(社科处管理员) ` 包下新建 InventionPatentService(发明专利服务类)
+
+* 2021.08.30 **Rex Joush**
+  * guiding_student, course_teaching 表的 id 字段改为自增
+  * 新建 GuidingStudent(指导学生), CourseTeaching(研究生课程教学情况) 实体
+
+* 2021.08.31 **Rex Joush**
+  * apply 表 id 字段改完 apply_id, apply_id 改完 apply_type_id
+  * apply_type 表 apply_id 字段改为 apply_type_id
+  * tutor_inspect, tutor_no_inspect 表 tutor_id 改完 apply_id, number 改为 tutor_id
+  * system_user 表 number 改为 tutor_id

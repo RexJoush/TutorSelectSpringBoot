@@ -3,6 +3,8 @@ package com.nwu.entities;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,15 +22,16 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@TableName("tutor_inspect")
 @ApiModel(value="TutorInspect对象", description="")
 public class TutorInspect implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "tutor_id", type = IdType.ID_WORKER)
-    private String tutorId;
+    @TableId(value = "apply_id", type = IdType.ID_WORKER)
+    private String applyId;
 
-    private String number;
+    private String tutorId;
     // 姓名
     private String name;
     // 所在单位
