@@ -82,7 +82,8 @@ public class DeliberationExportExcel {
         List<List<String>> headTitles = Lists.newArrayList();
         String firstRow = schoolName + this.year + "年" + departmentName + "学位评定分委员会审议汇总表";
         String secondRow = "（首次上岗研究生导师/增列学科岗位认定）";
-        String threeRow = "院（系、所）负责人签字：       填表人：        年    月   日   ";
+        String threeRow = "院（系、所）负责人签字：                                 填表人：                                  " +
+                "                                                      年    月   日                                ";
         //第一列
         headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"序号", "序号", "序号"));
         //第2-6列
