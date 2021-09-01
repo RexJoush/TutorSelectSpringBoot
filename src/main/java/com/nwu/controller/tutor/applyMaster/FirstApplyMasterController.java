@@ -190,8 +190,8 @@ public class FirstApplyMasterController {
             // 出现异常
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code", 1201);
-            jsonObject.put("message", e.getMessage().split("-")[0]);
-            jsonObject.put("errorMessage", e.getMessage().split("-")[1]);
+            jsonObject.put("message", e.getMessage().split("!")[0]);
+            jsonObject.put("errorMessage", e.getMessage().split("!")[1]);
             return new Result(ResultCode.SUCCESS, jsonObject);
         }
 
@@ -223,8 +223,8 @@ public class FirstApplyMasterController {
             // 出现异常
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code", 1201);
-            jsonObject.put("message", e.getMessage().split("-")[0]);
-            jsonObject.put("errorMessage", e.getMessage().split("-")[1]);
+            jsonObject.put("message", e.getMessage().split("!")[0]);
+            jsonObject.put("errorMessage", e.getMessage().split("!")[1]);
             return new Result(ResultCode.SUCCESS, jsonObject);
         }
 

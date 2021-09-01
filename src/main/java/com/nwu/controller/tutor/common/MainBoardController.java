@@ -116,7 +116,7 @@ public class MainBoardController {
         }
 
         ResultClient resultClient = new ResultClient();
-        TeacherInfo dataInfo = resultClient.getDataInfo(tutorId);
+        // TeacherInfo dataInfo = resultClient.getDataInfo(tutorId);
 //        JSONObject object = JSON.parseObject(dataInfo);
 
         return new Result(ResultCode.SUCCESS, teacherInfo);

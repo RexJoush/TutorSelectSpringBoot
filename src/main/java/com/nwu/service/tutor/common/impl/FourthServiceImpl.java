@@ -3,6 +3,7 @@ package com.nwu.service.tutor.common.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.tutor.FourthPage;
 import com.nwu.entities.tutor.childSubject.CourseTeaching;
+import com.nwu.entities.tutor.childSubject.DeleteItem;
 import com.nwu.entities.tutor.childSubject.GuidingStudent;
 import com.nwu.service.tutor.common.CourseTeachingService;
 import com.nwu.service.tutor.common.FourthService;
@@ -10,6 +11,7 @@ import com.nwu.service.tutor.common.GuidingStudentService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +42,7 @@ public class FourthServiceImpl implements FourthService {
 
             fourthPage.setCourseTeachings(courseTeachings);
             fourthPage.setGuidingStudents(GuidingStudents);
+            fourthPage.setDeleteItems(new ArrayList<>());
         } catch (Exception e) {
             // 出现异常则返回空信息
             return new FourthPage();
@@ -53,24 +56,57 @@ public class FourthServiceImpl implements FourthService {
 
         // 填写研究生课程信息
         try {
-            for (CourseTeaching courseTeaching : fourthPage.getCourseTeachings()) {
-                courseTeaching.setApplyId(applyId);
-                courseTeaching.setTutorId(tutorId);
-                courseTeachingService.saveOrUpdate(courseTeaching);
+            if (fourthPage.getCourseTeachings() != null){
+                for (CourseTeaching courseTeaching : fourthPage.getCourseTeachings()) {
+                    courseTeaching.setApplyId(applyId);
+                    courseTeaching.setTutorId(tutorId);
+                    courseTeachingService.saveOrUpdate(courseTeaching);
+                }
             }
         } catch (Exception e) {
-            throw new RuntimeException("研究生课程信息填写错误，请检查" + "-" + e.getMessage());
+            throw new RuntimeException("研究生课程信息填写错误，请检查" + "!" + e.getMessage());
         }
 
         // 填写学生信息
         try {
-            for (GuidingStudent guidingStudent : fourthPage.getGuidingStudents()) {
-                guidingStudent.setApplyId(applyId);
-                guidingStudent.setTutorId(tutorId);
-                guidingStudentService.saveOrUpdate(guidingStudent);
+            if (fourthPage.getGuidingStudents() != null){
+                for (GuidingStudent guidingStudent : fourthPage.getGuidingStudents()) {
+                    guidingStudent.setApplyId(applyId);
+                    guidingStudent.setTutorId(tutorId);
+                    guidingStudentService.saveOrUpdate(guidingStudent);
+                }
             }
         } catch (Exception e) {
-            throw new RuntimeException("学生信息填写错误，请检查" + "-" + e.getMessage());
+            throw new RuntimeException("学生信息填写错误，请检查" + "!" + e.getMessage());
         }
+
+        // 删除信息
+        if (fourthPage.getDeleteItems() != null) {
+            for (DeleteItem deleteItem : fourthPage.getDeleteItems()) {
+                /*
+                1, 研究生课程情况
+                2, 协助指导研究生
+                3, 指导本科生
+                4, ....
+             */
+                // 删除对应的数据库信息
+                if (deleteItem.getDeleteId() != -1) {
+                    // 获取 id 值
+                    int id = deleteItem.getDeleteId();
+                    switch (deleteItem.getDeleteType()) {
+                        case 1:
+                            courseTeachingService.removeById(id);
+                            break;
+                        case 2:
+                        case 3:
+                            guidingStudentService.removeById(id);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
     }
 }
