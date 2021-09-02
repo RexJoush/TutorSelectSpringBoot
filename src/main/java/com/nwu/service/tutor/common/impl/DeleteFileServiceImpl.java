@@ -15,19 +15,18 @@ public class DeleteFileServiceImpl implements DeleteFileService{
     @Resource
     UpLoadFile upLoadFile;
 
+    /**
+     * 删除文件
+     * @param httpPath http://localhost:8081/downFile/uploadFile/20133220/学术论文/社科类论文/导师遴选.rar
+     * @return ok err
+     */
     @Override
     public String delFile(String httpPath) {
-        /**
-         * 删除文件 http://localhost:8081/downFile/uploadFile/20133220/学术论文/社科类论文/导师遴选.rar
-         * @param path 路径中的文件
-         * @return ok err
-         */
+
         if (!"".equals(httpPath)) {
             try {
                 String path = URLDecoder.decode(httpPath, "UTF-8");
-                System.out.println(upLoadFile.getFilePath());
                 String realPath= upLoadFile.getFilePath() + path.substring(42, path.length() - 1);
-                System.out.println(realPath);
                 File file = new File(realPath);
                 if (file.exists()){
                     file.delete();

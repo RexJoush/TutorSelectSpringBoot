@@ -65,19 +65,19 @@
         WHERE tutor_id = #{tutorInspect.tutorId};
     </update>
 
-    <insert id="saveTutorInspectBaseInfo" parameterType="com.nwu.entities.TutorInspect">
+    <insert id="saveTutorInspectBaseInfo" parameterType="com.nwu.entities.tutor.FirstPage">
         INSERT INTO tutor_inspect
-        (tutor_id, number, `name`, gender, organization_id, birthday, identity, phone, email, title, evaluate_time,
+        (apply_id, tutor_id, `name`, gender, organization_id, birthday, identity, phone, email, title, evaluate_time,
          final_degree, awarding_unit_time)
-        VALUES (#{tutorInspect.tutorId}, #{tutorInspect.number}, #{tutorInspect.name}, #{tutorInspect.gender},
-                #{tutorInspect.organizationId},
-                #{tutorInspect.birthday}, #{tutorInspect.identity}, #{tutorInspect.phone}, #{tutorInspect.email},
-                #{tutorInspect.title},
-                #{tutorInspect.evaluateTime}, #{tutorInspect.finalDegree}, #{tutorInspect.awardingUnitTime});
+        VALUES (#{firstPage.applyId}, #{firstPage.tutorId}, #{firstPage.name}, #{firstPage.gender},
+                #{firstPage.organizationId},
+                #{firstPage.birthday}, #{firstPage.identity}, #{firstPage.phone}, #{firstPage.email},
+                #{firstPage.title},
+                #{firstPage.evaluateTime}, #{firstPage.finalDegree}, #{firstPage.awardingUnitTime});
     </insert>
 
     <select id="getTutorInspectSecond" resultMap="secondInfo">
-        SELECT a.id,
+        SELECT a.apply_id,
                subject,
                research_directions,
                academic_groups_jobs,
@@ -86,11 +86,11 @@
                doctoral_master_subject_code,
                doctoral_master_subject_name
         FROM apply a
-                 LEFT JOIN tutor_inspect t ON a.id = t.tutor_id
-        WHERE a.id = #{id}
+                 LEFT JOIN tutor_inspect t ON a.apply_id = t.apply_id
+        WHERE a.apply_id = #{applyId}
     </select>
     <resultMap id="secondInfo" type="com.nwu.entities.tutor.SecondPage">
-        <id property="id" column="id"></id>
+        <id property="applyId" column="apply_id"></id>
         <!--  非主键  -->
         <result property="applySubject" column="subject"></result>
         <result property="major" column="research_directions"></result>
@@ -110,6 +110,6 @@
             doctoral_master_application_subject_unit = #{secondPage.doctoralMasterApplicationSubjectUnit},
             doctoral_master_subject_code             = #{secondPage.doctoralMasterSubjectCode},
             doctoral_master_subject_name             = #{secondPage.doctoralMasterSubjectName}
-        WHERE tutor_id = #{id}
+        WHERE apply_id = #{applyId}
     </update>
 </mapper>
