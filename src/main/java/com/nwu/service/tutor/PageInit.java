@@ -7,6 +7,7 @@ package com.nwu.service.tutor;
 
 import com.nwu.entities.Summary;
 import com.nwu.entities.tutor.FourthPage;
+import com.nwu.entities.tutor.SecondPage;
 import com.nwu.entities.tutor.ThirdPage;
 
 import java.util.ArrayList;
@@ -17,10 +18,24 @@ import java.util.ArrayList;
 public class PageInit {
 
     /**
+     * 获取第二页的空对象
+     * @return 第二页空对象
+     */
+    public static SecondPage getSecondPage() {
+
+        SecondPage secondPage = new SecondPage();
+        secondPage.setExpertTitles(new ArrayList<>());
+        secondPage.setGroupsOrPartTimeJobs(new ArrayList<>());
+
+        return secondPage;
+
+    }
+
+    /**
      * 获取第三页的初始化空对象
      * @return 第三页空对象
      */
-    public static ThirdPage getThirdPage(){
+    public static ThirdPage getThirdPage() {
         ThirdPage thirdPage = new ThirdPage();
 
         thirdPage.setAcademicPapers(new ArrayList<>());
@@ -28,6 +43,7 @@ public class PageInit {
         thirdPage.setAcademicWorks(new ArrayList<>());
         thirdPage.setTeachingAwards(new ArrayList<>());
         thirdPage.setInventionPatents(new ArrayList<>());
+        thirdPage.setSummary(getSummary());
         thirdPage.setDeleteItems(new ArrayList<>());
 
         return thirdPage;
@@ -37,7 +53,7 @@ public class PageInit {
      * 获取第四页的初始化空对象
      * @return 第四页空对象
      */
-    public static FourthPage getFourthPage(){
+    public static FourthPage getFourthPage() {
         FourthPage fourthPage = new FourthPage();
 
         fourthPage.setGuidingStudents(new ArrayList<>());
@@ -50,11 +66,15 @@ public class PageInit {
 
         return fourthPage;
     }
-    
-    public static Summary getSummary(){
-        
+
+    /**
+     * 获取第三页的总结信息
+     * @return 总结信息空对象
+     */
+    public static Summary getSummary() {
+
         Summary summary = new Summary();
-        
+
         summary.setFirstAuthorPaper(0);
         summary.setAuthorityAmount(0);
         summary.setEiAmount(0);
@@ -74,7 +94,7 @@ public class PageInit {
         summary.setNewUtilityPatent(0);
 
         return summary;
-        
+
     }
 
 }

@@ -17,6 +17,7 @@ import com.nwu.service.tutor.common.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 /**
  * @author Rex Joush
@@ -69,11 +70,19 @@ public class FirstApplyMasterController {
         // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
         if (applyCondition == 101) {
             int applyId = mainBoardService.getApplyId(firstPage.getTutorId(), 4, 0);
+
             SecondPage secondPage = tutorInspectService.getTutorInspectSecond(applyId);
-            System.out.println(secondPage);
-            secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
-            secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
-            secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
+
+            if (secondPage.getExpertTitles() == null){
+                secondPage.setExpertTitles(new ArrayList<>());
+            } else {
+                secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
+            }
+            if (secondPage.getGroupsOrPartTimeJobs() == null) {
+                secondPage.setGroupsOrPartTimeJobs(new ArrayList<>());
+            } else {
+                secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
+            }
             return new Result(ResultCode.SUCCESS, secondPage);
         }
 
@@ -108,16 +117,22 @@ public class FirstApplyMasterController {
 
             // 102 表示未申请过，第二页无信息，否则取读取第二页信息
             if (applyCondition == 102) {
-                secondPage = new SecondPage();
+                secondPage = PageInit.getSecondPage();
             } else {
                 secondPage = tutorInspectService.getTutorInspectSecond(apply.getApplyId());
-                secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
-                secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
-                if (secondPage.getDoctoralMasterSubjectCode() != null){
-                    secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
-                }
 
+                if (secondPage.getExpertTitles() == null){
+                    secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
+                } else {
+                    secondPage.setExpertTitles(new ArrayList<>());
+                }
+                if (secondPage.getGroupsOrPartTimeJobs() == null) {
+                    secondPage.setGroupsOrPartTimeJobs(new ArrayList<>());
+                } else {
+                    secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
+                }
             }
+
         } catch (Exception e) {
 
             JSONObject jsonObject = new JSONObject();

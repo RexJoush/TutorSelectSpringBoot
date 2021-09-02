@@ -34,7 +34,7 @@
     <update id="updateApplySubject">
         UPDATE apply
         SET subject = #{applySubject}
-        WHERE apply_type_id = #{applyId}
+        WHERE apply_id = #{applyId}
     </update>
 
     <select id="getApplyId" resultType="int">
