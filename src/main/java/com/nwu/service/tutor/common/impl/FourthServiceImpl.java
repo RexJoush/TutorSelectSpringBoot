@@ -5,6 +5,7 @@ import com.nwu.entities.tutor.FourthPage;
 import com.nwu.entities.tutor.childSubject.CourseTeaching;
 import com.nwu.entities.tutor.childSubject.DeleteItem;
 import com.nwu.entities.tutor.childSubject.GuidingStudent;
+import com.nwu.service.tutor.PageInit;
 import com.nwu.service.tutor.common.CourseTeachingService;
 import com.nwu.service.tutor.common.FourthService;
 import com.nwu.service.tutor.common.GuidingStudentService;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Rex Joush
@@ -30,7 +33,7 @@ public class FourthServiceImpl implements FourthService {
     @Override
     public FourthPage getFourthPage(int applyId, String tutorId) {
 
-        FourthPage fourthPage = new FourthPage();
+        FourthPage fourthPage = PageInit.getFourthPage();
 
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("apply_id", applyId);
@@ -38,14 +41,12 @@ public class FourthServiceImpl implements FourthService {
 
         try {
             List<CourseTeaching> courseTeachings = courseTeachingService.list(queryWrapper);
-            List<GuidingStudent> GuidingStudents = guidingStudentService.list(queryWrapper);
-
+            List<GuidingStudent> guidingStudents = guidingStudentService.list(queryWrapper);
             fourthPage.setCourseTeachings(courseTeachings);
-            fourthPage.setGuidingStudents(GuidingStudents);
-            fourthPage.setDeleteItems(new ArrayList<>());
+            fourthPage.setGuidingStudents(guidingStudents);
         } catch (Exception e) {
             // 出现异常则返回空信息
-            return new FourthPage();
+            return PageInit.getFourthPage();
         }
 
         return fourthPage;

@@ -5,6 +5,7 @@ import com.nwu.entities.*;
 import com.nwu.entities.tutor.ThirdPage;
 import com.nwu.entities.tutor.childSubject.DeleteItem;
 import com.nwu.service.scientificResearchManager.*;
+import com.nwu.service.tutor.PageInit;
 import com.nwu.service.tutor.SummaryService;
 import com.nwu.service.tutor.common.ThirdService;
 import org.springframework.stereotype.Service;
@@ -162,7 +163,7 @@ public class ThirdServiceImpl implements ThirdService {
     @Override
     public ThirdPage getThirdPage(int applyId, String tutorId) {
 
-        ThirdPage thirdPage = new ThirdPage();
+        ThirdPage thirdPage = PageInit.getThirdPage();
 
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("apply_id", applyId);
@@ -193,12 +194,10 @@ public class ThirdServiceImpl implements ThirdService {
             Summary summary = summaryService.getOne(queryWrapper);
             thirdPage.setSummary(summary);
 
-            // 添加删除空列表
-            thirdPage.setDeleteItems(new ArrayList<>());
 
         } catch (Exception e) {
             // 出现异常则返回空信息
-            return new ThirdPage();
+            return PageInit.getThirdPage();
         }
         return thirdPage;
     }

@@ -12,10 +12,12 @@ import com.nwu.results.ResultCode;
 import com.nwu.service.OrganizationService;
 import com.nwu.service.TutorInspectService;
 import com.nwu.service.admin.ApplyService;
+import com.nwu.service.tutor.PageInit;
 import com.nwu.service.tutor.common.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 /**
  * @author Rex Joush
@@ -69,6 +71,7 @@ public class FirstApplyMasterController {
         if (applyCondition == 101) {
             int applyId = mainBoardService.getApplyId(firstPage.getTutorId(), 4, 0);
             SecondPage secondPage = tutorInspectService.getTutorInspectSecond(applyId);
+            System.out.println(secondPage);
             secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
             secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
             secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
@@ -142,7 +145,7 @@ public class FirstApplyMasterController {
 
         // 没有申请过此岗位，直接返回，填写新值
         if (applyCondition == 102) {
-            return new Result(ResultCode.SUCCESS, new ThirdPage());
+            return new Result(ResultCode.SUCCESS, PageInit.getThirdPage());
         }
 
         // 保存或更新第二页信息
@@ -178,7 +181,8 @@ public class FirstApplyMasterController {
         System.out.println(applyId); // 第一页的 apply 表 id
 
         // 没有申请过此岗位，直接返回，填写新值
-        FourthPage fourthPage = new FourthPage();
+        FourthPage fourthPage = PageInit.getFourthPage();
+
         if (applyCondition == 102) {
             return new Result(ResultCode.SUCCESS, fourthPage);
         }
