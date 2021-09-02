@@ -8,13 +8,17 @@ package com.nwu.entities;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 申请表中的总结信息
  */
 @Data
 @TableName("summary")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Summary {
 
     @TableId(value = "summary_id", type = IdType.AUTO)
@@ -41,23 +45,4 @@ public class Summary {
     private int inventionPatentAmount  ; // 发明专利
     private int newUtilityPatent       ; // 新型实用专利
 
-    public Summary(int firstAuthorPaper, int authorityAmount, int eiAmount, int cssciAmount, int ssciAmount, int directProject, int projectNationalLevel, int projectProvinceLevel, int accumulatedFunds, int horizontalProject, int publishWorks, int publishWorksWords, int scientificAwards, int awardsNationalLevel, int awardsProvinceLevel, int inventionPatentAmount, int newUtilityPatent) {
-        this.firstAuthorPaper = firstAuthorPaper;
-        this.authorityAmount = authorityAmount;
-        this.eiAmount = eiAmount;
-        this.cssciAmount = cssciAmount;
-        this.ssciAmount = ssciAmount;
-        this.directProject = directProject;
-        this.projectNationalLevel = projectNationalLevel;
-        this.projectProvinceLevel = projectProvinceLevel;
-        this.accumulatedFunds = accumulatedFunds;
-        this.horizontalProject = horizontalProject;
-        this.publishWorks = publishWorks;
-        this.publishWorksWords = publishWorksWords;
-        this.scientificAwards = scientificAwards;
-        this.awardsNationalLevel = awardsNationalLevel;
-        this.awardsProvinceLevel = awardsProvinceLevel;
-        this.inventionPatentAmount = inventionPatentAmount;
-        this.newUtilityPatent = newUtilityPatent;
-    }
 }

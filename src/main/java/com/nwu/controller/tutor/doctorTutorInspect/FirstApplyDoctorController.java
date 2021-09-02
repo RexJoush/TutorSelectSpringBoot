@@ -152,7 +152,7 @@ public class FirstApplyDoctorController {
             else{
                 //第三页填写过 //申请过此岗位，但是填到第一页交过之后退出了 第三页第四页数据库无字段
                 thirdPage = thirdService.getThirdPage(applyId, tutorId);
-                thirdPage.setSummary(new Summary(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+                // thirdPage.setSummary(new Summary(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
             }
             System.out.println(thirdPage);
             //返回成功信息

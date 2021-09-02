@@ -5,6 +5,7 @@ package com.nwu.service.tutor;
  * @time 2021.09.02 10:25
  */
 
+import com.nwu.entities.Summary;
 import com.nwu.entities.tutor.FourthPage;
 import com.nwu.entities.tutor.ThirdPage;
 
@@ -48,6 +49,32 @@ public class PageInit {
         fourthPage.setDeleteItems(new ArrayList<>());
 
         return fourthPage;
+    }
+    
+    public static Summary getSummary(){
+        
+        Summary summary = new Summary();
+        
+        summary.setFirstAuthorPaper(0);
+        summary.setAuthorityAmount(0);
+        summary.setEiAmount(0);
+        summary.setCssciAmount(0);
+        summary.setSsciAmount(0);
+        summary.setDirectProject(0);
+        summary.setProjectNationalLevel(0);
+        summary.setProjectProvinceLevel(0);
+        summary.setAccumulatedFunds(0);
+        summary.setHorizontalProject(0);
+        summary.setPublishWorks(0);
+        summary.setPublishWorksWords(0);
+        summary.setScientificAwards(0);
+        summary.setAwardsNationalLevel(0);
+        summary.setAwardsProvinceLevel(0);
+        summary.setInventionPatentAmount(0);
+        summary.setNewUtilityPatent(0);
+
+        return summary;
+        
     }
 
 }

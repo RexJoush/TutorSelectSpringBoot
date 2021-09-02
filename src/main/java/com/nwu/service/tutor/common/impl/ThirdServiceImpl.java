@@ -207,8 +207,12 @@ public class ThirdServiceImpl implements ThirdService {
 
             // 获取汇总信息,需要用户手动点击汇总信息，所以不查询数据库
             Summary summary = summaryService.getOne(queryWrapper);
-            thirdPage.setSummary(summary);
 
+            if (summary == null){
+                thirdPage.setSummary(PageInit.getSummary());
+            } else {
+                thirdPage.setSummary(summary);
+            }
 
         } catch (Exception e) {
             // 出现异常则返回空信息
