@@ -39,11 +39,13 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
 
     @Override
     public SecondPage getTutorInspectSecond(int applyId) {
-        return tutorInspectMapper.getTutorInspectSecond(applyId);
+        SecondPage secondPage = tutorInspectMapper.getTutorInspectSecond(applyId);
+        return secondPage;
     }
 
     @Override
     public int updateTutorInspectSecond(int applyId, SecondPage secondPage) {
         return tutorInspectMapper.updateTutorInspectSecond(applyId, secondPage);
     }
+
 }

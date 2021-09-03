@@ -112,4 +112,5 @@
             doctoral_master_subject_name             = #{secondPage.doctoralMasterSubjectName}
         WHERE apply_id = #{applyId}
     </update>
+
 </mapper>

@@ -20,4 +20,11 @@ public interface SecondService {
      */
     void updateOrSaveSecond(int applyId, String tutorId, SecondPage secondPage);
 
+    /**
+     * 获取第二页的信息
+     * @param applyId 申请表 id
+     * @return 第二页信息
+     */
+    SecondPage getSecondPage(int applyId);
+
 }

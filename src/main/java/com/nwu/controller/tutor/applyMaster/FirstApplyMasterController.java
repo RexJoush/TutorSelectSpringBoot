@@ -14,10 +14,12 @@ import com.nwu.service.TutorInspectService;
 import com.nwu.service.admin.ApplyService;
 import com.nwu.service.tutor.PageInit;
 import com.nwu.service.tutor.common.*;
+import com.nwu.util.TimeUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @author Rex Joush
@@ -70,36 +72,35 @@ public class FirstApplyMasterController {
         // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
         if (applyCondition == 101) {
             int applyId = mainBoardService.getApplyId(firstPage.getTutorId(), 4, 0);
-
-            SecondPage secondPage = tutorInspectService.getTutorInspectSecond(applyId);
-
-            if (secondPage.getExpertTitles() == null){
-                secondPage.setExpertTitles(new ArrayList<>());
-            } else {
-                secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
-            }
-            if (secondPage.getGroupsOrPartTimeJobs() == null) {
-                secondPage.setGroupsOrPartTimeJobs(new ArrayList<>());
-            } else {
-                secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
-            }
+            SecondPage secondPage = secondService.getSecondPage(applyId);
             return new Result(ResultCode.SUCCESS, secondPage);
         }
 
         // 首次申请，添加申请表
         String tutorId = firstPage.getTutorId();
-        System.out.println(applyTypeId);
-        System.out.println(applyCondition);
-        System.out.println(firstPage);
 
-        // 添加申请表
-        Apply apply = new Apply(0, tutorId, applyTypeId, 0, 0, 0, "");
-        mainBoardService.saveApplyInfo(apply);
+        Apply apply = new Apply();
+
+        // 未申请过，需要添加申请表
+        if (applyCondition == 102) {
+            // 设置申请的类型和教师工号
+            apply.setTutorId(tutorId);
+            apply.setApplyTypeId(applyTypeId);
+            apply.setSubmitTime(TimeUtils.sdf.format(new Date()));
+            // 添加申请表
+            mainBoardService.saveApplyInfo(apply);
+        }
+        // 已申请过，读取申请表
+        else {
+            QueryWrapper<Apply> wrapper = new QueryWrapper<>();
+            wrapper.eq("tutor_id", tutorId).eq("apply_type_id", applyTypeId);
+            apply = applyService.getOne(wrapper);
+        }
 
         // 添加信息表
         firstPage.setApplyId(String.valueOf(apply.getApplyId()));
-        System.out.println(firstPage);
 
+        // 根据院系名称查询院系代码
         QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("organization_name", firstPage.getOrganizationName());
         Organization one = organizationService.getOne(queryWrapper);
@@ -119,18 +120,7 @@ public class FirstApplyMasterController {
             if (applyCondition == 102) {
                 secondPage = PageInit.getSecondPage();
             } else {
-                secondPage = tutorInspectService.getTutorInspectSecond(apply.getApplyId());
-
-                if (secondPage.getExpertTitles() == null){
-                    secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
-                } else {
-                    secondPage.setExpertTitles(new ArrayList<>());
-                }
-                if (secondPage.getGroupsOrPartTimeJobs() == null) {
-                    secondPage.setGroupsOrPartTimeJobs(new ArrayList<>());
-                } else {
-                    secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
-                }
+                secondPage = secondService.getSecondPage(apply.getApplyId());
             }
 
         } catch (Exception e) {

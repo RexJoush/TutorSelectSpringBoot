@@ -42,10 +42,10 @@ public interface TutorInspectService extends IService<TutorInspect> {
     /**
      * 获取第二页的导师信息
      *
-     * @param apply_id tutor_inspect 表的主键
+     * @param applyId tutor_inspect 表的主键
      * @return 第二页信息
      */
-    SecondPage getTutorInspectSecond(int apply_id);
+    SecondPage getTutorInspectSecond(int applyId);
 
     /**
      * 更新第二页的导师信息

@@ -27,8 +27,8 @@
 
     <insert id="saveApplyInfo" useGeneratedKeys="true" keyColumn="apply_id" keyProperty="applyId"
             parameterType="com.nwu.entities.Apply">
-        INSERT INTO apply (tutor_id, apply_type_id, status)
-        VALUES (#{apply.tutorId}, #{apply.applyTypeId}, #{apply.status});
+        INSERT INTO apply (tutor_id, apply_type_id, status, submit_time)
+        VALUES (#{apply.tutorId}, #{apply.applyTypeId}, #{apply.status}, #{apply.submitTime});
     </insert>
 
     <update id="updateApplySubject">
