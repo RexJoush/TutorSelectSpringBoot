@@ -17,7 +17,6 @@ public interface ThirdService {
      * @param applyId 申请的 apply 表的 id
      * @param tutorId 申请的教师工号
      * @param thirdPage 第三页信息
-     * @return 存储结果
      */
     void updateOrSaveThirdPage(int applyId, String tutorId, ThirdPage thirdPage);
 

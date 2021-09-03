@@ -33,7 +33,7 @@ public interface MainBoardService {
      * 存储 apply 表
      *
      * @param apply 申请信息
-     * @return 影响的行数
+     * @return 返回主键
      */
     int saveApplyInfo(Apply apply);
 
