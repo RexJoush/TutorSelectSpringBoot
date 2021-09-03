@@ -29,7 +29,7 @@ public class AcademicWorks implements Serializable {
     @TableId(value = "works_id", type = IdType.AUTO)
     private int worksId                 ; // 著作 id
     private String tutorId              ; // apply表中的user_id  教师工号
-    private int applyId                 ; // 著作所属的申请
+    private Integer applyId                 ; // 著作所属的申请
 
     private String worksName            ; // 著作名称
     private String worksNumber          ; // 著作编号

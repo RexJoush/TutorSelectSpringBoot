@@ -31,7 +31,7 @@ public class AcademicPaper implements Serializable {
     @TableId(value = "paper_id", type = IdType.AUTO)
     private Integer paperId                 ; // 论文 id
     private String tutorId                  ; // 论文所属教师 id
-    private int applyId                     ; // 论文所属的申请
+    private Integer applyId                     ; // 论文所属的申请
 
     private String paperName                ; // 论文名称
     private String paperNumber              ; // 论文编号
