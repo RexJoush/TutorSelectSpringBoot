@@ -27,10 +27,12 @@ public class AcademicWorksController {
 
     @Autowired
     AcademicWorksService academicWorksService;
-    @GetMapping("/get/{tutorId}")
-    public Result getAll(@PathVariable("tutorId") String tutorId){
+
+    @GetMapping("/get/{tutorId}/{applyId}")
+    public Result getAll(@PathVariable("tutorId") String tutorId,
+                         @PathVariable String applyId){
         QueryWrapper<AcademicWorks> wrapper = new QueryWrapper<>();
-        wrapper.eq("tutor_id", tutorId);
+        wrapper.eq("tutor_id", tutorId).eq("apply_id",applyId);;
 
         List<AcademicWorks> list = academicWorksService.list(wrapper);
         System.out.println(list);
