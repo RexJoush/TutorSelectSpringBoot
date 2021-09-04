@@ -2,6 +2,7 @@ package com.nwu.controller.admin;
 
 import com.nwu.service.admin.impl.ExportExcelServiceImpl;
 import com.nwu.util.exportExcel.DeliberationExportExcel;
+import com.nwu.util.exportExcel.QualificationExamExportExcel;
 import com.nwu.util.exportExcel.RecommendExportExcel;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.TutorQuery;
@@ -76,4 +77,15 @@ public class ExportExcelController {
      * @param tutorQuery 封装对象
      * @throws IOException
      */
+    @GetMapping("/qualification")
+    public void qualificationExportExcel(HttpServletResponse response,TutorQuery tutorQuery) throws IOException{
+        List<QueryDepartmentSecretaryInit> list = exportExcelService.getTutorByQuery(tutorQuery);
+        try {
+            new QualificationExamExportExcel(response,"西北大学",list).execute();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return;
+    }
+
 }
