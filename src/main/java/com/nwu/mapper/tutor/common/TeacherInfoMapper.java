@@ -14,9 +14,11 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface TeacherInfoMapper {
-
-    int addTeacherNoInspectInfo(@Param("teacherInfo") TeacherInfo teacherInfo);
-
-    int addTeacherInfo(@Param("teacherInfo") TeacherInfo teacherInfo);
+    /**
+     * 获取教师基本信息
+     * @param tutorId
+     * @return
+     */
+    TeacherInfo getTeacherInfo(@Param("tutorId") String tutorId);
 
 }

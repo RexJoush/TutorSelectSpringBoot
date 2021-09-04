@@ -8,6 +8,7 @@ import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.tutor.common.DeleteFileService;
 import com.nwu.service.tutor.common.MainBoardService;
+import com.nwu.service.tutor.common.TeacherInfoService;
 import com.nwu.util.ResultClient;
 import com.nwu.util.UpLoadFile;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +34,9 @@ public class MainBoardController {
     // 申请表
     @Resource
     private MainBoardService mainBoardService;
+    //教师基本信息
+    @Resource
+    private TeacherInfoService teacherInfoService;
     //删除文件
     @Resource
     private DeleteFileService deleteFileService;
@@ -106,29 +110,23 @@ public class MainBoardController {
     @GetMapping("/getTeacherInfo")
     public Result getTeacherInfo(){
 
-        ResultClient client = new ResultClient();
-        // TeacherInfo teacherInfo = client.getDataInfo(tutorId);
-        TeacherInfo teacherInfo = new TeacherInfo();
-        teacherInfo.setXM("吴昊");
-        teacherInfo.setSFZJH("420111197209287319");
-        teacherInfo.setXB("男");
-        teacherInfo.setSJH("13519162128");
-        teacherInfo.setMC("网络和数据中心");
-        teacherInfo.setSHZ("");
-        teacherInfo.setCSRQ("1972-09-28 00:00:00.0");
-        teacherInfo.setZGXW("博士");
-        teacherInfo.setZGH("20133220");
-        teacherInfo.setZCMC("高级工程师");
+        TeacherInfo teacherInfo = teacherInfoService.getTeacherInfo(tutorId);
+//        TeacherInfo teacherInfo = new TeacherInfo();
+//        teacherInfo.setXM("吴昊");
+//        teacherInfo.setSFZJH("420111197209287319");
+//        teacherInfo.setXB("男");
+//        teacherInfo.setSJH("13519162128");
+//        teacherInfo.setMC("网络和数据中心");
+////        teacherInfo.setSHZ("");
+//        teacherInfo.setCSRQ("1972-09-28 00:00:00.0");
+//        teacherInfo.setZGXW("博士");
+//        teacherInfo.setZGH("20133220");
+//        teacherInfo.setZCMC("高级工程师");
 
         // 查不到教师信息
         if (teacherInfo == null){
             return Result.FAIL();
         }
-
-        ResultClient resultClient = new ResultClient();
-        // TeacherInfo dataInfo = resultClient.getDataInfo(tutorId);
-//        JSONObject object = JSON.parseObject(dataInfo);
-
         return new Result(ResultCode.SUCCESS, teacherInfo);
     }
 

@@ -115,19 +115,7 @@ public class ThirdServiceImpl implements ThirdService {
             Summary summary = thirdPage.getSummary();
             summary.setApplyId(applyId);
             summary.setTutorId(tutorId);
-//            QueryWrapper<Summary> wrapper = new QueryWrapper<>();
-//            wrapper.eq("apply_id",applyId).eq("tutor_id",tutorId);
-//            Summary one = summaryService.getOne(wrapper);
-//            if (one!=null){
-//                //更新数据
-//                UpdateWrapper<Summary> updateWrapper = new UpdateWrapper<>();
-////                updateWrapper.eq("")
-////                summaryService.update()
-//            }
-//            else{
-                //插入数据
-                summaryService.saveOrUpdate(summary);
-//            }
+            summaryService.saveOrUpdate(summary);
 
         } catch (Exception e) {
             throw new RuntimeException("成果汇总填写错误，请检查" + "!" + e.getMessage());

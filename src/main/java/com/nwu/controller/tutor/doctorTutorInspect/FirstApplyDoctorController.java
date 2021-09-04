@@ -1,10 +1,10 @@
 package com.nwu.controller.tutor.doctorTutorInspect;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.Apply;
 import com.nwu.entities.Organization;
-import com.nwu.entities.Summary;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.FourthPage;
 import com.nwu.entities.tutor.SecondPage;
@@ -16,17 +16,20 @@ import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.OrganizationService;
 import com.nwu.service.TutorInspectService;
+import com.nwu.service.admin.ApplyService;
 import com.nwu.service.tutor.PageInit;
 import com.nwu.service.tutor.common.FourthService;
 import com.nwu.service.tutor.common.MainBoardService;
 
 import com.nwu.service.tutor.common.ThirdService;
+import com.nwu.util.TimeUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -42,13 +45,15 @@ import java.util.HashMap;
 @ApiModel("首次申请博士导师岗位")
 @RequestMapping("/tutor/firstApplyDoctor")
 public class FirstApplyDoctorController {
-    // saveOrUpdate() 这个方法是更新或者插入，有主键就执行更新，如果没有主键就执行插入。
     // 申请表
     @Resource
     private MainBoardService mainBoardService;
     // 导师申请表
     @Resource
     private TutorInspectService tutorInspectService;
+    //申请
+    @Resource
+    private ApplyService applyService;
     //第三页
     @Resource
     private ThirdService thirdService;
@@ -77,6 +82,7 @@ public class FirstApplyDoctorController {
             Apply apply = new Apply();
             apply.setTutorId(tutorId);
             apply.setStatus(0);
+            apply.setSubmitTime(TimeUtils.sdf.format(new Date()));
             //申请类别
             apply.setApplyTypeId(applyTypeId);
             //返回主键
@@ -152,7 +158,6 @@ public class FirstApplyDoctorController {
             else{
                 //第三页填写过 //申请过此岗位，但是填到第一页交过之后退出了 第三页第四页数据库无字段
                 thirdPage = thirdService.getThirdPage(applyId, tutorId);
-                // thirdPage.setSummary(new Summary(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
             }
             System.out.println(thirdPage);
             //返回成功信息
@@ -187,8 +192,29 @@ public class FirstApplyDoctorController {
         if (applyCondition == 102){
             return new Result(ResultCode.SUCCESS);
         }
+        //返回第四页信息
         FourthPage fourthPage = fourthService.getFourthPage(applyId, tutorId);
         return new Result(ResultCode.SUCCESS,fourthPage);
+    }
+
+    @ApiOperation("更新第四页博士信息")
+    @PostMapping("/updateFourthPage/{applyId}")
+    public Result updateFourthPage(@RequestBody FourthPage fourthPage,@PathVariable("applyId") Integer applyId){
+        try{
+            //存储或更新第四页
+            fourthService.updateOrSaveFourthPage(applyId,tutorId,fourthPage);
+        }
+        catch (Exception e){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code", 1201);
+            jsonObject.put("message", "信息填写异常，请重试");
+            jsonObject.put("errorMessage", e.getMessage());
+            return new Result(ResultCode.SUCCESS, jsonObject);
+
+        }
+        // 修改 apply 表
+        applyService.updateApplyStatus(applyId, 10, "");
+        return Result.SUCCESS();
     }
 
 }

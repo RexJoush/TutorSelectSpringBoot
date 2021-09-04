@@ -43,6 +43,8 @@ public class ResearchProjectController {
         System.out.println(updateProject);
         ResearchProject researchProject = new ResearchProject();
         BeanUtils.copyProperties(updateProject,researchProject);
+        System.out.println("========================");
+        System.out.println(researchProject);
         researchProjectService.updateById(researchProject);
         return Result.SUCCESS();
     }
