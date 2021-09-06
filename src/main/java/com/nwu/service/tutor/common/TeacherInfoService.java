@@ -1,5 +1,6 @@
 package com.nwu.service.tutor.common;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.TeacherInfo;
 import org.apache.ibatis.annotations.Param;
@@ -9,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * @time 2021.08.23 15:29
  */
 
-public interface TeacherInfoService {
+public interface TeacherInfoService extends IService<TeacherInfo> {
     /**
      * 添加免审表
      * @return 添加结果

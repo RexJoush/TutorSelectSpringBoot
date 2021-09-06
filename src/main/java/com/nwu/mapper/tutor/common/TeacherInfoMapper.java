@@ -1,5 +1,7 @@
 package com.nwu.mapper.tutor.common;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.nwu.entities.AcademicPaper;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.TeacherInfo;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,7 +16,7 @@ import org.apache.ibatis.annotations.Param;
  * 登录时添加教师信息
  */
 @Mapper
-public interface TeacherInfoMapper {
+public interface TeacherInfoMapper extends BaseMapper<TeacherInfo> {
     /**
      * 获取教师基本信息
      * @param tutorId
