@@ -2,6 +2,8 @@ package com.nwu.service.tutor.common;
 
 import com.nwu.entities.Apply;
 
+import java.util.List;
+
 public interface MainBoardService {
 
     /**
@@ -29,6 +31,13 @@ public interface MainBoardService {
      */
     Apply getApplyByTutorIdAndApplyTypeIdAndStatus(String tutorId, Integer applyId);
 
+    /**
+     * 查询出 apply表  list集合
+     * @param tutorId
+     * @param applyTypeId
+     * @return
+     */
+    List<Apply> getApplyListByTutorIdAndApplyTypeId(String tutorId,Integer applyTypeId);
     /**
      * 存储 apply 表
      *
