@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.sql.Blob;
 
 /**
  * @author Rex Joush
@@ -20,10 +21,11 @@ public class TeacherInfo implements Serializable {
     private String XB;      // 性别
     private String SJH;     // 手机号
     private String MC;      // 单位
-    private String SHZ;     // 招聘
+    private byte[] SHZ;     // 照片信息
     private String CSRQ;    // 出生日期
     private String ZGXW;    // 最高学位
     private String ZGH;     // 工号
     private String ZCMC;    // 职称
+    private String DM;      //学院代码
 
 }

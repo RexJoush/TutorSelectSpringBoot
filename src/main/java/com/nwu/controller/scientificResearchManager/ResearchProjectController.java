@@ -28,10 +28,11 @@ public class ResearchProjectController {
     @Autowired
     ResearchProjectService researchProjectService;
 
-    @GetMapping("/get/{tutorId}")
-    public Result getAll(@PathVariable("tutorId") String tutorId){
+    @GetMapping("/get/{tutorId}/{applyId}")
+    public Result getAll(@PathVariable("tutorId") String tutorId,
+                         @PathVariable String applyId){
         QueryWrapper<ResearchProject> wrapper = new QueryWrapper<>();
-        wrapper.eq("tutor_id",tutorId);
+        wrapper.eq("tutor_id",tutorId).eq("apply_id",applyId);;
         List<ResearchProject> list = researchProjectService.list(wrapper);
         System.out.println(list);
         return new Result(ResultCode.SUCCESS,list);
@@ -42,6 +43,8 @@ public class ResearchProjectController {
         System.out.println(updateProject);
         ResearchProject researchProject = new ResearchProject();
         BeanUtils.copyProperties(updateProject,researchProject);
+        System.out.println("========================");
+        System.out.println(researchProject);
         researchProjectService.updateById(researchProject);
         return Result.SUCCESS();
     }

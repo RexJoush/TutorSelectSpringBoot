@@ -30,5 +30,7 @@ logging:
     com.nwu.mapper: debug
 
 #上传文件路径
-FilePath: E://RARZIP/uploadFile/
+FilePath: D://RARZIP/uploadFile/
+#图片保存路径
+ImagePath : D://RARZIP/image/
 

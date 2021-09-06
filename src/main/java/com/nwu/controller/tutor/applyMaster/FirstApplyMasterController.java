@@ -14,10 +14,12 @@ import com.nwu.service.TutorInspectService;
 import com.nwu.service.admin.ApplyService;
 import com.nwu.service.tutor.PageInit;
 import com.nwu.service.tutor.common.*;
+import com.nwu.util.TimeUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @author Rex Joush
@@ -70,28 +72,35 @@ public class FirstApplyMasterController {
         // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
         if (applyCondition == 101) {
             int applyId = mainBoardService.getApplyId(firstPage.getTutorId(), 4, 0);
-            SecondPage secondPage = tutorInspectService.getTutorInspectSecond(applyId);
-            System.out.println(secondPage);
-            secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
-            secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
-            secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
+            SecondPage secondPage = secondService.getSecondPage(applyId);
             return new Result(ResultCode.SUCCESS, secondPage);
         }
 
         // 首次申请，添加申请表
         String tutorId = firstPage.getTutorId();
-        System.out.println(applyTypeId);
-        System.out.println(applyCondition);
-        System.out.println(firstPage);
 
-        // 添加申请表
-        Apply apply = new Apply(0, tutorId, applyTypeId, 0, 0, 0, "");
-        mainBoardService.saveApplyInfo(apply);
+        Apply apply = new Apply();
+
+        // 未申请过，需要添加申请表
+        if (applyCondition == 102) {
+            // 设置申请的类型和教师工号
+            apply.setTutorId(tutorId);
+            apply.setApplyTypeId(applyTypeId);
+            apply.setSubmitTime(TimeUtils.sdf.format(new Date()));
+            // 添加申请表
+            mainBoardService.saveApplyInfo(apply);
+        }
+        // 已申请过，读取申请表
+        else {
+            QueryWrapper<Apply> wrapper = new QueryWrapper<>();
+            wrapper.eq("tutor_id", tutorId).eq("apply_type_id", applyTypeId);
+            apply = applyService.getOne(wrapper);
+        }
 
         // 添加信息表
-        firstPage.setTutorId(String.valueOf(apply.getApplyId()));
-        System.out.println(firstPage);
+        firstPage.setApplyId(String.valueOf(apply.getApplyId()));
 
+        // 根据院系名称查询院系代码
         QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("organization_name", firstPage.getOrganizationName());
         Organization one = organizationService.getOne(queryWrapper);
@@ -109,14 +118,13 @@ public class FirstApplyMasterController {
 
             // 102 表示未申请过，第二页无信息，否则取读取第二页信息
             if (applyCondition == 102) {
-                secondPage = new SecondPage();
+                secondPage = PageInit.getSecondPage();
             } else {
-                secondPage = tutorInspectService.getTutorInspectSecond(apply.getApplyId());
-                secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
-                secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
-                secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
+                secondPage = secondService.getSecondPage(apply.getApplyId());
             }
+
         } catch (Exception e) {
+
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code", 1201);
             jsonObject.put("message", "您不在此系统中，请联系系统管理员");
@@ -143,11 +151,6 @@ public class FirstApplyMasterController {
         System.out.println(applyTypeId);    // 申请类型
         System.out.println(applyId);         // 第一页添加的 id
 
-        // 没有申请过此岗位，直接返回，填写新值
-        if (applyCondition == 102) {
-            return new Result(ResultCode.SUCCESS, PageInit.getThirdPage());
-        }
-
         // 保存或更新第二页信息
         try {
             secondService.updateOrSaveSecond(applyId, tutorId, secondPage);
@@ -158,6 +161,11 @@ public class FirstApplyMasterController {
             jsonObject.put("message", "信息填写异常，请重试");
             jsonObject.put("errorMessage", e.getMessage());
             return new Result(ResultCode.SUCCESS, jsonObject);
+        }
+
+        // 没有申请过此岗位，直接返回空对象，填写新值
+        if (applyCondition == 102) {
+            return new Result(ResultCode.SUCCESS, PageInit.getThirdPage());
         }
 
         // 获取第三页信息并返回
@@ -180,13 +188,6 @@ public class FirstApplyMasterController {
 
         System.out.println(applyId); // 第一页的 apply 表 id
 
-        // 没有申请过此岗位，直接返回，填写新值
-        FourthPage fourthPage = PageInit.getFourthPage();
-
-        if (applyCondition == 102) {
-            return new Result(ResultCode.SUCCESS, fourthPage);
-        }
-
         // 存储第三页信息
         try {
             thirdService.updateOrSaveThirdPage(applyId, tutorId, thirdPage);
@@ -197,6 +198,13 @@ public class FirstApplyMasterController {
             jsonObject.put("message", e.getMessage().split("!")[0]);
             jsonObject.put("errorMessage", e.getMessage().split("!")[1]);
             return new Result(ResultCode.SUCCESS, jsonObject);
+        }
+
+        // 没有申请过此岗位，返回空对象，填写新值
+        FourthPage fourthPage = PageInit.getFourthPage();
+
+        if (applyCondition == 102) {
+            return new Result(ResultCode.SUCCESS, fourthPage);
         }
 
         // 获取第四页

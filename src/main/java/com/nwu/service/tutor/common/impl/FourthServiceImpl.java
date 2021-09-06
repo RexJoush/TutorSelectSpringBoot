@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -68,6 +69,20 @@ public class FourthServiceImpl implements FourthService {
             throw new RuntimeException("研究生课程信息填写错误，请检查" + "!" + e.getMessage());
         }
 
+        // 将各个子类型的学生列表合并为一个学生列表
+        fourthPage.setGuidingStudents(new ArrayList<>());
+        fourthPage.setGuidingStudents(
+            Stream.of(
+                    fourthPage.getDoctorStudents(),
+                    fourthPage.getAssistDoctorStudents(),
+                    fourthPage.getMasterStudents(),
+                    fourthPage.getAssistMasterStudents(),
+                    fourthPage.getUndergraduateStudents()
+            ).flatMap(Collection::stream).collect(Collectors.toList())
+        );
+
+
+
         // 填写学生信息
         try {
             if (fourthPage.getGuidingStudents() != null){
@@ -100,6 +115,9 @@ public class FourthServiceImpl implements FourthService {
                             break;
                         case 2:
                         case 3:
+                        case 4:
+                        case 5:
+                        case 6:
                             guidingStudentService.removeById(id);
                             break;
                         default:

@@ -31,12 +31,11 @@ public class AcademicPaperController {
     @Autowired
     AcademicPaperService academicPaperService;
 
-    @GetMapping("/get/{tutorId}")
-    public Result getAll(@PathVariable("tutorId") String tutorId){
+        @GetMapping("/get/{tutorId}/{applyId}")
+        public Result getAll(@PathVariable("tutorId") String tutorId,
+                         @PathVariable String applyId){
         QueryWrapper<AcademicPaper> wrapper = new QueryWrapper<>();
-        wrapper.eq("tutor_id",tutorId);
-//      AcademicPaper one = academicPaperService.getOne(wrapper);
-
+        wrapper.eq("tutor_id",tutorId).eq("apply_id",applyId);
         List<AcademicPaper> list = academicPaperService.list(wrapper);
         System.out.println(list);
         return new Result(ResultCode.SUCCESS,list);

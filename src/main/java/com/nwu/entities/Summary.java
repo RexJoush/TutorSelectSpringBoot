@@ -8,13 +8,17 @@ package com.nwu.entities;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 申请表中的总结信息
  */
 @Data
 @TableName("summary")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Summary {
 
     @TableId(value = "summary_id", type = IdType.AUTO)
@@ -40,4 +44,5 @@ public class Summary {
     private int awardsProvinceLevel    ; // 省部级奖项
     private int inventionPatentAmount  ; // 发明专利
     private int newUtilityPatent       ; // 新型实用专利
+
 }

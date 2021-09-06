@@ -29,10 +29,9 @@ public class FourthPage {
 
     private List<GuidingStudent> doctorStudents;        // 指导博士生情况：博导增岗
     private List<GuidingStudent> assistDoctorStudents;  // 协助指导博士生情况：首次博导
-    private List<GuidingStudent> masterStudents;        // 指导硕士生情况：学硕增岗，专硕增岗
+    private List<GuidingStudent> masterStudents;        // 指导硕士生情况：首次博导，博导增岗，学硕增岗，专硕增岗
     private List<GuidingStudent> assistMasterStudents;  // 协助指导硕士生情况：首次学硕，首次专硕
     private List<GuidingStudent> undergraduateStudents; // 指导本科生情况：首次学硕，首次专硕
-
 
     private List<DeleteItem> deleteItems;               // 删除信息
 

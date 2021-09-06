@@ -31,8 +31,11 @@ public class FirstPage {
     // 性别
     private String gender;
 
-    // 图片
+    // 图片 路径
     private String image;
+
+    // blob图片
+    private byte[] blobImage;
 
     // 所在单位id
     private Integer organizationId;

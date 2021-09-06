@@ -1,6 +1,7 @@
 package com.nwu.service.tutor.common.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.nwu.entities.*;
 import com.nwu.entities.tutor.ThirdPage;
 import com.nwu.entities.tutor.childSubject.DeleteItem;
@@ -40,7 +41,8 @@ public class ThirdServiceImpl implements ThirdService {
     private SummaryService summaryService; // 汇总服务类
 
     @Override
-    public void updateOrSaveThirdPage(int applyId, String tutorId, ThirdPage thirdPage) {
+    public void
+    updateOrSaveThirdPage(int applyId, String tutorId, ThirdPage thirdPage) {
 
         // 设置论文
         try {
@@ -114,6 +116,7 @@ public class ThirdServiceImpl implements ThirdService {
             summary.setApplyId(applyId);
             summary.setTutorId(tutorId);
             summaryService.saveOrUpdate(summary);
+
         } catch (Exception e) {
             throw new RuntimeException("成果汇总填写错误，请检查" + "!" + e.getMessage());
         }
@@ -192,8 +195,12 @@ public class ThirdServiceImpl implements ThirdService {
 
             // 获取汇总信息,需要用户手动点击汇总信息，所以不查询数据库
             Summary summary = summaryService.getOne(queryWrapper);
-            thirdPage.setSummary(summary);
 
+            if (summary == null){
+                thirdPage.setSummary(PageInit.getSummary());
+            } else {
+                thirdPage.setSummary(summary);
+            }
 
         } catch (Exception e) {
             // 出现异常则返回空信息

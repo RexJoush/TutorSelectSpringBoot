@@ -13,6 +13,9 @@ public class UploadMappingConfig implements WebMvcConfigurer {
         registry
                 .addResourceHandler("/downFile/**")
                 .addResourceLocations("file:E:/RARZIP/");
+//        registry
+//                .addResourceHandler("/downImage/**")
+//                .addResourceLocations("file:E:/RARZIP/");
         //LINUX用
 //        registry.addResourceHandler("/img/**").addResourceLocations("file:/usr/local/img/");
     }
