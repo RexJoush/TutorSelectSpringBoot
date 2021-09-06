@@ -15,10 +15,10 @@ public interface MainBoardService {
      * 查询 apply 信息
      *
      * @param tutorId 导师工号
-     * @param applyId 申请类别
+     * @param applyTypeId 申请类别
      * @return apply 信息
      */
-    Apply getApplyInfoByTutorIdAndApplyId(String tutorId, Integer applyId);
+    Apply getApplyInfoByTutorIdAndApplyId(String tutorId, Integer applyTypeId);
 
     /**
      * 查询 apply 信息

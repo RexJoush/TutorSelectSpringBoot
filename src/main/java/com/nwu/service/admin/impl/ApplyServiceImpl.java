@@ -17,6 +17,11 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
     private ApplyMapper applyMapper;
 
     @Override
+    public int updateApplyStatusAndTime(Integer applyId, Integer status, String time) {
+        return applyMapper.updateApplyStatusAndTime(applyId,status,time);
+    }
+
+    @Override
     public int updateApplyStatus(Integer id, Integer status, String commit) {
         applyMapper.updateApplyStatus(id,status,commit);
         return 1;

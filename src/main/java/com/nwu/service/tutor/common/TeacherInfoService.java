@@ -1,5 +1,6 @@
 package com.nwu.service.tutor.common;
 
+import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.TeacherInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,5 +27,5 @@ public interface TeacherInfoService {
      * @param tutorId
      * @return
      */
-    TeacherInfo getTeacherInfo(String tutorId);
+    FirstPage getTeacherInfo(String tutorId);
 }

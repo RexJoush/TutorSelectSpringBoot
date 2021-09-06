@@ -67,13 +67,13 @@
 
     <insert id="saveTutorInspectBaseInfo" parameterType="com.nwu.entities.tutor.FirstPage">
         INSERT INTO tutor_inspect
-        (apply_id, tutor_id, `name`, gender, organization_id, birthday, identity, phone, email, title, evaluate_time,
+        (apply_id, tutor_id, `name`, gender, organization_id, birthday, identity, phone, email, title, evaluate_time,image,
          final_degree, awarding_unit_time)
         VALUES (#{firstPage.applyId}, #{firstPage.tutorId}, #{firstPage.name}, #{firstPage.gender},
                 #{firstPage.organizationId},
                 #{firstPage.birthday}, #{firstPage.identity}, #{firstPage.phone}, #{firstPage.email},
                 #{firstPage.title},
-                #{firstPage.evaluateTime}, #{firstPage.finalDegree}, #{firstPage.awardingUnitTime});
+                #{firstPage.evaluateTime},#{firstPage.image}, #{firstPage.finalDegree}, #{firstPage.awardingUnitTime});
     </insert>
 
     <select id="getTutorInspectSecond" resultMap="secondInfo">
@@ -113,4 +113,10 @@
         WHERE apply_id = #{applyId}
     </update>
 
+    <select id="getFirstPage" parameterType="string" resultType="com.nwu.entities.tutor.FirstPage">
+        SELECT apply_id,tutor_id,name,organization_id,gender,birthday,image,identity,phone,email,final_degree,
+                awarding_unit_time,final_degree,evaluate_time,title
+        FROM tutor_inspect
+        WHERE apply_id=#{applyId}
+    </select>
 </mapper>

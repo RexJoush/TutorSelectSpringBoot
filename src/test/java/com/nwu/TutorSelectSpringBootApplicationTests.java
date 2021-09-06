@@ -9,6 +9,7 @@ import com.nwu.service.admin.ApplyService;
 import com.nwu.service.tutor.common.SecondService;
 import com.nwu.service.tutor.common.ThirdService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -16,6 +17,8 @@ import javax.annotation.Resource;
 @SpringBootTest
 class TutorSelectSpringBootApplicationTests {
 
+    @Value("${ImagePath}")
+    private String imagePath;
     @Resource
     private TutorInspectService tutorInspectService;
 
@@ -30,6 +33,9 @@ class TutorSelectSpringBootApplicationTests {
 
     @Test
     void contextLoads() {
+
+        System.out.println(imagePath);
+
 
         SecondPage second = tutorInspectService.getTutorInspectSecond(105);
         System.out.println(second.getDoctoralMasterSubjectCode());

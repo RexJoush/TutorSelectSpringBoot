@@ -24,4 +24,12 @@ public interface ApplyService extends IService<Apply> {
      */
     List<ApplyDisplay> getApplyList(String tutorId);
 
+    /**
+     * 导师提交最后一页修改apply
+     * @param applyId
+     * @param status
+     * @param time
+     * @return int
+     */
+    int updateApplyStatusAndTime(Integer applyId,Integer status, String time);
 }

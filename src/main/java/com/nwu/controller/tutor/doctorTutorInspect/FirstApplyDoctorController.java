@@ -21,7 +21,9 @@ import com.nwu.service.tutor.PageInit;
 import com.nwu.service.tutor.common.FourthService;
 import com.nwu.service.tutor.common.MainBoardService;
 
+import com.nwu.service.tutor.common.SecondService;
 import com.nwu.service.tutor.common.ThirdService;
+import com.nwu.util.SaveImage;
 import com.nwu.util.TimeUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -51,6 +54,9 @@ public class FirstApplyDoctorController {
     // 导师申请表
     @Resource
     private TutorInspectService tutorInspectService;
+    //第二页
+    @Resource
+    private SecondService secondService;
     //申请
     @Resource
     private ApplyService applyService;
@@ -75,14 +81,13 @@ public class FirstApplyDoctorController {
      */
     @ApiOperation("保存博士基本信息和申请类别表")
     @PostMapping("/saveBaseInfo/{applyTypeId}/{applyCondition}")
-    public Result SaveOrUpdateApplyDoctor(@RequestBody FirstPage firstPage, @PathVariable("applyTypeId") int applyTypeId, @PathVariable("applyCondition") int applyCondition) {
+    public Result SaveOrUpdateApplyDoctor(HttpServletRequest request, @RequestBody FirstPage firstPage, @PathVariable("applyTypeId") int applyTypeId, @PathVariable("applyCondition") Integer applyCondition) throws Exception {
         // 没有申请过和正在申请中都进来 根据applyCondition判断是插入还是修改apply
         if (applyCondition == 102) {
             // 没有申请过此岗位apply表插入
             Apply apply = new Apply();
             apply.setTutorId(tutorId);
             apply.setStatus(0);
-            apply.setSubmitTime(TimeUtils.sdf.format(new Date()));
             //申请类别
             apply.setApplyTypeId(applyTypeId);
             //返回主键
@@ -97,20 +102,22 @@ public class FirstApplyDoctorController {
             firstPage.setOrganizationId(one.getOrganizationId());
             // 拼接授予时间及单位
             firstPage.setAwardingUnitTime(firstPage.getAwardDepartment() + " " + firstPage.getAwardTime());
+            //存图
+            String httpPath = SaveImage.ExportBlob( firstPage.getBlobImage(), tutorId, request) ;
+            firstPage.setImage(httpPath);
             // 插入数据库
             tutorInspectService.saveTutorInspectBaseInfo(firstPage);
-
-            return new Result(ResultCode.SUCCESS, apply.getApplyId());
+            //返回第二页信息
+            SecondPage secondPage = PageInit.getSecondPage();
+            secondPage.setApplyId(apply.getApplyId());
+            return new Result(ResultCode.SUCCESS, secondPage);
 
         } else if (applyCondition == 101) {
             // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
             //根据填写信息查询出对应的主键id
-            int id = mainBoardService.getApplyId(firstPage.getTutorId(), 1, 0);
-            //返回给前端第二页的数据
-            SecondPage secondPage = tutorInspectService.getTutorInspectSecond(id);
-            secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));
-            secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
-            secondPage.setDoctoralMasterSubjectCodeName(secondPage.getDoctoralMasterSubjectCode() + " " + secondPage.getDoctoralMasterSubjectName());
+            int ApplyId = mainBoardService.getApplyId(firstPage.getTutorId(), 1, 0);
+            //返回给前端第二页的数据 去数据库读取数据
+            SecondPage secondPage = secondService.getSecondPage(ApplyId);
             return new Result(ResultCode.SUCCESS, secondPage);
         }
         return Result.FAIL();
@@ -213,7 +220,7 @@ public class FirstApplyDoctorController {
 
         }
         // 修改 apply 表
-        applyService.updateApplyStatus(applyId, 10, "");
+        applyService.updateApplyStatusAndTime(applyId, 10, TimeUtils.sdf.format(new Date()));
         return Result.SUCCESS();
     }
 

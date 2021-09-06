@@ -26,7 +26,6 @@ public class PageInit {
         SecondPage secondPage = new SecondPage();
         secondPage.setExpertTitles(new ArrayList<>());
         secondPage.setGroupsOrPartTimeJobs(new ArrayList<>());
-
         return secondPage;
 
     }

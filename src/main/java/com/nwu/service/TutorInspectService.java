@@ -32,6 +32,13 @@ public interface TutorInspectService extends IService<TutorInspect> {
     List<QueryDepartmentSecretaryInit> getTutorByQuery(TutorQuery tutorQuery);
 
     /**
+     * 根据applyId获取第一页信息
+     * @param ApplyId
+     * @return FirstPage
+     */
+    FirstPage getFirstPage(String ApplyId);
+
+    /**
      * 更新第一页申请导师信息
      *
      * @param firstPage 信息
@@ -55,5 +62,6 @@ public interface TutorInspectService extends IService<TutorInspect> {
      * @return 修改条数
      */
     int updateTutorInspectSecond(int applyId, SecondPage secondPage);
+
 
 }

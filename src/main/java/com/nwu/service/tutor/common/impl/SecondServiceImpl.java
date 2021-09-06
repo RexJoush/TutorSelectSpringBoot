@@ -62,7 +62,6 @@ public class SecondServiceImpl implements SecondService {
 
         SecondPage secondPage = tutorInspectService.getTutorInspectSecond(applyId);
 
-
         // 处理申请专业的代码和名字
         if (secondPage.getDoctoralMasterSubjectCode() == null){
             secondPage.setDoctoralMasterSubjectCodeName("");
@@ -77,7 +76,7 @@ public class SecondServiceImpl implements SecondService {
             secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
         }
         // 参加职务处理
-        if ("[]".equals(secondPage.getGroupsOrPartTimeJobsJson())){
+        if ("[]".equals(secondPage.getGroupsOrPartTimeJobsJson()) || secondPage.getGroupsOrPartTimeJobsJson() == null){
             secondPage.setGroupsOrPartTimeJobs(new ArrayList<>());
         } else {
             secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));

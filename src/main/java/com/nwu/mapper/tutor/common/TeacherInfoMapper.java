@@ -1,5 +1,6 @@
 package com.nwu.mapper.tutor.common;
 
+import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.TeacherInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -19,6 +20,8 @@ public interface TeacherInfoMapper {
      * @param tutorId
      * @return
      */
-    TeacherInfo getTeacherInfo(@Param("tutorId") String tutorId);
+    FirstPage getTeacherInfo(@Param("tutorId") String tutorId);
+
+
 
 }

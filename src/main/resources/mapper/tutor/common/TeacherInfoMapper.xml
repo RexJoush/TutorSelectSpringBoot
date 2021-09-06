@@ -3,9 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nwu.mapper.tutor.common.TeacherInfoMapper">
-    <select id="getTeacherInfo" parameterType="string" resultType="com.nwu.entities.tutor.TeacherInfo">
+    <select id="getTeacherInfo" parameterType="string" resultMap="firstInfo">
         SELECT *
         FROM teacher_info
         WHERE ZGH = #{tutorId}
     </select>
+    <resultMap id="firstInfo" type="com.nwu.entities.tutor.FirstPage">
+        <result property="tutorId" column="ZGH"></result>
+        <result property="name" column="XM"></result>
+        <result property="gender" column="XB"></result>
+        <result property="birthday" column="CSRQ"></result>
+        <result property="identity" column="SFZJH"></result>
+        <result property="phone" column="SJH"></result>
+        <result property="organizationName" column="MC"></result>
+        <result property="organizationId" column="DM"></result>
+        <result property="title" column="ZCMC"></result>
+        <result property="finalDegree" column="ZGXW"></result>
+        <result property="blobImage" column="SHZ"></result>
+    </resultMap>
+
+
 </mapper>

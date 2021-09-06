@@ -16,4 +16,10 @@
         where
             apply_id = #{id}
     </update>
+
+    <update id="updateApplyStatusAndTime">
+        update apply
+        set status = #{status},submit_time = #{time}
+        where apply_id = #{applyId}
+    </update>
 </mapper>
