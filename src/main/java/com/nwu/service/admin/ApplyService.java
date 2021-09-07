@@ -32,4 +32,6 @@ public interface ApplyService extends IService<Apply> {
      * @return int
      */
     int updateApplyStatusAndTime(Integer applyId,Integer status, String time);
+
+
 }
