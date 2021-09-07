@@ -21,6 +21,8 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
         return applyMapper.updateApplyStatusAndTime(applyId,status,time);
     }
 
+
+
     @Override
     public int updateApplyStatus(Integer id, Integer status, String commit) {
         applyMapper.updateApplyStatus(id,status,commit);
