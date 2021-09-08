@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Rex Joush
@@ -52,7 +53,6 @@ public class MainBoardController {
     @ApiOperation("是否申请过此岗位")
     @GetMapping("/firstApply/{applyTypeId}")
     public Result firstApply(@PathVariable("applyTypeId") int applyTypeId) {
-        System.out.println("88888888888888");
         if (!"".equals(tutorId)) {
             /*
                 根据 tutorId 和 applyId 查询申请信息
@@ -86,21 +86,23 @@ public class MainBoardController {
         增列博士，增列学硕，增列专硕，免审
     */
     @ApiOperation("是否申请申请过此类型岗位")
-    @GetMapping("/addApply/{applyId}")
-    public Result addApply(@PathVariable("applyId") int applyId) {
-
+    @GetMapping("/addApply/{applyTypeId}")
+    public Result addApply(@PathVariable("applyTypeId") int applyTypeId) {
 
         if (!"".equals(tutorId)) {
-            // 根据 tutorId 和 applyId 和 status 查询是否申请过
-            Apply apply = mainBoardService.getApplyByTutorIdAndApplyTypeIdAndStatus(tutorId, applyId);
+            //status == 0
+            Apply apply = mainBoardService.getApplyByTutorIdAndApplyTypeIdAndStatus(tutorId, applyTypeId);
+            HashMap<String, Object> map = new HashMap<>();
             if (apply != null) {
-                // 申请过此岗位
-
-                return new Result(ResultCode.SUCCESS, 100);
+               // 申请过此岗位 status == 0 信息还没有填写完整 主键也返回
+                map.put("applyId",apply.getApplyId());
+                map.put("applyCondition",101);
             } else {
                 // 没有申请过此岗位
-                return new Result(ResultCode.SUCCESS, 101);
+                map.put("applyId",-1);
+                map.put("applyCondition",102);
             }
+            return new Result(ResultCode.SUCCESS, map);
         }
         // 返回失败
         return Result.FAIL();
@@ -128,7 +130,30 @@ public class MainBoardController {
             return Result.FAIL();
         }
         return new Result(ResultCode.SUCCESS, firstPage);
+    }
 
+    /**
+     * 导师增列
+     * @param applyTypeId
+     * @param applyCondition
+     * @param applyId
+     * @return
+     */
+        @GetMapping("/getFirstPage/{applyTypeId}/{applyCondition}/{applyId}")
+        public Result getFirstPage(@PathVariable("applyTypeId") Integer applyTypeId ,@PathVariable("applyCondition") Integer applyCondition,@PathVariable("applyId") Integer applyId)
+        {
+            FirstPage firstPage;
+            if (applyCondition == 102) {
+                //未申请过 查找teacherInfo
+                firstPage = teacherInfoService.getTeacherInfo(tutorId);
+            } else if (applyCondition == 101) {
+                //查询tutorInspect 博士增岗
+                firstPage = tutorInspectService.getFirstPage(String.valueOf(applyId));
+            } else {
+                return Result.FAIL();
+            }
+            return new Result(ResultCode.SUCCESS, firstPage);
+        }
 
         //           ===  校外  ====
 //        TeacherInfo teacherInfo = new TeacherInfo();
@@ -148,7 +173,6 @@ public class MainBoardController {
 //            return Result.FAIL();
 //        }
 //        return new Result(ResultCode.SUCCESS, teacherInfo);
-    }
 
     /**
      * 文件上传controller

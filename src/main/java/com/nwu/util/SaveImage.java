@@ -54,7 +54,6 @@ public class SaveImage {
             outputStream.flush();//刷新
             outputStream.close();//关闭字节输出流
             String httpPath=request.getScheme()+"://"+ request.getServerName() +":"+request.getServerPort()+"/downFile/image/"+fileName+".jpg";
-            System.out.println(httpPath);
             return httpPath;
         }
         catch (Exception e){

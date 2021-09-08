@@ -6,6 +6,7 @@ import com.nwu.service.tutor.common.MainBoardService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @Service
@@ -17,6 +18,11 @@ public class MainBoardServiceImpl implements MainBoardService {
     @Override
     public Apply getApplyInfoByTutorIdAndApplyId(String tutorId, Integer applyTypeId) {
         return tutorApplyMapper.getApplyInfoByTutorIdAndApplyTypeId(tutorId, applyTypeId);
+    }
+
+    @Override
+    public List<Apply> getApplyListByTutorIdAndApplyTypeId(String tutorId, Integer applyTypeId) {
+        return tutorApplyMapper.getApplyListByTutorIdAndApplyTypeId(tutorId,applyTypeId);
     }
 
     @Override

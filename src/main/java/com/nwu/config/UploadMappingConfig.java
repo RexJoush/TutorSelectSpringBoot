@@ -12,7 +12,7 @@ public class UploadMappingConfig implements WebMvcConfigurer {
         //Windows用
         registry
                 .addResourceHandler("/downFile/**")
-                .addResourceLocations("file:E:/RARZIP/");
+                .addResourceLocations("file:D:/RARZIP/");
 //        registry
 //                .addResourceHandler("/downImage/**")
 //                .addResourceLocations("file:E:/RARZIP/");
