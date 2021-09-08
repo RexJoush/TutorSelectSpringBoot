@@ -114,20 +114,26 @@ public class MainBoardController {
     @GetMapping("/getTeacherInfo/{applyTypeId}/{applyCondition}")
     public Result getTeacherInfo(@PathVariable("applyTypeId") Integer applyTypeId ,@PathVariable("applyCondition") Integer applyCondition){
         FirstPage firstPage;
-        if (applyCondition == 102){
-            //未申请过 查找teacherInfo
-            firstPage = teacherInfoService.getTeacherInfo(tutorId);
-        }
-        else if (applyCondition == 101)
-        {
-            //已申请过 查询对应的主键
-            int applyId = mainBoardService.getApplyId(tutorId, applyTypeId, 0);
-            //查询tutorInspect
-            firstPage = tutorInspectService.getFirstPage(String.valueOf(applyId));
-        }
-        else
-        {
-            return Result.FAIL();
+        try {
+            if (applyCondition == 102) {
+                //未申请过 查找teacherInfo
+                firstPage = teacherInfoService.getTeacherInfo(tutorId);
+            }
+            else if (applyCondition == 101) {
+                //已申请过 查询对应的主键
+                int applyId = mainBoardService.getApplyId(tutorId, applyTypeId, 0);
+                //查询tutorInspect
+                firstPage = tutorInspectService.getFirstPage(String.valueOf(applyId));
+            }
+            else {
+                return Result.FAIL();
+            }
+        } catch (Exception e) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code", 1201);
+            jsonObject.put("message", "您不在此系统中，请联系系统管理员");
+            jsonObject.put("errorMessage", e.getMessage());
+            return new Result(ResultCode.SUCCESS, jsonObject);
         }
         return new Result(ResultCode.SUCCESS, firstPage);
     }

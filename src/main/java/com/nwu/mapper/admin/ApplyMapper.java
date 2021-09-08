@@ -9,17 +9,18 @@ import java.util.List;
 
 public interface ApplyMapper extends BaseMapper<Apply> {
 
-    int updateApplyStatus(Integer id,Integer status, String commit);
+    int updateApplyStatus(Integer applyId, Integer status, String commit);
 
 
     /**
      * 导师提交最后一页修改
+     *
      * @param applyId
      * @param status
      * @param time
      * @return
      */
-    int updateApplyStatusAndTime(@Param("applyId") Integer applyId, @Param("status") Integer status,@Param("time") String time);
+    int updateApplyStatusAndTime(@Param("applyId") Integer applyId, @Param("status") Integer status, @Param("time") String time);
 
     List<ApplyDisplayVo> getInspectApply(String tutorId);
 

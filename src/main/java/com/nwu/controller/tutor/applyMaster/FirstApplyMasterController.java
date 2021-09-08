@@ -18,6 +18,7 @@ import com.nwu.util.TimeUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -48,6 +49,9 @@ public class FirstApplyMasterController {
     private OrganizationService organizationService;
 
     @Resource
+    private FirstService firstService;
+
+    @Resource
     private SecondService secondService;
 
     @Resource
@@ -67,11 +71,12 @@ public class FirstApplyMasterController {
     @PostMapping("/first/{applyTypeId}/{applyCondition}")
     public Result firstPage(@PathVariable("applyTypeId") int applyTypeId,
                             @PathVariable("applyCondition") int applyCondition,
-                            @RequestBody FirstPage firstPage) {
+                            @RequestBody FirstPage firstPage,
+                            HttpServletRequest request) {
 
         // 已经申请过此岗位，但信息未填写完成，第一页不修改，继续第二页，直接返回
         if (applyCondition == 101) {
-            int applyId = mainBoardService.getApplyId(firstPage.getTutorId(), 4, 0);
+            int applyId = mainBoardService.getApplyId(firstPage.getTutorId(), applyTypeId, 0);
             SecondPage secondPage = secondService.getSecondPage(applyId);
             return new Result(ResultCode.SUCCESS, secondPage);
         }
@@ -86,9 +91,10 @@ public class FirstApplyMasterController {
             // 设置申请的类型和教师工号
             apply.setTutorId(tutorId);
             apply.setApplyTypeId(applyTypeId);
+            apply.setStatus(0);
             apply.setSubmitTime(TimeUtils.sdf.format(new Date()));
             // 添加申请表
-            mainBoardService.saveApplyInfo(apply);
+            firstService.saveApplyInfo(apply);
         }
         // 已申请过，读取申请表
         else {
@@ -100,24 +106,15 @@ public class FirstApplyMasterController {
         // 添加信息表
         firstPage.setApplyId(String.valueOf(apply.getApplyId()));
 
-        // 根据院系名称查询院系代码
-        QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("organization_name", firstPage.getOrganizationName());
-        Organization one = organizationService.getOne(queryWrapper);
-
-        // 设置院系 id
-        firstPage.setOrganizationId(one.getOrganizationId());
-        // 拼接授予时间及单位
-        firstPage.setAwardingUnitTime(firstPage.getAwardDepartment() + " " + firstPage.getAwardTime());
-
         // 返回第二页的结果
         SecondPage secondPage = null;
         try {
-            // 插入数据库
-            tutorInspectService.saveTutorInspectBaseInfo(firstPage);
+            // 插入基本信息表
+            firstService.saveFirstPage(firstPage, request);
             // 102 表示未申请过，第二页无信息，否则取读取第二页信息
             if (applyCondition == 102) {
                 secondPage = PageInit.getSecondPage();
+                secondPage.setApplyId(apply.getApplyId());
             } else {
                 secondPage = secondService.getSecondPage(apply.getApplyId());
             }

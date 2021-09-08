@@ -14,12 +14,13 @@
 
         </set>
         where
-        apply_id = #{id}
+        apply_id = #{applyId}
     </update>
 
     <update id="updateApplyStatusAndTime">
         update apply
-        set status = #{status},submit_time = #{time}
+        set status      = #{status},
+            submit_time = #{time}
         where apply_id = #{applyId}
     </update>
     <select id="getInspectApply" resultType="com.nwu.vo.ApplyDisplayVo">

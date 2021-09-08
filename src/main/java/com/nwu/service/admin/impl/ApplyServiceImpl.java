@@ -20,14 +20,13 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
 
     @Override
     public int updateApplyStatusAndTime(Integer applyId, Integer status, String time) {
-        return applyMapper.updateApplyStatusAndTime(applyId,status,time);
+        return applyMapper.updateApplyStatusAndTime(applyId, status, time);
     }
 
 
-
     @Override
-    public int updateApplyStatus(Integer id, Integer status, String commit) {
-        applyMapper.updateApplyStatus(id,status,commit);
+    public int updateApplyStatus(Integer applyId, Integer status, String commit) {
+        applyMapper.updateApplyStatus(applyId, status, commit);
         return 1;
     }
 
@@ -39,61 +38,66 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
         // 获取非免审的申请
         List<ApplyDisplayVo> inspectApply = applyMapper.getInspectApply(tutorId);
 
-        for (ApplyDisplayVo display : inspectApply) {
-            ApplyDisplay applyDisplay = new ApplyDisplay();
+        if (inspectApply != null) {
+            for (ApplyDisplayVo display : inspectApply) {
+                ApplyDisplay applyDisplay = new ApplyDisplay();
 
-            // 设置基本信息
-            applyDisplay.setApplyId(display.getApplyId());
-            applyDisplay.setApplyTypeId(display.getApplyTypeId());
-            applyDisplay.setApplyName(display.getApplyName());
-            applyDisplay.setStatus(display.getStatus());
-            applyDisplay.setStatusDisplay(display.getStatusDisplay());
-            applyDisplay.setCommit(display.getCommit());
+                // 设置基本信息
+                applyDisplay.setApplyId(display.getApplyId());
+                applyDisplay.setApplyTypeId(display.getApplyTypeId());
+                applyDisplay.setApplyName(display.getApplyName());
+                applyDisplay.setStatus(display.getStatus());
+                applyDisplay.setStatusDisplay(display.getStatusDisplay());
+                applyDisplay.setCommit(display.getCommit());
 
-            // 填写申请的专业信息
-            switch (display.getApplyTypeId()){
-                case 1:
-                case 2:
-                case 4:
-                case 5:
-                    applyDisplay.setApplyDepartment(display.getDoctoralMasterApplicationSubjectUnit());
-                    applyDisplay.setApplySubject(display.getDoctoralMasterSubjectCode() + " " + display.getDoctoralMasterSubjectName());
-                    break;
-                case 7:
-                case 8:
-                    applyDisplay.setApplyDepartment(display.getProfessionalApplicationSubjectUnit());
-                    applyDisplay.setApplySubject(display.getProfessionalApplicationSubjectCode() + " " + display.getProfessionalApplicationSubjectName());
-                    break;
-                default:
-                    break;
+                // 填写申请的专业信息
+                switch (display.getApplyTypeId()) {
+                    case 1:
+                    case 2:
+                    case 4:
+                    case 5:
+                        applyDisplay.setApplyDepartment(display.getDoctoralMasterApplicationSubjectUnit());
+                        applyDisplay.setApplySubject(display.getDoctoralMasterSubjectCode() + " " + display.getDoctoralMasterSubjectName());
+                        break;
+                    case 7:
+                    case 8:
+                        applyDisplay.setApplyDepartment(display.getProfessionalApplicationSubjectUnit());
+                        applyDisplay.setApplySubject(display.getProfessionalApplicationSubjectCode() + " " + display.getProfessionalApplicationSubjectName());
+                        break;
+                    default:
+                        break;
+                }
+                // 标识非免审
+                applyDisplay.setNoInspect(false);
+                applyList.add(applyDisplay);
             }
-            // 标识非免审
-            applyDisplay.setNoInspect(false);
-            applyList.add(applyDisplay);
         }
 
 
         // 获取免审的申请
         List<ApplyDisplayVo> noInspectApply = applyMapper.getNoInspectApply(tutorId);
 
-        for (ApplyDisplayVo display : noInspectApply) {
+        if (noInspectApply != null) {
+            for (ApplyDisplayVo display : noInspectApply) {
 
-            ApplyDisplay applyDisplay = new ApplyDisplay();
+                ApplyDisplay applyDisplay = new ApplyDisplay();
 
-            // 设置基本信息
-            applyDisplay.setApplyId(display.getApplyId());
-            applyDisplay.setApplyTypeId(display.getApplyTypeId());
-            applyDisplay.setApplyName(display.getApplyName());
-            applyDisplay.setStatus(display.getStatus());
-            applyDisplay.setStatusDisplay(display.getStatusDisplay());
-            applyDisplay.setCommit(display.getCommit());
+                // 设置基本信息
+                applyDisplay.setApplyId(display.getApplyId());
+                applyDisplay.setApplyTypeId(display.getApplyTypeId());
+                applyDisplay.setApplyName(display.getApplyName());
+                applyDisplay.setStatus(display.getStatus());
+                applyDisplay.setStatusDisplay(display.getStatusDisplay());
+                applyDisplay.setCommit(display.getCommit());
 
-            // 设置申请的学院和专业
-            applyDisplay.setApplyDepartment(display.getAppliedSubjectUnit());
-            applyDisplay.setApplySubject(display.getAppliedSubjectCode() + " " + display.getAppliedSubjectName());
-            // 标识免审
-            applyDisplay.setNoInspect(true);
-            applyList.add(applyDisplay);
+                // 设置申请的学院和专业
+                applyDisplay.setApplyDepartment(display.getAppliedSubjectUnit());
+                applyDisplay.setApplySubject(display.getAppliedSubjectCode() + " " + display.getAppliedSubjectName());
+
+                // 标识免审
+                applyDisplay.setNoInspect(true);
+                applyList.add(applyDisplay);
+            }
         }
 
         // 返回两个列表合并
