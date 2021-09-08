@@ -1,5 +1,6 @@
 package com.nwu.service.tutor.common.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.TeacherInfo;
 import com.nwu.mapper.tutor.common.TeacherInfoMapper;
@@ -18,7 +19,7 @@ import java.util.Date;
  */
 
 @Service
-public class TeacherInfoServiceImpl implements TeacherInfoService {
+public class TeacherInfoServiceImpl extends ServiceImpl<TeacherInfoMapper, TeacherInfo> implements TeacherInfoService {
 
     @Resource
     private TeacherInfoMapper teacherInfoMapper;

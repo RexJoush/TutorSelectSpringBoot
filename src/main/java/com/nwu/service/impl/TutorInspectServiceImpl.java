@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author dynamic
@@ -40,10 +40,16 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     public FirstPage getFirstPage(String applyId) {
         FirstPage firstPage = tutorInspectMapper.getFirstPage(applyId);
         //查询所在院系
-        QueryWrapper<Organization> queryWrapper = new QueryWrapper();
+        QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("organization_id", firstPage.getOrganizationId());
         Organization one = organizationService.getOne(queryWrapper);
         firstPage.setOrganizationName(one.getOrganizationName());
+        //设置对应的授予单位及时间
+        if (firstPage.getAwardingUnitTime() != null) {
+            firstPage.setAwardDepartment(firstPage.getAwardingUnitTime().split(" ")[0]);
+            firstPage.setAwardTime(firstPage.getAwardingUnitTime().split(" ")[1]);
+        }
+        System.out.println(firstPage);
         return firstPage;
     }
 

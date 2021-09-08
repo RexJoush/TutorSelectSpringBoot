@@ -4,6 +4,8 @@ import com.nwu.entities.Apply;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 @Mapper
 public interface TutorApplyMapper {
@@ -31,6 +33,13 @@ public interface TutorApplyMapper {
      */
     Apply getApplyByTutorIdAndApplyTypeIdAndStatus(@Param("tutorId") String tutorId, @Param("applyTypeId") Integer applyTypeId);
 
+    /**
+     * 根据导师工号和申请类别状态码查询出对应的apply信息
+     * @param tutorId
+     * @param applyTypeId
+     * @return
+     */
+    List<Apply> getApplyListByTutorIdAndApplyTypeId(@Param("tutorId") String tutorId,@Param("applyTypeId") Integer applyTypeId);
     /**
      * 添加申请表信息 tutor_id apply_type_id status
      * @param apply 申请信息

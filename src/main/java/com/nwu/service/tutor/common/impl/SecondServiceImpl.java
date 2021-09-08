@@ -70,13 +70,13 @@ public class SecondServiceImpl implements SecondService {
         }
 
         // 专家称号处理
-        if ("[]".equals(secondPage.getExpertTitlesJson()) || secondPage.getExpertTitlesJson() == null){
+        if (secondPage.getExpertTitlesJson() == null){
             secondPage.setExpertTitles(new ArrayList<>());
         } else {
             secondPage.setExpertTitles(JSON.parseArray(secondPage.getExpertTitlesJson(), ExpertTitle.class));
         }
         // 参加职务处理
-        if ("[]".equals(secondPage.getGroupsOrPartTimeJobsJson()) || secondPage.getGroupsOrPartTimeJobsJson() == null){
+        if (secondPage.getGroupsOrPartTimeJobsJson() == null){
             secondPage.setGroupsOrPartTimeJobs(new ArrayList<>());
         } else {
             secondPage.setGroupsOrPartTimeJobs(JSON.parseArray(secondPage.getGroupsOrPartTimeJobsJson(), GroupsOrPartTimeJob.class));

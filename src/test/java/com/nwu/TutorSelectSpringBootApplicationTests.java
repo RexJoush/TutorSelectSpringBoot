@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.nwu.entities.Apply;
 import com.nwu.entities.tutor.SecondPage;
 import com.nwu.entities.tutor.ThirdPage;
+import com.nwu.service.AuthorizationService;
 import com.nwu.service.TutorInspectService;
 import com.nwu.service.admin.ApplyService;
 import com.nwu.service.tutor.common.SecondService;
 import com.nwu.service.tutor.common.ThirdService;
+import com.nwu.util.AESUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,15 +33,16 @@ class TutorSelectSpringBootApplicationTests {
     @Resource
     private ApplyService applyService;
 
+    @Resource
+    private AuthorizationService authorizationService;
+
     @Test
-    void contextLoads() {
+    void contextLoads() throws Exception {
 
-        System.out.println(imagePath);
-
-
-        SecondPage second = tutorInspectService.getTutorInspectSecond(105);
-        System.out.println(second.getDoctoralMasterSubjectCode());
-        System.out.println(second.getDoctoralMasterSubjectCode() == null);
+//        String hello = AESUtil.encode("hello");
+//        System.out.println("hello: " + hello);
+//        System.out.println(AESUtil.decode(hello));
+//        System.out.println(AESUtil.decode("3c/621Azt7nS/Xgdp2ToMQ=="));
 
 
 //        SecondPage secondPage = secondService.getSecondPage(102);

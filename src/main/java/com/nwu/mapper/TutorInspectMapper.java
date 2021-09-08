@@ -39,4 +39,6 @@ public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
      */
     FirstPage getFirstPage(@Param("applyId") String applyId);
 
+
+
 }
