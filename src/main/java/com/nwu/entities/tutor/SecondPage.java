@@ -24,6 +24,20 @@ public class SecondPage {
     private String doctoralMasterSubjectCode;   // 一级学科代码
     private String doctoralMasterSubjectName;   // 一级学科名称
 
+    //=========博士增岗 非免审============
+
+    //博导在岗学科
+    private String doctoralTutorOnDuty;
+
+    //上岗时间
+    private String doctoralStartTime;
+
+    // 原单位名称
+    private String sourceUnitName;
+
+    //原单位调入时间
+    private String transferInTime;
+
     private String major;           // 主要研究方向的内容及其意义
     private List<GroupsOrPartTimeJob> groupsOrPartTimeJobs;    // 何时参加何种学术团体、任何种职务，有何社会兼职列表
     private String groupsOrPartTimeJobsJson;    // 上一个字段的 json 串 存数据库

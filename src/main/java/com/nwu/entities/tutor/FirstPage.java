@@ -73,18 +73,8 @@ public class FirstPage {
     // 授予单位及时间
     private String awardingUnitTime;
 
-    //=========博士增岗 非免审============
 
-    //博导在岗学科
-    private String doctoralTutorOnDuty;
 
-    //上岗时间
-    private String doctoralStartTime;
 
-    // 原单位名称
-    private String sourceUnitName;
-
-    //原单位调入时间
-    private String transferInTime;
 
 }
