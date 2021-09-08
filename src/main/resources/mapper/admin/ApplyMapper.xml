@@ -14,7 +14,7 @@
 
         </set>
         where
-            apply_id = #{id}
+        apply_id = #{id}
     </update>
 
     <update id="updateApplyStatusAndTime">
@@ -22,4 +22,42 @@
         set status = #{status},submit_time = #{time}
         where apply_id = #{applyId}
     </update>
+    <select id="getInspectApply" resultType="com.nwu.vo.ApplyDisplayVo">
+        SELECT a.apply_id,
+               a.apply_type_id,
+               a.status,
+               apt.apply_name,
+               sc.status_display,
+               a.commit,
+               t.doctoral_master_application_subject_unit,
+               t.doctoral_master_subject_code,
+               t.doctoral_master_subject_name,
+               t.professional_application_subject_unit,
+               t.professional_application_subject_code,
+               t.professional_application_subject_name,
+               t.professional_field_code,
+               t.professional_field_name
+        FROM tutor_inspect t
+                 LEFT JOIN apply a ON a.apply_id = t.apply_id
+                 LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+                 LEFT JOIN status_code sc ON a.status = sc.code_id
+        WHERE a.tutor_id = #{tutorId}
+    </select>
+
+    <select id="getNoInspectApply" resultType="com.nwu.vo.ApplyDisplayVo">
+        SELECT a.apply_id,
+               a.apply_type_id,
+               a.status,
+               apt.apply_name,
+               sc.status_display,
+               a.commit,
+               t.applied_subject_unit,
+               t.applied_subject_code,
+               t.applied_subject_name
+        FROM tutor_no_inspect t
+                 LEFT JOIN apply a ON a.apply_id = t.apply_id
+                 LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+                 LEFT JOIN status_code sc ON a.status = sc.code_id
+        WHERE a.tutor_id = #{tutorId}
+    </select>
 </mapper>

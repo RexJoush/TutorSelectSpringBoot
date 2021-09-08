@@ -2,6 +2,7 @@ package com.nwu.controller.tutor.common;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.Apply;
+import com.nwu.entities.tutor.ApplyDisplay;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.admin.ApplyService;
@@ -28,10 +29,7 @@ public class ApplyController {
     @GetMapping("/getApplyList")
     public Result getApplyList(){
 
-        QueryWrapper<Apply> wrapper = new QueryWrapper<>();
-        wrapper.eq("tutor_id", tutorId);
-
-        List<Apply> applyList = applyService.list(wrapper);
+        List<ApplyDisplay> applyList = applyService.getApplyList(tutorId);
 
         return new Result(ResultCode.SUCCESS, applyList);
 
