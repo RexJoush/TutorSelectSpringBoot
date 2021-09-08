@@ -42,12 +42,13 @@ public class AuthorizationController {
     @GetMapping("/info")
     public String info(@RequestParam("token") String token) {
 
-        System.out.println(token);
+
         // 解密 token 值拿到学号
         String decode = AESUtil.decode(token);
 
+        // 权限列表
         List<String> roles = new ArrayList<>();
-
+        // 查询权限
         String authorization = authorizationService.getAuthorization(decode);
 
         roles.add(authorization);
