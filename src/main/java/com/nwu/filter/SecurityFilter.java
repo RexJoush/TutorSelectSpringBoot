@@ -52,6 +52,7 @@ public class SecurityFilter implements Filter {
 
         // 如果没有权限，直接拒绝
         if (token == null) {
+            System.out.println("无权限");
             response.setStatus(403);
             return;
         }
@@ -80,6 +81,7 @@ public class SecurityFilter implements Filter {
             }
             // 否则拒绝
             else {
+
                 response.setStatus(403);
             }
         }
