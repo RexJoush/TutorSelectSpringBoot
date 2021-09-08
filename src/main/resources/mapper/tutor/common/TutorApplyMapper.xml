@@ -25,6 +25,14 @@
           AND status = 0;
     </select>
 
+    <select id="getApplyListByTutorIdAndApplyTypeId" resultType="com.nwu.entities.Apply">
+        SELECT *
+        FROM apply
+        WHERE tutor_id = #{tutorId}
+          AND apply_type_id = #{applyTypeId}
+          AND status = #{status};
+    </select>
+
     <insert id="saveApplyInfo" useGeneratedKeys="true" keyColumn="apply_id" keyProperty="applyId"
             parameterType="com.nwu.entities.Apply">
         INSERT INTO apply (tutor_id, apply_type_id, status, submit_time)

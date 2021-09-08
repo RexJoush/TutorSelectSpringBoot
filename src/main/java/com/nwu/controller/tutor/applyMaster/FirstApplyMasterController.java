@@ -115,7 +115,6 @@ public class FirstApplyMasterController {
         try {
             // 插入数据库
             tutorInspectService.saveTutorInspectBaseInfo(firstPage);
-
             // 102 表示未申请过，第二页无信息，否则取读取第二页信息
             if (applyCondition == 102) {
                 secondPage = PageInit.getSecondPage();
