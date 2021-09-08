@@ -44,8 +44,11 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
         queryWrapper.eq("organization_id", firstPage.getOrganizationId());
         Organization one = organizationService.getOne(queryWrapper);
         firstPage.setOrganizationName(one.getOrganizationName());
+        System.out.println(firstPage.getAwardingUnitTime());
         //设置对应的授予单位及时间
-        if (firstPage.getAwardingUnitTime() != null) {
+
+        if (!"".equals(firstPage.getAwardingUnitTime())){
+
             firstPage.setAwardDepartment(firstPage.getAwardingUnitTime().split(" ")[0]);
             firstPage.setAwardTime(firstPage.getAwardingUnitTime().split(" ")[1]);
         }

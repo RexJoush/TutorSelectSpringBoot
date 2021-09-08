@@ -88,7 +88,7 @@ public class AddApplyDoctorController {
     @PostMapping("/updateSecondPage/{applyCondition}/{applyId}")
     public Result UpdateSecondPage(@RequestBody SecondPage secondPage, @PathVariable Integer applyCondition, @PathVariable Integer applyId) {
         //tutorInspect已经有主键了 102 未申请
-        if (applyId != null) {
+        if (applyId != null && secondPage.getApplySubject() != null) {
             // 保存或更新第二页信息
             try {
                 secondService.updateOrSaveSecond(applyId, tutorId, secondPage);
@@ -142,7 +142,7 @@ public class AddApplyDoctorController {
     }
 
     @ApiOperation("博士第四页信息提交")
-    @PostMapping("/updateThirdPage/{applyId}")
+    @PostMapping("/updateFourthPage/{applyId}")
     public Result updateFourthPage(@RequestBody FourthPage fourthPage,@PathVariable("applyId") Integer applyId){
         try{
             //存储或更新第四页

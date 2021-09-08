@@ -56,3 +56,6 @@
   * apply_type 表 apply_id 字段改为 apply_type_id
   * tutor_inspect, tutor_no_inspect 表 tutor_id 改完 apply_id, number 改为 tutor_id
   * system_user 表 number 改为 tutor_id
+
+* 2021.09.08 **zjz**
+  * tutor_no_inspect 添加上传免审的证明材料路径字段 exemption_conditions_materials

@@ -41,8 +41,14 @@ public class FirstServiceImpl implements FirstService {
             Organization one = organizationService.getOne(queryWrapper);
             // 设置院系 id
             firstPage.setOrganizationId(one.getOrganizationId());
-            // 拼接授予时间及单位
-            firstPage.setAwardingUnitTime(firstPage.getAwardDepartment() + " " + firstPage.getAwardTime());
+            if (!"".equals(firstPage.getAwardDepartment())){
+                // 拼接授予时间及单位
+                firstPage.setAwardingUnitTime(firstPage.getAwardDepartment() + " " + firstPage.getAwardTime());
+            }else
+            {
+                firstPage.setAwardingUnitTime("");
+            }
+
             //将图路径存入数据库
             String httpPath = SaveImage.ExportBlob( firstPage.getBlobImage(), firstPage.getTutorId(), request) ;
             firstPage.setImage(httpPath);

@@ -68,13 +68,12 @@
     <insert id="saveTutorInspectBaseInfo" parameterType="com.nwu.entities.tutor.FirstPage">
         INSERT INTO tutor_inspect
         (apply_id, tutor_id, `name`, gender, organization_id, image, birthday, identity, phone, email, title, evaluate_time,
-         final_degree, awarding_unit_time , doctoral_tutor_on_duty , doctoral_start_time , source_unit_name , transfer_in_time)
+         final_degree, awarding_unit_time)
         VALUES (#{firstPage.applyId}, #{firstPage.tutorId}, #{firstPage.name}, #{firstPage.gender},
                 #{firstPage.organizationId},#{firstPage.image},
                 #{firstPage.birthday}, #{firstPage.identity}, #{firstPage.phone}, #{firstPage.email},
                 #{firstPage.title},
-                #{firstPage.evaluateTime}, #{firstPage.finalDegree}, #{firstPage.awardingUnitTime},
-                #{firstPage.doctoralTutorOnDuty},#{firstPage.doctoralStartTime},#{firstPage.sourceUnitName},#{firstPage.transferInTime})
+                #{firstPage.evaluateTime}, #{firstPage.finalDegree}, #{firstPage.awardingUnitTime})
     </insert>
 
     <select id="getTutorInspectSecond" resultMap="secondInfo">
@@ -85,7 +84,11 @@
                titles_of_expert,
                doctoral_master_application_subject_unit,
                doctoral_master_subject_code,
-               doctoral_master_subject_name
+               doctoral_master_subject_name,
+               doctoral_tutor_on_duty,
+               doctoral_start_time,
+               source_unit_name,
+               transfer_in_time
         FROM apply a
                  LEFT JOIN tutor_inspect t ON a.apply_id = t.apply_id
         WHERE a.apply_id = #{applyId}
@@ -110,13 +113,17 @@
             titles_of_expert                         = #{secondPage.expertTitlesJson},
             doctoral_master_application_subject_unit = #{secondPage.doctoralMasterApplicationSubjectUnit},
             doctoral_master_subject_code             = #{secondPage.doctoralMasterSubjectCode},
-            doctoral_master_subject_name             = #{secondPage.doctoralMasterSubjectName}
+            doctoral_master_subject_name             = #{secondPage.doctoralMasterSubjectName},
+            doctoral_tutor_on_duty                   = #{secondPage.doctoralTutorOnDuty},
+            doctoral_start_time                      = #{secondPage.doctoralStartTime},
+            source_unit_name                         = #{secondPage.sourceUnitName},
+            transfer_in_time                         = #{secondPage.transferInTime}
         WHERE apply_id = #{applyId}
     </update>
 
     <select id="getFirstPage" parameterType="string" resultType="com.nwu.entities.tutor.FirstPage">
         SELECT apply_id,tutor_id,name,organization_id,gender,birthday,image,identity,phone,email,final_degree,
-                awarding_unit_time,final_degree,evaluate_time,title,source_unit_name,transfer_in_time,
+                awarding_unit_time,final_degree,evaluate_time,title,
                 doctoral_tutor_on_duty,doctoral_start_time
         FROM tutor_inspect
         WHERE apply_id=#{applyId}

@@ -55,6 +55,7 @@ public class PageInit {
     public static FourthPage getFourthPage() {
         FourthPage fourthPage = new FourthPage();
 
+        fourthPage.setCourseTeachings(new ArrayList<>());
         fourthPage.setGuidingStudents(new ArrayList<>());
         fourthPage.setDoctorStudents(new ArrayList<>());
         fourthPage.setAssistDoctorStudents(new ArrayList<>());
