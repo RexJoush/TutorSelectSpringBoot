@@ -127,4 +127,8 @@ public class QueryDepartmentSecretaryInit implements Serializable {
 
     //负责院系表
     private String organizationName;  //院系名称
+
+    private  String commitYjsyCs;  // 研究生院管理员初审的备注
+    private  String commitYjsySfh; //研究生院管理员提交分会页面的备注
+    private  String commitYjsyLr; //研究生院管理员录入分会意见页面的备注
 }

@@ -1,7 +1,9 @@
 package com.nwu.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.nwu.entities.Apply;
+import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.UpdateStatus;
 import com.nwu.results.Result;
 import com.nwu.service.admin.ApplyService;
@@ -80,4 +82,17 @@ public class UpdateStatusController {
             applyService.update(unApplay,unApplyQueryWrapper);
             return Result.SUCCESS();
     }
+    //研究生院管理员修改备注
+    @PostMapping("/updateCommitByGraduate")
+    public Result updateCommitByGraduate(@RequestBody QueryDepartmentSecretaryInit submit) throws Exception {
+        Apply apply = new Apply();
+        apply.setCommitYjsyCs(submit.getCommitYjsyCs());
+        apply.setCommitYjsyLr(submit.getCommitYjsyLr());
+        apply.setCommitYjsySfh(submit.getCommitYjsySfh());
+        UpdateWrapper<Apply> applyUpdateWrapper = new UpdateWrapper<>();
+        applyUpdateWrapper.eq("apply_id",submit.getApplyId());
+        applyService.update(apply,applyUpdateWrapper);
+        return Result.SUCCESS();
+    }
+
 }

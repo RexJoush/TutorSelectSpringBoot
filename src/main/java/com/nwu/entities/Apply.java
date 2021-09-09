@@ -33,6 +33,9 @@ public class Apply implements Serializable {
     private String commit;  // 院系秘书初审的备注
     private  String commitYxSfh; //院系秘书提交分会页面的备注
     private String commitYxXy; //院系秘书录入分会意见页面的备注
+    private String commitYjsyCs;  // 研究生院管理员初审的备注
+    private  String commitYjsySfh; //研究生院管理员提交分会页面的备注
+    private String commitYjsyLr; //研究生院管理员录入分会意见页面的备注
     private String submitTime; // 提交申请的时间
 
 }
