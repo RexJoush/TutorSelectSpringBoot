@@ -27,14 +27,16 @@ public class AuthorizationController {
     @PostMapping("/login")
     public String login(@RequestBody Map<String, String> body) {
 
-
         // 获取到登录名
         String username = body.get("username");
 
+        // 获取权限
+        String authorization = authorizationService.getAuthorization(username);
+
         JSONObject object = new JSONObject();
-        // 将学号加密后写入 token
+        // 将 学号 + 权限 加密后写入 token
         object.put("code", 20000);
-        object.put("data", Map.of("token", AESUtil.encode(username)));
+        object.put("data", Map.of("token", AESUtil.encode(username + "+" + authorization)));
 
         return JSON.toJSONString(object);
     }
@@ -43,13 +45,14 @@ public class AuthorizationController {
     public String info(@RequestParam("token") String token) {
 
 
-        // 解密 token 值拿到学号
+        // 解密 token 值拿到 学号 + 权限
         String decode = AESUtil.decode(token);
 
         // 权限列表
         List<String> roles = new ArrayList<>();
+
         // 查询权限
-        String authorization = authorizationService.getAuthorization(decode);
+        String authorization = authorizationService.getAuthorization(decode.split("[+]")[0]);
 
         roles.add(authorization);
 
