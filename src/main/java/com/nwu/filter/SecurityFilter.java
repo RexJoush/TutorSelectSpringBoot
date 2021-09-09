@@ -63,6 +63,7 @@ public class SecurityFilter implements Filter {
         if ("admin".equals(authorization)) {
             filterChain.doFilter(request, response);
         } else {
+
             // 公共请求前缀，照片请求，所有角色均放行
             if ("common".equals(requestPrefix) || "downFile".equals(requestPrefix)) {
                 filterChain.doFilter(request, response);

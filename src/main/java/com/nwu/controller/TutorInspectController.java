@@ -4,6 +4,8 @@ package com.nwu.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.nwu.results.Result;
+import com.nwu.results.ResultCode;
 import com.nwu.service.impl.TutorInspectServiceImpl;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.TutorQuery;
@@ -34,7 +36,7 @@ public class TutorInspectController {
 
     @ApiOperation(value = "获取所有用户")
     @GetMapping("/admin/getAll")
-    public  Map<String, Object> getAll(TutorQuery tutorQuery) {
+    public  Result getAll(TutorQuery tutorQuery) {
         System.out.println("getAll");
         System.out.println("TutorQuery: " + tutorQuery.toString());
         List<String> status = new ArrayList<>();
@@ -61,12 +63,10 @@ public class TutorInspectController {
 //            int total = ((List<Integer>)reslist.get(1)).get(0);
             res.put("data", pageInfo.getList());
             res.put("total", pageInfo.getTotal());
-            res.put("code", 20000);
         }else{
-            res.put("code",20001);
         }
 
-        return res;
+        return new Result(ResultCode.SUCCESS,res);
     }
 
 }
