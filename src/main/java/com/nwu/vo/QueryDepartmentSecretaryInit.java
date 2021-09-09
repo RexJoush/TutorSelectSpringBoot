@@ -110,7 +110,9 @@ public class QueryDepartmentSecretaryInit implements Serializable {
     //  private int tutorId; // 导师工号
     private int applyTypeId; // 申请的类别 id
     private int status; // 此申请的状态
-    private String commit; //备注
+    private String commit; //秘书初审的备注
+    private String commitYxSfh; //院系秘书提交分会的备注
+    private String commitYxXy; //院系秘书提交分会意见页面的备注
 
     /* 申请类别表 */
 //  private int applyTypeId;  //申请类型id

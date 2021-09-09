@@ -11,11 +11,31 @@ import java.util.List;
 @Mapper
 public interface ApplyMapper extends BaseMapper<Apply> {
 
+    /**
+     *
+     * @param id
+     * @param status
+     * @param commit 院系秘书初审页面的备注
+     * @return
+     */
+    int updateApplyStatusAndCommit(@Param("applyId") Integer id, @Param("status") Integer status, @Param("commit") String commit);
+    /**
+     *
+     * @param id
+     * @param status
+     * @param commit 院系秘书提交分会页面的备注
+     * @return
+     */
+    int updateApplyStatusAndCommitSfh(@Param("applyId") Integer id, @Param("status") Integer status, @Param("commit") String commit);
 
-    int updateApplyStatus(@Param("id") Integer id,@Param("status") Integer status, @Param("commit") String commit);
-
-
-
+    /**
+     *
+     * @param id
+     * @param status
+     * @param commit 院系秘书录入分会意见页面的备注
+     * @return
+     */
+    int updateApplyStatusAndCommitXy(@Param("applyId") Integer id, @Param("status") Integer status, @Param("commit") String commit);
     /**
      * 导师提交最后一页修改
      *

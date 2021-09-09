@@ -124,7 +124,7 @@ public class DeliberationExportExcel {
                             queryDepartmentSecretaryInit.getBirthday(), //出生年月
                             queryDepartmentSecretaryInit.getFinalDegree(), //最后学位
                             queryDepartmentSecretaryInit.getTitle(), //职称
-                            //TODO 申请学科或类别及代码需要进行判断和拼接
+                            //TODO 申请学科或类别及代码（分专硕和学硕（博士））需要进行判断和拼接
                             queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
                             queryDepartmentSecretaryInit.getApplyName(),//SCI/权威   学术论文（篇）
@@ -133,6 +133,7 @@ public class DeliberationExportExcel {
                             queryDepartmentSecretaryInit.getApplyName(),//省部  科研项目（项）
                             queryDepartmentSecretaryInit.getApplyName(),//纵向  科研经费（万元）
                             queryDepartmentSecretaryInit.getApplyName(),// 横向 科研经费（万元）
+                            //TODO 备注是apply中的字段commitYxXy(院系秘书复审页面添加的备注字段)
                             null  //备注
                     )
             );

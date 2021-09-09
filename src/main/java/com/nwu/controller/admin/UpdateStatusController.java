@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /*
- *  进行审核操作,更新审核状态
+ *  进行审核操作,更新审核状态，添加备注
  */
 @RestController
 @RequestMapping("/update-status")
@@ -23,17 +23,42 @@ public class UpdateStatusController {
     @Resource
     public ApplyService applyService;
 
-    //更新操作，修改状态
+    //院系秘书初审页面的更新操作，修改状态，添加备注
     @PostMapping("/update")
-    public Result updateStatusByDepartmentSecretary(@RequestBody List<UpdateStatus> list) throws Exception {
-        System.out.println(list);
+    public Result updateFirstByDepartmentSecretary(@RequestBody List<UpdateStatus> list) throws Exception {
         if (list.size() > 0) {
             for (UpdateStatus s : list) {
-                System.out.println(s);
                 Integer id = s.getId_1();
                 Integer status = s.getStatus_1();
                 String commit = s.getCommit_1();
                 int i = applyService.updateApplyStatus(id, status, commit);
+            }
+        }
+        return Result.SUCCESS();
+    }
+    //院系秘书提交分会页面的更新操作，修改状态，添加备注
+    @PostMapping("/updateSfh")
+    public Result updateSubmitChapterByDepartmentSecretary(@RequestBody List<UpdateStatus> list) throws Exception {
+        if (list.size() > 0) {
+            for (UpdateStatus s : list) {
+                Integer id = s.getId_1();
+                Integer status = s.getStatus_1();
+                String commit = s.getCommit_1();
+                int i = applyService.updateApplyStatusSfh(id,status,commit);
+            }
+        }
+        return Result.SUCCESS();
+    }
+    //院系秘书录入分会意见页面的更新操作，修改状态，添加备注
+    @PostMapping("/updateXy")
+    public Result updateEnterChapterByDepartmentSecretary(@RequestBody List<UpdateStatus> list) throws Exception {
+        System.out.println("学院分会"+list);
+        if (list.size() > 0) {
+            for (UpdateStatus s : list) {
+                Integer id = s.getId_1();
+                Integer status = s.getStatus_1();
+                String commit = s.getCommit_1();
+                int i = applyService.updateApplyStatusAndCommitXy(id,status,commit);
             }
         }
         return Result.SUCCESS();

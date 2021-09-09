@@ -11,9 +11,7 @@
         SELECT
         t.*,
         a2.apply_name as applyName,
-        a.status,
-        a.apply_type_id,
-        a.commit,
+        a.*,
         s.inspect_describe as inspectDescribe,
         o.organization_name as organizationName
         FROM `tutor_inspect` t,`apply` a, `organization` o, `status_code` s,`apply_type` a2

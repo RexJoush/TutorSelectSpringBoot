@@ -30,7 +30,9 @@ public class Apply implements Serializable {
     private int status;  // 当前申请的状态
     private int subject;  // 分科，文科或理科
     private int professional;  // 专硕或学硕
-    private String commit;  // 备注，驳回理由
+    private String commit;  // 院系秘书初审的备注
+    private  String commitYxSfh; //院系秘书提交分会页面的备注
+    private String commitYxXy; //院系秘书录入分会意见页面的备注
     private String submitTime; // 提交申请的时间
 
 }

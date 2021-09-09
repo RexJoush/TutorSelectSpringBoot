@@ -6,6 +6,7 @@ import com.nwu.entities.tutor.ApplyDisplay;
 import com.nwu.mapper.admin.ApplyMapper;
 import com.nwu.service.admin.ApplyService;
 import com.nwu.vo.ApplyDisplayVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,7 +27,20 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
 
     @Override
     public int updateApplyStatus(Integer applyId, Integer status, String commit) {
-        applyMapper.updateApplyStatus(applyId, status, commit);
+        applyMapper.updateApplyStatusAndCommit(applyId, status, commit);
+        return 1;
+    }
+
+    //院系秘书初审提交分会页面的更新操作
+    @Override
+    public int updateApplyStatusSfh(Integer applyId, Integer status, String commit){
+        applyMapper.updateApplyStatusAndCommitSfh(applyId, status, commit);
+        return 1;
+    }
+
+    @Override
+    public int updateApplyStatusAndCommitXy(Integer applyId, Integer status, String commit){
+        applyMapper.updateApplyStatusAndCommitXy(applyId, status, commit);
         return 1;
     }
 
