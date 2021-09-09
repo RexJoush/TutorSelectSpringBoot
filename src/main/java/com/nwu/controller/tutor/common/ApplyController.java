@@ -7,12 +7,12 @@ import com.nwu.entities.tutor.ApplyDisplay;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.admin.ApplyService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.nwu.util.AESUtil;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -29,7 +29,12 @@ public class ApplyController {
     private ApplyService applyService;
 
     @GetMapping("/getApplyList")
-    public Result getApplyList() {
+    public Result getApplyList(HttpServletRequest request) {
+
+
+        String token = request.getHeader("token");
+        System.out.println(token);
+        System.out.println(AESUtil.decode(token));
 
         List<ApplyDisplay> applyList = applyService.getApplyList(tutorId);
 

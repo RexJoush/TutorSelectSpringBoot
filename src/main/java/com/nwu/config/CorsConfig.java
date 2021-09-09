@@ -1,5 +1,6 @@
 package com.nwu.config;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -26,10 +27,14 @@ public class CorsConfig {
     }
 
     @Bean
-    public CorsFilter corsFilter() {
+    public FilterRegistrationBean<CorsFilter> corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", buildConfig());
-        return new CorsFilter(source);
+
+        FilterRegistrationBean<CorsFilter> corsBean = new FilterRegistrationBean<>(new CorsFilter(source));
+        corsBean.setName("corsFilter");
+        corsBean.setOrder(0);
+        return corsBean;
     }
 
 }
