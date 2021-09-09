@@ -16,7 +16,7 @@ import java.util.List;
  *  获取所有的申请类别控制层
  */
 @RestController
-@RequestMapping("/apply-type")
+@RequestMapping("/admin/apply-type")
 public class ApplyTypeController {
     @Resource
     ApplyTypeServiceImpl applyTypeService;

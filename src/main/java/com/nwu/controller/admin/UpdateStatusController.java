@@ -18,7 +18,7 @@ import java.util.List;
  *  进行审核操作,更新审核状态，添加备注
  */
 @RestController
-@RequestMapping("/update-status")
+@RequestMapping("/admin/update-status")
 public class UpdateStatusController {
     @Resource
     public ApplyService applyService;

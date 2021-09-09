@@ -98,8 +98,7 @@
         <result property="major" column="research_directions"></result>
         <result property="groupsOrPartTimeJobsJson" column="academic_groups_jobs"></result>
         <result property="expertTitlesJson" column="titles_of_expert"></result>
-        <result property="doctoralMasterApplicationSubjectUnit"
-                column="doctoral_master_application_subject_unit"></result>
+        <result property="doctoralMasterApplicationSubjectUnit" column="doctoral_master_application_subject_unit"></result>
         <result property="doctoralMasterSubjectCode" column="doctoral_master_subject_code"></result>
         <result property="doctoralMasterSubjectName" column="doctoral_master_subject_name"></result>
     </resultMap>

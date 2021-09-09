@@ -22,7 +22,7 @@ import java.util.List;
  * @since 2021-08-10
  */
 @RestController
-@RequestMapping("/organization")
+@RequestMapping("/admin/organization")
 public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;

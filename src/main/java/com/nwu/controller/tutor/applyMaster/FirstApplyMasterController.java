@@ -1,12 +1,9 @@
 package com.nwu.controller.tutor.applyMaster;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.Apply;
-import com.nwu.entities.Organization;
 import com.nwu.entities.tutor.*;
-import com.nwu.entities.tutor.childSubject.*;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.OrganizationService;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -41,12 +37,6 @@ public class FirstApplyMasterController {
 
     @Resource
     private ApplyService applyService;
-
-    @Resource
-    private TutorInspectService tutorInspectService;
-
-    @Resource
-    private OrganizationService organizationService;
 
     @Resource
     private FirstService firstService;

@@ -25,7 +25,7 @@ import java.util.Map;
  * @since 2021-08-26
  */
 @RestController
-@RequestMapping("/academic_paper")
+@RequestMapping("/admin/academic_paper")
 public class AcademicPaperController {
 
     @Autowired

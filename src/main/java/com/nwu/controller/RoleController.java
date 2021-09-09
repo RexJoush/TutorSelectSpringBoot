@@ -21,7 +21,7 @@ import java.util.List;
  * @since 2021-08-09
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/admin/role")
 public class RoleController {
     @Autowired
     private RoleServiceImpl roleService;

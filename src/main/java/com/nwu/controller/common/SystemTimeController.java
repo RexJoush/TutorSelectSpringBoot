@@ -30,7 +30,7 @@ import java.util.List;
  * @since 2021-08-09
  */
 @RestController
-@RequestMapping("/system-time")
+@RequestMapping("/admin/system-time")
 public class SystemTimeController {
     @Autowired
     private SystemTimeServiceImpl systemTimeService;

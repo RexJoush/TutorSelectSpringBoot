@@ -20,7 +20,7 @@ import java.util.List;
 */
 
 @RestController
-@RequestMapping("/export")
+@RequestMapping("/admin/export")
 public class ExportExcelController {
 
     @Resource

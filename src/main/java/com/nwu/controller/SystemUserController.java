@@ -25,7 +25,7 @@ import java.util.*;
  * @since 2021-08-10
  */
 @RestController
-@RequestMapping("/graduate/system-user")
+@RequestMapping("/admin/graduate/system-user")
 public class SystemUserController {
     @Autowired
     private SystemUserServiceImpl systemUserService;
