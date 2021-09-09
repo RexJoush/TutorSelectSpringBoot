@@ -68,6 +68,11 @@ public class SecurityFilter implements Filter {
                 filterChain.doFilter(request, response);
                 return;
             }
+            // 放行所以管理员的请求，以 admin 为请求前缀
+            if (!"tutor".equals(authorization) && "admin".equals(requestPrefix)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
             // 如果用户权限和当前的请求前缀相同，则放行
             if (authorization.equals(requestPrefix)) {
                 filterChain.doFilter(request, response);
