@@ -30,24 +30,30 @@ public class NoSecondPage {
     //一级学科名称
     private String appliedSubjectName;
 
+    //一级学科代码及名称 辅助字段
+    private String doctoralMasterSubjectCodeName;
+
     //免审条件
     private String exemptionConditions;
 
     //免审条件路径
     private String exemptionConditionsMaterials;
 
+    //申请类别 文史 理工 交叉
+    private int applySubject;
+
     /* 科研教学情况 */
 
     //科研项目 存入数据库
     private String researchProjectsJson;
 
-    //科研项目
+    //科研项目 辅助字段
     private ArrayList<researchProject> researchProjects;
 
     //科研教学情况 存入数据库
     private String teachingAwardsJson;
 
-    //科研教学情况
+    //科研教学情况 辅助字段
     private ArrayList<teachingAward> teachingAwards;
 
     /* 博导免审 */

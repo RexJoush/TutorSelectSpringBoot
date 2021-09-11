@@ -16,4 +16,42 @@
         FROM tutor_no_inspect
         WHERE apply_id=#{applyId}
     </select>
+
+    <insert id="saveTutorNoInspectFirstPage" parameterType="com.nwu.entities.tutor.noInspect.NoFirstPage">
+        INSERT INTO tutor_no_inspect
+        (apply_id, tutor_id, `name`, gender, organization_id, image, birthday, identity, phone, email, title, evaluate_time,
+         final_degree, awarding_unit_time)
+        VALUES (#{noFirstPage.applyId}, #{noFirstPage.tutorId}, #{noFirstPage.name}, #{noFirstPage.gender},
+                #{noFirstPage.organizationId},#{noFirstPage.image},
+                #{noFirstPage.birthday}, #{noFirstPage.identity}, #{noFirstPage.phone}, #{noFirstPage.email},
+                #{noFirstPage.title},
+                #{noFirstPage.evaluateTime}, #{noFirstPage.finalDegree}, #{noFirstPage.awardingUnitTime})
+    </insert>
+
+    <update id="updateTutorNoInspectSecondPage" parameterType="com.nwu.entities.tutor.noInspect.NoSecondPage">
+        UPDATE tutor_no_inspect
+        SET research_directions                      = #{noSecondPage.researchDirections},
+            applied_subject_unit                     = #{noSecondPage.appliedSubjectUnit},
+            applied_subject_code                     = #{noSecondPage.appliedSubjectCode},
+            applied_subject_name                     = #{noSecondPage.appliedSubjectName},
+            exemption_conditions                     = #{noSecondPage.exemptionConditions},
+            teaching_awards                          = #{noSecondPage.teachingAwardsJson},
+            master_director_time                     = #{noSecondPage.masterDirectorTime},
+            master_director_subject                  = #{noSecondPage.masterDirectorSubject},
+            exemption_conditions_materials           = #{noSecondPage.exemptionConditionsMaterials},
+            research_projects                        = #{noSecondPage.researchProjectsJson}
+        WHERE apply_id = #{applyId}
+    </update>
+
+    <insert id="saveNoApplyInfo" useGeneratedKeys="true" keyColumn="apply_id" keyProperty="applyId"
+            parameterType="com.nwu.entities.Apply">
+        INSERT INTO apply (tutor_id, apply_type_id, status, submit_time)
+        VALUES (#{apply.tutorId}, #{apply.applyTypeId}, #{apply.status}, #{apply.submitTime});
+    </insert>
+
+    <update id="updateNoApplySubject">
+        UPDATE apply
+        SET subject = #{applySubject}
+        WHERE apply_id = #{applyId}
+    </update>
 </mapper>

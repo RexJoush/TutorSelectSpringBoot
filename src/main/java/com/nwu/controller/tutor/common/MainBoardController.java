@@ -118,25 +118,17 @@ public class MainBoardController {
     @GetMapping("/tutor/getTeacherInfo/{applyTypeId}/{applyCondition}")
     public Result getTeacherInfo(@PathVariable("applyTypeId") Integer applyTypeId, @PathVariable("applyCondition") Integer applyCondition) {
         FirstPage firstPage;
-        NoFirstPage noFirstPage;
         try {
             if (applyCondition == 102) {
                 //未申请过 查找teacherInfo
                 firstPage = teacherInfoService.getTeacherInfo(tutorId);
-                return new Result(ResultCode.SUCCESS, firstPage);
             } else if (applyCondition == 101) {
                 //已申请过 查询对应的主键 导师增列
                 int applyId = mainBoardService.getApplyId(tutorId, applyTypeId, 0);
-                if (applyTypeId == 3 || applyTypeId == 6) {
-                    //导师免审 查询tutor_no_inspect
-                    noFirstPage = noFirstService.getNoFirstPage(String.valueOf(applyId));
-                    return new Result(ResultCode.SUCCESS, noFirstPage);
-                } else {
-                    //查询tutorInspect
-                    firstPage = tutorInspectService.getFirstPage(String.valueOf(applyId));
-                    return new Result(ResultCode.SUCCESS, firstPage);
-                }
-            } else {
+                //查询tutorInspect
+                firstPage = tutorInspectService.getFirstPage(String.valueOf(applyId));
+            }
+            else {
                 return Result.FAIL();
             }
         } catch (Exception e) {
@@ -146,6 +138,7 @@ public class MainBoardController {
             jsonObject.put("errorMessage", e.getMessage());
             return new Result(ResultCode.SUCCESS, jsonObject);
         }
+        return new Result(ResultCode.SUCCESS, firstPage);
     }
 
 

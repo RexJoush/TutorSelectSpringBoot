@@ -1,5 +1,6 @@
 package com.nwu.mapper;
 
+import com.nwu.entities.Apply;
 import com.nwu.entities.tutor.noInspect.NoFirstPage;
 import com.nwu.entities.tutor.noInspect.NoSecondPage;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,4 +22,34 @@ public interface TutorNoInspectMapper {
      * @return
      */
     NoFirstPage getNoFirstPage(@Param("applyId") String applyId);
+
+    /**
+     * 保存免审第一页信息 tutor_no_inspect
+     * @param noFirstPage
+     * @return
+     */
+    int saveTutorNoInspectFirstPage(@Param("noFirstPage") NoFirstPage noFirstPage);
+
+    /**
+     * 更新免审第二页信息
+     * @param noSecondPage
+     * @return
+     */
+    int updateTutorNoInspectSecondPage(@Param("noSecondPage") NoSecondPage noSecondPage);
+
+    /**
+     * 添加申请表信息 tutor_id apply_type_id status
+     * @param apply 申请信息
+     * @return 影响的行数
+     */
+    int saveNoApplyInfo(@Param("apply") Apply apply);
+
+    /**
+     * 更新第一页的申请学科
+     *
+     * @param applyId      申请表的主键
+     * @param applySubject 申请学科代码，1 文史， 2 理工， 3 交叉学科
+     * @return 影响的行数
+     */
+    int updateNoApplySubject(int applyId, int applySubject);
 }

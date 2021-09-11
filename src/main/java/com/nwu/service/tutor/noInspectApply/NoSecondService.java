@@ -15,5 +15,17 @@ public interface NoSecondService {
      */
     NoSecondPage getSecondPageInit();
 
+    /**
+     * 获取第二页信息 查询数据库
+     * @param applyId
+     * @return
+     */
     NoSecondPage getSecondPage(Integer applyId);
+
+    /**
+     * 更新第二页信息
+     * @param noSecondPage
+     * @return
+     */
+    void updateNoSecondPage(NoSecondPage noSecondPage,Integer applyId);
 }
