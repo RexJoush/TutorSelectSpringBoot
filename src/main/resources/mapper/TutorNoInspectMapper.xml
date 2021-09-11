@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nwu.mapper.TutorNoInspectMapper">
+    <select id="getSecondPage" parameterType="string" resultType="com.nwu.entities.tutor.noInspect.NoSecondPage">
+        SELECT
+            research_directions,applied_subject_unit,applied_subject_code,applied_subject_name,
+            exemption_conditions,exemption_conditions_materials,teaching_awards,research_projects,
+            master_director_time,master_director_subject
+        FROM tutor_no_inspect
+        WHERE apply_id = #{ applyId }
+    </select>
 
+    <select id="getNoFirstPage" parameterType="string" resultType="com.nwu.entities.tutor.noInspect.NoFirstPage">
+        SELECT apply_id,tutor_id,name,organization_id,gender,birthday,image,identity,phone,email,final_degree,
+            awarding_unit_time,final_degree,evaluate_time,title,
+        FROM tutor_no_inspect
+        WHERE apply_id=#{applyId}
+    </select>
 </mapper>

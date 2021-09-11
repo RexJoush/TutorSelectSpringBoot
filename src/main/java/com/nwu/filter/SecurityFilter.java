@@ -54,6 +54,7 @@ public class SecurityFilter implements Filter {
         if (token == null) {
             System.out.println("无权限");
             response.setStatus(403);
+            System.out.println("无权限");
             return;
         }
 
