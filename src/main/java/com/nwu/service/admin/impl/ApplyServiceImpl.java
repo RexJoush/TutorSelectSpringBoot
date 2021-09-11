@@ -71,12 +71,20 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
                     case 4:
                     case 5:
                         applyDisplay.setApplyDepartment(display.getDoctoralMasterApplicationSubjectUnit());
-                        applyDisplay.setApplySubject(display.getDoctoralMasterSubjectCode() + " " + display.getDoctoralMasterSubjectName());
+                        if (display.getDoctoralMasterSubjectCode() == null){
+                            applyDisplay.setApplySubject("");
+                        } else {
+                            applyDisplay.setApplySubject(display.getDoctoralMasterSubjectCode() + " " + display.getDoctoralMasterSubjectName());
+                        }
                         break;
                     case 7:
                     case 8:
                         applyDisplay.setApplyDepartment(display.getProfessionalApplicationSubjectUnit());
-                        applyDisplay.setApplySubject(display.getProfessionalApplicationSubjectCode() + " " + display.getProfessionalApplicationSubjectName());
+                        if (display.getDoctoralMasterSubjectCode() == null){
+                            applyDisplay.setApplySubject("");
+                        } else {
+                            applyDisplay.setApplySubject(display.getProfessionalApplicationSubjectCode() + " " + display.getProfessionalApplicationSubjectName());
+                        }
                         break;
                     default:
                         break;

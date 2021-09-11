@@ -45,7 +45,7 @@ public class TeacherInfoServiceImpl extends ServiceImpl<TeacherInfoMapper, Teach
             teacherInfo.setBirthday(sdf.format(date));
         }
         catch (Exception e){
-            System.out.println(e);
+            throw new RuntimeException("获取教师信息失败" + "!" + e.getMessage());
         }
         return teacherInfo;
     }

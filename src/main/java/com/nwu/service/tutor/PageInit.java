@@ -5,6 +5,7 @@ package com.nwu.service.tutor;
  * @time 2021.09.02 10:25
  */
 
+import com.alibaba.fastjson.JSONObject;
 import com.nwu.entities.Summary;
 import com.nwu.entities.tutor.FourthPage;
 import com.nwu.entities.tutor.SecondPage;
@@ -36,6 +37,7 @@ public class PageInit {
      * @return 第三页空对象
      */
     public static ThirdPage getThirdPage() {
+
         ThirdPage thirdPage = new ThirdPage();
 
         thirdPage.setAcademicPapers(new ArrayList<>());
@@ -96,6 +98,22 @@ public class PageInit {
 
         return summary;
 
+    }
+
+    /**
+     * 获取异常信息，并封装成对象返回
+     * @param e 异常信息，a!b
+     *          a 表示提示信息
+     *          b 表示异常信息
+     * @return 封装好的对象
+     */
+    public static JSONObject getErrorMessage(Exception e){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", 1201);
+        jsonObject.put("message", e.getMessage().split("!")[0]);
+        jsonObject.put("errorMessage", e.getMessage().split("!")[1]);
+
+        return jsonObject;
     }
 
 }

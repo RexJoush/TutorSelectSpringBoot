@@ -65,10 +65,11 @@
 
     <insert id="saveTutorInspectBaseInfo" parameterType="com.nwu.entities.tutor.FirstPage">
         INSERT INTO tutor_inspect
-        (apply_id, tutor_id, `name`, gender, organization_id, image, birthday, identity, phone, email, title, evaluate_time,
+        (apply_id, tutor_id, `name`, gender, organization_id, image, birthday, identity, phone, email, title,
+         evaluate_time,
          final_degree, awarding_unit_time)
         VALUES (#{firstPage.applyId}, #{firstPage.tutorId}, #{firstPage.name}, #{firstPage.gender},
-                #{firstPage.organizationId},#{firstPage.image},
+                #{firstPage.organizationId}, #{firstPage.image},
                 #{firstPage.birthday}, #{firstPage.identity}, #{firstPage.phone}, #{firstPage.email},
                 #{firstPage.title},
                 #{firstPage.evaluateTime}, #{firstPage.finalDegree}, #{firstPage.awardingUnitTime})
@@ -80,13 +81,27 @@
                research_directions,
                academic_groups_jobs,
                titles_of_expert,
+               source_unit_name,
+               transfer_in_time,
+               -- title,
+               professional_title,
+               -- evaluate_time,
+               first_doctoral_first_time_tutor,
+               first_doctoral_first_discipline,
+               doctoral_tutor_on_duty,
+               doctoral_start_time,
+               master_degree_increase_tutor_on_duty,
+               master_degree_increase_tutor_start_time,
                doctoral_master_application_subject_unit,
                doctoral_master_subject_code,
                doctoral_master_subject_name,
-               doctoral_tutor_on_duty,
-               doctoral_start_time,
-               source_unit_name,
-               transfer_in_time
+               professional_master_on_duty,
+               professional_master_start_time,
+               professional_application_subject_unit,
+               professional_application_subject_code,
+               professional_application_subject_name,
+               professional_field_code,
+               professional_field_name
         FROM apply a
                  LEFT JOIN tutor_inspect t ON a.apply_id = t.apply_id
         WHERE a.apply_id = #{applyId}
@@ -98,9 +113,31 @@
         <result property="major" column="research_directions"></result>
         <result property="groupsOrPartTimeJobsJson" column="academic_groups_jobs"></result>
         <result property="expertTitlesJson" column="titles_of_expert"></result>
-        <result property="doctoralMasterApplicationSubjectUnit" column="doctoral_master_application_subject_unit"></result>
+        <result property="sourceUnitName" column="source_unit_name"></result>
+        <result property="transferInTime" column="transfer_in_time"></result>
+<!--        <result property="title" column="title"></result>-->
+        <result property="professionalTitle" column="professional_title"></result>
+<!--        <result property="evaluateTime" column="evaluate_time"></result>-->
+        <result property="firstDoctoralFirstTimeTutor" column="first_doctoral_first_time_tutor"></result>
+        <result property="firstDoctoralFirstDiscipline" column="first_doctoral_first_discipline"></result>
+        <result property="doctoralTutorOnDuty" column="doctoral_tutor_on_duty"></result>
+        <result property="doctoralStartTime" column="doctoral_start_time"></result>
+        <result property="masterDegreeIncreaseTutorOnDuty" column="master_degree_increase_tutor_on_duty"></result>
+        <result property="masterDegreeIncreaseTutorStartTime" column="master_degree_increase_tutor_start_time"></result>
+
+        <result property="doctoralMasterApplicationSubjectUnit"
+                column="doctoral_master_application_subject_unit"></result>
         <result property="doctoralMasterSubjectCode" column="doctoral_master_subject_code"></result>
         <result property="doctoralMasterSubjectName" column="doctoral_master_subject_name"></result>
+        <result property="professionalMasterOnDuty" column="professional_master_on_duty"></result>
+        <result property="professionalMasterStartTime" column="professional_master_start_time"></result>
+
+        <result property="professionalApplicationSubjectUnit" column="professional_application_subject_unit"></result>
+        <result property="professionalApplicationSubjectCode" column="professional_application_subject_code"></result>
+        <result property="professionalApplicationSubjectName" column="professional_application_subject_name"></result>
+        <result property="professionalFieldCode" column="professional_field_code"></result>
+        <result property="professionalFieldName" column="professional_field_name"></result>
+
     </resultMap>
 
     <update id="updateTutorInspectSecond" parameterType="com.nwu.entities.tutor.SecondPage">
@@ -108,22 +145,49 @@
         SET research_directions                      = #{secondPage.major},
             academic_groups_jobs                     = #{secondPage.groupsOrPartTimeJobsJson},
             titles_of_expert                         = #{secondPage.expertTitlesJson},
+            source_unit_name                         = #{secondPage.sourceUnitName},
+            transfer_in_time                         = #{secondPage.transferInTime},
+            professional_title                       = #{secondPage.professionalTitle},
+            first_doctoral_first_time_tutor          = #{secondPage.firstDoctoralFirstTimeTutor},
+            first_doctoral_first_discipline          = #{secondPage.firstDoctoralFirstDiscipline},
+            doctoral_tutor_on_duty                   = #{secondPage.doctoralTutorOnDuty},
+            doctoral_start_time                      = #{secondPage.doctoralStartTime},
+            master_degree_increase_tutor_on_duty     = #{secondPage.masterDegreeIncreaseTutorOnDuty},
+            master_degree_increase_tutor_start_time  = #{secondPage.masterDegreeIncreaseTutorStartTime},
             doctoral_master_application_subject_unit = #{secondPage.doctoralMasterApplicationSubjectUnit},
             doctoral_master_subject_code             = #{secondPage.doctoralMasterSubjectCode},
             doctoral_master_subject_name             = #{secondPage.doctoralMasterSubjectName},
-            doctoral_tutor_on_duty                   = #{secondPage.doctoralTutorOnDuty},
-            doctoral_start_time                      = #{secondPage.doctoralStartTime},
-            source_unit_name                         = #{secondPage.sourceUnitName},
-            transfer_in_time                         = #{secondPage.transferInTime}
+            professional_master_on_duty              = #{secondPage.professionalMasterOnDuty},
+            professional_master_start_time           = #{secondPage.professionalMasterStartTime},
+            professional_application_subject_unit    = #{secondPage.professionalApplicationSubjectUnit},
+            professional_application_subject_code    = #{secondPage.professionalApplicationSubjectCode},
+            professional_application_subject_name    = #{secondPage.professionalApplicationSubjectName},
+            professional_field_code                  = #{secondPage.professionalFieldCode},
+            professional_field_name                  = #{secondPage.professionalFieldName}
         WHERE apply_id = #{applyId}
     </update>
 
     <select id="getFirstPage" parameterType="string" resultType="com.nwu.entities.tutor.FirstPage">
-        SELECT apply_id,tutor_id,name,organization_id,gender,birthday,image,identity,phone,email,final_degree,
-                awarding_unit_time,final_degree,evaluate_time,title,
-                doctoral_tutor_on_duty,doctoral_start_time
+        SELECT apply_id,
+               tutor_id,
+               name,
+               organization_id,
+               gender,
+               birthday,
+               image, identity, phone, email, final_degree,
+            awarding_unit_time, final_degree, evaluate_time, title,
+            doctoral_tutor_on_duty, doctoral_start_time
         FROM tutor_inspect
         WHERE apply_id=#{applyId}
     </select>
+
+    <update id="updateFirstPage">
+        UPDATE tutor_inspect
+        SET phone              = #{phone},
+            email              = #{email},
+            awarding_unit_time = #{awardingUnitTime},
+            evaluate_time      = #{evaluateTime}
+        WHERE apply_id = #{applyId}
+    </update>
 
 </mapper>

@@ -1,4 +1,4 @@
-package com.nwu.controller.tutor.common;
+package com.nwu.controller.tutor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RequestMapping("/tutor")
 @RestController
-public class ApplyController {
+public class MyApplyController {
 
     public final String tutorId = "20133220";
 
@@ -45,9 +45,12 @@ public class ApplyController {
     @GetMapping("/changeStatus/{applyId}")
     public Result change10To0(@PathVariable("applyId") int applyId) {
         // 将状态码 14 改为 0，让教师修改被驳回的申请
+
+        System.out.println(applyId);
         try {
             applyService.updateApplyStatus(applyId, 0, "");
         } catch (Exception e){
+            e.printStackTrace();
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code", 1201);
             jsonObject.put("message", "网络出现异常，请稍后再试");
