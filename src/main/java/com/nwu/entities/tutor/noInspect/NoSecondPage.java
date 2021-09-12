@@ -1,12 +1,13 @@
 package com.nwu.entities.tutor.noInspect;
 
-import com.nwu.entities.tutor.childSubject.researchProject;
-import com.nwu.entities.tutor.childSubject.teachingAward;
+import com.nwu.entities.tutor.childSubject.ResearchProject;
+import com.nwu.entities.tutor.childSubject.TeachingAward;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -40,7 +41,7 @@ public class NoSecondPage {
     private String exemptionConditionsMaterials;
 
     //申请类别 文史 理工 交叉
-    private int applySubject;
+    private String applySubject;
 
     /* 科研教学情况 */
 
@@ -48,13 +49,13 @@ public class NoSecondPage {
     private String researchProjectsJson;
 
     //科研项目 辅助字段
-    private ArrayList<researchProject> researchProjects;
+    private List<ResearchProject> researchProjects;
 
     //科研教学情况 存入数据库
     private String teachingAwardsJson;
 
     //科研教学情况 辅助字段
-    private ArrayList<teachingAward> teachingAwards;
+    private List<TeachingAward> teachingAwards;
 
     /* 博导免审 */
 

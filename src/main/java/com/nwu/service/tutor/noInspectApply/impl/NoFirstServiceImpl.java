@@ -60,17 +60,25 @@ public class NoFirstServiceImpl implements NoFirstService {
     }
 
     @Override
-    public NoFirstPage getNoFirstPage(String applyId) {
-        NoFirstPage noFirstPage = noInspectMapper.getNoFirstPage(applyId);
-        //查询所在院系
-        QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("organization_id", noFirstPage.getOrganizationId());
-        noFirstPage.setOrganizationName(organizationService.getOne(queryWrapper).getOrganizationName());
-        //设置对应的授予单位及时间
-        if (!"".equals(noFirstPage.getAwardingUnitTime())){
-            noFirstPage.setAwardDepartment(noFirstPage.getAwardingUnitTime().split(" ")[0]);
-            noFirstPage.setAwardTime(noFirstPage.getAwardingUnitTime().split(" ")[1]);
+    public NoFirstPage getNoFirstPage(String applyId) throws Exception {
+        try {
+            NoFirstPage noFirstPage = noInspectMapper.getNoFirstPage(applyId);
+            //查询所在院系
+            QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("organization_id", noFirstPage.getOrganizationId());
+            noFirstPage.setOrganizationName(organizationService.getOne(queryWrapper).getOrganizationName());
+            //设置对应的授予单位及时间
+            if (!"".equals(noFirstPage.getAwardingUnitTime())){
+                noFirstPage.setAwardDepartment(noFirstPage.getAwardingUnitTime().split(" ")[0]);
+                noFirstPage.setAwardTime(noFirstPage.getAwardingUnitTime().split(" ")[1]);
+            }
+            return noFirstPage;
         }
-        return noFirstPage;
+        catch (Exception e)
+        {
+            throw new Exception(e.getMessage());
+        }
+
+
     }
 }

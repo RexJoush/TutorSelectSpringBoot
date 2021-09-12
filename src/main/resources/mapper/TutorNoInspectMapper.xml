@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nwu.mapper.TutorNoInspectMapper">
-    <select id="getSecondPage" parameterType="string" resultType="com.nwu.entities.tutor.noInspect.NoSecondPage">
+
+    <select id="getSecondPage" parameterType="string" resultMap="noSecondInfo">
         SELECT
+            a.apply_id,subject,
             research_directions,applied_subject_unit,applied_subject_code,applied_subject_name,
             exemption_conditions,exemption_conditions_materials,teaching_awards,research_projects,
             master_director_time,master_director_subject
-        FROM tutor_no_inspect
-        WHERE apply_id = #{ applyId }
+        FROM apply a
+            LEFT JOIN tutor_no_inspect t ON a.apply_id = t.apply_id
+        WHERE a.apply_id = #{applyId}
     </select>
+    <resultMap id="noSecondInfo" type="com.nwu.entities.tutor.noInspect.NoSecondPage">
+        <id property="applyId" column="apply_id"></id>
+        <result property="researchDirections" column="research_directions"></result>
+        <result property="appliedSubjectUnit" column="applied_subject_unit"></result>
+        <result property="appliedSubjectCode" column="applied_subject_code"></result>
+        <result property="appliedSubjectName" column="applied_subject_name"></result>
+        <result property="exemptionConditions" column="exemption_conditions"></result>
+        <result property="exemptionConditionsMaterials" column="exemption_conditions_materials"></result>
+        <result property="researchProjectsJson" column="research_projects"></result>
+        <result property="teachingAwardsJson" column="teaching_awards"></result>
+        <result property="masterDirectorTime" column="master_director_time"></result>
+        <result property="masterDirectorSubject" column="master_director_subject"></result>
+        <result property="applySubject" column="subject"></result>
+    </resultMap>
 
     <select id="getNoFirstPage" parameterType="string" resultType="com.nwu.entities.tutor.noInspect.NoFirstPage">
         SELECT apply_id,tutor_id,name,organization_id,gender,birthday,image,identity,phone,email,final_degree,
-            awarding_unit_time,final_degree,evaluate_time,title,
+            awarding_unit_time,final_degree,evaluate_time,title
         FROM tutor_no_inspect
         WHERE apply_id=#{applyId}
     </select>
@@ -28,7 +45,7 @@
                 #{noFirstPage.evaluateTime}, #{noFirstPage.finalDegree}, #{noFirstPage.awardingUnitTime})
     </insert>
 
-    <update id="updateTutorNoInspectSecondPage" parameterType="com.nwu.entities.tutor.noInspect.NoSecondPage">
+    <update id="updateTutorNoInspectSecondPage">
         UPDATE tutor_no_inspect
         SET research_directions                      = #{noSecondPage.researchDirections},
             applied_subject_unit                     = #{noSecondPage.appliedSubjectUnit},
@@ -49,9 +66,11 @@
         VALUES (#{apply.tutorId}, #{apply.applyTypeId}, #{apply.status}, #{apply.submitTime});
     </insert>
 
-    <update id="updateNoApplySubject">
+    <update id="updateApplySubjectStatusTimeByApplyId">
         UPDATE apply
-        SET subject = #{applySubject}
+        SET subject = #{applySubject},
+            status = #{status},
+            submit_time= #{submitTime}
         WHERE apply_id = #{applyId}
     </update>
 </mapper>

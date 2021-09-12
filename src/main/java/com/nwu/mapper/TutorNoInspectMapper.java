@@ -35,7 +35,7 @@ public interface TutorNoInspectMapper {
      * @param noSecondPage
      * @return
      */
-    int updateTutorNoInspectSecondPage(@Param("noSecondPage") NoSecondPage noSecondPage);
+    int updateTutorNoInspectSecondPage(@Param("noSecondPage") NoSecondPage noSecondPage,@Param("applyId") Integer applyId);
 
     /**
      * 添加申请表信息 tutor_id apply_type_id status
@@ -51,5 +51,5 @@ public interface TutorNoInspectMapper {
      * @param applySubject 申请学科代码，1 文史， 2 理工， 3 交叉学科
      * @return 影响的行数
      */
-    int updateNoApplySubject(int applyId, int applySubject);
+    int updateApplySubjectStatusTimeByApplyId(@Param("applySubject") int applySubject, @Param("status") int status,@Param("submitTime") String submitTime,@Param("applyId") int applyId);
 }

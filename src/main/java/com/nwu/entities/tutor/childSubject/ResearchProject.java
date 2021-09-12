@@ -3,7 +3,7 @@ package com.nwu.entities.tutor.childSubject;
 import lombok.Data;
 
 @Data
-public class researchProject {
+public class ResearchProject {
 
     /* 导师免审 科研项目情况*/
 

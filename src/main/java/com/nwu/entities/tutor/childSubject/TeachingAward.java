@@ -3,7 +3,7 @@ package com.nwu.entities.tutor.childSubject;
 import lombok.Data;
 
 @Data
-public class teachingAward {
+public class TeachingAward {
 
     /* 导师免审 科研教学奖励*/
     //奖励名称

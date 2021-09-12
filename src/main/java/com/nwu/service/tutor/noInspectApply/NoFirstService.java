@@ -12,7 +12,7 @@ public interface NoFirstService {
      * @param applyId
      * @return
      */
-    NoFirstPage getNoFirstPage(String applyId);
+    NoFirstPage getNoFirstPage(String applyId) throws Exception;
 
     /**
      * 保存免审第一页信息 tutor_no_inspect
