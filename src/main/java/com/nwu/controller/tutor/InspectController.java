@@ -169,6 +169,7 @@ public class InspectController {
         try {
             secondService.updateOrSaveSecond(applyId, tutorId, secondPage);
         } catch (Exception e) {
+            e.printStackTrace();
             return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
         }
 

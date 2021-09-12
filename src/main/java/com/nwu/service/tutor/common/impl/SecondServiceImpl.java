@@ -29,31 +29,31 @@ public class SecondServiceImpl implements SecondService {
     public void updateOrSaveSecond(int applyId, String tutorId, SecondPage secondPage) {
 
         // 设置学术团体、任何种职务，有何社会兼职的字符串
-        if (secondPage.getGroupsOrPartTimeJobs() != null) {
+        if (secondPage.getGroupsOrPartTimeJobs().size() != 0) {
             secondPage.setGroupsOrPartTimeJobsJson(JSON.toJSONString(secondPage.getGroupsOrPartTimeJobs()));
         } else {
             secondPage.setGroupsOrPartTimeJobsJson("[]");
         }
 
         // 设置专家称号的字符串
-        if (secondPage.getExpertTitles() != null) {
+        if (secondPage.getExpertTitles().size() != 0) {
             secondPage.setExpertTitlesJson(JSON.toJSONString(secondPage.getExpertTitles()));
         } else {
             secondPage.setExpertTitlesJson("[]");
         }
 
         // 分别设置学术硕士的一级学科代码和名称
-        if (secondPage.getDoctoralMasterSubjectCodeName() != null) {
+        if (!"".equals(secondPage.getDoctoralMasterSubjectCodeName()) && secondPage.getDoctoralMasterSubjectCodeName() != null) {
             secondPage.setDoctoralMasterSubjectCode(secondPage.getDoctoralMasterSubjectCodeName().split(" ")[0]);
             secondPage.setDoctoralMasterSubjectName(secondPage.getDoctoralMasterSubjectCodeName().split(" ")[1]);
         }
         // 设置专业硕士的类别代码
-        if (secondPage.getProfessionalApplicationSubjectCodeName() != null) {
+        if (!"".equals(secondPage.getProfessionalApplicationSubjectCodeName()) && secondPage.getProfessionalApplicationSubjectCodeName() != null) {
             secondPage.setProfessionalApplicationSubjectCode(secondPage.getProfessionalApplicationSubjectCodeName().split(" ")[0]);
             secondPage.setProfessionalApplicationSubjectName(secondPage.getProfessionalApplicationSubjectCodeName().split(" ")[1]);
         }
         // 设置专业硕士的领域代码
-        if (secondPage.getProfessionalFieldCodeName() != null) {
+        if (!"".equals(secondPage.getProfessionalFieldCodeName()) && secondPage.getProfessionalFieldCodeName() != null) {
             secondPage.setProfessionalFieldCode(secondPage.getProfessionalFieldCodeName().split(" ")[0]);
             secondPage.setProfessionalFieldName(secondPage.getProfessionalFieldCodeName().split(" ")[1]);
         }
