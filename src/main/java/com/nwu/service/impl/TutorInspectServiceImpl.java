@@ -38,19 +38,25 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     private OrganizationService organizationService;
 
     @Override
-    public FirstPage getFirstPage(String applyId) {
+    public FirstPage getFirstPage(int applyId) {
 
-        FirstPage firstPage = tutorInspectMapper.getFirstPage(applyId);
-        // 查询所在院系
-        QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("organization_id", firstPage.getOrganizationId());
-        Organization one = organizationService.getOne(queryWrapper);
-        firstPage.setOrganizationName(one.getOrganizationName());
+        FirstPage firstPage = null;
+        try {
+            firstPage = tutorInspectMapper.getFirstPage(applyId);
+            // 查询所在院系
+            QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("organization_id", firstPage.getOrganizationId());
+            Organization one = organizationService.getOne(queryWrapper);
+            firstPage.setOrganizationName(one.getOrganizationName());
 
-        // 设置对应的授予单位及时间
-        if (!"".equals(firstPage.getAwardingUnitTime())) {
-            firstPage.setAwardDepartment(firstPage.getAwardingUnitTime().split(" ")[0]);
-            firstPage.setAwardTime(firstPage.getAwardingUnitTime().split(" ")[1]);
+            // 设置对应的授予单位及时间
+            if (!"".equals(firstPage.getAwardingUnitTime())) {
+                firstPage.setAwardDepartment(firstPage.getAwardingUnitTime().split(" ")[0]);
+                firstPage.setAwardTime(firstPage.getAwardingUnitTime().split(" ")[1]);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("获取教师信息失败" + "!" + e.getMessage());
         }
         return firstPage;
     }

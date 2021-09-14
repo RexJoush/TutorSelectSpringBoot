@@ -27,6 +27,7 @@ public class InventionPatent {
     private String patentRank           ; // 排名
     private String patentGrantTime      ; // 专利授权日期
     private String patentGrantNumber    ; // 专利授权号
+    private String patentType           ; // 专利类型
     private String patentAuthorName     ; // 作者姓名
     private String patentAuthorNumber   ; // 作者编号
     private String patentSource         ; // 专利的来源，系统获取 或 导师上传

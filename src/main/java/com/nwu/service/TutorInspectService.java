@@ -36,7 +36,7 @@ public interface TutorInspectService extends IService<TutorInspect> {
      * @param ApplyId
      * @return FirstPage
      */
-    FirstPage getFirstPage(String ApplyId);
+    FirstPage getFirstPage(int ApplyId);
 
     /**
      * 更新第一页申请导师信息

@@ -60,7 +60,7 @@ public class NoFirstServiceImpl implements NoFirstService {
     }
 
     @Override
-    public NoFirstPage getNoFirstPage(String applyId) throws Exception {
+    public NoFirstPage getNoFirstPage(int applyId) throws Exception {
         try {
             NoFirstPage noFirstPage = noInspectMapper.getNoFirstPage(applyId);
             //查询所在院系
