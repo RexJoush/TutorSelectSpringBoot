@@ -54,7 +54,6 @@ public class UpdateStatusController {
     //院系秘书录入分会意见页面的更新操作，修改状态，添加备注
     @PostMapping("/updateXy")
     public Result updateEnterChapterByDepartmentSecretary(@RequestBody List<UpdateStatus> list) throws Exception {
-        System.out.println("学院分会"+list);
         if (list.size() > 0) {
             for (UpdateStatus s : list) {
                 Integer id = s.getId_1();
