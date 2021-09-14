@@ -21,7 +21,7 @@ public interface TutorNoInspectMapper {
      * @param applyId
      * @return
      */
-    NoFirstPage getNoFirstPage(@Param("applyId") String applyId);
+    NoFirstPage getNoFirstPage(@Param("applyId") int applyId);
 
     /**
      * 保存免审第一页信息 tutor_no_inspect

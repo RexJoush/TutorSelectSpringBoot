@@ -34,9 +34,6 @@ public class InspectController {
     public final String tutorId = "20133220";
 
     @Resource
-    private MainBoardService mainBoardService;
-
-    @Resource
     private TutorInspectService tutorInspectService;
 
     @Resource
@@ -77,7 +74,7 @@ public class InspectController {
                 firstPage = teacherInfoService.getTeacherInfo(tutorId);
             } else {
                 // 已申请过 查询 tutor_inspect 表的信息
-                firstPage = tutorInspectService.getFirstPage(String.valueOf(applyId));
+                firstPage = tutorInspectService.getFirstPage(applyId);
             }
         } catch (Exception e) {
             return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));

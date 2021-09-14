@@ -60,7 +60,7 @@ public class NoInspectController {
                 return new Result(ResultCode.SUCCESS, firstPage);
             } else {
                 // 已申请过 查询 tutor_no_inspect 表的信息
-                noFirstPage = noFirstService.getNoFirstPage(String.valueOf(applyId));
+                noFirstPage = noFirstService.getNoFirstPage(applyId);
                 System.out.println(noFirstPage);
                 return new Result(ResultCode.SUCCESS, noFirstPage);
             }

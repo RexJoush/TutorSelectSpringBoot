@@ -27,7 +27,7 @@
         <result property="applySubject" column="subject"></result>
     </resultMap>
 
-    <select id="getNoFirstPage" parameterType="string" resultType="com.nwu.entities.tutor.noInspect.NoFirstPage">
+    <select id="getNoFirstPage" parameterType="int" resultType="com.nwu.entities.tutor.noInspect.NoFirstPage">
         SELECT apply_id,tutor_id,name,organization_id,gender,birthday,image,identity,phone,email,final_degree,
             awarding_unit_time,final_degree,evaluate_time,title
         FROM tutor_no_inspect

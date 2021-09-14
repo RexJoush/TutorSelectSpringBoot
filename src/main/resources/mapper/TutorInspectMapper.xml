@@ -167,7 +167,7 @@
         WHERE apply_id = #{applyId}
     </update>
 
-    <select id="getFirstPage" parameterType="string" resultType="com.nwu.entities.tutor.FirstPage">
+    <select id="getFirstPage" parameterType="int" resultType="com.nwu.entities.tutor.FirstPage">
         SELECT apply_id,
                tutor_id,
                name,

@@ -143,11 +143,11 @@ public class MainBoardController {
                 //已申请过 查询对应的主键 导师增列
                 if (applyTypeId == 3 || applyTypeId == 6) {
                     //导师免审 查询tutor_no_inspect
-                    noFirstPage = noFirstService.getNoFirstPage(String.valueOf(applyId));
+                    noFirstPage = noFirstService.getNoFirstPage(applyId);
                     return new Result(ResultCode.SUCCESS, noFirstPage);
                 } else {
                     //查询tutorInspect
-                    firstPage = tutorInspectService.getFirstPage(String.valueOf(applyId));
+                    firstPage = tutorInspectService.getFirstPage(applyId);
                     return new Result(ResultCode.SUCCESS, firstPage);
                 }
             }

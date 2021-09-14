@@ -2,11 +2,18 @@ package com.nwu.service.admin.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nwu.entities.Apply;
-import com.nwu.entities.tutor.ApplyDisplay;
+import com.nwu.entities.tutor.*;
+import com.nwu.entities.tutor.noInspect.NoFirstPage;
+import com.nwu.entities.tutor.noInspect.NoSecondPage;
 import com.nwu.mapper.admin.ApplyMapper;
+import com.nwu.service.TutorInspectService;
 import com.nwu.service.admin.ApplyService;
+import com.nwu.service.tutor.common.FourthService;
+import com.nwu.service.tutor.common.SecondService;
+import com.nwu.service.tutor.common.ThirdService;
+import com.nwu.service.tutor.noInspectApply.NoFirstService;
+import com.nwu.service.tutor.noInspectApply.NoSecondService;
 import com.nwu.vo.ApplyDisplayVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,11 +26,28 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
     @Resource
     private ApplyMapper applyMapper;
 
+    @Resource
+    private TutorInspectService tutorInspectService;
+
+    @Resource
+    private SecondService secondService;
+
+    @Resource
+    private ThirdService thirdService;
+
+    @Resource
+    private FourthService fourthService;
+
+    @Resource
+    private NoFirstService noFirstService;
+
+    @Resource
+    private NoSecondService noSecondService;
+
     @Override
     public int updateApplyStatusAndTime(Integer applyId, Integer status, String time) {
         return applyMapper.updateApplyStatusAndTime(applyId, status, time);
     }
-
 
     @Override
     public int updateApplyStatus(Integer applyId, Integer status, String commit) {
@@ -33,13 +57,13 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
 
     //院系秘书初审提交分会页面的更新操作
     @Override
-    public int updateApplyStatusSfh(Integer applyId, Integer status, String commit){
+    public int updateApplyStatusSfh(Integer applyId, Integer status, String commit) {
         applyMapper.updateApplyStatusAndCommitSfh(applyId, status, commit);
         return 1;
     }
 
     @Override
-    public int updateApplyStatusAndCommitXy(Integer applyId, Integer status, String commit){
+    public int updateApplyStatusAndCommitXy(Integer applyId, Integer status, String commit) {
         applyMapper.updateApplyStatusAndCommitXy(applyId, status, commit);
         return 1;
     }
@@ -71,7 +95,7 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
                     case 4:
                     case 5:
                         applyDisplay.setApplyDepartment(display.getDoctoralMasterApplicationSubjectUnit());
-                        if (display.getDoctoralMasterSubjectCode() == null){
+                        if (display.getDoctoralMasterSubjectCode() == null) {
                             applyDisplay.setApplySubject("");
                         } else {
                             applyDisplay.setApplySubject(display.getDoctoralMasterSubjectCode() + " " + display.getDoctoralMasterSubjectName());
@@ -80,10 +104,14 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
                     case 7:
                     case 8:
                         applyDisplay.setApplyDepartment(display.getProfessionalApplicationSubjectUnit());
-                        if (display.getDoctoralMasterSubjectCode() == null){
+                        if (display.getProfessionalApplicationSubjectCode() == null) {
                             applyDisplay.setApplySubject("");
                         } else {
-                            applyDisplay.setApplySubject(display.getProfessionalApplicationSubjectCode() + " " + display.getProfessionalApplicationSubjectName());
+                            if (display.getProfessionalFieldCode() == null) {
+                                applyDisplay.setApplySubject(display.getProfessionalApplicationSubjectCode() + " " + display.getProfessionalApplicationSubjectName());
+                            } else {
+                                applyDisplay.setApplySubject(display.getProfessionalFieldCode() + " " + display.getProfessionalFieldName());
+                            }
                         }
                         break;
                     default:
@@ -113,8 +141,17 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
                 applyDisplay.setCommit(display.getCommit());
 
                 // 设置申请的学院和专业
-                applyDisplay.setApplyDepartment(display.getAppliedSubjectUnit());
-                applyDisplay.setApplySubject(display.getAppliedSubjectCode() + " " + display.getAppliedSubjectName());
+                if (!"".equals(display.getAppliedSubjectUnit()) && display.getAppliedSubjectUnit() != null) {
+                    applyDisplay.setApplyDepartment(display.getAppliedSubjectUnit());
+                } else {
+                    applyDisplay.setApplyDepartment("");
+                }
+
+                if (!"".equals(display.getAppliedSubjectCode()) && display.getAppliedSubjectCode() != null) {
+                    applyDisplay.setApplySubject(display.getAppliedSubjectCode() + " " + display.getAppliedSubjectName());
+                } else {
+                    applyDisplay.setApplySubject("");
+                }
 
                 // 标识免审
                 applyDisplay.setNoInspect(true);
@@ -124,5 +161,46 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
 
         // 返回两个列表合并
         return applyList;
+    }
+
+    @Override
+    public ApplyDetails getApplyDetails(int applyId, int isInspect, String tutorId) {
+
+        ApplyDetails details = new ApplyDetails();
+
+        try {
+
+            // 非免审
+            if (isInspect == 1){
+                // 获取第一页
+                FirstPage firstPage = tutorInspectService.getFirstPage(applyId);
+                details.setFirstPage(firstPage);
+
+                // 获取第二页
+                SecondPage secondPage = secondService.getSecondPage(applyId);
+                details.setSecondPage(secondPage);
+
+                // 获取第三页
+                ThirdPage thirdPage = thirdService.getThirdPage(applyId, tutorId);
+                details.setThirdPage(thirdPage);
+
+                // 获取第四页
+                FourthPage fourthPage = fourthService.getFourthPage(applyId, tutorId);
+                details.setFourthPage(fourthPage);
+
+            } else {
+                // 获取免审第一页
+                NoFirstPage noFirstPage = noFirstService.getNoFirstPage(applyId);
+                details.setNoFirstPage(noFirstPage);
+
+                // 获取免审第二页
+                NoSecondPage noSecondPage = noSecondService.getSecondPage(applyId);
+                details.setNoSecondPage(noSecondPage);
+            }
+        } catch (Exception e){
+            throw new RuntimeException("获取信息失败，请稍后再试" + "!" + e.getMessage());
+        }
+
+        return details;
     }
 }
