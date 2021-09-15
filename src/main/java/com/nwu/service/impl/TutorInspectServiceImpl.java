@@ -31,28 +31,33 @@ import java.util.List;
 @Service
 public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, TutorInspect> implements TutorInspectService {
 
-    @Autowired
+    @Resource
     private TutorInspectMapper tutorInspectMapper;
+
     @Resource
     private OrganizationService organizationService;
 
     @Override
-    public FirstPage getFirstPage(String applyId) {
-        FirstPage firstPage = tutorInspectMapper.getFirstPage(applyId);
-        //查询所在院系
-        QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("organization_id", firstPage.getOrganizationId());
-        Organization one = organizationService.getOne(queryWrapper);
-        firstPage.setOrganizationName(one.getOrganizationName());
-        System.out.println(firstPage.getAwardingUnitTime());
-        //设置对应的授予单位及时间
+    public FirstPage getFirstPage(int applyId) {
 
-        if (!"".equals(firstPage.getAwardingUnitTime())){
+        FirstPage firstPage = null;
+        try {
+            firstPage = tutorInspectMapper.getFirstPage(applyId);
+            // 查询所在院系
+            QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("organization_id", firstPage.getOrganizationId());
+            Organization one = organizationService.getOne(queryWrapper);
+            firstPage.setOrganizationName(one.getOrganizationName());
 
-            firstPage.setAwardDepartment(firstPage.getAwardingUnitTime().split(" ")[0]);
-            firstPage.setAwardTime(firstPage.getAwardingUnitTime().split(" ")[1]);
+            // 设置对应的授予单位及时间
+            if (!"".equals(firstPage.getAwardingUnitTime())) {
+                firstPage.setAwardDepartment(firstPage.getAwardingUnitTime().split(" ")[0]);
+                firstPage.setAwardTime(firstPage.getAwardingUnitTime().split(" ")[1]);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("获取教师信息失败" + "!" + e.getMessage());
         }
-        System.out.println(firstPage);
         return firstPage;
     }
 
@@ -70,8 +75,7 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     @Override
     public SecondPage getTutorInspectSecond(int applyId) {
 
-        SecondPage secondPage = tutorInspectMapper.getTutorInspectSecond(applyId);
-        return secondPage;
+        return tutorInspectMapper.getTutorInspectSecond(applyId);
     }
 
     @Override

@@ -32,13 +32,15 @@ public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
 
 
     int updateTutorInspectSecond(@Param("applyId") int applyId, @Param("secondPage") SecondPage secondPage);
+
     /**
-     * 从tutorInspect获取基本信息
+     * 从 tutorInspect 获取基本信息
      * @param applyId
      * @return
      */
-    FirstPage getFirstPage(@Param("applyId") String applyId);
+    FirstPage getFirstPage(@Param("applyId") int applyId);
 
 
+    int updateFirstPage(String applyId, String phone, String email, String evaluateTime, String awardingUnitTime);
 
 }

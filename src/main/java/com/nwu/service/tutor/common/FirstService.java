@@ -14,11 +14,25 @@ public interface FirstService {
     int saveApplyInfo(Apply apply);
 
     /**
-     * 插入第一页信息
-     * @param firstPage
-     * @return
+     * 更新第一页的信息
+     * @param applyId   申请表 id
+     * @param phone     电话
+     * @param email     邮箱
+     * @param evaluateTime      职称评定时间
+     * @param awardingUnitTime  学位授予单位及时间
+     * @return 修改结果
      */
-    int saveFirstPage(FirstPage firstPage, HttpServletRequest request) throws Exception ;
+    int updateFirstPage(String applyId, String phone, String email, String evaluateTime, String awardingUnitTime);
+
+
+    /**
+     * 插入第一页信息
+     * @param firstPage 第一页的信息
+     * @return 修改插入结果
+     */
+    int saveFirstPage(FirstPage firstPage, HttpServletRequest request);
+
+
 }
 
 

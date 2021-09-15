@@ -27,8 +27,8 @@ public class SecurityFilter implements Filter {
         // 获取请求的前缀地址，/user, /user/a 获取到 user
         String requestPrefix = requestURI.split("/")[1];
 
-        System.out.println("requestURI: " + requestURI);
-        System.out.println("requestPrefix: " + requestPrefix);
+        // System.out.println("requestURI: " + requestURI);
+        // System.out.println("requestPrefix: " + requestPrefix);
 
         // 登录，info，登出，直接放行
         if ("user".equals(requestPrefix)) {
@@ -52,7 +52,9 @@ public class SecurityFilter implements Filter {
 
         // 如果没有权限，直接拒绝
         if (token == null) {
+            System.out.println("无权限");
             response.setStatus(403);
+            System.out.println("无权限");
             return;
         }
 
@@ -80,6 +82,7 @@ public class SecurityFilter implements Filter {
             }
             // 否则拒绝
             else {
+
                 response.setStatus(403);
             }
         }

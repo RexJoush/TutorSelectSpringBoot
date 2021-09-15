@@ -27,4 +27,5 @@ public interface SecondService {
      */
     SecondPage getSecondPage(int applyId);
 
+
 }

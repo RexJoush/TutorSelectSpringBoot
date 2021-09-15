@@ -1,9 +1,4 @@
-package com.nwu.entities.tutor;
-
-/**
- * @author Rex Joush
- * @time 2021.08.24 11:11
- */
+package com.nwu.entities.tutor.noInspect;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,13 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * 添加表格的第一页基本信息
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FirstPage {
+public class NoFirstPage {
+
+    //免审
 
     @TableId(value = "apply_id", type = IdType.ID_WORKER)
     private String applyId;
@@ -72,5 +66,4 @@ public class FirstPage {
 
     // 授予单位及时间
     private String awardingUnitTime;
-
 }

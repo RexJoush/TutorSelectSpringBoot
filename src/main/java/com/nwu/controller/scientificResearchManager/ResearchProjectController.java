@@ -22,7 +22,7 @@ import java.util.List;
  * @since 2021-08-27
  */
 @RestController
-@RequestMapping("/research_project")
+@RequestMapping("/admin/research_project")
 public class ResearchProjectController {
 
     @Autowired

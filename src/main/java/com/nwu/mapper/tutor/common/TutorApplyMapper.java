@@ -23,7 +23,7 @@ public interface TutorApplyMapper {
      * @param applyTypeId 申请类别
      * @return apply 信息
      */
-    Apply getApplyInfoByTutorIdAndApplyTypeId(@Param("tutorId") String tutorId, @Param("applyTypeId") Integer applyTypeId);
+    List<Apply> getApplyByTutorIdAndApplyTypeId(@Param("tutorId") String tutorId, @Param("applyTypeId") Integer applyTypeId);
 
     /**
      * 根据导师工号和申请类别查询出对应的apply信息

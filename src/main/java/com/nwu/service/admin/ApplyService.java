@@ -2,6 +2,7 @@ package com.nwu.service.admin;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nwu.entities.Apply;
+import com.nwu.entities.tutor.ApplyDetails;
 import com.nwu.entities.tutor.ApplyDisplay;
 
 import java.util.List;
@@ -40,7 +41,6 @@ public interface ApplyService extends IService<Apply> {
 
     /**
      * 查询当前教师的所有申请
-     *
      * @param tutorId 教师工号
      * @return 所有的申请
      */
@@ -49,12 +49,19 @@ public interface ApplyService extends IService<Apply> {
     /**
      * 导师提交最后一页修改apply
      *
-     * @param applyId
-     * @param status
-     * @param time
+     * @param applyId 申请 id
+     * @param status 状态
+     * @param time 时间
      * @return int
      */
     int updateApplyStatusAndTime(Integer applyId, Integer status, String time);
 
-
+    /**
+     * 获取当前申请的详情信息
+     * @param applyId 申请 id
+     * @param isInspect 是否免审
+     *                  1 免审; 0 非免审
+     * @return 详情信息
+     */
+    ApplyDetails getApplyDetails(int applyId, int isInspect, String tutorId);
 }

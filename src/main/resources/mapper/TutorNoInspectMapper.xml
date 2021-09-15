@@ -2,4 +2,75 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nwu.mapper.TutorNoInspectMapper">
 
+    <select id="getSecondPage" parameterType="string" resultMap="noSecondInfo">
+        SELECT
+            a.apply_id,subject,
+            research_directions,applied_subject_unit,applied_subject_code,applied_subject_name,
+            exemption_conditions,exemption_conditions_materials,teaching_awards,research_projects,
+            master_director_time,master_director_subject
+        FROM apply a
+            LEFT JOIN tutor_no_inspect t ON a.apply_id = t.apply_id
+        WHERE a.apply_id = #{applyId}
+    </select>
+    <resultMap id="noSecondInfo" type="com.nwu.entities.tutor.noInspect.NoSecondPage">
+        <id property="applyId" column="apply_id"></id>
+        <result property="researchDirections" column="research_directions"></result>
+        <result property="appliedSubjectUnit" column="applied_subject_unit"></result>
+        <result property="appliedSubjectCode" column="applied_subject_code"></result>
+        <result property="appliedSubjectName" column="applied_subject_name"></result>
+        <result property="exemptionConditions" column="exemption_conditions"></result>
+        <result property="exemptionConditionsMaterials" column="exemption_conditions_materials"></result>
+        <result property="researchProjectsJson" column="research_projects"></result>
+        <result property="teachingAwardsJson" column="teaching_awards"></result>
+        <result property="masterDirectorTime" column="master_director_time"></result>
+        <result property="masterDirectorSubject" column="master_director_subject"></result>
+        <result property="applySubject" column="subject"></result>
+    </resultMap>
+
+    <select id="getNoFirstPage" parameterType="int" resultType="com.nwu.entities.tutor.noInspect.NoFirstPage">
+        SELECT apply_id,tutor_id,name,organization_id,gender,birthday,image,identity,phone,email,final_degree,
+            awarding_unit_time,final_degree,evaluate_time,title
+        FROM tutor_no_inspect
+        WHERE apply_id=#{applyId}
+    </select>
+
+    <insert id="saveTutorNoInspectFirstPage" parameterType="com.nwu.entities.tutor.noInspect.NoFirstPage">
+        INSERT INTO tutor_no_inspect
+        (apply_id, tutor_id, `name`, gender, organization_id, image, birthday, identity, phone, email, title, evaluate_time,
+         final_degree, awarding_unit_time)
+        VALUES (#{noFirstPage.applyId}, #{noFirstPage.tutorId}, #{noFirstPage.name}, #{noFirstPage.gender},
+                #{noFirstPage.organizationId},#{noFirstPage.image},
+                #{noFirstPage.birthday}, #{noFirstPage.identity}, #{noFirstPage.phone}, #{noFirstPage.email},
+                #{noFirstPage.title},
+                #{noFirstPage.evaluateTime}, #{noFirstPage.finalDegree}, #{noFirstPage.awardingUnitTime})
+    </insert>
+
+    <update id="updateTutorNoInspectSecondPage">
+        UPDATE tutor_no_inspect
+        SET research_directions                      = #{noSecondPage.researchDirections},
+            applied_subject_unit                     = #{noSecondPage.appliedSubjectUnit},
+            applied_subject_code                     = #{noSecondPage.appliedSubjectCode},
+            applied_subject_name                     = #{noSecondPage.appliedSubjectName},
+            exemption_conditions                     = #{noSecondPage.exemptionConditions},
+            teaching_awards                          = #{noSecondPage.teachingAwardsJson},
+            master_director_time                     = #{noSecondPage.masterDirectorTime},
+            master_director_subject                  = #{noSecondPage.masterDirectorSubject},
+            exemption_conditions_materials           = #{noSecondPage.exemptionConditionsMaterials},
+            research_projects                        = #{noSecondPage.researchProjectsJson}
+        WHERE apply_id = #{applyId}
+    </update>
+
+    <insert id="saveNoApplyInfo" useGeneratedKeys="true" keyColumn="apply_id" keyProperty="applyId"
+            parameterType="com.nwu.entities.Apply">
+        INSERT INTO apply (tutor_id, apply_type_id, status, submit_time)
+        VALUES (#{apply.tutorId}, #{apply.applyTypeId}, #{apply.status}, #{apply.submitTime});
+    </insert>
+
+    <update id="updateApplySubjectStatusTimeByApplyId">
+        UPDATE apply
+        SET subject = #{applySubject},
+            status = #{status},
+            submit_time= #{submitTime}
+        WHERE apply_id = #{applyId}
+    </update>
 </mapper>

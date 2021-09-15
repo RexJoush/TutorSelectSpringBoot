@@ -59,3 +59,6 @@
 
 * 2021.09.08 **zjz**
   * tutor_no_inspect 添加上传免审的证明材料路径字段 exemption_conditions_materials
+  * research_teaching_situations 科研教学情况 拆分为下面2个字段
+  * teaching_awards 科研教学奖励
+  * research_projects 科研项目

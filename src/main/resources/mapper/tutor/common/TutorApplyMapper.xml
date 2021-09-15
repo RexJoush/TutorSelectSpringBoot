@@ -10,7 +10,7 @@
         WHERE tutor_id = #{tutorId};
     </select>
 
-    <select id="getApplyInfoByTutorIdAndApplyTypeId" resultType="com.nwu.entities.Apply">
+    <select id="getApplyByTutorIdAndApplyTypeId" resultType="com.nwu.entities.Apply">
         SELECT *
         FROM apply
         WHERE tutor_id = #{tutorId}

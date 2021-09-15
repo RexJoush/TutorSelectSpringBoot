@@ -24,7 +24,7 @@ import java.util.List;
  * @since 2021-08-26
  */
 @RestController
-@RequestMapping("/teaching_awards")
+@RequestMapping("/admin/teaching_awards")
 public class TeachingAwardsController {
     @Autowired
     TeachingAwardsService teachingAwardsService;
