@@ -25,6 +25,13 @@ import java.util.List;
 public interface TutorInspectService extends IService<TutorInspect> {
 
     /**
+     * 获取所有教师信息
+     * @param organizationId 院系id
+     * @return 信息列表
+     */
+    List<QueryDepartmentSecretaryInit> getTutorInit(int organizationId, List<String> applyStatuss);
+
+    /**
      * 获取导师申请信息
      *
      * @param tutorQuery 查询条件

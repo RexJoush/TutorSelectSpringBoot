@@ -147,6 +147,61 @@ public class PDFTemplates {
                     pdfContentByte = pdfStamper.getOverContent(2);
                     n = 6;  //篇数
                     m = widths.length;
+                }else if (key == "tableResearchProject"){   //科研项目
+                    float[] widths = {0.04f, 0.25f, 0.11f, 0.10f, 0.10f, 0.10f, 0.1f, 0.1f,0.10f};
+                    pdfPTable.setWidths(widths);
+                    pdfContentByte = pdfStamper.getOverContent(3);
+                    n = 5;
+                    m = widths.length;
+                }
+                else if (key == "tableAcademicWorks"){      //教材或学术著作AcademicWorks
+                    float[] widths = {0.06f, 0.3f, 0.06f, 0.12f, 0.26f, 0.1f,0.1f};
+                    pdfPTable.setWidths(widths);
+                    pdfContentByte = pdfStamper.getOverContent(3);
+                    n = 2;
+                    m = widths.length;
+                }
+                else if (key == "tableTeachingAwards"){     //科研教学奖励
+                    float[] widths = {0.06f, 0.3f, 0.1f, 0.2f, 0.1f, 0.1f, 0.14f};
+                    pdfPTable.setWidths(widths);
+                    pdfContentByte = pdfStamper.getOverContent(3);
+                    n = 2;
+                    m = widths.length;
+                }
+                else if (key == "tableInventionPatent"){    //发明专利
+                    float[] widths = {0.06f, 0.3f, 0.1f, 0.18f, 0.2f, 0.16f};
+                    pdfPTable.setWidths(widths);
+                    pdfContentByte = pdfStamper.getOverContent(3);
+                    n = 2;
+                    m = widths.length;
+                }
+                else if ((key == "tableGuidingDoctor") || (key == "tableGuidingMaster")){      //指导博士 指导硕士
+                    float[] widths = {0.2f, 0.5f, 0.15f, 0.15f};
+                    pdfPTable.setWidths(widths);
+                    pdfContentByte = pdfStamper.getOverContent(4);
+                    n = 3;
+                    m = widths.length;
+                }
+                else if ((key == "tableHelpGuidingDoctor") ||(key == "tableHelpGuidingMaster")){  //协助指导博士 协助指导硕士
+                    float[] widths = {0.2f, 0.35f, 0.15f, 0.15f, 0.15f};
+                    pdfPTable.setWidths(widths);
+                    pdfContentByte = pdfStamper.getOverContent(4);
+                    n = 3;
+                    m = widths.length;
+                }
+                else if (key == "tableGuidingBachelor"){     //指导本科
+                    float[] widths = {0.2f, 0.2f, 0.6f};
+                    pdfPTable.setWidths(widths);
+                    pdfContentByte = pdfStamper.getOverContent(4);
+                    n = 3;
+                    m = widths.length;
+                }
+                else if (key == "tableCourseTeaching"){      //研究生课程教学情况
+                    float[] widths = {0.2f, 0.4f, 0.15f, 0.25f};
+                    pdfPTable.setWidths(widths);
+                    pdfContentByte = pdfStamper.getOverContent(4);
+                    n = 3;
+                    m = widths.length;
                 }
 
                 //创建表体

@@ -2,14 +2,17 @@ package com.nwu.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.impl.TutorInspectServiceImpl;
+import com.nwu.service.tutor.PageInit;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.TutorQuery;
 import io.swagger.annotations.ApiOperation;
+import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +36,23 @@ public class TutorInspectController {
 
     @Autowired
     private TutorInspectServiceImpl tutorInspectService;
+
+    @GetMapping("/getInit/{organizationId}/{applyStatuss}")
+    public Result getInit(@PathVariable("organizationId") int organizationId,
+                          @PathVariable("applyStatuss") List<String> applyStatuss){
+//    public Result getInit(@RequestBody Map<String, Object> bodies){
+        System.out.println(organizationId);
+        System.out.println(applyStatuss);
+
+        List<QueryDepartmentSecretaryInit> inits = null;
+        try {
+             inits = tutorInspectService.getTutorInit(organizationId, applyStatuss);
+        } catch (Exception e) {
+            return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
+        }
+        return new Result(ResultCode.SUCCESS, inits);
+    }
+
 
     @ApiOperation(value = "获取所有用户")
     @GetMapping("/admin/getAll")

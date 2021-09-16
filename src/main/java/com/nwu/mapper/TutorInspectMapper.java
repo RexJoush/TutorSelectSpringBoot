@@ -25,6 +25,9 @@ import java.util.List;
 @Mapper
 public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
 
+    List<QueryDepartmentSecretaryInit> getTutorInspectInit(int organizationId, List<String> applyStatuss);
+    List<QueryDepartmentSecretaryInit> getTutorNoInspectInit(int organizationId, List<String> applyStatuss);
+
     List<QueryDepartmentSecretaryInit> selectByQuery(TutorQuery tutorQuery);
 
     int saveTutorInspectBaseInfo(@Param("firstPage") FirstPage firstPage);
