@@ -15,6 +15,7 @@ import com.nwu.results.ResultCode;
 import com.nwu.service.tutor.common.TeacherInfoService;
 import com.nwu.service.tutor.noInspectApply.NoFirstService;
 import com.nwu.service.tutor.noInspectApply.NoSecondService;
+import com.nwu.util.IdUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/tutor")
 public class NoInspectController {
 
-    public final String tutorId = "20133220";
+    // public final String tutorId = "20133220";
 
     //第一页
     @Resource
@@ -43,11 +44,16 @@ public class NoInspectController {
 
     /**
      * 获取第一页导师基本信息
+     *
      * @param applyId 申请表 id
      * @return firstPage
      */
     @GetMapping("/noInspect/getFirstPage/{applyId}")
-    public Result getFirstPage(@PathVariable("applyId") Integer applyId) {
+    public Result getFirstPage(@PathVariable("applyId") Integer applyId,
+                               HttpServletRequest request) {
+
+        String tutorId = IdUtils.getTutorId(request);
+
         NoFirstPage noFirstPage;
         FirstPage firstPage;
         if (applyId == null) {
@@ -71,42 +77,48 @@ public class NoInspectController {
 
     @ApiOperation("保存免审基本信息")
     @PostMapping("/noInspect/saveFirstPage/{applyId}/{applyTypeId}/{applyCondition}")
-    public Result saveFirstPage(@RequestBody NoFirstPage nofirstPage, @PathVariable("applyId") Integer applyId, @PathVariable("applyTypeId") Integer applyTypeId, @PathVariable("applyCondition") Integer applyCondition, HttpServletRequest request) throws Exception {
-        //判断是否数据库中有数据 applyCondition == 101表示数据库中有status == 0 applyTypeId == 2
+    public Result saveFirstPage(@RequestBody NoFirstPage nofirstPage,
+                                @PathVariable("applyId") Integer applyId,
+                                @PathVariable("applyTypeId") Integer applyTypeId,
+                                @PathVariable("applyCondition") Integer applyCondition,
+                                HttpServletRequest request) throws Exception {
+
+        String tutorId = IdUtils.getTutorId(request);
+
+        // 判断是否数据库中有数据 applyCondition == 101 表示数据库中有 status == 0 applyTypeId == 2
         if (applyCondition == 101 && applyId != null && applyTypeId != null) {
-            //根据applyId更新老师基本信息 第一页不修改，继续第二页，直接返回
+            // 根据 applyId 更新老师基本信息 第一页不修改，继续第二页，直接返回
             NoSecondPage secondPage = noSecondService.getSecondPage(applyId);
             if (secondPage != null) {
                 return new Result(ResultCode.SUCCESS, secondPage);
             }
-            return Result.FAIL();
         } else {
-            //插入老师数据tutorId applyTypeId status ******* apply tutorInspect
+            // 插入老师数据tutorId applyTypeId status ******* apply tutorInspect
             Apply apply = new Apply();
             apply.setTutorId(tutorId);
             apply.setApplyTypeId(applyTypeId);
             apply.setStatus(0);
             noFirstService.saveNoApplyInfo(apply);
-            //插入的主键
+            // 插入的主键
             nofirstPage.setApplyId(String.valueOf(apply.getApplyId()));
-            //插入tutorNoInspect表 保存图片
+            // 插入 tutorNoInspect 表 保存图片
             int result = noFirstService.saveNoFirstPage(nofirstPage, request);
             if (result > 0) {
-                //返回第二页信息 免审第二页
+                // 返回第二页信息 免审第二页
                 NoSecondPage secondPage = noSecondService.getSecondPageInit();
                 secondPage.setApplyId(apply.getApplyId());
                 return new Result(ResultCode.SUCCESS, secondPage);
             }
-            return Result.FAIL();
         }
+        return Result.FAIL();
     }
 
     @ApiOperation("保存免审第二页信息")
     @PostMapping("/noInspect/saveSecondPage/{applyId}")
     public Result saveSecondPage(@RequestBody NoSecondPage noSecondPage, @PathVariable("applyId") Integer applyId) {
 
-        //第二页无论什么都要更新数据库
-        if (noSecondPage != null && applyId != null &&noSecondPage.getApplySubject() != null) {
+        // 第二页无论什么都要更新数据库
+        if (noSecondPage != null && applyId != null && noSecondPage.getApplySubject() != null) {
             try {
                 noSecondService.updateNoSecondPage(noSecondPage, applyId);
             } catch (Exception e) {

@@ -1,10 +1,8 @@
 package com.nwu.controller.tutor;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.nwu.entities.Apply;
 import com.nwu.entities.tutor.FirstPage;
-import com.nwu.entities.tutor.TeacherInfo;
 import com.nwu.entities.tutor.noInspect.NoFirstPage;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
@@ -13,17 +11,15 @@ import com.nwu.service.tutor.common.DeleteFileService;
 import com.nwu.service.tutor.common.MainBoardService;
 import com.nwu.service.tutor.common.TeacherInfoService;
 import com.nwu.service.tutor.noInspectApply.NoFirstService;
-import com.nwu.util.ResultClient;
+import com.nwu.util.IdUtils;
 import com.nwu.util.UpLoadFile;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,8 +29,6 @@ import java.util.List;
  */
 @RestController
 public class MainBoardController {
-
-    public final String tutorId = "20133220";
 
     // 申请表
     @Resource
@@ -57,12 +51,17 @@ public class MainBoardController {
 
     /**
      * 判断申请状态
+     *
      * @param applyTypeId 申请类别Id
      * @return data
      */
     @ApiOperation("是否申请过此岗位")
     @GetMapping("/tutor/checkApply/{applyTypeId}")
-    public Result checkApply(@PathVariable("applyTypeId") int applyTypeId) {
+    public Result checkApply(@PathVariable("applyTypeId") int applyTypeId,
+                             HttpServletRequest request) {
+
+        String tutorId = IdUtils.getTutorId(request);
+
         /*
             根据 tutorId 和 applyId 查询申请信息
             101：已经申请过此岗位，但信息未填写完成
@@ -75,11 +74,10 @@ public class MainBoardController {
         boolean flag = true;
 
         // 没申请过
-        if (applyList.size() == 0){
+        if (applyList.size() == 0) {
             map.put("applyId", -1);
             map.put("applyCondition", 102);
-        }
-        else {
+        } else {
             switch (applyTypeId) {
                 // 只允许有一个
                 case 1:
@@ -101,7 +99,7 @@ public class MainBoardController {
                 case 8:
                     for (Apply apply : applyList) {
                         // 查到有在申请中的申请，返回当前申请
-                        if (apply.getStatus() == 0){
+                        if (apply.getStatus() == 0) {
                             flag = false;
                             map.put("applyId", apply.getApplyId());
                             map.put("applyCondition", 101);
@@ -121,16 +119,22 @@ public class MainBoardController {
     }
 
 
-
     /**
      * 导师免审
+     *
      * @param applyTypeId
      * @param applyCondition
      * @param applyId
      * @return
      */
     @GetMapping("/tutor/getNoFirstPage/{applyTypeId}/{applyCondition}/{applyId}")
-    public Result getNoFirstPage(@PathVariable("applyTypeId") int applyTypeId, @PathVariable("applyCondition") Integer applyCondition, @PathVariable("applyId") Integer applyId) {
+    public Result getNoFirstPage(@PathVariable("applyTypeId") int applyTypeId,
+                                 @PathVariable("applyCondition") Integer applyCondition,
+                                 @PathVariable("applyId") Integer applyId,
+                                 HttpServletRequest request) {
+
+        String tutorId = IdUtils.getTutorId(request);
+
         FirstPage firstPage;
         NoFirstPage noFirstPage;
         try {
@@ -138,8 +142,7 @@ public class MainBoardController {
                 //未申请过 查找teacherInfo
                 firstPage = teacherInfoService.getTeacherInfo(tutorId);
                 return new Result(ResultCode.SUCCESS, firstPage);
-            }
-            else if (applyCondition == 101) {
+            } else if (applyCondition == 101) {
                 //已申请过 查询对应的主键 导师增列
                 if (applyTypeId == 3 || applyTypeId == 6) {
                     //导师免审 查询tutor_no_inspect
@@ -150,8 +153,7 @@ public class MainBoardController {
                     firstPage = tutorInspectService.getFirstPage(applyId);
                     return new Result(ResultCode.SUCCESS, firstPage);
                 }
-            }
-            else {
+            } else {
                 return Result.FAIL();
             }
         } catch (Exception e) {
@@ -168,12 +170,17 @@ public class MainBoardController {
      *
      * @param uploadFile
      * @param typeId     上传文件类别 学术论文/科研奖励等  11=博士首次申请+学术论文 41=硕士首次申请+学术论文
-     * @param req
+     * @param request
      * @return path路径
      */
     @ApiOperation("文件上传")
     @PostMapping("/user/upload/{typeId}")
-    public Result uploadFile(@RequestParam("material") MultipartFile uploadFile, @PathVariable("typeId") Integer typeId, HttpServletRequest req) {
+    public Result uploadFile(@RequestParam("material") MultipartFile uploadFile,
+                             @PathVariable("typeId") Integer typeId,
+                             HttpServletRequest request) {
+
+        String tutorId = IdUtils.getTutorId(request);
+
         UpLoadFile loadFile = new UpLoadFile();
         String typeName = "";
         if (!"".equals(typeId)) {
@@ -210,7 +217,7 @@ public class MainBoardController {
                     return Result.FAIL();
                 }
             }
-            String path = loadFile.upload(uploadFile, req, typeName, tutorId);
+            String path = loadFile.upload(uploadFile, request, typeName, tutorId);
             System.out.println(path);
             if (!"".equals(path)) {
                 //路径不为空
