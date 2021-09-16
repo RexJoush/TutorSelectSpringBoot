@@ -3,6 +3,7 @@ package com.nwu.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.Organization;
+import com.nwu.entities.PdfEntity.PdfTutorInspect;
 import com.nwu.entities.TutorInspect;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.SecondPage;
@@ -81,6 +82,16 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     @Override
     public int updateTutorInspectSecond(int applyId, SecondPage secondPage) {
         return tutorInspectMapper.updateTutorInspectSecond(applyId, secondPage);
+    }
+
+    /**
+     * pdf打印
+     * @param applyId
+     * @return
+     */
+    @Override
+    public PdfTutorInspect getPdfTutorInspect(int applyId) {
+        return tutorInspectMapper.getTutorInspect(applyId);
     }
 
 }

@@ -32,7 +32,7 @@ public class InventionPatent {
     private String patentAuthorNumber   ; // 作者编号
     private String patentSource         ; // 专利的来源，系统获取 或 导师上传
     private String patentProveMaterials ; // 证明材料，图片，pdf等
-
+    private String patentType;            // 类型
     /* 保留字段 */
     private String col1                 ; // 保留字段1
     private String col2                 ; // 保留字段2

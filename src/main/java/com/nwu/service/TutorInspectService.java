@@ -1,5 +1,6 @@
 package com.nwu.service;
 
+import com.nwu.entities.PdfEntity.PdfTutorInspect;
 import com.nwu.entities.TutorInspect;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nwu.entities.tutor.FirstPage;
@@ -63,5 +64,11 @@ public interface TutorInspectService extends IService<TutorInspect> {
      */
     int updateTutorInspectSecond(int applyId, SecondPage secondPage);
 
+    /**
+     * pdf获取
+     * @param applyId
+     * @return
+     */
+    PdfTutorInspect getPdfTutorInspect(int applyId);
 
 }
