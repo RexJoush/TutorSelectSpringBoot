@@ -190,4 +190,11 @@
         WHERE apply_id = #{applyId}
     </update>
 
+    <select id="getTutorInspect" resultType="com.nwu.entities.PdfEntity.PdfTutorInspect">
+        SELECT t.* , o.organization_name , a.subject
+        FROM tutor_inspect t ,organization o ,apply a
+        WHERE t.organization_id = o.organization_id
+        AND a.apply_id = t.apply_id
+        AND t.apply_id = #{applyId}
+    </select>
 </mapper>

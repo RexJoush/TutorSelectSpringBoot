@@ -8,6 +8,7 @@ import com.nwu.results.ResultCode;
 import com.nwu.service.admin.ApplyService;
 import com.nwu.service.tutor.PageInit;
 import com.nwu.util.AESUtil;
+import com.nwu.util.IdUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,8 +23,6 @@ import java.util.List;
 @RestController
 public class MyApplyController {
 
-    public final String tutorId = "20133220";
-
     @Resource
     private ApplyService applyService;
 
@@ -33,6 +32,7 @@ public class MyApplyController {
     @GetMapping("/getApplyList")
     public Result getApplyList(HttpServletRequest request) {
 
+        String tutorId = IdUtils.getTutorId(request);
 
         String token = request.getHeader("token");
         System.out.println(token);
@@ -46,6 +46,7 @@ public class MyApplyController {
 
     /**
      * 将当前的申请表状态改为 0，使得教师可以进行修改
+     *
      * @param applyId 申请表 id
      */
     @GetMapping("/changeStatus/{applyId}")
@@ -54,7 +55,7 @@ public class MyApplyController {
         System.out.println(applyId);
         try {
             applyService.updateApplyStatus(applyId, 0, "");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("code", 1201);
@@ -67,8 +68,11 @@ public class MyApplyController {
 
     @GetMapping("/getApplyDetails/{applyId}/{isInspect}")
     public Result getApplyDetails(@PathVariable("applyId") int applyId,
-                                  @PathVariable("isInspect") int isInspect) {
-        System.out.println(applyId);
+                                  @PathVariable("isInspect") int isInspect,
+                                  HttpServletRequest request) {
+
+        String tutorId = IdUtils.getTutorId(request);
+
         System.out.println(isInspect);// 1 非免审，0 免审
 
         ApplyDetails applyDetails = null;

@@ -1,5 +1,6 @@
 package com.nwu.mapper;
 
+import com.nwu.entities.PdfEntity.PdfTutorInspect;
 import com.nwu.entities.TutorInspect;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.nwu.entities.tutor.FirstPage;
@@ -43,4 +44,10 @@ public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
 
     int updateFirstPage(String applyId, String phone, String email, String evaluateTime, String awardingUnitTime);
 
+    /**
+     * 获取tutorInspect表全部信息
+     * @param applyId   申请主键
+     * @return  PdfTutorInspect
+     */
+    PdfTutorInspect getTutorInspect(@Param("applyId") Integer applyId);
 }
