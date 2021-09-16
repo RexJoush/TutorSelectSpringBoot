@@ -6,7 +6,7 @@
     <resultMap type="java.lang.Integer" id="total">
         <result column="total"/>
     </resultMap>
-    <select id="selectByQuery" resultMap="QueryDepartmentSecretaryInit,total"
+    <select id="selectByQuery" resultMap="QueryDepartmentSecretaryInit"
             parameterType="com.nwu.vo.TutorQuery">
         SELECT
         t.*,

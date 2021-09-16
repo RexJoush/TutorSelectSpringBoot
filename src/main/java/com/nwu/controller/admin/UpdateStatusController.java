@@ -85,6 +85,10 @@ public class UpdateStatusController {
     @PostMapping("/updateCommitByGraduate")
     public Result updateCommitByGraduate(@RequestBody QueryDepartmentSecretaryInit submit) throws Exception {
         Apply apply = new Apply();
+        apply.setApplyTypeId(submit.getApplyTypeId());
+        apply.setStatus(submit.getStatus());
+        apply.setProfessional(submit.getProfessional());
+        apply.setSubject(submit.getSubject());
         apply.setCommitYjsyCs(submit.getCommitYjsyCs());
         apply.setCommitYjsyLr(submit.getCommitYjsyLr());
         apply.setCommitYjsySfh(submit.getCommitYjsySfh());
