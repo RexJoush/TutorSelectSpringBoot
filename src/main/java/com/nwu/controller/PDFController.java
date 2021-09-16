@@ -336,7 +336,7 @@ public class PDFController {
         }
 
         //声明一个arrayList数组 用于放入DataList数组中
-        ArrayList<Map<String,Object>> inventionPatentPdfList = new ArrayList<>();
+//        ArrayList<Map<String,Object>> inventionPatentPdfList = new ArrayList<>();
 
 
         //创建表格内table所需字段
