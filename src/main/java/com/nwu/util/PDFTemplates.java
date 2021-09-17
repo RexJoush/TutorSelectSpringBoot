@@ -203,6 +203,21 @@ public class PDFTemplates {
                     n = 3;
                     m = widths.length;
                 }
+                else if ( key == "tableResearchProjects"){  //科研项目
+                    float[] widths = {0.06f, 0.3f, 0.1f, 0.18f, 0.2f, 0.16f };
+                    pdfPTable.setWidths(widths);
+                    pdfContentByte = pdfStamper.getOverContent(2);
+                    n=5;
+                    m=widths.length;
+                }
+                else if (key == "tableTeachingAwards") {    //教学奖励
+                    float[] widths = {0.06f, 0.25f, 0.15f, 0.18f, 0.2f, 0.16f}   ;
+                    pdfPTable.setWidths(widths);
+                    pdfContentByte = pdfStamper.getOverContent(2);
+                    n=3;
+                    m=widths.length;
+                }
+
 
                 //创建表体
                 String[] fields = pdfTable.getColFields().split(",");

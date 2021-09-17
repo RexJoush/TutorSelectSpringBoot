@@ -73,4 +73,35 @@
             submit_time= #{submitTime}
         WHERE apply_id = #{applyId}
     </update>
+
+    <select id="getPdfTutorNoInspect" parameterType="string" resultType="com.nwu.entities.PdfEntity.PdfNoTutorInspect">
+        SELECT
+            t.apply_id,
+            t.tutor_id,
+            t.`name`,
+            o.organization_name,
+            t.gender,
+            t.birthday,
+            t.image,
+            t.identity,
+            t.phone,
+            t.email,
+            t.final_degree,
+            t.awarding_unit_time,
+            t.title,
+            t.evaluate_time,
+            t.research_directions,
+            t.applied_subject_unit,
+            t.applied_subject_code,
+            t.applied_subject_name,
+            t.exemption_conditions,
+            t.master_director_time,
+            t.master_director_subject,
+            t.teaching_awards,
+            t.research_projects
+        FROM
+            tutor_no_inspect t
+                LEFT JOIN organization o ON t.organization_id = o.organization_id
+        WHERE t.apply_id = #{applyId}
+    </select>
 </mapper>
