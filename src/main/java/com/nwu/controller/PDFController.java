@@ -1,35 +1,15 @@
 package com.nwu.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.nwu.entities.*;
-import com.nwu.entities.PdfEntity.PdfTable;
-import com.nwu.entities.PdfEntity.PdfTutorInspect;
-import com.nwu.entities.tutor.childSubject.CourseTeaching;
-import com.nwu.entities.tutor.childSubject.ExpertTitle;
-import com.nwu.entities.tutor.childSubject.GroupsOrPartTimeJob;
-import com.nwu.entities.tutor.childSubject.GuidingStudent;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.PdfInspectService;
 import com.nwu.service.PdfNoInspectService;
-import com.nwu.service.TutorInspectService;
-import com.nwu.service.scientificResearchManager.*;
-import com.nwu.service.tutor.SummaryService;
-import com.nwu.service.tutor.common.CourseTeachingService;
-import com.nwu.service.tutor.common.GuidingStudentService;
-import com.nwu.util.PDFTemplates;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/tutor")
@@ -43,10 +23,7 @@ public class PDFController {
 
     @ApiOperation("pdf导出")
     @GetMapping("/getPdf/{applyId}/{applyTypeId}")
-    public Result pdfCreate(@Param("applyId") Integer applyId, @Param("applyTypeId") Integer applyTypeId) throws Exception {
-        applyId = 138;
-        applyTypeId = 1;
-        System.out.println(applyTypeId);
+    public Result pdfCreate(@PathVariable("applyId") Integer applyId, @PathVariable("applyTypeId") Integer applyTypeId, HttpServletRequest request) throws Exception {
         if (applyId ==null && applyTypeId == null){
             return Result.FAIL();
         }
@@ -66,14 +43,16 @@ public class PDFController {
         String pdfPath = "";
         if (applyTypeId == 1 || applyTypeId ==2 || applyTypeId == 4 || applyTypeId ==5 || applyTypeId == 7 || applyTypeId == 8){
             //非免审
-            pdfPath = pdfInspectService.getTutorInspectPdf(applyId, applyTypeId, pdfTemplate);
+            pdfPath = pdfInspectService.getTutorInspectPdf(applyId, applyTypeId, pdfTemplate,request);
         }
         else
         {
             //免审
-            pdfPath = pdfNoInspectService.getTutorNoInspect(applyId,applyTypeId,pdfTemplate);
+            pdfPath = pdfNoInspectService.getTutorNoInspect(applyId,applyTypeId,pdfTemplate,request);
         }
         return new Result(ResultCode.SUCCESS,pdfPath);
+
+
 
 
 //       linux版本

@@ -71,6 +71,7 @@ public class PDFTemplates {
         PdfReader pdfReader = new PdfReader(templatePdfPath);   //读取pdf模板
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();  //输出流
         PdfStamper pdfStamper = new PdfStamper(pdfReader,byteArrayOutputStream);    //pdf修改器
+
         BaseFont baseFont = BaseFont.createFont(getFontPath(fontName), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);//输出中文字体
         ArrayList<BaseFont> fontList = new ArrayList<>();   //字体列表
         fontList.add(baseFont); //添加字体到列表
@@ -111,7 +112,7 @@ public class PDFTemplates {
             String key = entry.getKey();   //此处key为Pdf模板中对应的域名  ???????
             PdfTable pdfTable = entry.getValue();
             //获取属性类型
-            if (pdfTable!=null&& pdfTable.getColFields() != null && acroFields.getField(key) != null){
+            if (pdfTable != null && pdfTable.getColFields() != null && acroFields.getField(key) != null){
                 //获取位置
                 AcroFields.FieldPosition fieldPosition = acroFields.getFieldPositions(key).get(0);
                 float width = fieldPosition.position.getRight() - fieldPosition.position.getLeft();
@@ -136,12 +137,12 @@ public class PDFTemplates {
                 //学术论文 tableAcademicPaper_lg tableAcademicPaper_ws
                 if ((key == "tableAcademicPaper_lg") && (pdfPTable != null)){
                     //理工
-                    float[] widths = { 0.04f,0.36f,0.07f,0.07f,0.06f,0.26f,0.05f,0.09f};
+                    float[] widths = { 0.04f,0.34f,0.07f,0.07f,0.08f,0.26f,0.05f,0.09f};
                     pdfPTable.setWidths(widths);
                     pdfContentByte = pdfStamper.getOverContent(2);
                     n = 6;
                     m= widths.length;
-                }else if((key == "tableAcademicPaper_ws") && (pdfPTable!=null)){
+                }else if((key == "tableAcademicPaper_ws") && (pdfPTable != null)){
                     float[] widths = {0.04f, 0.31f, 0.14f, 0.15f, 0.3f, 0.06f};
                     pdfPTable.setWidths(widths);
                     pdfContentByte = pdfStamper.getOverContent(2);

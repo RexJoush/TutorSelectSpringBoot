@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,7 +29,7 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
     TutorNoInspectMapper tutorNoInspectMapper;
 
     @Override
-    public String getTutorNoInspect(Integer applyId, Integer applyTypeId,String pdfTemplate) {
+    public String getTutorNoInspect(Integer applyId, Integer applyTypeId, String pdfTemplate, HttpServletRequest request) {
 
         try
         {   //尝试进行读取资源文件
@@ -36,7 +37,7 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
             FileInputStream s = new FileInputStream(pdfFile);
             s.close();
             if (s == null){
-                return "err";   //模板资源不存在
+                return "";   //模板资源不存在
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -129,24 +130,30 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
 
         //创建pdf生成路径
         try{
-            String path="D:\\RARZIP\\PDF\\"+pdfTutorNoInspect.getName();
+            String path="D:\\RARZIP\\PDF\\";
+            String pdfName = pdfTutorNoInspect.getName();
             switch (applyTypeId){
-                case 3: path = path + "博导免审表"; break;
-                case 6: path = path + "学硕免审表"; break;
+                case 3: pdfName = pdfName + "博导免审表"; break;
+                case 6: pdfName = pdfName + "学硕免审表"; break;
             }
-            path = path + TimeUtils.sdf.format(new Date()) +".pdf";
+            pdfName = pdfName +".pdf";   //pdf名称
+            path = path + pdfName;
             File file = new File(path);
             if (!file.getParentFile().exists()){
                 file.getParentFile().mkdirs();
             }
+            if (file.exists()){
+                file.delete();
+            }
             file.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             new PDFTemplates(pdfTemplate).export(fileOutputStream,textFields,tableFields,imgFields);
-            return path;
+            String httpPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/downFile/PDF/" + pdfName;
+            return httpPath;
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        return "ok";
+        return "";
     }
 }

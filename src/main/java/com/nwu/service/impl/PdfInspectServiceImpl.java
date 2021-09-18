@@ -19,14 +19,17 @@ import com.nwu.service.tutor.common.CourseTeachingService;
 import com.nwu.service.tutor.common.GuidingStudentService;
 import com.nwu.util.PDFTemplates;
 import com.nwu.util.TimeUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.*;
 
+@Service
 public class PdfInspectServiceImpl implements PdfInspectService {
 
     @Resource
@@ -57,7 +60,7 @@ public class PdfInspectServiceImpl implements PdfInspectService {
     CourseTeachingService courseTeachingService;
 
     @Override
-    public String getTutorInspectPdf(Integer applyId, Integer applyTypeId,String pdfTemplate) {
+    public String getTutorInspectPdf(Integer applyId, Integer applyTypeId, String pdfTemplate, HttpServletRequest request) {
 
         try
         {   //尝试进行读取资源文件
@@ -65,7 +68,7 @@ public class PdfInspectServiceImpl implements PdfInspectService {
             FileInputStream s = new FileInputStream(pdfFile);
             s.close();
             if (s == null){
-                return "模板资源不存在！";
+                return "";  //模板资源不存在！
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -208,7 +211,7 @@ public class PdfInspectServiceImpl implements PdfInspectService {
                 row.put("journalName", academicPaperList.get(i).getJournalName());
                 row.put("journalCategory", academicPaperList.get(i).getJournalCategory());
                 if (academicPaperList.get(i).getSciPart() != null && String.valueOf(academicPaperList.get(i).getImpactFactors()) != null) {
-                    row.put("sciPart", academicPaperList.get(i).getSciPart() + academicPaperList.get(i).getImpactFactors());
+                    row.put("sciPart", academicPaperList.get(i).getSciPart() + "/" + academicPaperList.get(i).getImpactFactors());
                 } else if (String.valueOf(academicPaperList.get(i).getImpactFactors()) == null) {
                     row.put("sciPart", academicPaperList.get(i).getImpactFactors());
                 } else {
@@ -485,28 +488,35 @@ public class PdfInspectServiceImpl implements PdfInspectService {
 
         //创建pdf生成路径
         try{
-            String path="D:\\RARZIP\\PDF\\"+pdfTutorInspect.getName();
+            String path="D:\\RARZIP\\PDF\\";
+            String pdfName = pdfTutorInspect.getName();
             switch (applyTypeId){
-                case 1: path = path + "首次博导表"; break;
-                case 2: path = path + "博导增岗表"; break;
-                case 4: path = path + "首次学硕表"; break;
-                case 5: path = path + "学硕增岗表"; break;
-                case 7: path = path + "首次专硕表"; break;
-                case 8: path = path + "专硕增岗表"; break;
+                case 1: pdfName = pdfName + "首次博导表"; break;
+                case 2: pdfName = pdfName + "博导增岗表"; break;
+                case 4: pdfName = pdfName + "首次学硕表"; break;
+                case 5: pdfName = pdfName + "学硕增岗表"; break;
+                case 7: pdfName = pdfName + "首次专硕表"; break;
+                case 8: pdfName = pdfName + "专硕增岗表"; break;
             }
-            path = path + TimeUtils.sdf.format(new Date()) +".pdf";
+            pdfName = pdfName +".pdf";   //pdf名称
+            path = path + pdfName;                                          //物理路径
             File file = new File(path);
             if (!file.getParentFile().exists()){
                 file.getParentFile().mkdirs();
             }
+            if (file.exists()){
+                file.delete();
+            }
             file.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             new PDFTemplates(pdfTemplate).export(fileOutputStream,textFields,tableFields,imgFields);
-            return path;
+            String httpPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/downFile/PDF/" + pdfName;
+            System.out.println(httpPath);
+            return httpPath;
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        return "ok";
+        return "";
     }
 }
