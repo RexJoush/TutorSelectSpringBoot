@@ -108,7 +108,7 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
             //教学奖励处理
             PdfTable tableTeachingAwards = new PdfTable();
             tableTeachingAwards.setColNames("序号,奖励名称,颁奖单位,获奖级别,获奖日期,获奖人");
-            tableResearchProjects.setColFields("id,awardsName,awardsUnit,awardsLevel,awardsTime,awardsAuthorName");
+            tableTeachingAwards.setColFields("id,awardsName,awardsUnit,awardsLevel,awardsTime,awardsAuthorName");
             List<TeachingAward> teachingAwardList = JSON.parseArray(pdfTutorNoInspect.getTeachingAwards(), TeachingAward.class);
             ArrayList<Map<String,Object>> teachingAwardPdfList = new ArrayList<>();
             for (int i =0 ;i < teachingAwardList.size(); i++){
@@ -125,8 +125,8 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
 
 
             HashMap<String, PdfTable> tableFields = new HashMap<>();
-            tableFields.put("tableResearchProjects",tableResearchProjects);
-            tableFields.put("tableTeachingAwards",tableTeachingAwards);
+            tableFields.put("tableNoResearchProjects",tableResearchProjects);
+            tableFields.put("tableNoTeachingAwards",tableTeachingAwards);
 
         //创建pdf生成路径
         try{

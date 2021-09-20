@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/tutor")
@@ -50,10 +51,16 @@ public class PDFController {
             //免审
             pdfPath = pdfNoInspectService.getTutorNoInspect(applyId,applyTypeId,pdfTemplate,request);
         }
-        return new Result(ResultCode.SUCCESS,pdfPath);
-
-
-
+        HashMap<String, Object> map = new HashMap<>();
+        if (pdfPath != ""){
+            map.put("code",1201);
+            map.put("pdfPath",pdfPath);
+        }
+        else {
+            map.put("code","1200");
+            map.put("pdfPath",pdfPath);
+        }
+        return new Result(ResultCode.SUCCESS,map);
 
 //       linux版本
 //       InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(pdfTemplate);

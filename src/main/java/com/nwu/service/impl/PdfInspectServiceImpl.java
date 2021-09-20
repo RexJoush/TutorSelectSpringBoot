@@ -133,7 +133,7 @@ public class PdfInspectServiceImpl implements PdfInspectService {
         }
 
         //学硕增岗
-        if (applyTypeId == 4){
+        if (applyTypeId == 5){
             textFields.put("masterDegreeIncreaseTutorOnDuty", pdfTutorInspect.getMasterDegreeIncreaseTutorOnDuty());
             textFields.put("masterDegreeIncreaseTutorStartTime", pdfTutorInspect.getMasterDegreeIncreaseTutorStartTime());
         }
@@ -256,7 +256,7 @@ public class PdfInspectServiceImpl implements PdfInspectService {
             HashMap<String, Object> map = new HashMap<>();
             map.put("id", i + 1);
             map.put("projectName", researchProjectList.get(i).getProjectName());
-            map.put("projectNumber", researchProjectList.get(i).getProjectNumber());
+            map.put("projectNumber", researchProjectList.get(i).getApprovalNumber());       //有改动
             map.put("projectChargeName", researchProjectList.get(i).getProjectChargeName());
             map.put("projectStartTime", researchProjectList.get(i).getProjectStartTime());
             map.put("projectEndTime", researchProjectList.get(i).getProjectEndTime());
@@ -356,7 +356,7 @@ public class PdfInspectServiceImpl implements PdfInspectService {
         //协助指导硕士
         PdfTable tableHelpGuidingMaster = new PdfTable();
         tableHelpGuidingMaster.setColNames("学生姓名,论文题目,入学时间,指导教师,是否获得学位");
-        tableHelpGuidingMaster.setColNames("studentName,degreePaperTitle,studentEntryTime,tutorName,isGainDegree");
+        tableHelpGuidingMaster.setColFields("studentName,degreePaperTitle,studentEntryTime,tutorName,isGainDegree");
         //指导本科
         PdfTable tableGuidingBachelor = new PdfTable();
         tableGuidingBachelor.setColNames("学生姓名,毕业时间,毕业设计题目");
