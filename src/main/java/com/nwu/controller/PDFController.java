@@ -15,7 +15,6 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/tutor")
 public class PDFController {
-    public static String tutorId = "20133220";
 
     @Resource
     PdfInspectService pdfInspectService;

@@ -114,7 +114,7 @@ public class PdfInspectServiceImpl implements PdfInspectService {
         textFields.put("evaluateTime", pdfTutorInspect.getEvaluateTime());
 
         //首次专硕，专硕增岗 现任专业技术职位
-        textFields.put("professionalTitle", pdfTutorInspect.getProfessionalTitle());
+        textFields.put("professionalTitle", pdfTutorInspect.getTitle());
 
         // 外单位调入填写 专硕增岗 学硕增岗 博导增岗
         textFields.put("sourceUnitName", pdfTutorInspect.getSourceUnitName());

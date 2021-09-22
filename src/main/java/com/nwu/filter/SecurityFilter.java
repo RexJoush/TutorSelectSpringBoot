@@ -41,7 +41,9 @@ public class SecurityFilter implements Filter {
                 requestURI.endsWith("jpg") ||
                 requestURI.endsWith("png") ||
                 requestURI.endsWith("rar") ||
-                requestURI.endsWith("zip")) {
+                requestURI.endsWith("zip") ||
+                requestURI.endsWith("pdf"))
+        {
             filterChain.doFilter(request, response);
             return;
         }
