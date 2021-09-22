@@ -19,7 +19,6 @@ import java.util.List;
  * @author Rex Joush
  * @time 2021.09.03 15:19
  */
-@RequestMapping("/tutor")
 @RestController
 public class MyApplyController {
 
@@ -29,7 +28,7 @@ public class MyApplyController {
     /**
      * 获取当前教师的所有申请信息
      */
-    @GetMapping("/getApplyList")
+    @GetMapping("/tutor/getApplyList")
     public Result getApplyList(HttpServletRequest request) {
 
         String tutorId = IdUtils.getTutorId(request);
@@ -49,7 +48,7 @@ public class MyApplyController {
      *
      * @param applyId 申请表 id
      */
-    @GetMapping("/changeStatus/{applyId}")
+    @GetMapping("/tutor/changeStatus/{applyId}")
     public Result change10To0(@PathVariable("applyId") int applyId) {
         // 将状态码 14 改为 0，让教师修改被驳回的申请
         System.out.println(applyId);
@@ -66,7 +65,7 @@ public class MyApplyController {
         return new Result(ResultCode.SUCCESS);
     }
 
-    @GetMapping("/getApplyDetails/{applyId}/{isInspect}")
+    @GetMapping("/common/tutor/getApplyDetails/{applyId}/{isInspect}")
     public Result getApplyDetails(@PathVariable("applyId") int applyId,
                                   @PathVariable("isInspect") int isInspect,
                                   HttpServletRequest request) {

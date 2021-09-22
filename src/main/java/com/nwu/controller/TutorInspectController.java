@@ -1,6 +1,7 @@
 package com.nwu.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.github.pagehelper.PageHelper;
@@ -12,6 +13,7 @@ import com.nwu.service.tutor.PageInit;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.TutorQuery;
 import io.swagger.annotations.ApiOperation;
+import netscape.javascript.JSObject;
 import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,20 +39,29 @@ public class TutorInspectController {
     @Autowired
     private TutorInspectServiceImpl tutorInspectService;
 
-    @GetMapping("/getInit/{organizationId}/{applyStatuss}")
-    public Result getInit(@PathVariable("organizationId") int organizationId,
-                          @PathVariable("applyStatuss") List<String> applyStatuss){
-//    public Result getInit(@RequestBody Map<String, Object> bodies){
+//    @GetMapping("/getInit/{organizationId}/{applyStatuss}/{pageNumber}")
+    @PostMapping("/getInit")
+    public Result getInit(@RequestParam("organizationId") int organizationId,
+                          @RequestParam("applyStatuss") List<String> applyStatuss,
+                          @RequestParam("pageNumber") int pageNumber){
+
         System.out.println(organizationId);
         System.out.println(applyStatuss);
 
         List<QueryDepartmentSecretaryInit> inits = null;
+        PageInfo<QueryDepartmentSecretaryInit> pageInfo = null;
         try {
-             inits = tutorInspectService.getTutorInit(organizationId, applyStatuss);
+            PageHelper.startPage(pageNumber,10);
+            inits = tutorInspectService.getTutorInit(organizationId, applyStatuss);
+            pageInfo = new PageInfo<>(inits);
+
         } catch (Exception e) {
             return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
         }
-        return new Result(ResultCode.SUCCESS, inits);
+        JSONObject object = new JSONObject();
+        object.put("data", pageInfo.getList());
+        object.put("total", pageInfo.getTotal());
+        return new Result(ResultCode.SUCCESS, object);
     }
 
 
