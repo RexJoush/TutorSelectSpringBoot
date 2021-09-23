@@ -27,9 +27,13 @@ public interface TutorInspectService extends IService<TutorInspect> {
     /**
      * 获取所有教师信息
      * @param organizationId 院系id
+     * @param applyStatuss 申请的状态列别
+     * @param type 当前的查询是否为条件查询
+     *        0 获取所有
+     *        1 条件查询
      * @return 信息列表
      */
-    List<QueryDepartmentSecretaryInit> getTutorInit(int organizationId, List<String> applyStatuss);
+    List<QueryDepartmentSecretaryInit> getTutorInitOrSearch(int organizationId, List<String> applyStatuss, TutorQuery tutorQuery, int type);
 
     /**
      * 获取导师申请信息
@@ -77,5 +81,4 @@ public interface TutorInspectService extends IService<TutorInspect> {
      * @return
      */
     PdfTutorInspect getPdfTutorInspect(int applyId);
-
 }

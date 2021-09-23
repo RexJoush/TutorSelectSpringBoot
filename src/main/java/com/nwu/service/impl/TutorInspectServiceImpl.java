@@ -66,13 +66,20 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     }
 
     @Override
-    public List<QueryDepartmentSecretaryInit> getTutorInit(int organizationId, List<String> applyStatuss) {
+    public List<QueryDepartmentSecretaryInit> getTutorInitOrSearch(int organizationId, List<String> applyStatuss, TutorQuery tutorQuery, int type) {
+
         List<QueryDepartmentSecretaryInit> tutorInspectInit = null;
         List<QueryDepartmentSecretaryInit> tutorNoInspectInit = null;
 
         try {
             // 获取非免审的信息
-            tutorInspectInit = tutorInspectMapper.getTutorInspectInit(organizationId, applyStatuss);
+            if (type == 0) {
+                // 非条件查询
+                tutorInspectInit = tutorInspectMapper.getTutorInspectInit(organizationId, applyStatuss);
+            } else {
+                // 条件查询
+                tutorInspectInit = tutorInspectMapper.getTutorInspectSearch(tutorQuery);
+            }
             for (QueryDepartmentSecretaryInit queryDepartmentSecretaryInit : tutorInspectInit) {
                 switch (queryDepartmentSecretaryInit.getApplyTypeId()) {
                     case 1:
@@ -107,7 +114,11 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
             }
 
             // 获取免审的信息
-            tutorNoInspectInit = tutorInspectMapper.getTutorNoInspectInit(organizationId, applyStatuss);
+            if (type == 0) {
+                tutorNoInspectInit = tutorInspectMapper.getTutorNoInspectInit(organizationId, applyStatuss);
+            } else {
+                tutorNoInspectInit = tutorInspectMapper.getTutorNoInspectSearch(tutorQuery);
+            }
             // 标记免审
             tutorNoInspectInit.forEach(queryDepartmentSecretaryInit -> queryDepartmentSecretaryInit.setNoInspect(true));
 
@@ -168,5 +179,6 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     public PdfTutorInspect getPdfTutorInspect(int applyId) {
         return tutorInspectMapper.getTutorInspect(applyId);
     }
+
 
 }

@@ -43,14 +43,7 @@ class TutorSelectSpringBootApplicationTests {
     @Test
     void contextLoads() throws Exception {
 //        "10-15-16-17-18"
-        List<QueryDepartmentSecretaryInit> tutorInit = tutorInspectService.getTutorInit(50030, List.of("10", "15", "16", "17", "18"));
-//        System.out.println(tutorInit);
-        tutorInit.forEach(queryDepartmentSecretaryInit -> {
-            System.out.println(queryDepartmentSecretaryInit);
-            System.out.println(queryDepartmentSecretaryInit.isNoInspect());
-        });
 
-        System.out.println(tutorInit.size());
 
 //        String hello = AESUtil.encode("hello");
 //        System.out.println("hello: " + hello);

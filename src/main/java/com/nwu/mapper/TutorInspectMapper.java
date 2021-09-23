@@ -28,6 +28,20 @@ public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
     List<QueryDepartmentSecretaryInit> getTutorInspectInit(int organizationId, List<String> applyStatuss);
     List<QueryDepartmentSecretaryInit> getTutorNoInspectInit(int organizationId, List<String> applyStatuss);
 
+    /**
+     * 条件查询申请信息
+     * @param tutorQuery 查询条件
+     * @return 申请列表
+     */
+    List<QueryDepartmentSecretaryInit> getTutorInspectSearch(TutorQuery tutorQuery);
+
+    /**
+     * 条件查询申请信息
+     * @param tutorQuery 查询条件
+     * @return 申请列表
+     */
+    List<QueryDepartmentSecretaryInit> getTutorNoInspectSearch(TutorQuery tutorQuery);
+
     List<QueryDepartmentSecretaryInit> selectByQuery(TutorQuery tutorQuery);
 
     int saveTutorInspectBaseInfo(@Param("firstPage") FirstPage firstPage);
@@ -53,4 +67,5 @@ public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
      * @return  PdfTutorInspect
      */
     PdfTutorInspect getTutorInspect(@Param("applyId") Integer applyId);
+
 }

@@ -20,13 +20,13 @@ public class ExportExcelServiceImpl extends ServiceImpl<ExportExcelMapper, Query
     @Override
     public List<QueryDepartmentSecretaryInit> getTutorByQuery(TutorQuery tutorQuery) {
         List<String> exportStatus = new ArrayList<>();
-        if(tutorQuery!=null&&tutorQuery.getApplyStatus()!=null) {
-            String[] split = tutorQuery.getApplyStatus().split("-");
-            for (String s : split) {
-                exportStatus.add(s);
-            }
-        }
-        tutorQuery.setApplyStatuss(exportStatus);
+//        if(tutorQuery!=null&&tutorQuery.getApplyStatus()!=null) {
+//            String[] split = tutorQuery.getApplyStatus().split("-");
+//            for (String s : split) {
+//                exportStatus.add(s);
+//            }
+//        }
+        // tutorQuery.setApplyStatuss(exportStatus);
         return exportExcelMapper.selectByQuery(tutorQuery);
     }
 

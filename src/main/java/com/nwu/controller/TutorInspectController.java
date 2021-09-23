@@ -39,7 +39,6 @@ public class TutorInspectController {
     @Autowired
     private TutorInspectServiceImpl tutorInspectService;
 
-//    @GetMapping("/getInit/{organizationId}/{applyStatuss}/{pageNumber}")
     @PostMapping("/getInit")
     public Result getInit(@RequestParam("organizationId") int organizationId,
                           @RequestParam("applyStatuss") List<String> applyStatuss,
@@ -52,7 +51,35 @@ public class TutorInspectController {
         PageInfo<QueryDepartmentSecretaryInit> pageInfo = null;
         try {
             PageHelper.startPage(pageNumber,10);
-            inits = tutorInspectService.getTutorInit(organizationId, applyStatuss);
+            inits = tutorInspectService.getTutorInitOrSearch(organizationId, applyStatuss, null, 0);
+            pageInfo = new PageInfo<>(inits);
+
+        } catch (Exception e) {
+            return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
+        }
+        JSONObject object = new JSONObject();
+        object.put("data", pageInfo.getList());
+        object.put("total", pageInfo.getTotal());
+        return new Result(ResultCode.SUCCESS, object);
+    }
+
+    @PostMapping("/search/{pageNumber}")
+    public Result search(@RequestBody TutorQuery tutorQuery,
+                         @PathVariable("pageNumber") int pageNumber) {
+
+        System.out.println(tutorQuery);
+        System.out.println(pageNumber);
+
+        // List<String> applyStatuss = tutorQuery.getApplyStatuss();
+//        if (applyStatuss.size() == 1) {
+//            tutorQuery.setApplyStatus(applyStatuss.get(0));
+//        }
+
+        List<QueryDepartmentSecretaryInit> inits = null;
+        PageInfo<QueryDepartmentSecretaryInit> pageInfo = null;
+        try {
+            PageHelper.startPage(pageNumber,10);
+            inits = tutorInspectService.getTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
             pageInfo = new PageInfo<>(inits);
 
         } catch (Exception e) {
@@ -73,16 +100,16 @@ public class TutorInspectController {
         List<String> status = new ArrayList<>();
        // int pageNum = (tutorQuery.getPageNum()-1)*tutorQuery.getPageSize();
       //  tutorQuery.setPageNum(pageNum);
-        if(tutorQuery!=null&&tutorQuery.getApplyStatus()!=null) {
-            String[] split = tutorQuery.getApplyStatus().split("-");
-            for (String s : split) {
-                status.add(s);
-            }
-        }
+//        if(tutorQuery!=null&&tutorQuery.getApplyStatus()!=null) {
+//            String[] split = tutorQuery.getApplyStatus().split("-");
+//            for (String s : split) {
+//                status.add(s);
+//            }
+//        }
 
         System.out.println(tutorQuery.toString());
-        tutorQuery.setApplyStatuss(status);
-       PageHelper.startPage(tutorQuery.getPageNum(),tutorQuery.getPageSize());
+        // tutorQuery.setApplyStatuss(status);
+       // PageHelper.startPage(tutorQuery.getPageNum(),tutorQuery.getPageSize());
        List<QueryDepartmentSecretaryInit> list= tutorInspectService.getTutorByQuery(tutorQuery);
        PageInfo<QueryDepartmentSecretaryInit> pageInfo = new PageInfo<>(list);
 
