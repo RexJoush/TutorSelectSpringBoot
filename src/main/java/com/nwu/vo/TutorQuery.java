@@ -34,5 +34,7 @@ public class TutorQuery {
 
     // 申请状态码
     private List<String> applyStatuss;
+    private int pageNum;
+    private int pageSize;
 
 }

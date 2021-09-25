@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class UploadMappingConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
         //注册，所有请求到upfile下的所有资源 我们映射到磁盘上的位置上
         //Windows用
         registry

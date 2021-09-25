@@ -126,19 +126,19 @@
         <if test="organization != 0">
             AND o.organization_id = #{organization}
         </if>
-        <if test="userId != '' and userId.length > 0 ">
+        <if test="userId != null and userId.length > 0 ">
             AND a.tutor_id = #{userId}
         </if>
         <if test="applyType != 0">
             AND a.apply_type_id = #{applyType}
         </if>
-        <if test="subjectType != '' and subjectType.length > 0">
+        <if test="subjectType != null and subjectType.length > 0">
             AND a.subject = #{subjectType}
         </if>
-        <if test="userName != '' and userName.length > 0">
+        <if test="userName != null and userName.length > 0">
             AND t.name = #{userName}
         </if>
-        <if test="subjectName != '' and subjectName.length > 0">
+        <if test="subjectName != null and subjectName.length > 0">
             AND t.applied_subject_code = #{subjectName}
         </if>
     </select>
@@ -182,19 +182,19 @@
         <if test="organization != 0">
             AND o.organization_id = #{organization}
         </if>
-        <if test="userId != '' and userId.length > 0 ">
+        <if test="userId != null and userId.length > 0 ">
             AND a.tutor_id = #{userId}
         </if>
         <if test="applyType != 0">
             AND a.apply_type_id = #{applyType}
         </if>
-        <if test="subjectType != '' and subjectType.length > 0">
+        <if test="subjectType != null and subjectType.length > 0">
             AND a.subject = #{subjectType}
         </if>
-        <if test="userName != '' and userName.length > 0">
+        <if test="userName != null and userName.length > 0">
             AND t.name = #{userName}
         </if>
-        <if test="subjectName != '' and subjectName.length > 0">
+        <if test="subjectName != null and subjectName.length > 0">
             AND t.applied_subject_code = #{subjectName}
         </if>
     </select>

@@ -4,6 +4,7 @@ package com.nwu.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nwu.results.Result;
@@ -50,9 +51,12 @@ public class TutorInspectController {
         List<QueryDepartmentSecretaryInit> inits = null;
         PageInfo<QueryDepartmentSecretaryInit> pageInfo = null;
         try {
-            PageHelper.startPage(pageNumber,10);
+
+           // PageHelper.startPage(pageNumber,10);
             inits = tutorInspectService.getTutorInitOrSearch(organizationId, applyStatuss, null, 0);
+            PageHelper.startPage(pageNumber,10);
             pageInfo = new PageInfo<>(inits);
+
 
         } catch (Exception e) {
             return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
@@ -100,25 +104,22 @@ public class TutorInspectController {
         List<String> status = new ArrayList<>();
        // int pageNum = (tutorQuery.getPageNum()-1)*tutorQuery.getPageSize();
       //  tutorQuery.setPageNum(pageNum);
-//        if(tutorQuery!=null&&tutorQuery.getApplyStatus()!=null) {
-//            String[] split = tutorQuery.getApplyStatus().split("-");
-//            for (String s : split) {
-//                status.add(s);
-//            }
-//        }
+        if(tutorQuery!=null&&tutorQuery.getApplyStatus()!=null) {
+            String[] split = tutorQuery.getApplyStatus().split("-");
+            for (String s : split) {
+                status.add(s);
+            }
+        }
 
         System.out.println(tutorQuery.toString());
-        // tutorQuery.setApplyStatuss(status);
-       // PageHelper.startPage(tutorQuery.getPageNum(),tutorQuery.getPageSize());
+         tutorQuery.setApplyStatuss(status);
+        PageHelper.startPage(tutorQuery.getPageNum(),tutorQuery.getPageSize());
        List<QueryDepartmentSecretaryInit> list= tutorInspectService.getTutorByQuery(tutorQuery);
        PageInfo<QueryDepartmentSecretaryInit> pageInfo = new PageInfo<>(list);
 
 
         Map<String, Object> res = new HashMap<>();
-//
         if(list.size()>0) {
-//            List<QueryDepartmentSecretaryInit> list = (List<QueryDepartmentSecretaryInit>) reslist.get(0);
-//            int total = ((List<Integer>)reslist.get(1)).get(0);
             res.put("data", pageInfo.getList());
             res.put("total", pageInfo.getTotal());
         }else{

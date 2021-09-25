@@ -26,7 +26,7 @@ public class ExportExcelServiceImpl extends ServiceImpl<ExportExcelMapper, Query
 //                exportStatus.add(s);
 //            }
 //        }
-        // tutorQuery.setApplyStatuss(exportStatus);
+//         tutorQuery.setApplyStatuss(exportStatus);
         return exportExcelMapper.selectByQuery(tutorQuery);
     }
 
