@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author dynamic
@@ -30,7 +30,6 @@ public class Role implements Serializable {
 
     private String roleDescribe;
 
-    private String col1;
 
 
 }

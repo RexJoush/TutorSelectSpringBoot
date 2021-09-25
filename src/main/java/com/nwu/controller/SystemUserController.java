@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nwu.entities.SystemUser;
+import com.nwu.results.Result;
+import com.nwu.results.ResultCode;
 import com.nwu.service.impl.SystemUserServiceImpl;
 import com.nwu.util.TimeUtils;
 import com.nwu.vo.UserQuery;
@@ -25,14 +27,14 @@ import java.util.*;
  * @since 2021-08-10
  */
 @RestController
-@RequestMapping("/admin/graduate/system-user")
+@RequestMapping("/admin/system-user")
 public class SystemUserController {
     @Autowired
     private SystemUserServiceImpl systemUserService;
 
     @ApiOperation(value = "获取所有系统用户")
     @GetMapping("/getAll")
-    public Map<String, Object> getAll(UserQuery query) {
+    public Result getAll(UserQuery query) {
         Page page = new Page();
         QueryWrapper<SystemUser> queryWrapper = new QueryWrapper<>();
         if (query != null && query.getPageSize() > 0 && query.getPageNum() > 0) {
@@ -46,13 +48,14 @@ public class SystemUserController {
             queryWrapper.eq("role_name", query.getUserRole());
         }
         if (query.getUserId() != null) {
-            queryWrapper.eq("number", query.getUserId());
+            queryWrapper.eq("tutor_id", query.getUserId());
         }
         if (query.getOrganization() != null) {
             queryWrapper.eq("organization", query.getOrganization());
         }
         if (query.getCreateTime() != null) {
-            queryWrapper.eq("create_time", TimeUtils.sdf.format(new Date(query.getCreateTime())));
+
+            queryWrapper.like("create_time", query.getCreateTime());
         }
         IPage pages = systemUserService.page(page, queryWrapper);
         List<SystemUser> list = pages.getRecords();
@@ -78,12 +81,12 @@ public class SystemUserController {
         res.put("pageSize", pageSize);
         res.put("total", total);
         res.put("pageNum", pageNum);
-        return res;
+        return new Result(ResultCode.SUCCESS,res);
     }
 
     @ApiOperation("新增系统用户")
     @PostMapping("/addUser")
-    public String saveUser(@RequestBody UserVo userVo) {
+    public Result saveUser(@RequestBody UserVo userVo) {
         SystemUser user = new SystemUser();
         user.setUserName(userVo.getUserName());
         user.setTutorId(userVo.getUserId());
@@ -91,16 +94,18 @@ public class SystemUserController {
         user.setCreateTime(TimeUtils.sdf.format(new Date()));
         user.setStatus(0);
         boolean res = systemUserService.save(user);
+        String s = "";
         if (res) {
-            return "200";
+           s = "200";
         } else {
-            return "201";
+           s =  "201";
         }
+        return new Result(ResultCode.SUCCESS,s);
     }
 
     @ApiOperation("修改系统用户状态")
     @PostMapping("/updateUser")
-    public String updateUserStatus(@RequestBody UserVo userVo) {
+    public Result updateUserStatus(@RequestBody UserVo userVo) {
         SystemUser user = new SystemUser();
         user.setUserName(userVo.getUserName());
         user.setTutorId(userVo.getUserId());
@@ -108,43 +113,50 @@ public class SystemUserController {
         user.setCreateTime(userVo.getCreateTime());
         user.setStatus(userVo.getStatus());
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("number", userVo.getUserId());
+        queryWrapper.eq("tutor_id", userVo.getUserId());
         boolean res = systemUserService.update(user, queryWrapper);
+        String s = "";
         if (res) {
-            return "20000";
+            s =  "20000";
         } else {
-            return "20001";
+            s = "20001";
         }
+        return new Result(ResultCode.SUCCESS,s);
+
     }
 
     @ApiOperation("删除系统用户状态")
     @PostMapping("/delUser/{userId}")
-    public String delUser(@PathVariable String userId) {
+    public Result delUser(@PathVariable String userId) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("number", userId);
+        queryWrapper.eq("tutor_id", userId);
         boolean res = systemUserService.remove(queryWrapper);
+        String s = "";
         if (res) {
-            return "20000";
+            s =  "20000";
         } else {
-            return "20001";
+            s = "20001";
         }
+        return new Result(ResultCode.SUCCESS,s);
     }
 
     @Transactional
     @ApiOperation("删除系统用户状态")
     @PostMapping("/delUsers")
-    public String delUsers(@RequestBody ArrayList<String> userId) {
+    public Result delUsers(@RequestBody ArrayList<String> userId) {
         boolean res = true;
         for (String id : userId) {
             QueryWrapper queryWrapper = new QueryWrapper();
-            queryWrapper.eq("number", id);
+            queryWrapper.eq("tutor_id", id);
             res = systemUserService.remove(queryWrapper);
         }
+        String s = "";
         if (res) {
-            return "20000";
+            s =  "20000";
         } else {
-            return "20001";
+            s = "20001";
         }
+        return new Result(ResultCode.SUCCESS,s);
     }
 }
 

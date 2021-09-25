@@ -2,6 +2,8 @@ package com.nwu.controller;
 
 
 import com.nwu.entities.Role;
+import com.nwu.results.Result;
+import com.nwu.results.ResultCode;
 import com.nwu.service.impl.RoleServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,9 @@ public class RoleController {
 
     @ApiOperation(value = "获取所有角色")
     @GetMapping("/getAll")
-    public List<Role> getAll() {
-        return roleService.list(null);
+    public Result getAll() {
+        List<Role> roles = roleService.list(null);
+        return new Result(ResultCode.SUCCESS,roles);
     }
 }
 
