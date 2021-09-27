@@ -68,7 +68,6 @@ public class FourthServiceImpl implements FourthService {
         } catch (Exception e) {
             throw new RuntimeException("研究生课程信息填写错误，请检查" + "!" + e.getMessage());
         }
-
         // 将各个子类型的学生列表合并为一个学生列表
         fourthPage.setGuidingStudents(new ArrayList<>());
         fourthPage.setGuidingStudents(

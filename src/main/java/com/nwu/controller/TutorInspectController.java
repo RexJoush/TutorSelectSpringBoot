@@ -1,15 +1,21 @@
 package com.nwu.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.api.R;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.impl.TutorInspectServiceImpl;
+import com.nwu.service.tutor.PageInit;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.TutorQuery;
 import io.swagger.annotations.ApiOperation;
+import netscape.javascript.JSObject;
+import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +40,62 @@ public class TutorInspectController {
     @Autowired
     private TutorInspectServiceImpl tutorInspectService;
 
+    @PostMapping("/getInit")
+    public Result getInit(@RequestParam("organizationId") int organizationId,
+                          @RequestParam("applyStatuss") List<String> applyStatuss,
+                          @RequestParam("pageNumber") int pageNumber){
+
+        System.out.println(organizationId);
+        System.out.println(applyStatuss);
+
+        List<QueryDepartmentSecretaryInit> inits = null;
+        PageInfo<QueryDepartmentSecretaryInit> pageInfo = null;
+        try {
+
+           // PageHelper.startPage(pageNumber,10);
+            inits = tutorInspectService.getTutorInitOrSearch(organizationId, applyStatuss, null, 0);
+            PageHelper.startPage(pageNumber,10);
+            pageInfo = new PageInfo<>(inits);
+
+
+        } catch (Exception e) {
+            return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
+        }
+        JSONObject object = new JSONObject();
+        object.put("data", pageInfo.getList());
+        object.put("total", pageInfo.getTotal());
+        return new Result(ResultCode.SUCCESS, object);
+    }
+
+    @PostMapping("/search/{pageNumber}")
+    public Result search(@RequestBody TutorQuery tutorQuery,
+                         @PathVariable("pageNumber") int pageNumber) {
+
+        System.out.println(tutorQuery);
+        System.out.println(pageNumber);
+
+        // List<String> applyStatuss = tutorQuery.getApplyStatuss();
+//        if (applyStatuss.size() == 1) {
+//            tutorQuery.setApplyStatus(applyStatuss.get(0));
+//        }
+
+        List<QueryDepartmentSecretaryInit> inits = null;
+        PageInfo<QueryDepartmentSecretaryInit> pageInfo = null;
+        try {
+            PageHelper.startPage(pageNumber,10);
+            inits = tutorInspectService.getTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
+            pageInfo = new PageInfo<>(inits);
+
+        } catch (Exception e) {
+            return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
+        }
+        JSONObject object = new JSONObject();
+        object.put("data", pageInfo.getList());
+        object.put("total", pageInfo.getTotal());
+        return new Result(ResultCode.SUCCESS, object);
+    }
+
+
     @ApiOperation(value = "获取所有用户")
     @GetMapping("/admin/getAll")
     public  Result getAll(TutorQuery tutorQuery) {
@@ -50,17 +112,14 @@ public class TutorInspectController {
         }
 
         System.out.println(tutorQuery.toString());
-        tutorQuery.setApplyStatuss(status);
-       PageHelper.startPage(tutorQuery.getPageNum(),tutorQuery.getPageSize());
+         tutorQuery.setApplyStatuss(status);
+        PageHelper.startPage(tutorQuery.getPageNum(),tutorQuery.getPageSize());
        List<QueryDepartmentSecretaryInit> list= tutorInspectService.getTutorByQuery(tutorQuery);
        PageInfo<QueryDepartmentSecretaryInit> pageInfo = new PageInfo<>(list);
 
 
         Map<String, Object> res = new HashMap<>();
-//
         if(list.size()>0) {
-//            List<QueryDepartmentSecretaryInit> list = (List<QueryDepartmentSecretaryInit>) reslist.get(0);
-//            int total = ((List<Integer>)reslist.get(1)).get(0);
             res.put("data", pageInfo.getList());
             res.put("total", pageInfo.getTotal());
         }else{

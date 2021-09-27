@@ -1,11 +1,210 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nwu.mapper.TutorInspectMapper">
+
+    <!-- 查询所有非免审 -->
+    <select id="getTutorInspectInit" resultType="com.nwu.vo.QueryDepartmentSecretaryInit">
+        SELECT
+        a.apply_id,
+        a.apply_type_id,
+        a.`status`,
+        a.`commit`,
+        a.commit_yx_sfh,
+        a.commit_yx_xy,
+        a.commit_yjsy_cs,
+        a.commit_yjsy_sfh,
+        a.commit_yjsy_lr,
+        t.tutor_id,
+        t.`name`,
+        t.final_degree,
+        t.title,
+        t.doctoral_master_application_subject_unit,
+        t.doctoral_master_subject_code,
+        t.doctoral_master_subject_name,
+        t.professional_application_subject_unit,
+        t.professional_application_subject_code,
+        t.professional_application_subject_name,
+        t.professional_field_code,
+        t.professional_field_name,
+        apt.apply_name,
+        sc.inspect_describe,
+        o.organization_name
+        FROM
+        tutor_inspect t
+        LEFT JOIN apply a ON t.apply_id = a.apply_id
+        LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+        LEFT JOIN status_code sc ON a.`status` = sc.code_id
+        LEFT JOIN organization o ON t.organization_id = o.organization_id
+        WHERE a.status IN
+        <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
+            ${status}
+        </foreach>
+
+        <if test="organizationId != 0">
+            AND o.organization_id = #{organizationId}
+        </if>
+
+    </select>
+
+    <!-- 查询所有免审 -->
+    <select id="getTutorNoInspectInit" resultType="com.nwu.vo.QueryDepartmentSecretaryInit">
+        SELECT  a.apply_id,
+                a.apply_type_id,
+                a.`status`,
+                a.`commit`,
+                a.commit_yx_sfh,
+                a.commit_yx_xy,
+                a.commit_yjsy_cs,
+                a.commit_yjsy_sfh,
+                a.commit_yjsy_lr,
+                t.tutor_id,
+                t.`name`,
+                t.final_degree,
+                t.title,
+                t.applied_subject_unit,
+                t.applied_subject_code,
+                t.applied_subject_name,
+                apt.apply_name,
+                sc.inspect_describe,
+                o.organization_name
+        FROM tutor_no_inspect t
+            LEFT JOIN apply a ON t.apply_id = a.apply_id
+            LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+            LEFT JOIN status_code sc ON a.`status` = sc.code_id
+            LEFT JOIN organization o ON t.organization_id = o.organization_id
+        WHERE a.status IN
+        <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
+            ${status}
+        </foreach>
+
+        <if test="organizationId != 0">
+            AND o.organization_id = #{organizationId}
+        </if>
+    </select>
+
+    <!-- 条件查询非免审 -->
+    <select id="getTutorInspectSearch" parameterType="com.nwu.vo.TutorQuery" resultType="com.nwu.vo.QueryDepartmentSecretaryInit">
+        SELECT  a.apply_id,
+                a.apply_type_id,
+                a.`status`,
+                a.`commit`,
+                a.commit_yx_sfh,
+                a.commit_yx_xy,
+                a.commit_yjsy_cs,
+                a.commit_yjsy_sfh,
+                a.commit_yjsy_lr,
+                t.tutor_id,
+                t.`name`,
+                t.final_degree,
+                t.title,
+                t.doctoral_master_application_subject_unit,
+                t.doctoral_master_subject_code,
+                t.doctoral_master_subject_name,
+                t.professional_application_subject_unit,
+                t.professional_application_subject_code,
+                t.professional_application_subject_name,
+                t.professional_field_code,
+                t.professional_field_name,
+                apt.apply_name,
+                sc.inspect_describe,
+                o.organization_name
+        FROM tutor_inspect t
+            LEFT JOIN apply a ON t.apply_id = a.apply_id
+            LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+            LEFT JOIN status_code sc ON a.`status` = sc.code_id
+            LEFT JOIN organization o ON t.organization_id = o.organization_id
+        WHERE TRUE
+        <if test="applyStatuss.size() == 0">
+            AND a.status = #{applyStatus}
+        </if>
+        <if test="applyStatuss.size() > 0">
+            AND a.status in
+            <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
+                ${status}
+            </foreach>
+        </if>
+        <if test="organization != 0">
+            AND o.organization_id = #{organization}
+        </if>
+        <if test="userId != null and userId.length > 0 ">
+            AND a.tutor_id = #{userId}
+        </if>
+        <if test="applyType != 0">
+            AND a.apply_type_id = #{applyType}
+        </if>
+        <if test="subjectType != null and subjectType.length > 0">
+            AND a.subject = #{subjectType}
+        </if>
+        <if test="userName != null and userName.length > 0">
+            AND t.name = #{userName}
+        </if>
+        <if test="subjectName != null and subjectName.length > 0">
+            AND t.applied_subject_code = #{subjectName}
+        </if>
+    </select>
+
+    <!-- 条件查询免审 -->
+    <select id="getTutorNoInspectSearch" parameterType="com.nwu.vo.TutorQuery" resultType="com.nwu.vo.QueryDepartmentSecretaryInit">
+        SELECT  a.apply_id,
+                a.apply_type_id,
+                a.`status`,
+                a.`commit`,
+                a.commit_yx_sfh,
+                a.commit_yx_xy,
+                a.commit_yjsy_cs,
+                a.commit_yjsy_sfh,
+                a.commit_yjsy_lr,
+                t.tutor_id,
+                t.`name`,
+                t.final_degree,
+                t.title,
+                t.applied_subject_unit,
+                t.applied_subject_code,
+                t.applied_subject_name,
+                apt.apply_name,
+                sc.inspect_describe,
+                o.organization_name
+        FROM tutor_no_inspect t
+            LEFT JOIN apply a ON t.apply_id = a.apply_id
+            LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+            LEFT JOIN status_code sc ON a.`status` = sc.code_id
+            LEFT JOIN organization o ON t.organization_id = o.organization_id
+        WHERE TRUE
+        <if test="applyStatuss.size() == 0">
+            AND a.status = #{applyStatus}
+        </if>
+        <if test="applyStatuss.size() > 0">
+            AND a.status in
+            <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
+                ${status}
+            </foreach>
+        </if>
+        <if test="organization != 0">
+            AND o.organization_id = #{organization}
+        </if>
+        <if test="userId != null and userId.length > 0 ">
+            AND a.tutor_id = #{userId}
+        </if>
+        <if test="applyType != 0">
+            AND a.apply_type_id = #{applyType}
+        </if>
+        <if test="subjectType != null and subjectType.length > 0">
+            AND a.subject = #{subjectType}
+        </if>
+        <if test="userName != null and userName.length > 0">
+            AND t.name = #{userName}
+        </if>
+        <if test="subjectName != null and subjectName.length > 0">
+            AND t.applied_subject_code = #{subjectName}
+        </if>
+    </select>
+
     <resultMap type="com.nwu.vo.QueryDepartmentSecretaryInit" id="QueryDepartmentSecretaryInit">
     </resultMap>
     <resultMap type="java.lang.Integer" id="total">
         <result column="total"/>
     </resultMap>
+
     <select id="selectByQuery" resultMap="QueryDepartmentSecretaryInit"
             parameterType="com.nwu.vo.TutorQuery">
         SELECT
@@ -115,9 +314,9 @@
         <result property="expertTitlesJson" column="titles_of_expert"></result>
         <result property="sourceUnitName" column="source_unit_name"></result>
         <result property="transferInTime" column="transfer_in_time"></result>
-<!--        <result property="title" column="title"></result>-->
+        <!--        <result property="title" column="title"></result>-->
         <result property="professionalTitle" column="professional_title"></result>
-<!--        <result property="evaluateTime" column="evaluate_time"></result>-->
+        <!--        <result property="evaluateTime" column="evaluate_time"></result>-->
         <result property="firstDoctoralFirstTimeTutor" column="first_doctoral_first_time_tutor"></result>
         <result property="firstDoctoralFirstDiscipline" column="first_doctoral_first_discipline"></result>
         <result property="doctoralTutorOnDuty" column="doctoral_tutor_on_duty"></result>
@@ -191,10 +390,12 @@
     </update>
 
     <select id="getTutorInspect" resultType="com.nwu.entities.PdfEntity.PdfTutorInspect">
-        SELECT t.* , o.organization_name , a.subject
-        FROM tutor_inspect t ,organization o ,apply a
+        SELECT t.*, o.organization_name, a.subject
+        FROM tutor_inspect t,
+             organization o,
+             apply a
         WHERE t.organization_id = o.organization_id
-        AND a.apply_id = t.apply_id
-        AND t.apply_id = #{applyId}
+          AND a.apply_id = t.apply_id
+          AND t.apply_id = #{applyId}
     </select>
 </mapper>

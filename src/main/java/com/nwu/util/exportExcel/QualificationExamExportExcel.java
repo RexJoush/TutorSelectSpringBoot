@@ -119,11 +119,11 @@ public class QualificationExamExportExcel {
                             String.valueOf(i++),  //序号
                             queryDepartmentSecretaryInit.getOrganizationName(),//所在单位
                             queryDepartmentSecretaryInit.getName(),  //姓名
-                            queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别及代码
+//                            queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别及代码
                             queryDepartmentSecretaryInit.getTitle(), //职称
                             queryDepartmentSecretaryInit.getFinalDegree(), //最后学位
-                            queryDepartmentSecretaryInit.getResearchDirections(),//科研情况
-                            queryDepartmentSecretaryInit.getAcademicGroupsJobs(),//著作、奖项或专利
+//                            queryDepartmentSecretaryInit.getResearchDirections(),//科研情况
+//                            queryDepartmentSecretaryInit.getAcademicGroupsJobs(),//著作、奖项或专利
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
                             queryDepartmentSecretaryInit.getCommit()//备注
                     )

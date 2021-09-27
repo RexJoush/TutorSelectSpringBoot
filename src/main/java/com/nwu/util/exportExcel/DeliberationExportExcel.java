@@ -121,11 +121,11 @@ public class DeliberationExportExcel {
                     Lists.newArrayList(
                             String.valueOf(i++),  //序号
                             queryDepartmentSecretaryInit.getName(),  //姓名
-                            queryDepartmentSecretaryInit.getBirthday(), //出生年月
+//                            queryDepartmentSecretaryInit.getBirthday(), //出生年月
                             queryDepartmentSecretaryInit.getFinalDegree(), //最后学位
                             queryDepartmentSecretaryInit.getTitle(), //职称
                             //TODO 申请学科或类别及代码（分专硕和学硕（博士））需要进行判断和拼接
-                            queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别
+//                            queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
                             queryDepartmentSecretaryInit.getApplyName(),//SCI/权威   学术论文（篇）
                             queryDepartmentSecretaryInit.getApplyName(),//核心  学术论文（篇）

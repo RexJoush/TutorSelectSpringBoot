@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class SystemTimeController {
     @Autowired
     private SystemTimeServiceImpl systemTimeService;
     @GetMapping("/save/{time}/{orgId}")
-    public String saveTime(@PathVariable String time,@PathVariable Integer orgId){
+    public Result saveTime(@PathVariable String time,@PathVariable Integer orgId){
         System.out.println(time);
         String[] times = time.split(",");
         QueryWrapper<SystemTime> queryWrapper = new QueryWrapper<>();
@@ -54,18 +55,18 @@ public class SystemTimeController {
             time1.setEndTime(times[1]);
             resSave = systemTimeService.save(time1);
         }
+        HashMap<String, Object> map = new HashMap<>();
 
         if(resSave){
-            return "20002";
+            map.put("code",20002);
         }else if(resUpadte) {
-            return "20000";
+            map.put("code",20000);
         }else{
-            return "20001";
-        }
-
+            map.put("code",20001);        }
+        return new Result(ResultCode.SUCCESS,map);
     }
     @GetMapping("/get/{orgId}")
-    public ArrayList<String> getTime(@PathVariable Integer orgId){
+    public Result getTime(@PathVariable Integer orgId){
 
         SystemTime systemTime = new SystemTime();
         QueryWrapper<SystemTime> queryWrapper = new QueryWrapper<>();
@@ -76,7 +77,7 @@ public class SystemTimeController {
         ArrayList<String> list = new ArrayList<>();
         list.add(start);
         list.add(end);
-        return list;
+        return new Result(ResultCode.SUCCESS,list);
 
     }
 }

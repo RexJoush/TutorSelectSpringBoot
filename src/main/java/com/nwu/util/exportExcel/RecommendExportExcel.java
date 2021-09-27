@@ -129,11 +129,11 @@ public class RecommendExportExcel {
                     Lists.newArrayList(
                             String.valueOf(i++),  //序号
                             queryDepartmentSecretaryInit.getName(),  //姓名
-                            queryDepartmentSecretaryInit.getBirthday(), //出生年月
+//                            queryDepartmentSecretaryInit.getBirthday(), //出生年月
                             queryDepartmentSecretaryInit.getFinalDegree(), //最后学位
                             queryDepartmentSecretaryInit.getTitle(), //职称
                             //TODO 申请学科或类别及代码需要进行判断和拼接,备注字段是apply表中的commitYxSfh字段
-                            queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别及代码
+//                            queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别及代码
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
                             null, null, null, null
                     )

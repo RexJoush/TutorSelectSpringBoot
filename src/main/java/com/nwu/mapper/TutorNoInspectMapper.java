@@ -1,6 +1,7 @@
 package com.nwu.mapper;
 
 import com.nwu.entities.Apply;
+import com.nwu.entities.PdfEntity.PdfNoTutorInspect;
 import com.nwu.entities.tutor.noInspect.NoFirstPage;
 import com.nwu.entities.tutor.noInspect.NoSecondPage;
 import org.apache.ibatis.annotations.Mapper;
@@ -52,4 +53,11 @@ public interface TutorNoInspectMapper {
      * @return 影响的行数
      */
     int updateApplySubjectStatusTimeByApplyId(@Param("applySubject") int applySubject, @Param("status") int status,@Param("submitTime") String submitTime,@Param("applyId") int applyId);
+
+    /**
+     * pdf打印免审信息
+     * @param applyId 主键
+     * @return  实体类
+     */
+    PdfNoTutorInspect getPdfTutorNoInspect(@Param("applyId") String applyId);
 }
