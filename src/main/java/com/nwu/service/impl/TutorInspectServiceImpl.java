@@ -1,6 +1,7 @@
 package com.nwu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.nwu.entities.ApplyInfo;
 import com.nwu.entities.Organization;
 import com.nwu.entities.PdfEntity.PdfTutorInspect;
 import com.nwu.entities.TutorInspect;
@@ -15,10 +16,8 @@ import com.nwu.vo.TutorQuery;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * <p>
@@ -62,86 +61,108 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     }
 
     @Override
-    public List<QueryDepartmentSecretaryInit> getTutorInitOrSearch(int organizationId, List<String> applyStatuss, TutorQuery tutorQuery, int type) {
+    public List<QueryDepartmentSecretaryInit> getTutorInitOrSearch(int organizationId, List<String> applyStatuss, int pageNumber, TutorQuery tutorQuery, int type) {
 
-        List<QueryDepartmentSecretaryInit> tutorInspectInit = null;
-        List<QueryDepartmentSecretaryInit> tutorNoInspectInit = null;
+        List<QueryDepartmentSecretaryInit> tutorInspect = new ArrayList<>();
+        List<ApplyInfo> applyInfos;
 
         try {
-            // 获取非免审的信息
             if (type == 0) {
-                // 非条件查询
-                tutorInspectInit = tutorInspectMapper.getTutorInspectInit(organizationId, applyStatuss);
+                // 初始化获取
+                applyInfos = tutorInspectMapper.getTutorInspectApplyInit(organizationId, applyStatuss, (pageNumber - 1) * 10);
             } else {
-                // 条件查询
-                tutorInspectInit = tutorInspectMapper.getTutorInspectSearch(tutorQuery);
+                // 查询获取
+                applyInfos = tutorInspectMapper.getTutorInspectApplySearch(tutorQuery, (pageNumber - 1) * 10);
             }
-            for (QueryDepartmentSecretaryInit queryDepartmentSecretaryInit : tutorInspectInit) {
-                switch (queryDepartmentSecretaryInit.getApplyTypeId()) {
-                    case 1:
-                    case 2:
-                    case 4:
-                    case 5:
-                        queryDepartmentSecretaryInit.setApplyDepartment(queryDepartmentSecretaryInit.getDoctoralMasterApplicationSubjectUnit());
-                        if (queryDepartmentSecretaryInit.getDoctoralMasterSubjectCode() == null) {
-                            queryDepartmentSecretaryInit.setApplySubject("");
-                        } else {
-                            queryDepartmentSecretaryInit.setApplySubject(queryDepartmentSecretaryInit.getDoctoralMasterSubjectCode() + " " + queryDepartmentSecretaryInit.getDoctoralMasterSubjectName());
-                        }
-                        break;
-                    case 7:
-                    case 8:
-                        queryDepartmentSecretaryInit.setApplyDepartment(queryDepartmentSecretaryInit.getProfessionalApplicationSubjectUnit());
-                        if (queryDepartmentSecretaryInit.getProfessionalApplicationSubjectCode() == null) {
-                            queryDepartmentSecretaryInit.setApplySubject("");
-                        } else {
-                            if (queryDepartmentSecretaryInit.getProfessionalFieldCode() == null) {
-                                queryDepartmentSecretaryInit.setApplySubject(queryDepartmentSecretaryInit.getProfessionalApplicationSubjectCode() + " " + queryDepartmentSecretaryInit.getProfessionalApplicationSubjectName());
+
+            for (ApplyInfo applyInfo : applyInfos) {
+                QueryDepartmentSecretaryInit tutorInspectApplyInitDetails = null;
+
+                // 免审
+                if (applyInfo.getApplyTypeId() == 3 || applyInfo.getApplyTypeId() == 6) {
+                    tutorInspectApplyInitDetails = tutorInspectMapper.getTutorNoInspectApplyInitDetails(applyInfo.getApplyId());
+                    // 设置申请的学院和专业
+                    if (!"".equals(tutorInspectApplyInitDetails.getAppliedSubjectUnit()) && tutorInspectApplyInitDetails.getAppliedSubjectUnit() != null) {
+                        tutorInspectApplyInitDetails.setApplyDepartment(tutorInspectApplyInitDetails.getAppliedSubjectUnit());
+                    } else {
+                        tutorInspectApplyInitDetails.setApplyDepartment("");
+                    }
+
+                    if (!"".equals(tutorInspectApplyInitDetails.getAppliedSubjectCode()) && tutorInspectApplyInitDetails.getAppliedSubjectCode() != null) {
+                        tutorInspectApplyInitDetails.setApplySubject(tutorInspectApplyInitDetails.getAppliedSubjectCode() + " " + tutorInspectApplyInitDetails.getAppliedSubjectName());
+                    } else {
+                        tutorInspectApplyInitDetails.setApplySubject("");
+                    }
+
+                    // 标识免审
+                    tutorInspectApplyInitDetails.setNoInspect(true);
+                }
+                // 非免审
+                else {
+                    tutorInspectApplyInitDetails = tutorInspectMapper.getTutorInspectApplyInitDetails(applyInfo.getApplyId());
+
+                    switch (tutorInspectApplyInitDetails.getApplyTypeId()) {
+                        case 1:
+                        case 2:
+                        case 4:
+                        case 5:
+                            tutorInspectApplyInitDetails.setApplyDepartment(tutorInspectApplyInitDetails.getDoctoralMasterApplicationSubjectUnit());
+                            if (tutorInspectApplyInitDetails.getDoctoralMasterSubjectCode() == null) {
+                                tutorInspectApplyInitDetails.setApplySubject("");
                             } else {
-                                queryDepartmentSecretaryInit.setApplySubject(queryDepartmentSecretaryInit.getProfessionalFieldCode() + " " + queryDepartmentSecretaryInit.getProfessionalFieldName());
+                                tutorInspectApplyInitDetails.setApplySubject(tutorInspectApplyInitDetails.getDoctoralMasterSubjectCode() + " " + tutorInspectApplyInitDetails.getDoctoralMasterSubjectName());
                             }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                // 标识非免审
-                queryDepartmentSecretaryInit.setNoInspect(false);
-            }
-
-            // 获取免审的信息
-            if (type == 0) {
-                tutorNoInspectInit = tutorInspectMapper.getTutorNoInspectInit(organizationId, applyStatuss);
-            } else {
-                tutorNoInspectInit = tutorInspectMapper.getTutorNoInspectSearch(tutorQuery);
-            }
-            // 标记免审
-            tutorNoInspectInit.forEach(queryDepartmentSecretaryInit -> queryDepartmentSecretaryInit.setNoInspect(true));
-
-            for (QueryDepartmentSecretaryInit queryDepartmentSecretaryInit : tutorNoInspectInit) {
-                // 设置申请的学院和专业
-                if (!"".equals(queryDepartmentSecretaryInit.getAppliedSubjectUnit()) && queryDepartmentSecretaryInit.getAppliedSubjectUnit() != null) {
-                    queryDepartmentSecretaryInit.setApplyDepartment(queryDepartmentSecretaryInit.getAppliedSubjectUnit());
-                } else {
-                    queryDepartmentSecretaryInit.setApplyDepartment("");
+                            break;
+                        case 7:
+                        case 8:
+                            tutorInspectApplyInitDetails.setApplyDepartment(tutorInspectApplyInitDetails.getProfessionalApplicationSubjectUnit());
+                            if (tutorInspectApplyInitDetails.getProfessionalApplicationSubjectCode() == null) {
+                                tutorInspectApplyInitDetails.setApplySubject("");
+                            } else {
+                                if (tutorInspectApplyInitDetails.getProfessionalFieldCode() == null) {
+                                    tutorInspectApplyInitDetails.setApplySubject(tutorInspectApplyInitDetails.getProfessionalApplicationSubjectCode() + " " + tutorInspectApplyInitDetails.getProfessionalApplicationSubjectName());
+                                } else {
+                                    tutorInspectApplyInitDetails.setApplySubject(tutorInspectApplyInitDetails.getProfessionalFieldCode() + " " + tutorInspectApplyInitDetails.getProfessionalFieldName());
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    // 标识非免审
+                    tutorInspectApplyInitDetails.setNoInspect(false);
                 }
 
-                if (!"".equals(queryDepartmentSecretaryInit.getAppliedSubjectCode()) && queryDepartmentSecretaryInit.getAppliedSubjectCode() != null) {
-                    queryDepartmentSecretaryInit.setApplySubject(queryDepartmentSecretaryInit.getAppliedSubjectCode() + " " + queryDepartmentSecretaryInit.getAppliedSubjectName());
-                } else {
-                    queryDepartmentSecretaryInit.setApplySubject("");
-                }
+                tutorInspect.add(tutorInspectApplyInitDetails);
 
-                // 标识免审
-                queryDepartmentSecretaryInit.setNoInspect(true);
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("获取数据失败，请稍后再试" + "!" + e.getMessage());
         }
 
         // 返回合并后的列表
-        return Stream.of(tutorInspectInit, tutorNoInspectInit).flatMap(Collection::stream).collect(Collectors.toList());
+        return tutorInspect;
+    }
+
+    @Override
+    public int getTutorInitOrSearchTotal(int organizationId, List<String> applyStatuss, TutorQuery tutorQuery, int type) {
+        int total;
+        try {
+            if (type == 0) {
+                // 初始化获取
+                total = tutorInspectMapper.getTutorInspectApplyInitTotal(organizationId, applyStatuss);
+            } else {
+                // 查询获取
+                total = tutorInspectMapper.getTutorInspectApplySearchTotal(tutorQuery);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("获取数据失败，请稍后再试" + "!" + e.getMessage());
+        }
+        return total;
     }
 
     @Override
@@ -175,6 +196,5 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
     public PdfTutorInspect getPdfTutorInspect(int applyId) {
         return tutorInspectMapper.getTutorInspect(applyId);
     }
-
 
 }

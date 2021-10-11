@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class QueryDepartmentSecretaryInit implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    //导师非免审申请表 免审
+    // 导师非免审申请表 免审
     private String applyId;  //申请表的id
     private int applyTypeId; // 申请的类别 id
     private String tutorId;  //教师工号
@@ -46,10 +46,10 @@ public class QueryDepartmentSecretaryInit implements Serializable {
     /* 申请类别表 */
     private String applyName; // 申请类别名称
 
-    /*状态码表*/
+    /* 状态码表 */
     private String inspectDescribe;     //申请状态码简称
 
-    //负责院系表
+    // 负责院系表
     private String organizationName;  //院系名称
 
     private String commitYjsyCs;  // 研究生院管理员初审的备注

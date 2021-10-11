@@ -27,14 +27,13 @@ public class TutorQuery {
     // 学科属性
     private String subjectType;
     // 学科名称
-    private String subjectName;
+    // private String subjectName;
 
     // 申请状态码
     private String applyStatus;
 
     // 申请状态码
     private List<String> applyStatuss;
-    private int pageNum;
-    private int pageSize;
+
 
 }

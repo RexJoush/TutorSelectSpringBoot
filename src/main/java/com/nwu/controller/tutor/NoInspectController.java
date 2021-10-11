@@ -78,24 +78,26 @@ public class NoInspectController {
     @ApiOperation("保存免审基本信息")
     @PostMapping("/noInspect/saveFirstPage/{applyId}/{applyTypeId}/{applyCondition}")
     public Result saveFirstPage(@RequestBody NoFirstPage nofirstPage,
-                                @PathVariable("applyId") Integer applyId,
-                                @PathVariable("applyTypeId") Integer applyTypeId,
-                                @PathVariable("applyCondition") Integer applyCondition,
+                                @PathVariable("applyId") int applyId,
+                                @PathVariable("applyTypeId") int applyTypeId,
+                                @PathVariable("applyCondition") int applyCondition,
                                 HttpServletRequest request) throws Exception {
 
         String tutorId = IdUtils.getTutorId(request);
 
         // 判断是否数据库中有数据 applyCondition == 101 表示数据库中有 status == 0 applyTypeId == 2
-        if (applyCondition == 101 && applyId != null && applyTypeId != null) {
+        if (applyCondition == 101) {
             // 根据 applyId 更新老师基本信息 第一页不修改，继续第二页，直接返回
             NoSecondPage secondPage = noSecondService.getSecondPage(applyId);
             if (secondPage != null) {
                 return new Result(ResultCode.SUCCESS, secondPage);
             }
         } else {
-            // 插入老师数据tutorId applyTypeId status ******* apply tutorInspect
+            // 插入老师数据 tutorId applyTypeId status ******* apply tutorInspect
             Apply apply = new Apply();
             apply.setTutorId(tutorId);
+            apply.setName(nofirstPage.getName());
+            apply.setOrganizedId(nofirstPage.getOrganizationId());
             apply.setApplyTypeId(applyTypeId);
             apply.setStatus(0);
             noFirstService.saveNoApplyInfo(apply);
@@ -115,10 +117,11 @@ public class NoInspectController {
 
     @ApiOperation("保存免审第二页信息")
     @PostMapping("/noInspect/saveSecondPage/{applyId}")
-    public Result saveSecondPage(@RequestBody NoSecondPage noSecondPage, @PathVariable("applyId") Integer applyId) {
+    public Result saveSecondPage(@RequestBody NoSecondPage noSecondPage,
+                                 @PathVariable("applyId") int applyId) {
 
         // 第二页无论什么都要更新数据库
-        if (noSecondPage != null && applyId != null && noSecondPage.getApplySubject() != null) {
+        if (noSecondPage != null && noSecondPage.getApplySubject() != null) {
             try {
                 noSecondService.updateNoSecondPage(noSecondPage, applyId);
             } catch (Exception e) {
