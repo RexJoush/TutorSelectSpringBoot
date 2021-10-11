@@ -17,6 +17,7 @@
             AND a.organization_id = #{organizationId}
         </if>
         LIMIT ${pageStart}, 10
+
     </select>
     <!-- 获取所有初始化申请信息的数量 -->
     <select id="getTutorInspectApplyInitTotal" resultType="int">
@@ -157,6 +158,7 @@
              LEFT JOIN status_code sc ON a.`status` = sc.code_id
              LEFT JOIN organization o ON t.organization_id = o.organization_id
         WHERE a.apply_id = ${applyId}
+
     </select>
 
 

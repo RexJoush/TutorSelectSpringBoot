@@ -38,6 +38,7 @@ public class ExportExcelController {
     @PostMapping("/sfh")
     public void exportSFH(HttpServletResponse response, @RequestBody TutorQuery tutorQuery) throws IOException {
         //TODO 用户保存excel路径，前端需传 学校名、部门名、符合条件的状态码（一个或多个）
+        System.out.println(tutorQuery);
         //1.查询数据
         List<QueryDepartmentSecretaryInit> list = tutorInspectService.getTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), 1, tutorQuery, 1);
         System.out.println(list);
@@ -62,7 +63,7 @@ public class ExportExcelController {
     public void exportSXYFH(HttpServletResponse response,@RequestBody TutorQuery tutorQuery) throws IOException {
         //TODO 用户保存excel路径，前端需传 部门名、符合条件的状态码（一个或多个）
         //1.查询数据
-        List<QueryDepartmentSecretaryInit> list = exportExcelService.getTutorByQuery(tutorQuery);
+        List<QueryDepartmentSecretaryInit> list = tutorInspectService.getTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(),1, tutorQuery, 1);
         //2.输出Excel
         //TODO 判断导出是否成功，返回值
 
