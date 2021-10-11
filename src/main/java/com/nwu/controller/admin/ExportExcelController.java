@@ -1,14 +1,14 @@
 package com.nwu.controller.admin;
 
 import com.nwu.service.admin.impl.ExportExcelServiceImpl;
+import com.nwu.service.impl.TutorInspectServiceImpl;
 import com.nwu.util.exportExcel.DeliberationExportExcel;
 import com.nwu.util.exportExcel.QualificationExamExportExcel;
 import com.nwu.util.exportExcel.RecommendExportExcel;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.TutorQuery;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -26,17 +26,21 @@ public class ExportExcelController {
     @Resource
     private ExportExcelServiceImpl exportExcelService;
 
+    @Resource
+    private TutorInspectServiceImpl tutorInspectService;
+
     /**
      * 院系秘书导出同意上分会数据
      * @param response
      * @param tutorQuery 封装对象
      * @throws IOException
      */
-    @GetMapping("/sfh")
-    public void exportSFH(HttpServletResponse response, TutorQuery tutorQuery) throws IOException {
+    @PostMapping("/sfh")
+    public void exportSFH(HttpServletResponse response, @RequestBody TutorQuery tutorQuery) throws IOException {
         //TODO 用户保存excel路径，前端需传 学校名、部门名、符合条件的状态码（一个或多个）
         //1.查询数据
-        List<QueryDepartmentSecretaryInit> list = exportExcelService.getTutorByQuery(tutorQuery);
+        List<QueryDepartmentSecretaryInit> list = tutorInspectService.getTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
+        System.out.println(list);
         //2.输出Excel
         //TODO 判断导出是否成功，返回值
 
@@ -45,7 +49,6 @@ public class ExportExcelController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return;
     }
 
     /**
@@ -55,9 +58,9 @@ public class ExportExcelController {
      * @throws IOException
      */
 
-    @GetMapping("/sxyfh")
-    public void exportSXYFH(HttpServletResponse response, TutorQuery tutorQuery) throws IOException {
-        //TODO 用户保存excel路径，前端需传 学校名、部门名、符合条件的状态码（一个或多个）
+    @PostMapping("/sxyfh")
+    public void exportSXYFH(HttpServletResponse response,@RequestBody TutorQuery tutorQuery) throws IOException {
+        //TODO 用户保存excel路径，前端需传 部门名、符合条件的状态码（一个或多个）
         //1.查询数据
         List<QueryDepartmentSecretaryInit> list = exportExcelService.getTutorByQuery(tutorQuery);
         //2.输出Excel
