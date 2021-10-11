@@ -1,21 +1,17 @@
 package com.nwu.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.Organization;
 import com.nwu.entities.PdfEntity.PdfTutorInspect;
 import com.nwu.entities.TutorInspect;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.SecondPage;
-import com.nwu.entities.tutor.childSubject.ExpertTitle;
-import com.nwu.entities.tutor.childSubject.GroupsOrPartTimeJob;
 import com.nwu.mapper.TutorInspectMapper;
 import com.nwu.service.OrganizationService;
 import com.nwu.service.TutorInspectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.TutorQuery;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -54,7 +50,7 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
             firstPage.setOrganizationName(one.getOrganizationName());
 
             // 设置对应的授予单位及时间
-            if (!"".equals(firstPage.getAwardingUnitTime())) {
+            if (!"".equals(firstPage.getAwardingUnitTime()) || firstPage.getAwardingUnitTime() != null) {
                 firstPage.setAwardDepartment(firstPage.getAwardingUnitTime().split(" ")[0]);
                 firstPage.setAwardTime(firstPage.getAwardingUnitTime().split(" ")[1]);
             }

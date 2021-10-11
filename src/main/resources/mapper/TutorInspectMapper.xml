@@ -31,11 +31,11 @@
         sc.inspect_describe,
         o.organization_name
         FROM
-        tutor_inspect t
-        LEFT JOIN apply a ON t.apply_id = a.apply_id
-        LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
-        LEFT JOIN status_code sc ON a.`status` = sc.code_id
-        LEFT JOIN organization o ON t.organization_id = o.organization_id
+            tutor_inspect t
+            LEFT JOIN apply a ON t.apply_id = a.apply_id
+            LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+            LEFT JOIN status_code sc ON a.`status` = sc.code_id
+            LEFT JOIN organization o ON t.organization_id = o.organization_id
         WHERE a.status IN
         <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
             ${status}
@@ -44,7 +44,7 @@
         <if test="organizationId != 0">
             AND o.organization_id = #{organizationId}
         </if>
-
+        LIMIT 0, 10
     </select>
 
     <!-- 查询所有免审 -->
@@ -82,6 +82,7 @@
         <if test="organizationId != 0">
             AND o.organization_id = #{organizationId}
         </if>
+        LIMIT 0, 10
     </select>
 
     <!-- 条件查询非免审 -->
@@ -144,6 +145,7 @@
         <if test="subjectName != null and subjectName.length > 0">
             AND t.applied_subject_code = #{subjectName}
         </if>
+        LIMIT (pageNum - 1) * 10, 10
     </select>
 
     <!-- 条件查询免审 -->
@@ -201,6 +203,7 @@
         <if test="subjectName != null and subjectName.length > 0">
             AND t.applied_subject_code = #{subjectName}
         </if>
+        LIMIT (pageNum - 1) * 10, pageSize
     </select>
 
     <resultMap type="com.nwu.vo.QueryDepartmentSecretaryInit" id="QueryDepartmentSecretaryInit">
