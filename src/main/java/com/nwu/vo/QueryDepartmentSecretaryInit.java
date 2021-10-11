@@ -18,6 +18,7 @@ public class QueryDepartmentSecretaryInit implements Serializable {
     private int applyTypeId; // 申请的类别 id
     private String tutorId;  //教师工号
     private String name; //姓名
+    private String birthday; //出生年月
     private String finalDegree; //最后学位
     private String title; // 职称
 
