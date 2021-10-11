@@ -39,7 +39,7 @@ public class ExportExcelController {
     public void exportSFH(HttpServletResponse response, @RequestBody TutorQuery tutorQuery) throws IOException {
         //TODO 用户保存excel路径，前端需传 学校名、部门名、符合条件的状态码（一个或多个）
         //1.查询数据
-        List<QueryDepartmentSecretaryInit> list = tutorInspectService.getTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
+        List<QueryDepartmentSecretaryInit> list = tutorInspectService.getTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), 1, tutorQuery, 1);
         System.out.println(list);
         //2.输出Excel
         //TODO 判断导出是否成功，返回值

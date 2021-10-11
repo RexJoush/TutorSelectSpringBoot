@@ -160,7 +160,7 @@
     </select>
 
 
-    
+
     <resultMap type="com.nwu.vo.QueryDepartmentSecretaryInit" id="QueryDepartmentSecretaryInit">
     </resultMap>
     <resultMap type="java.lang.Integer" id="total">
