@@ -42,7 +42,9 @@ public class SystemUser implements Serializable {
     private String createTime;
 
     @ApiModelProperty(value = "系统用户院系名称")
-    private String organization;
+    private int organizationId;
+
+    private String organizationName;
 
 
 }

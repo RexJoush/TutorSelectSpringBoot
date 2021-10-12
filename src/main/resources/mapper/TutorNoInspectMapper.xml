@@ -79,6 +79,7 @@
             t.apply_id,
             t.tutor_id,
             t.`name`,
+            t.birthday,
             o.organization_name,
             t.gender,
             t.birthday,

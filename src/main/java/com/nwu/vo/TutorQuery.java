@@ -22,6 +22,8 @@ public class TutorQuery {
     private String userName;
     // 部门id
     private int organization;
+    // 院系名称
+    private String organizationName;
     // 申请类别
     private int applyType;
     // 学科属性

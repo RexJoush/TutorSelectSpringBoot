@@ -73,7 +73,7 @@ public class SystemUserController {
                 userVo.setStatus(systemUser.getStatus());
                 userVo.setCreateTime(systemUser.getCreateTime());
                 userVo.setMr("mr");
-                userVo.setOrganization(systemUser.getOrganization());
+                userVo.setOrganization(systemUser.getOrganizationId());
                 userVos.add(userVo);
             }
         }

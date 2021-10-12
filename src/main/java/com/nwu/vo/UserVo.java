@@ -16,7 +16,7 @@ public class UserVo {
     // 姓名
     private String userName;
     // 院系
-    private String organization;
+    private int organization;
     // 状态
     private int status;
     // 创建时间

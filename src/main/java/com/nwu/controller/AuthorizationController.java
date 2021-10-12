@@ -3,9 +3,11 @@ package com.nwu.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.nwu.entities.SystemUser;
 import com.nwu.entities.tutor.TeacherInfo;
 import com.nwu.service.AuthorizationService;
 import com.nwu.service.OrganizationService;
+import com.nwu.service.SystemUserService;
 import com.nwu.service.tutor.common.TeacherInfoService;
 import com.nwu.util.AESUtil;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +31,7 @@ public class AuthorizationController {
     private AuthorizationService authorizationService;
 
     @Resource
-    private TeacherInfoService teacherInfoService;
+    private SystemUserService systemUserService;
     //获取token信息
     @PostMapping("/login")
     public String login(@RequestBody Map<String, String> body) {
@@ -63,17 +65,23 @@ public class AuthorizationController {
         // 查询权限
         String authorization = authorizationService.getAuthorization(decode.split("[+]")[0]);
 
-        QueryWrapper<TeacherInfo> wrapper = new QueryWrapper<>();
-        wrapper.select("DM");
-        wrapper.eq("ZGH",decode.split("[+]")[0]);
-        TeacherInfo teacherInfo = teacherInfoService.getOne(wrapper);
-        String organizationId = teacherInfo.getDM();
+        QueryWrapper<SystemUser> wrapper = new QueryWrapper<>();
+
+        wrapper.eq("tutor_id",decode.split("[+]")[0]);
+        SystemUser systemUser = systemUserService.getOne(wrapper);
+        int organizationId = -1;
+        String organizationName = "";
+        if (systemUser != null){
+            organizationId = systemUser.getOrganizationId();
+            organizationName = systemUser.getOrganizationName();
+        }
         roles.add(authorization);
 
         JSONObject object = new JSONObject();
         object.put("code", 20000);
         object.put("data", Map.of("roles", roles));
-        object.put("organizationId",organizationId);
+        object.put("organizationId", organizationId);
+        object.put("organizationName", organizationName);
 
         return JSON.toJSONString(object);
 
