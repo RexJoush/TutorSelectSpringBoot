@@ -27,7 +27,7 @@ public class Apply implements Serializable {
     private int applyId; // 申请表id 自增
     private String tutorId;  // 导师工号
     private String name;     // 导师姓名
-    private int organizedId; // 导师所在院系 id
+    private int organizationId; // 导师所在院系 id
     private int applyTypeId;   // 申请的类别 id
     private int status;  // 当前申请的状态
     private int subject;  // 分科，文科或理科

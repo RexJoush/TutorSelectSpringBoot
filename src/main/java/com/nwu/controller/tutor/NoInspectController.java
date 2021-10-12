@@ -97,7 +97,7 @@ public class NoInspectController {
             Apply apply = new Apply();
             apply.setTutorId(tutorId);
             apply.setName(nofirstPage.getName());
-            apply.setOrganizedId(nofirstPage.getOrganizationId());
+            apply.setOrganizationId(nofirstPage.getOrganizationId());
             apply.setApplyTypeId(applyTypeId);
             apply.setStatus(0);
             noFirstService.saveNoApplyInfo(apply);

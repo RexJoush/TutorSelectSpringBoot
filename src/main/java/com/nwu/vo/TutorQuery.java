@@ -29,7 +29,7 @@ public class TutorQuery {
     // 学科属性
     private String subjectType;
     // 学科名称
-    // private String subjectName;
+     private String subjectName;
 
     // 申请状态码
     private String applyStatus;

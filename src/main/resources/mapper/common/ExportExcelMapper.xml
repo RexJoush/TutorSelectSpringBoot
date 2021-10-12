@@ -21,7 +21,7 @@
         <if test="userId !=null and userId.length >0 ">
             AND a.tutor_id = #{userId}
         </if>
-        <if test="applyType !=null ">
+        <if test="applyType !=0 ">
             AND a.apply_type_id = #{applyType}
         </if>
 

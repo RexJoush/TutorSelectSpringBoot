@@ -81,8 +81,8 @@ public class ExportExcelController {
      * @param tutorQuery 封装对象
      * @throws IOException
      */
-    @GetMapping("/qualification")
-    public void qualificationExportExcel(HttpServletResponse response,TutorQuery tutorQuery) throws IOException{
+    @PostMapping ("/qualification")
+    public void qualificationExportExcel(HttpServletResponse response,@RequestBody TutorQuery tutorQuery) throws IOException{
         List<QueryDepartmentSecretaryInit> list = exportExcelService.getTutorByQuery(tutorQuery);
         try {
             new QualificationExamExportExcel(response,"西北大学",list).execute();
