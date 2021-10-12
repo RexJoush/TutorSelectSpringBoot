@@ -178,6 +178,7 @@
                 a.commit_yjsy_lr,
                 t.tutor_id,
                 t.`name`,
+                t.birthday,
                 t.final_degree,
                 t.title,
                 t.applied_subject_unit,
@@ -185,12 +186,20 @@
                 t.applied_subject_name,
                 apt.apply_name,
                 sc.inspect_describe,
-                o.organization_name
+                o.organization_name,
+                s.firstAuthorPaper,
+                s.ssciAmount,
+                s.authorityAmount,
+                s.projectNationalLevel,
+                s.projectProvinceLevel,
+                s. accumulatedFunds,
+                s.horizontalProject
         FROM tutor_no_inspect t
             LEFT JOIN apply a ON t.apply_id = a.apply_id
             LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
             LEFT JOIN status_code sc ON a.`status` = sc.code_id
             LEFT JOIN organization o ON t.organization_id = o.organization_id
+            LEFT JOIN summary s ON s.apply_id = a.apply_id
         WHERE a.status IN
         <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
             ${status}
@@ -213,6 +222,7 @@
                 a.commit_yjsy_lr,
                 t.tutor_id,
                 t.`name`,
+                t.birthday,
                 t.final_degree,
                 t.title,
                 t.doctoral_master_application_subject_unit,
@@ -226,11 +236,19 @@
                 apt.apply_name,
                 sc.inspect_describe,
                 o.organization_name
+                s.firstAuthorPaper,
+                s.ssciAmount,
+                s.authorityAmount,
+                s.projectNationalLevel,
+                s.projectProvinceLevel,
+                s. accumulatedFunds,
+                s.horizontalProject
         FROM tutor_inspect t
             LEFT JOIN apply a ON t.apply_id = a.apply_id
             LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
             LEFT JOIN status_code sc ON a.`status` = sc.code_id
             LEFT JOIN organization o ON t.organization_id = o.organization_id
+            LEFT JOIN summary s ON s.apply_id = a.apply_id
         WHERE a.status IN
         <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
             ${status}
@@ -253,6 +271,7 @@
                 a.commit_yjsy_lr,
                 t.tutor_id,
                 t.`name`,
+                t.birthday,
                 t.final_degree,
                 t.title,
                 t.doctoral_master_application_subject_unit,
@@ -314,6 +333,7 @@
                 a.commit_yjsy_lr,
                 t.tutor_id,
                 t.`name`,
+                t.birthday,
                 t.final_degree,
                 t.title,
                 t.applied_subject_unit,

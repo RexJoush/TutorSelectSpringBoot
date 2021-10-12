@@ -136,7 +136,7 @@ public class RecommendExportExcel {
                             queryDepartmentSecretaryInit.getApplySubject(), //申请学科或类别及代码
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
                             null, null, null,
-                            queryDepartmentSecretaryInit.getCommit() //秘书初审备注
+                            queryDepartmentSecretaryInit.getCommitYxSfh() //秘书初审备注
                     )
             );
         }

@@ -3,6 +3,7 @@ package com.nwu.controller.admin;
 import com.nwu.service.admin.impl.ExportExcelServiceImpl;
 import com.nwu.service.impl.TutorInspectServiceImpl;
 import com.nwu.util.exportExcel.DeliberationExportExcel;
+import com.nwu.util.exportExcel.FirstInspectExportExcel;
 import com.nwu.util.exportExcel.QualificationExamExportExcel;
 import com.nwu.util.exportExcel.RecommendExportExcel;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
@@ -30,6 +31,29 @@ public class ExportExcelController {
     private TutorInspectServiceImpl tutorInspectService;
 
     /**
+     * 院系秘书初审页面导出所有数据
+     * @param response
+     * @param tutorQuery 封装对象
+     * @throws IOException
+     */
+    @PostMapping("/cs")
+    public void exportSc(HttpServletResponse response, @RequestBody TutorQuery tutorQuery) throws IOException {
+        // TODO 用户保存excel路径，前端需传 学校名、部门名、符合条件的状态码（一个或多个）
+        System.out.println(tutorQuery);
+        // 1.查询数据
+        List<QueryDepartmentSecretaryInit> list = tutorInspectService.exportTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
+        System.out.println(list);
+        // 2.输出Excel
+        // TODO 判断导出是否成功，返回值
+
+        try {
+            new FirstInspectExportExcel(response, "西北大学", tutorQuery.getOrganizationName(), list).execute();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
      * 院系秘书导出同意上分会数据
      * @param response
      * @param tutorQuery 封装对象
@@ -40,7 +64,7 @@ public class ExportExcelController {
         // TODO 用户保存excel路径，前端需传 学校名、部门名、符合条件的状态码（一个或多个）
         System.out.println(tutorQuery);
         // 1.查询数据
-        List<QueryDepartmentSecretaryInit> list = tutorInspectService.getTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), 1, tutorQuery, 1);
+        List<QueryDepartmentSecretaryInit> list = tutorInspectService.exportTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
         System.out.println(list);
         // 2.输出Excel
         // TODO 判断导出是否成功，返回值
@@ -63,12 +87,12 @@ public class ExportExcelController {
     public void exportSXYFH(HttpServletResponse response,@RequestBody TutorQuery tutorQuery) throws IOException {
         //TODO 用户保存excel路径，前端需传 部门名、符合条件的状态码（一个或多个）
         //1.查询数据
-        List<QueryDepartmentSecretaryInit> list = tutorInspectService.getTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(),1, tutorQuery, 1);
+        List<QueryDepartmentSecretaryInit> list = tutorInspectService.exportTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
         //2.输出Excel
         //TODO 判断导出是否成功，返回值
 
         try {
-            new DeliberationExportExcel(response, "西北大学", "网数中心", list).execute();
+            new DeliberationExportExcel(response, "西北大学", tutorQuery.getOrganizationName(), list).execute();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
