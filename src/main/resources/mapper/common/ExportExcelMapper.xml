@@ -43,8 +43,6 @@
         <if test="subjectName !=null and subjectName.length >0">
             AND t.applied_subject_code = #{subjectName}
         </if>
-
-
     </select>
 
 </mapper>
