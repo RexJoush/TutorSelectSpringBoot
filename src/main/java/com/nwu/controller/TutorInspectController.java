@@ -68,7 +68,6 @@ public class TutorInspectController {
         System.out.println(tutorQuery);
         System.out.println(pageNumber);
 
-
         List<QueryDepartmentSecretaryInit> inits;
         int total;
         try {
