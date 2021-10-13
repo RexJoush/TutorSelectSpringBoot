@@ -62,5 +62,14 @@ public class QueryDepartmentSecretaryInit implements Serializable {
     private String appliedSubjectCode;     // 申请学科_一级学科代码
     private String appliedSubjectName;     // 申请学科_一级学科名称
 
+    /* 汇总表信息*/
+    private int firstAuthorPaper; //核心
+    private int authorityAmount ; // 权威篇数
+    private int ssciAmount; // SSCI 篇数
+    private int projectNationalLevel; // 国家级项目
+    private int projectProvinceLevel; // 省部级项目
+    private int accumulatedFunds; // 累计科研经费，万元
+    private int horizontalProject; // 横向项目到款经费，万元
+
     private boolean isNoInspect;    // 是否为免审申请
 }

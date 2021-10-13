@@ -65,44 +65,54 @@ public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
     QueryDepartmentSecretaryInit getTutorNoInspectApplyInitDetails(int applyId);
 
 
-
-
     /**
-     * 获取所有非免审的信息
+     * excel ---- 导出所有免审
      * @param organizationId 院系 id
-     * @param applyStatuss 申请状态
+     * @param applyStatuss 申请状态列表
+     * @return 信息
      */
-    // List<QueryDepartmentSecretaryInit> getTutorInspectInit(int organizationId, List<String> applyStatuss);
+    List<QueryDepartmentSecretaryInit> exportTutorNoInspectInit(int organizationId, List<String> applyStatuss);
 
     /**
-     *
-     * @param organizationId
-     * @param applyStatuss
-     * @return
+     * excel ---- 导出所有非免审
+     * @param organizationId 院系 id
+     * @param applyStatuss 申请状态列表
+     * @return 信息
      */
-    // List<QueryDepartmentSecretaryInit> getTutorNoInspectInit(int organizationId, List<String> applyStatuss);
+    List<QueryDepartmentSecretaryInit> exportTutorInspectInit(int organizationId, List<String> applyStatuss);
 
     /**
-     * 条件查询申请信息
+     * excel ---- 导出查询非免审
      * @param tutorQuery 查询条件
      * @return 申请列表
      */
-    // List<QueryDepartmentSecretaryInit> getTutorInspectSearch(TutorQuery tutorQuery);
+    List<QueryDepartmentSecretaryInit> exportTutorInspectSearch(TutorQuery tutorQuery);
 
     /**
-     * 条件查询申请信息
+     * excel ---- 导出查询免审
      * @param tutorQuery 查询条件
      * @return 申请列表
      */
-    // List<QueryDepartmentSecretaryInit> getTutorNoInspectSearch(TutorQuery tutorQuery);
+    List<QueryDepartmentSecretaryInit> exportTutorNoInspectSearch(TutorQuery tutorQuery);
 
-    List<QueryDepartmentSecretaryInit> selectByQuery(TutorQuery tutorQuery);
-
+    /**
+     * 保存第一页的 tutor_inspect 信息
+     * @param firstPage 第一页信息
+     */
     int saveTutorInspectBaseInfo(@Param("firstPage") FirstPage firstPage);
 
+    /**
+     * 获取第二页的申请信息
+     * @param applyId 申请 id
+     * @return 第二页信息详情
+     */
     SecondPage getTutorInspectSecond(@Param("applyId") int applyId);
 
-
+    /**
+     * 更新第二页信息
+     * @param applyId 申请 id
+     * @param secondPage 第二页信息
+     */
     int updateTutorInspectSecond(@Param("applyId") int applyId, @Param("secondPage") SecondPage secondPage);
 
     /**
@@ -112,7 +122,14 @@ public interface TutorInspectMapper extends BaseMapper<TutorInspect> {
      */
     FirstPage getFirstPage(@Param("applyId") int applyId);
 
-
+    /**
+     * 更新第一页信息
+     * @param applyId 申请 id
+     * @param phone 电话
+     * @param email 邮箱
+     * @param evaluateTime 职称评定时间
+     * @param awardingUnitTime 学位授予单位及时间
+     */
     int updateFirstPage(String applyId, String phone, String email, String evaluateTime, String awardingUnitTime);
 
     /**

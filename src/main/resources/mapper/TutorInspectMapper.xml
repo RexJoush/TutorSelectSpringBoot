@@ -164,69 +164,219 @@
     </select>
 
 
-
-    <resultMap type="com.nwu.vo.QueryDepartmentSecretaryInit" id="QueryDepartmentSecretaryInit">
-    </resultMap>
-    <resultMap type="java.lang.Integer" id="total">
-        <result column="total"/>
-    </resultMap>
-
-    <select id="selectByQuery" resultMap="QueryDepartmentSecretaryInit"
-            parameterType="com.nwu.vo.TutorQuery">
-        SELECT
-        t.*,
-        a2.apply_name as applyName,
-        a.*,
-        s.inspect_describe as inspectDescribe,
-        o.organization_name as organizationName
-        FROM `tutor_inspect` t,`apply` a, `organization` o, `status_code` s,`apply_type` a2
-        WHERE
-        a.apply_id = t.apply_id
-        AND a.status = s.code_id
-        AND t.organization_id = o.organization_id
-        AND a.apply_type_id = a2.apply_type_id
-        <if test="userId !=null and userId.length >0 ">
-            AND a.tutor_id = #{userId}
+    <!-- ============================ excel 导出专用部分 ============================ -->
+    <!-- 导出所有免审 -->
+    <select id="exportTutorNoInspectInit" resultType="com.nwu.vo.QueryDepartmentSecretaryInit">
+        SELECT  a.apply_id,
+                a.apply_type_id,
+                a.`status`,
+                a.`commit`,
+                a.commit_yx_sfh,
+                a.commit_yx_xy,
+                a.commit_yjsy_cs,
+                a.commit_yjsy_sfh,
+                a.commit_yjsy_lr,
+                t.tutor_id,
+                t.`name`,
+                t.birthday,
+                t.final_degree,
+                t.title,
+                t.applied_subject_unit,
+                t.applied_subject_code,
+                t.applied_subject_name,
+                apt.apply_name,
+                sc.inspect_describe,
+                o.organization_name,
+                s.firstAuthorPaper,
+                s.ssciAmount,
+                s.authorityAmount,
+                s.projectNationalLevel,
+                s.projectProvinceLevel,
+                s. accumulatedFunds,
+                s.horizontalProject
+        FROM tutor_no_inspect t
+            LEFT JOIN apply a ON t.apply_id = a.apply_id
+            LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+            LEFT JOIN status_code sc ON a.`status` = sc.code_id
+            LEFT JOIN organization o ON t.organization_id = o.organization_id
+            LEFT JOIN summary s ON s.apply_id = a.apply_id
+        WHERE a.status IN
+        <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
+            ${status}
+        </foreach>
+        <if test="organizationId != 0">
+            AND o.organization_id = #{organizationId}
         </if>
-        <if test="applyType !=null and applyType.length >0">
-            AND a.apply_type_id = #{applyType}
+    </select>
+
+    <!-- 导出所有非免审 -->
+    <select id="exportTutorInspectInit" resultType="com.nwu.vo.QueryDepartmentSecretaryInit">
+        SELECT  a.apply_id,
+                a.apply_type_id,
+                a.`status`,
+                a.`commit`,
+                a.commit_yx_sfh,
+                a.commit_yx_xy,
+                a.commit_yjsy_cs,
+                a.commit_yjsy_sfh,
+                a.commit_yjsy_lr,
+                t.tutor_id,
+                t.`name`,
+                t.birthday,
+                t.final_degree,
+                t.title,
+                t.doctoral_master_application_subject_unit,
+                t.doctoral_master_subject_code,
+                t.doctoral_master_subject_name,
+                t.professional_application_subject_unit,
+                t.professional_application_subject_code,
+                t.professional_application_subject_name,
+                t.professional_field_code,
+                t.professional_field_name,
+                apt.apply_name,
+                sc.inspect_describe,
+                o.organization_name
+                s.firstAuthorPaper,
+                s.ssciAmount,
+                s.authorityAmount,
+                s.projectNationalLevel,
+                s.projectProvinceLevel,
+                s. accumulatedFunds,
+                s.horizontalProject
+        FROM tutor_inspect t
+            LEFT JOIN apply a ON t.apply_id = a.apply_id
+            LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+            LEFT JOIN status_code sc ON a.`status` = sc.code_id
+            LEFT JOIN organization o ON t.organization_id = o.organization_id
+            LEFT JOIN summary s ON s.apply_id = a.apply_id
+        WHERE a.status IN
+        <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
+            ${status}
+        </foreach>
+        <if test="organizationId != 0">
+            AND o.organization_id = #{organizationId}
         </if>
-        <if test="applyStatus !=null and applyStatus.length >0">
+    </select>
+
+    <!-- 导出查询非免审 -->
+    <select id="exportTutorInspectSearch" parameterType="com.nwu.vo.TutorQuery" resultType="com.nwu.vo.QueryDepartmentSecretaryInit">
+        SELECT  a.apply_id,
+                a.apply_type_id,
+                a.`status`,
+                a.`commit`,
+                a.commit_yx_sfh,
+                a.commit_yx_xy,
+                a.commit_yjsy_cs,
+                a.commit_yjsy_sfh,
+                a.commit_yjsy_lr,
+                t.tutor_id,
+                t.`name`,
+                t.birthday,
+                t.final_degree,
+                t.title,
+                t.doctoral_master_application_subject_unit,
+                t.doctoral_master_subject_code,
+                t.doctoral_master_subject_name,
+                t.professional_application_subject_unit,
+                t.professional_application_subject_code,
+                t.professional_application_subject_name,
+                t.professional_field_code,
+                t.professional_field_name,
+                apt.apply_name,
+                sc.inspect_describe,
+                o.organization_name
+        FROM tutor_inspect t
+            LEFT JOIN apply a ON t.apply_id = a.apply_id
+            LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+            LEFT JOIN status_code sc ON a.`status` = sc.code_id
+            LEFT JOIN organization o ON t.organization_id = o.organization_id
+        WHERE TRUE
+        <if test="applyStatuss.size() == 0">
+            AND a.status = #{applyStatus}
+        </if>
+        <if test="applyStatuss.size() > 0">
             AND a.status in
             <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
                 ${status}
             </foreach>
         </if>
-        <if test="subjectType !=null and subjectType.length >0">
+        <if test="organization != 0">
+            AND o.organization_id = #{organization}
+        </if>
+        <if test="userId != '' and userId.length > 0 ">
+            AND a.tutor_id = #{userId}
+        </if>
+        <if test="applyType != 0">
+            AND a.apply_type_id = #{applyType}
+        </if>
+        <if test="subjectType != '' and subjectType.length > 0">
             AND a.subject = #{subjectType}
         </if>
-        <if test="organization !=null and organization.length >0">
-            AND t.organization_id = #{organization}
-        </if>
-        <if test="userName !=null and userName.length >0">
+        <if test="userName != '' and userName.length > 0">
             AND t.name = #{userName}
         </if>
-        <if test="subjectName !=null and subjectName.length >0">
+        <if test="subjectName != '' and subjectName.length > 0">
             AND t.applied_subject_code = #{subjectName}
         </if>
     </select>
 
-    <update id="updateTutorInspect" parameterType="com.nwu.entities.TutorInspect">
-        UPDATE tutor_inspect
-        SET `name`            = #{tutorInspect.name},
-            gender            = #{tutorInspect.gender},
-            image= #{tutorInspect.image},
-            organization_id= #{tutorInspect.organizationId},
-            birthday=#{tutorInspect.birthday},
-            `identity`        = #{tutorInspect.identity},
-            phone= #{tutorInspect.phone},
-            email=#{tutorInspect.email},
-            title=#{tutorInspect.title},
-            evaluate_time=#{tutorInspect.evaluateTime},
-            final_degree=#{tutorInspect.finalDegree},
-            awarding_unit_time=#{tutorInspect.awardingUnitTime}
-        WHERE tutor_id = #{tutorInspect.tutorId};
-    </update>
+    <!-- 导出查询免审 -->
+    <select id="exportTutorNoInspectSearch" parameterType="com.nwu.vo.TutorQuery" resultType="com.nwu.vo.QueryDepartmentSecretaryInit">
+        SELECT  a.apply_id,
+                a.apply_type_id,
+                a.`status`,
+                a.`commit`,
+                a.commit_yx_sfh,
+                a.commit_yx_xy,
+                a.commit_yjsy_cs,
+                a.commit_yjsy_sfh,
+                a.commit_yjsy_lr,
+                t.tutor_id,
+                t.`name`,
+                t.birthday,
+                t.final_degree,
+                t.title,
+                t.applied_subject_unit,
+                t.applied_subject_code,
+                t.applied_subject_name,
+                apt.apply_name,
+                sc.inspect_describe,
+                o.organization_name
+        FROM tutor_no_inspect t
+            LEFT JOIN apply a ON t.apply_id = a.apply_id
+            LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id
+            LEFT JOIN status_code sc ON a.`status` = sc.code_id
+            LEFT JOIN organization o ON t.organization_id = o.organization_id
+        WHERE TRUE
+        <if test="applyStatuss.size() == 0">
+            AND a.status = #{applyStatus}
+        </if>
+        <if test="applyStatuss.size() > 0">
+            AND a.status in
+            <foreach item="status" collection="applyStatuss" open="(" separator="," close=")">
+                ${status}
+            </foreach>
+        </if>
+        <if test="organization != 0">
+            AND o.organization_id = #{organization}
+        </if>
+        <if test="userId != '' and userId.length > 0 ">
+            AND a.tutor_id = #{userId}
+        </if>
+        <if test="applyType != 0">
+            AND a.apply_type_id = #{applyType}
+        </if>
+        <if test="subjectType != '' and subjectType.length > 0">
+            AND a.subject = #{subjectType}
+        </if>
+        <if test="userName != '' and userName.length > 0">
+            AND t.name = #{userName}
+        </if>
+        <if test="subjectName != '' and subjectName.length > 0">
+            AND t.applied_subject_code = #{subjectName}
+        </if>
+    </select>
+
 
     <insert id="saveTutorInspectBaseInfo" parameterType="com.nwu.entities.tutor.FirstPage">
         INSERT INTO tutor_inspect

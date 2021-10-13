@@ -7,6 +7,7 @@ import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.impl.SystemTimeServiceImpl;
 import com.nwu.util.TimeUtils;
+import com.sun.tools.jconsole.JConsoleContext;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.incrementer.SybaseAnywhereMaxValueIncrementer;
@@ -62,7 +63,8 @@ public class SystemTimeController {
         }else if(resUpadte) {
             map.put("code",20000);
         }else{
-            map.put("code",20001);        }
+            map.put("code",20001);
+        }
         return new Result(ResultCode.SUCCESS,map);
     }
     @GetMapping("/get/{orgId}")

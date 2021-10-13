@@ -20,11 +20,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/*
- *  学位评定分委员会审议汇总表
+/**
+ * 学位评定分委员会推荐汇总表
  */
 
-public class DeliberationExportExcel {
+public class FirstInspectExportExcel {
 
     private List<QueryDepartmentSecretaryInit> originList;
     private HorizontalCellStyleStrategy horizontalCellStyleStrategy;
@@ -35,7 +35,14 @@ public class DeliberationExportExcel {
     private List<List<String>> headData;
     private String year;
 
-    public DeliberationExportExcel(HttpServletResponse response,
+    /**
+     *构造函数
+     * @param response 请求头
+     * @param schoolName 学校名字
+     * @param departmentName 院系名称
+     * @param originList 原始数据
+     */
+    public FirstInspectExportExcel(HttpServletResponse response,
                                    String schoolName,
                                    String departmentName,
                                    List<QueryDepartmentSecretaryInit> originList) {
@@ -48,6 +55,10 @@ public class DeliberationExportExcel {
         this.originList = originList;
     }
 
+    /**
+     * 执行函数，写入excel
+     * @throws IOException
+     */
 
     public void execute() throws IOException {
 
@@ -62,6 +73,10 @@ public class DeliberationExportExcel {
                 .sheet().doWrite(contentList);
     }
 
+    /**
+     * 浏览器默认下载位置
+     * @throws UnsupportedEncodingException
+     */
     private void setResponse() throws UnsupportedEncodingException {
 
         response.setContentType("application/vnd.ms-excel");
@@ -75,45 +90,29 @@ public class DeliberationExportExcel {
     }
 
 
-    //表头
+    /**
+     * 创建表头
+     * @param schoolName 学校名称
+     * @param departmentName 院系名称
+     */
     private void setHead(String schoolName, String departmentName) {
 
         //2、构造表头
         List<List<String>> headTitles = Lists.newArrayList();
-        String firstRow = schoolName + this.year + "年" + departmentName + "学位评定分委员会审议汇总表";
+        String firstRow = schoolName + this.year + "年" + departmentName + "学位评定汇总表";
         String secondRow = "（首次上岗研究生导师/增列学科岗位认定）";
-        String threeRow = "院（系、所）负责人签字：                                 填表人：                                  " +
-                "                                                      年    月   日                                ";
-        //第一列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"序号", "序号", "序号"));
-        //第2-6列
-        ArrayList<String> basicInfoCol = Lists.newArrayList("姓名", "出生年月", "最后学位", "职称", "申请学科或类别");
-        basicInfoCol.forEach(title -> {
-            headTitles.add(Lists.newArrayList(firstRow,secondRow,threeRow,"基本情况",title,title));
+        //7列
+        ArrayList<String> sevenCol = Lists.newArrayList("序号", "姓名", "出生年月", "最后学位", "职称", "申请学科或类别及代码","导师上岗类别");
+        sevenCol.forEach(title -> {
+            headTitles.add(Lists.newArrayList(firstRow, secondRow, title, title, title));
         });
-        //第7列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"导师上岗类型","导师上岗类型","导师上岗类型"));
-
-        //第8列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","学术论文（篇）","SCI/权威"));
-        //第9列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","学术论文（篇）","核心"));
-        //第10列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","科研项目（项）","国家"));
-        //第11列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","科研项目（项）","省部"));
-        //第12列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","科研经费（万元）","纵向"));
-        //第13列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","科研经费（万元）","横向"));
-        //第14列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"备注", "备注", "备注"));
-
-
         this.headData = headTitles;
     }
 
-    //将数据库查出的符合前端规则的数据，转换成Excel表格的数据格式。
+    /**
+     * 将数据库查出的符合前端规则的数据，转换成Excel表格的数据格式
+     * @param list 数据库查出符合的数据列表
+     */
     public void exchangeData(List<QueryDepartmentSecretaryInit> list) {
         int i = 1;
         for (QueryDepartmentSecretaryInit queryDepartmentSecretaryInit : list) {
@@ -121,24 +120,19 @@ public class DeliberationExportExcel {
                     Lists.newArrayList(
                             String.valueOf(i++),  //序号
                             queryDepartmentSecretaryInit.getName(),  //姓名
-                            queryDepartmentSecretaryInit.getBirthday(), //出生年月
+                           queryDepartmentSecretaryInit.getBirthday(), //出生年月
                             queryDepartmentSecretaryInit.getFinalDegree(), //最后学位
                             queryDepartmentSecretaryInit.getTitle(), //职称
-                            queryDepartmentSecretaryInit.getApplySubject(), //申请学科或类别
-                            queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
-                            queryDepartmentSecretaryInit.getSsciAmount() + "/" + queryDepartmentSecretaryInit.getAuthorityAmount(),//SCI/权威   学术论文（篇）
-                            queryDepartmentSecretaryInit.getFirstAuthorPaper(),//核心  学术论文（篇）
-                            queryDepartmentSecretaryInit.getProjectNationalLevel(),//国家  科研项目（项）
-                            queryDepartmentSecretaryInit.getProjectProvinceLevel(),//省部  科研项目（项）
-                            queryDepartmentSecretaryInit.getAccumulatedFunds(),//纵向  科研经费（万元）
-                            queryDepartmentSecretaryInit.getHorizontalProject(),// 横向 科研经费（万元）
-                            queryDepartmentSecretaryInit.getCommitYxXy()  //备注
+                            queryDepartmentSecretaryInit.getApplySubject(), //申请学科或类别及代码
+                            queryDepartmentSecretaryInit.getApplyName()//导师上岗类别
                     )
             );
         }
     }
 
-    //表的格式定义
+    /**
+     * 表的格式定义
+     */
     private void tableStyle() {
         WriteCellStyle headWriteCellStyle = new WriteCellStyle();
         //背景

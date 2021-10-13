@@ -39,7 +39,7 @@ public interface TutorInspectService extends IService<TutorInspect> {
     /**
      * 获取所有教师信息的总条数
      * @param organizationId 院系 id
-     * @param applyStatuss 申请的状态类别
+     * @param applyStatuss 申请状态列表
      * @param tutorQuery 查询信息，条件查询使用
      * @param type 当前的查询是否为条件查询
      *        0 获取所有
@@ -49,12 +49,16 @@ public interface TutorInspectService extends IService<TutorInspect> {
     int getTutorInitOrSearchTotal(int organizationId, List<String> applyStatuss, TutorQuery tutorQuery, int type);
 
     /**
-     * 获取导师申请信息
-     *
-     * @param tutorQuery 查询条件
+     * 导出申请信息的 excel 表格
+     * @param organizationId 院系 id
+     * @param applyStatuss 申请状态列表
+     * @param tutorQuery 查询信息，条件查询使用
+     * @param type 当前的查询是否为条件查询
+     *        0 获取所有
+     *        1 条件查询
      * @return 信息列表
      */
-    List<QueryDepartmentSecretaryInit> getTutorByQuery(TutorQuery tutorQuery);
+    List<QueryDepartmentSecretaryInit> exportTutorInitOrSearch(int organizationId, List<String> applyStatuss, TutorQuery tutorQuery, int type);
 
     /**
      * 根据applyId获取第一页信息

@@ -118,7 +118,7 @@ public class InspectController {
         // 设置申请的类型和教师工号
         apply.setTutorId(firstPage.getTutorId());
         apply.setName(firstPage.getName());
-        apply.setOrganizedId(firstPage.getOrganizationId());
+        apply.setOrganizationId(firstPage.getOrganizationId());
         apply.setApplyTypeId(applyTypeId);
         apply.setStatus(0);
         apply.setSubmitTime(TimeUtils.sdf.format(new Date()));

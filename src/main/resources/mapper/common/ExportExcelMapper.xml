@@ -21,7 +21,7 @@
         <if test="userId !=null and userId.length >0 ">
             AND a.tutor_id = #{userId}
         </if>
-        <if test="applyType !=null ">
+        <if test="applyType !=0 ">
             AND a.apply_type_id = #{applyType}
         </if>
 
@@ -43,8 +43,6 @@
         <if test="subjectName !=null and subjectName.length >0">
             AND t.applied_subject_code = #{subjectName}
         </if>
-
-
     </select>
 
 </mapper>
