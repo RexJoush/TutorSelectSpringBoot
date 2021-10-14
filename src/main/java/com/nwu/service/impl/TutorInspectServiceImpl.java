@@ -75,6 +75,7 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
                 applyInfos = tutorInspectMapper.getTutorInspectApplyInit(organizationId, applyStatuss, (pageNumber - 1) * 10);
             } else {
                 // 查询获取
+                tutorQuery.setUserName("%" + tutorQuery.getUserName() + "%");
                 applyInfos = tutorInspectMapper.getTutorInspectApplySearch(tutorQuery, (pageNumber - 1) * 10);
             }
 
