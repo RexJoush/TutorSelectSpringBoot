@@ -62,7 +62,7 @@
             AND subject = #{tutorQuery.subjectType}
         </if>
         <if test="tutorQuery.userName != null and tutorQuery.userName.length > 0">
-            AND name = #{tutorQuery.userName}
+            AND name like #{tutorQuery.userName}
         </if>
         LIMIT ${pageStart}, 10
     </select>
@@ -93,7 +93,7 @@
             AND subject = #{subjectType}
         </if>
         <if test="userName != null and userName.length > 0">
-            AND name = #{userName}
+            AND name like #{userName}
         </if>
     </select>
 
