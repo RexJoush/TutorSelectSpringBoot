@@ -87,6 +87,7 @@ public class UpdateStatusController {
         Apply apply = new Apply();
         apply.setApplyTypeId(submit.getApplyTypeId());
         apply.setStatus(submit.getStatus());
+        apply.setOrganizationId(submit.getOrganizationId());
 //        apply.setProfessional(submit.getProfessional());
 //        apply.setSubject(submit.getSubject());
         apply.setCommitYjsyCs(submit.getCommitYjsyCs());

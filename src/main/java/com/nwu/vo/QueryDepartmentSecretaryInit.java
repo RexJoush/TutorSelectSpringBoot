@@ -72,4 +72,5 @@ public class QueryDepartmentSecretaryInit implements Serializable {
     private int horizontalProject; // 横向项目到款经费，万元
 
     private boolean isNoInspect;    // 是否为免审申请
+    private int organizationId; // 导师所在院系 id
 }
