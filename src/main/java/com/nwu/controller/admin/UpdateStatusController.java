@@ -69,16 +69,8 @@ public class UpdateStatusController {
     @Transactional
     @PostMapping("/submitUpdate")
     public Result updateStatusBySubmit() throws Exception {
-            Apply apply = new Apply();
-            apply.setStatus(38);
-            Apply unApplay = new Apply();
-            unApplay.setStatus(39);
-            QueryWrapper<Apply> applyQueryWrapper = new QueryWrapper<>();
-            applyQueryWrapper .eq("status","388");
-            QueryWrapper<Apply> unApplyQueryWrapper = new QueryWrapper<>();
-            unApplyQueryWrapper.eq("status","399");
-            applyService.update(apply,applyQueryWrapper);
-            applyService.update(unApplay,unApplyQueryWrapper);
+            applyService.updateApply388to38();
+            applyService.updateApply399to39();
             return Result.SUCCESS();
     }
     //研究生院管理员修改备注

@@ -64,4 +64,7 @@ public interface ApplyService extends IService<Apply> {
      * @return 详情信息
      */
     ApplyDetails getApplyDetails(int applyId, int isInspect, String tutorId);
+
+     int updateApply399to39();
+     int updateApply388to38();
 }

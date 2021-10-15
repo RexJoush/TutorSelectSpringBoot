@@ -203,4 +203,17 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
 
         return details;
     }
+    /***
+    * @Param [] //参数
+    * @description   //描述
+    * @author dynamic //作者 管理员点击提价按钮修改状态服务
+    * @return int  //返回值
+    * @throws   //异常
+    */
+    public int updateApply399to39(){
+        return applyMapper.updateApply399to39();
+    }
+    public int updateApply388to38(){
+        return applyMapper.updateApply388to38();
+    }
 }

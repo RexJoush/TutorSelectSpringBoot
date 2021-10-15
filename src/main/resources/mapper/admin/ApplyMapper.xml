@@ -49,6 +49,14 @@
             submit_time = #{time}
         where apply_id = #{applyId}
     </update>
+    <update id="updateApply399to39">
+        update apply
+        set status      = 39 where status = 399
+    </update>
+    <update id="updateApply388to38">
+        update apply
+        set status      = 38 where status = 388
+    </update>
     <select id="getInspectApply" resultType="com.nwu.vo.ApplyDisplayVo">
         SELECT a.apply_id,
                a.apply_type_id,

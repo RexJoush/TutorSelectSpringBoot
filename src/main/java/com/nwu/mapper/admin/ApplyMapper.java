@@ -49,5 +49,14 @@ public interface ApplyMapper extends BaseMapper<Apply> {
     List<ApplyDisplayVo> getInspectApply(String tutorId);
 
     List<ApplyDisplayVo> getNoInspectApply(String tutorId);
+    /***
+    * @Param [] //参数
+    * @description   //管理员在出身页面点击提交按钮后修改388状态为38 399 状态为39
+    * @author dynamic //作者
+    * @return int  //返回值
+    * @throws   //异常
+    */
+    int updateApply399to39();
+    int updateApply388to38();
 
 }
