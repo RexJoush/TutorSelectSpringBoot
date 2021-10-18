@@ -1,10 +1,13 @@
 package com.nwu.controller.tutor;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.nwu.entities.SystemTime;
 import com.nwu.entities.tutor.ApplyDetails;
 import com.nwu.entities.tutor.ApplyDisplay;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
+import com.nwu.service.SystemTimeService;
 import com.nwu.service.admin.ApplyService;
 import com.nwu.service.tutor.PageInit;
 import com.nwu.util.AESUtil;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +28,9 @@ public class MyApplyController {
 
     @Resource
     private ApplyService applyService;
+
+    @Resource
+    private SystemTimeService systemTimeService;
 
     /**
      * 获取当前教师的所有申请信息
@@ -63,6 +70,16 @@ public class MyApplyController {
             return new Result(ResultCode.SUCCESS, jsonObject);
         }
         return new Result(ResultCode.SUCCESS);
+    }
+
+    @GetMapping("/tutor/getOrganizationTime/{organizationId}")
+    public Result getTime(@PathVariable Integer organizationId) {
+
+        QueryWrapper<SystemTime> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("organization_id", organizationId);
+        SystemTime res = systemTimeService.getOne(queryWrapper);
+        return new Result(ResultCode.SUCCESS, res);
+
     }
 
     @GetMapping("/common/tutor/getApplyDetails/{applyId}/{isInspect}")
