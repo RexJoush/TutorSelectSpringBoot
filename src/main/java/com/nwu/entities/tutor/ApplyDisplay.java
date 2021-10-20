@@ -25,6 +25,7 @@ public class ApplyDisplay implements Serializable {
     private String applyName;       // 申请类型
     private String statusDisplay;   // 当前状态
     private String commit;          // 评论
+    private String commitSocial;        //社科处备注
 
     private boolean isNoInspect;    // 是否为免审申请
 

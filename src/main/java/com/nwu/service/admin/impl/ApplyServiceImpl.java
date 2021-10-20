@@ -55,6 +55,19 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
         return 1;
     }
 
+    /**
+     * 社科处更新 备注，状态码
+     * @param applyId 申请表的 id 值
+     * @param status  修改后的状态
+     * @param commit  备注，可选
+     * @return
+     */
+    @Override
+    public int updateSocialApplyStatus(Integer applyId, Integer status, String commit) {
+        applyMapper.updateSocialApplyStatusAndCommit(applyId, status, commit);
+        return 1;
+    }
+
     //院系秘书初审提交分会页面的更新操作
     @Override
     public int updateApplyStatusSfh(Integer applyId, Integer status, String commit) {

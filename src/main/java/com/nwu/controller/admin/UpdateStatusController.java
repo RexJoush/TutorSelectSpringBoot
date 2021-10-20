@@ -1,6 +1,5 @@
 package com.nwu.controller.admin;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.nwu.entities.Apply;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
@@ -38,6 +37,20 @@ public class UpdateStatusController {
         }
         return Result.SUCCESS();
     }
+    //社科、科研处更新操作，修改状态，添加备注
+    @PostMapping("/updateSocial")
+    public Result updateFirstBySocial(@RequestBody List<UpdateStatus> list) throws Exception {
+        if (list.size() > 0) {
+            for (UpdateStatus s : list) {
+                Integer id = s.getId_1();
+                Integer status = s.getStatus_1();
+                String commit = s.getCommit_1();
+                int i = applyService.updateSocialApplyStatus(id, status, commit);
+            }
+        }
+        return Result.SUCCESS();
+    }
+
     //院系秘书提交分会页面的更新操作，修改状态，添加备注
     @PostMapping("/updateSfh")
     public Result updateSubmitChapterByDepartmentSecretary(@RequestBody List<UpdateStatus> list) throws Exception {

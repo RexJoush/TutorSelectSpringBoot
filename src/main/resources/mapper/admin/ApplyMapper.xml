@@ -57,6 +57,20 @@
         update apply
         set status      = 38 where status = 388
     </update>
+    <!--  社科处更新操作  -->
+    <update id="updateSocialApplyStatusAndCommit" parameterType="com.nwu.vo.UpdateStatus">
+        update apply
+        <set>
+            status = #{status}
+            <if test="commit != null and commit !='' ">
+                , commit_social = #{commit}
+            </if>
+
+        </set>
+        where
+        apply_id = #{applyId}
+    </update>
+
     <select id="getInspectApply" resultType="com.nwu.vo.ApplyDisplayVo">
         SELECT a.apply_id,
                a.apply_type_id,

@@ -9,5 +9,5 @@ import lombok.Data;
 public class UpdateStatus {
     private int id_1; //id
     private int status_1;     //修改后的状态
-    private String commit_1;   //院系秘书初审审核完带回的备注
+    private String commit_1;   //备注
 }

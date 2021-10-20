@@ -43,6 +43,7 @@ public class QueryDepartmentSecretaryInit implements Serializable {
     private String commit; //秘书初审的备注
     private String commitYxSfh; //院系秘书提交分会的备注
     private String commitYxXy; //院系秘书提交分会意见页面的备注
+    private String commitSocial;//社科、科研处提交研究生院管理员的备注
 
     /* 申请类别表 */
     private String applyName; // 申请类别名称

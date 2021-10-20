@@ -19,6 +19,18 @@ public interface ApplyMapper extends BaseMapper<Apply> {
      * @return
      */
     int updateApplyStatusAndCommit(@Param("applyId") Integer id, @Param("status") Integer status, @Param("commit") String commit);
+
+
+    /**
+     *
+     * @param id
+     * @param status
+     * @param commit 社科处初审页面的备注
+     * @return
+     */
+    int updateSocialApplyStatusAndCommit(@Param("applyId") Integer id, @Param("status") Integer status, @Param("commit") String commit);
+
+
     /**
      *
      * @param id

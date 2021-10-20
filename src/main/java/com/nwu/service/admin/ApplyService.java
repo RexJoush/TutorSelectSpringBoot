@@ -20,6 +20,16 @@ public interface ApplyService extends IService<Apply> {
     int updateApplyStatus(Integer applyId, Integer status, String commit);
 
     /**
+     * 社科处申请表的状态修改方法
+     *
+     * @param applyId 申请表的 id 值
+     * @param status  修改后的状态
+     * @param commit  备注，可选
+     * @return 修改的结果
+     */
+    int updateSocialApplyStatus(Integer applyId, Integer status, String commit);
+
+    /**
      * 院系秘书初审提交分会页面的更新操作
      *
      * @param applyId 申请表的 id 值
