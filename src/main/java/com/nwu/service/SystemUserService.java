@@ -1,7 +1,12 @@
 package com.nwu.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nwu.entities.SystemUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.nwu.vo.UserQuery;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +18,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SystemUserService extends IService<SystemUser> {
 
+    int addSystemUser(String username);
+
+    Page<SystemUser> getAll(UserQuery query);
 }

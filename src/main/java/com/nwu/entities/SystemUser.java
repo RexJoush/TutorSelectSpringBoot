@@ -31,9 +31,11 @@ public class SystemUser implements Serializable {
     @ApiModelProperty(value = "学工号")
     private String tutorId;
     @ApiModelProperty(value = "用户姓名")
-    private String userName;
+    private String name;
     @ApiModelProperty(value = "角色名称")
     private String roleName;
+
+    private int roleId; // 角色 id
 
     @ApiModelProperty(value = "用户状态 0 禁用；1启用")
     private Integer status;
