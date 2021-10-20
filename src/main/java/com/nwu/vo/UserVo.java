@@ -21,9 +21,8 @@ public class UserVo {
     private int status;
     // 创建时间
     private String createTime;
-    // 管理员角色
-    private String mr;
     // 用户角色
     private String userRole;
+
 
 }

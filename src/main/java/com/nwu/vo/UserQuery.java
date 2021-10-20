@@ -1,6 +1,8 @@
 package com.nwu.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @program: TutorSelectSpringBoot
@@ -9,12 +11,12 @@ import lombok.Data;
  * @create: 2021-08-10 10:55
  **/
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserQuery {
-    private int pageNum;
-    private int pageSize;
-    private String userId;
-    private String userName;
-    private String organization;
-    private String userRole;
-    private String createTime;
+    private int pageNum;    // 页码
+    private int pageSize;   // 大小
+    private String tutorId; // 工号
+    private String name;    // 姓名
+    private String roleId; // 角色
 }
