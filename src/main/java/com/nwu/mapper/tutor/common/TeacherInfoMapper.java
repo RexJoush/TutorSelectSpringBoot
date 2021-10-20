@@ -2,6 +2,7 @@ package com.nwu.mapper.tutor.common;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.nwu.entities.AcademicPaper;
+import com.nwu.entities.SystemUser;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.TeacherInfo;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,6 +25,6 @@ public interface TeacherInfoMapper extends BaseMapper<TeacherInfo> {
      */
     FirstPage getTeacherInfo(@Param("tutorId") String tutorId);
 
-
+    SystemUser getSystemUserInfo(@Param("tutorId") String tutorId);
 
 }
