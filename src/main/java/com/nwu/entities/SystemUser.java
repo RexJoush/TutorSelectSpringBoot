@@ -28,6 +28,7 @@ public class SystemUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId("tutor_id")
     @ApiModelProperty(value = "学工号")
     private String tutorId;
     @ApiModelProperty(value = "用户姓名")

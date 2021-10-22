@@ -19,6 +19,19 @@
     </properties>
     <dependencies>
 
+        <!--  单点登录 统一身份认证-->
+        <dependency>
+            <groupId>org.jasig.cas.client</groupId>
+            <artifactId>cas-client-core</artifactId>
+            <version>3.5.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!--  swagger -->
         <dependency>
             <groupId>io.springfox</groupId>

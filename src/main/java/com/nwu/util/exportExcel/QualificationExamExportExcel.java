@@ -97,10 +97,10 @@ public class QualificationExamExportExcel {
 
         //2、构造表头
         List<List<String>> headTitles = Lists.newArrayList();
-        String firstRow = schoolName + this.year + "年"  + "上岗资格审核汇总表";
+        String firstRow = schoolName + this.year + "年"  + "研究生导师上岗资格审核汇总表";
         String secondRow = "（首次上岗研究生导师/增列学科岗位认定）";
         //前7列
-        ArrayList<String> sevenCol = Lists.newArrayList("序号", "所在单位", "姓名", "申请学科类别或代码", "职称", "最后学位","科研情况","著作、奖项或专利", "导师上岗类别","备注");
+        ArrayList<String> sevenCol = Lists.newArrayList("序号", "工号","姓名", "出生日期","性别","联系方式","所在单位", "职称", "最后学位", "申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称","导师上岗类别","科研汇总信息","备注");
         sevenCol.forEach(title -> {
             headTitles.add(Lists.newArrayList(firstRow, secondRow, title, title, title));
         });
@@ -113,19 +113,37 @@ public class QualificationExamExportExcel {
      */
     public void exchangeData(List<QueryDepartmentSecretaryInit> list) {
         int i = 1;
+        String primaryDisciplineCode = null;
+        String PrimaryDisciplineName = null;
         for (QueryDepartmentSecretaryInit queryDepartmentSecretaryInit : list) {
+            //判断学硕（博导）和专硕，一级学科字段不同
+            if (queryDepartmentSecretaryInit.getApplyTypeId() > 6) {
+                //专硕
+                primaryDisciplineCode = queryDepartmentSecretaryInit.getProfessionalApplicationSubjectCode();// 专硕一级学科代码
+                PrimaryDisciplineName = queryDepartmentSecretaryInit.getProfessionalApplicationSubjectName();//专硕一级学科名称
+            } else {
+                primaryDisciplineCode = queryDepartmentSecretaryInit.getDoctoralMasterSubjectCode();//一级学科代码
+                PrimaryDisciplineName = queryDepartmentSecretaryInit.getDoctoralMasterSubjectName();//一级学科名称
+            }
             this.contentList.add(
                     Lists.newArrayList(
                             String.valueOf(i++),  //序号
-                            queryDepartmentSecretaryInit.getOrganizationName(),//所在单位
+                            queryDepartmentSecretaryInit.getTutorId(),//工号
                             queryDepartmentSecretaryInit.getName(),  //姓名
-//                            queryDepartmentSecretaryInit.getProfessional(), //申请学科或类别及代码
+                            queryDepartmentSecretaryInit.getBirthday(),//出生日期
+                            queryDepartmentSecretaryInit.getGender(),//性别
+                            queryDepartmentSecretaryInit.getPhone(),//联系方式
+                            queryDepartmentSecretaryInit.getOrganizationName(),//所在单位
                             queryDepartmentSecretaryInit.getTitle(), //职称
                             queryDepartmentSecretaryInit.getFinalDegree(), //最后学位
-//                            queryDepartmentSecretaryInit.getResearchDirections(),//科研情况
-//                            queryDepartmentSecretaryInit.getAcademicGroupsJobs(),//著作、奖项或专利
+                            primaryDisciplineCode, //一级学科代码
+                            PrimaryDisciplineName, //一级学科名称
+                            queryDepartmentSecretaryInit.getProfessionalFieldCode(),//专硕二级代码
+                            queryDepartmentSecretaryInit.getProfessionalFieldName(),//专硕二级名称
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
-                            queryDepartmentSecretaryInit.getCommit()//备注
+                            // TODO 汇总字段李工给
+                            queryDepartmentSecretaryInit.getSummary(),//科研情况汇总
+                            queryDepartmentSecretaryInit.getCommitYjsySfh()//备注 commit_yjsy_lr
                     )
             );
         }

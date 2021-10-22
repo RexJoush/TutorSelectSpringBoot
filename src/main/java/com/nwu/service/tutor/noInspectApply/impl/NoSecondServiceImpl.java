@@ -43,7 +43,7 @@ public class NoSecondServiceImpl implements NoSecondService {
             noSecondPage.setTeachingAwardsJson("[]");
         }
         // 分别设置一级学科代码和名称
-        if (noSecondPage.getDoctoralMasterSubjectCodeName() != null){
+        if (noSecondPage.getDoctoralMasterSubjectCodeName() != null && !"".equals(noSecondPage.getDoctoralMasterSubjectCodeName())){
             noSecondPage.setAppliedSubjectCode(noSecondPage.getDoctoralMasterSubjectCodeName().split(" ")[0]);
             noSecondPage.setAppliedSubjectName(noSecondPage.getDoctoralMasterSubjectCodeName().split(" ")[1]);
         }
@@ -54,6 +54,7 @@ public class NoSecondServiceImpl implements NoSecondService {
             tutorNoInspectMapper.updateApplySubjectStatusTimeByApplyId(Integer.parseInt(noSecondPage.getApplySubject()),10, TimeUtils.sdf.format(new Date()),applyId);
         }
         catch (Exception e){
+            e.printStackTrace();
             throw new RuntimeException("信息填写出错，请重新尝试");
         }
     }

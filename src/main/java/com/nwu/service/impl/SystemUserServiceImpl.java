@@ -69,8 +69,11 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             queryWrapper.eq("role_id", query.getRoleId());
         }
         if (!"".equals(query.getTutorId())) {
-            queryWrapper.eq("tutor_id", query.getTutorId());
+            queryWrapper.like("tutor_id", query.getTutorId() + "%");
+            query.setTutorId(query.getTutorId() + "%");
         }
+        queryWrapper.eq("status", 1);
+        queryWrapper.in("role_id", 2, 4, 5, 6, 7);
 
         List<SystemUser> users = systemUserMapper.getAll(query, (query.getPageNum() - 1) * 10);
 
@@ -78,6 +81,16 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         page.setTotal(systemUserMapper.selectCount(queryWrapper));
 
         return page;
+    }
+
+    @Override
+    public List<String> getQueryTutorId(String tutorId) {
+        return systemUserMapper.getQueryTutorId(tutorId + "%");
+    }
+
+    @Override
+    public SystemUser getSystemUserByTutorId(String tutorId) {
+        return systemUserMapper.getSystemUserByTutorId(tutorId);
     }
 
 //    int getCount(UserQuery query){

@@ -2,12 +2,14 @@ package com.nwu;
 
 import com.alibaba.fastjson.JSON;
 import com.nwu.entities.Apply;
+import com.nwu.entities.SystemUser;
 import com.nwu.entities.tutor.SecondPage;
 import com.nwu.entities.tutor.ThirdPage;
 import com.nwu.service.AuthorizationService;
 import com.nwu.service.TutorInspectService;
 import com.nwu.service.admin.ApplyService;
 import com.nwu.service.tutor.common.SecondService;
+import com.nwu.service.tutor.common.TeacherInfoService;
 import com.nwu.service.tutor.common.ThirdService;
 import com.nwu.util.AESUtil;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
@@ -39,9 +41,16 @@ class TutorSelectSpringBootApplicationTests {
     @Resource
     private AuthorizationService authorizationService;
 
+    @Resource
+    private TeacherInfoService teacherInfoService;
+
 
     @Test
     void contextLoads() throws Exception {
+
+        SystemUser systemUserInfo = teacherInfoService.getSystemUserInfo("20133220");
+        System.out.println(systemUserInfo);
+
 //        "10-15-16-17-18"
 
 

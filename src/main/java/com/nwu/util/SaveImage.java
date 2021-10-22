@@ -10,10 +10,6 @@ import java.io.FileOutputStream;
 @Component
 public class SaveImage {
 
-    //    @Value(value = "${ImagePath}")
-    private final String imagePath = "D:\\RARZIP\\image\\";
-
-
     /**
      * 保存数据库图片到本地
      *
@@ -27,7 +23,7 @@ public class SaveImage {
             return "";
         }
 
-        String path = new SaveImage().imagePath + fileName + ".jpg";
+        String path = DataUtils.imagePath + fileName + ".jpg";
 
         File file = new File(path);
         if (!file.getParentFile().exists()) {

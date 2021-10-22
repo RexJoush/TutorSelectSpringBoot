@@ -8,6 +8,7 @@ package com.nwu.entities;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.nwu.service.tutor.PageInit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +31,11 @@ public class Summary {
     private int firstAuthorPaper       ; // 以第一作者或通讯在 核心及以上期刊发表与本学科发表的论文篇数
     private int authorityAmount        ; // 权威篇数
     private int eiAmount               ; // EI 篇数
-    private int cssciAmount            ; // CSSCI 篇数
     private int ssciAmount             ; // SSCI 篇数
+    private int ahciAmount             ; // A&HCI 篇数
+    private int cssciAmount            ; // CSSCI 篇数
+    private int cscdAmount             ; // CSCD 篇数
+    private int cpciAmount             ; // CPCI 篇数
     private int directProject          ; // 主持科研项目
     private int projectNationalLevel   ; // 国家级项目
     private int projectProvinceLevel   ; // 省部级项目
@@ -45,4 +49,29 @@ public class Summary {
     private int inventionPatentAmount  ; // 发明专利
     private int newUtilityPatent       ; // 新型实用专利
 
+    public String getSummaryString() {
+        return "1.以第一作者或通讯作者在核心及以上期刊发表与本学科相关的学术论文共篇，其中" +
+                    "权威 " + authorityAmount + " 篇，" +
+                    "EI " + eiAmount + " 篇，" +
+                    "CSCD " + cscdAmount + " 篇，" +
+                    "A&HCI " + ahciAmount + " 篇，" +
+                    "CSSCI " + cssciAmount + " 篇，" +
+                    "CPCI " + cpciAmount + " 篇。\n" +
+                "2.主持在研科研项目共 " + directProject + " 项，" +
+                    "其中国家级 " + projectNationalLevel + " 项，" +
+                    "省部级 " + projectProvinceLevel + " 项；" +
+                    "在研项目中累计到款科研经费 " + accumulatedFunds + " 万元，" +
+                    "其中横向项目到款经费 " + horizontalProject + " 万元。\n" +
+                "3.出版本专业领域内研究生" +
+                    "教材或学术著作（译著） " + publishWorks + " 部，" +
+                    "每部本人完成 " + publishWorksWords + " 万字。\n" +
+                "4.科研教学获奖" +
+                    "共 " + scientificAwards + " 项，" +
+                    "其中国家级 " + awardsNationalLevel + " 项，" +
+                    "省部级 " + awardsProvinceLevel + " 项。\n" +
+                "5.以第一发明人授权职务" +
+                    "发明专利 " + inventionPatentAmount + " 项，" +
+                    "实用新型专利 " + newUtilityPatent + " 项。";
+
+    }
 }

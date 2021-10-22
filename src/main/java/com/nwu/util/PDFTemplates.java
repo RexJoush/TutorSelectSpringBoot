@@ -1,13 +1,17 @@
 package com.nwu.util;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.*;
 import com.nwu.entities.PdfEntity.PdfTable;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -30,7 +34,7 @@ public class PDFTemplates {
     }
 
     //创建单元格
-    private static PdfPCell createCell(Object value, Font font ,int align){
+    private static PdfPCell createCell(Object value, Font font , int align){
         PdfPCell pdfPCell = new PdfPCell();
         pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE); //垂直居中
         pdfPCell.setHorizontalAlignment(align); //水平居中
@@ -86,24 +90,39 @@ public class PDFTemplates {
             acroFields.setFieldProperty(key,"textfont",baseFont,null);
             acroFields.setField(key,getBlank(value));   //写入值
         }
-        
-        //遍历图像字段
-        for (Map.Entry<String, Object> entry : imgFields.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue().toString();
-            //获取属性类型
-            if(value !=null && acroFields.getField(key) != null ){
-                AcroFields.FieldPosition fieldPosition = acroFields.getFieldPositions(key).get(0);
-                //获取图片的url
-                Image image = Image.getInstance(value);
-                PdfContentByte pdfContentByte = pdfStamper.getOverContent(1);   //pdf修改器
-                image.scaleAbsolute(75,100);    //宽高
-                float marginLeft = (fieldPosition.position.getRight() - fieldPosition.position.getLeft() - image.getScaledWidth())/2;   //左边距 = 右边距
-                image.setAbsolutePosition(fieldPosition.position.getLeft() + marginLeft,fieldPosition.position.getBottom());
-                pdfContentByte.addImage(image);
 
+
+            for (Map.Entry<String, Object> entry : imgFields.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue().toString();
+                System.out.println(value);
+                //获取属性类型
+                if(value != null && acroFields.getField(key) != null && !"".equals(value)){
+                    AcroFields.FieldPosition fieldPosition = acroFields.getFieldPositions(key).get(0);
+                    //获取图片的url
+                    // Image image = Image.getInstance("http://10.8.47.148:8081/downFile/image/20133220.jpg");
+
+                    String substring = value.substring(value.lastIndexOf('/'));
+
+                    Image image = Image.getInstance(DataUtils.imagePath + "\\" + substring);
+
+//                BufferedImage bufferedImage = ImageIO.read(new File());
+//                BufferedImage bufferedImage = new BufferedImage(75, 100, BufferedImage.TYPE_INT_RGB);
+
+//                ByteArrayOutputStream os = new ByteArrayOutputStream();
+//                ImageIO.write(bufferedImage, "jpg", os);
+//                Image image = Image.getInstance(os.toByteArray());
+                    PdfContentByte pdfContentByte = pdfStamper.getOverContent(1);   //pdf修改器
+                    image.scaleAbsolute(75,100);    //宽高
+                    float marginLeft = (fieldPosition.position.getRight() - fieldPosition.position.getLeft() - image.getScaledWidth())/2;   //左边距 = 右边距
+                    image.setAbsolutePosition(fieldPosition.position.getLeft() + marginLeft,fieldPosition.position.getBottom());
+                    pdfContentByte.addImage(image);
+
+                }
             }
-        }
+
+        //遍历图像字段
+
 
         //遍历表格字段    在表单里新加表格
         Font keyFont = new Font(baseFont,10,Font.BOLD);     //表头内容字体格式

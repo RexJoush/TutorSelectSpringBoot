@@ -5,6 +5,10 @@ package com.nwu.util;
  * @time 2021.09.16 16:03
  */
 
+import org.jasig.cas.client.authentication.AttributePrincipal;
+import org.jasig.cas.client.util.AbstractCasFilter;
+import org.jasig.cas.client.validation.Assertion;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -18,7 +22,12 @@ public class IdUtils {
      * @return 工号
      */
     public static String getTutorId(HttpServletRequest request) {
-        return "20131723";
+        return "202032939";
+//        Assertion assertion = (Assertion) request.getSession().getAttribute(AbstractCasFilter.CONST_CAS_ASSERTION);
+//        if (assertion != null) {
+//            AttributePrincipal principal = assertion.getPrincipal();
+//            return principal.getName();
+//        } else return null;
     }
 
 }

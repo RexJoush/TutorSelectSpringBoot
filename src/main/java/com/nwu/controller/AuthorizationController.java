@@ -4,15 +4,19 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.SystemUser;
-import com.nwu.entities.tutor.TeacherInfo;
 import com.nwu.service.AuthorizationService;
-import com.nwu.service.OrganizationService;
 import com.nwu.service.SystemUserService;
-import com.nwu.service.tutor.common.TeacherInfoService;
 import com.nwu.util.AESUtil;
+import com.nwu.util.IdUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +28,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/user")
+@CrossOrigin
 public class AuthorizationController {
 
     @Resource
@@ -32,26 +36,57 @@ public class AuthorizationController {
 
     @Resource
     private SystemUserService systemUserService;
-    //获取token信息
-    @PostMapping("/login")
-    public String login(@RequestBody Map<String, String> body) {
+
+    @Value("${union.casURL}")
+    private String CAS_URL;
+
+    @Value("${union.appURL}")
+    private String APP_URL;
+
+
+//    @GetMapping("/")
+//    public void index(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        System.out.println("hello");
+//        response.sendRedirect("/index.html");
+//    }
+
+    // 获取token信息
+    @PostMapping("/user/login")
+    public String login(HttpServletRequest request) {
 
         // 获取到登录名
-        String username = body.get("username");
+        String tutorId = IdUtils.getTutorId(request);
+        System.out.println("username " + tutorId);
 
         // 获取权限 tutor  departmentSecretary
-        String authorization = authorizationService.getAuthorization(username);
+        String authorization = authorizationService.getAuthorization(tutorId);
+
+        try {
+            if (authorization == null) {
+                authorization = "tutor";
+                int i = systemUserService.addSystemUser(tutorId);
+                if (i < 0) {
+                    JSONObject object = new JSONObject();
+                    object.put("code", 20001);
+                    return JSON.toJSONString(object);
+                }
+            }
+        } catch (Exception e) {
+            JSONObject object = new JSONObject();
+            object.put("code", 20001);
+            return JSON.toJSONString(object);
+        }
 
         JSONObject object = new JSONObject();
         // 将 学号 + 权限 加密后写入 token
         object.put("code", 20000);
-        object.put("data", Map.of("token", AESUtil.encode(username + "+" + authorization)));
+        object.put("data", Map.of("token", AESUtil.encode(tutorId + "+" + authorization)));
 
         return JSON.toJSONString(object);
     }
 
-    //获取个人信息
-    @GetMapping("/info")
+    // 获取个人信息
+    @GetMapping("/user/info")
     public String info(@RequestParam("token") String token) {
 
 
@@ -67,11 +102,11 @@ public class AuthorizationController {
 
         QueryWrapper<SystemUser> wrapper = new QueryWrapper<>();
 
-        wrapper.eq("tutor_id",decode.split("[+]")[0]);
+        wrapper.eq("tutor_id", decode.split("[+]")[0]);
         SystemUser systemUser = systemUserService.getOne(wrapper);
         int organizationId = -1;
         String organizationName = "";
-        if (systemUser != null){
+        if (systemUser != null) {
             organizationId = systemUser.getOrganizationId();
             organizationName = systemUser.getOrganizationName();
         }
@@ -87,14 +122,15 @@ public class AuthorizationController {
 
     }
 
-    @PostMapping("/logout")
-    public Map<String, Object> logout(){
-
+    @PostMapping("/user/logout")
+    public Map<String, Object> logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.getSession().invalidate();
+        String casLogoutUrl = CAS_URL + "/logout";
+        String redirectURL = casLogoutUrl + "?service="+ URLEncoder.encode(APP_URL);
         Map<String, Object> result = new HashMap<>();
 
         result.put("code", 20000);
-        result.put("data", "success");
-
+        result.put("data", redirectURL);
         return result;
     }
 

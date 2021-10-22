@@ -13,16 +13,16 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 控制权限的拦截器
  */
-@Configuration
+//@Configuration
 public class AuthorizationConfig {
 
-    @Bean
-    public FilterRegistrationBean<SecurityFilter> testFilterRegistration() {
-        FilterRegistrationBean<SecurityFilter> registration = new FilterRegistrationBean<>(new SecurityFilter());
-        registration.addUrlPatterns("/*"); //
-        registration.setName("securityFilter");
-        registration.setOrder(2);
-        return registration;
-    }
+//    @Bean
+//    public FilterRegistrationBean<SecurityFilter> testFilterRegistration() {
+//        FilterRegistrationBean<SecurityFilter> registration = new FilterRegistrationBean<>(new SecurityFilter());
+//        registration.addUrlPatterns("/*"); //
+//        registration.setName("securityFilter");
+//        registration.setOrder(6);
+//        return registration;
+//    }
 
 }

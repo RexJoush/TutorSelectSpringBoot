@@ -82,12 +82,13 @@ public class MyApplyController {
 
     }
 
-    @GetMapping("/common/tutor/getApplyDetails/{applyId}/{isInspect}")
+    @GetMapping("/common/tutor/getApplyDetails/{applyId}/{isInspect}/{tutorId}")
     public Result getApplyDetails(@PathVariable("applyId") int applyId,
                                   @PathVariable("isInspect") int isInspect,
+                                  @PathVariable("tutorId") String tutorId,
                                   HttpServletRequest request) {
 
-        String tutorId = IdUtils.getTutorId(request);
+//        String tutorId = IdUtils.getTutorId(request);
 
         System.out.println(isInspect);// 1 非免审，0 免审
 

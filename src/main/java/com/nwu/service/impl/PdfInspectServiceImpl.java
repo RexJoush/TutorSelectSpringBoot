@@ -164,6 +164,9 @@ public class PdfInspectServiceImpl implements PdfInspectService {
         if (pdfTutorInspect.getImage() != null) {
             imgFields.put("image", pdfTutorInspect.getImage());
         }
+        else{
+            imgFields.put("image",null);
+        }
 
         //======================summary=====================
         QueryWrapper<Summary> wrapper = new QueryWrapper<>();
@@ -174,6 +177,9 @@ public class PdfInspectServiceImpl implements PdfInspectService {
         textFields.put("eiAmount", one.getEiAmount());
         textFields.put("cssciAmount", one.getCssciAmount());
         textFields.put("ssciAmount", one.getSsciAmount());
+        textFields.put("ahciAmount",one.getAhciAmount());
+        textFields.put("cscdAmount",one.getCscdAmount());
+        textFields.put("cpciAmount",one.getCpciAmount());
         textFields.put("directProject", one.getDirectProject());
         textFields.put("projectNationalLevel", one.getProjectNationalLevel());
         textFields.put("projectProvinceLevel", one.getProjectProvinceLevel());

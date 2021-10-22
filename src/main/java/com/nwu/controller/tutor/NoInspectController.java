@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * 免审相关控制器
@@ -121,7 +122,7 @@ public class NoInspectController {
                                  @PathVariable("applyId") int applyId) {
 
         // 第二页无论什么都要更新数据库
-        if (noSecondPage != null && noSecondPage.getApplySubject() != null) {
+        if (noSecondPage != null && !"".equals(noSecondPage.getApplySubject())) {
             try {
                 noSecondService.updateNoSecondPage(noSecondPage, applyId);
             } catch (Exception e) {
@@ -133,6 +134,13 @@ public class NoInspectController {
                 return new Result(ResultCode.SUCCESS, jsonObject);
             }
         }
-        return Result.FAIL();
+        else
+        {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("code", 1202);
+            jsonObject.put("message", "请填写申请学科类别！");
+            return new Result(ResultCode.SUCCESS, jsonObject);
+        }
+        return new Result(ResultCode.SUCCESS, Map.of("code",1200));
     }
 }

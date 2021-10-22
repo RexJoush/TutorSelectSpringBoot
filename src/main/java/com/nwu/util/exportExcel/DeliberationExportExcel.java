@@ -85,29 +85,30 @@ public class DeliberationExportExcel {
         String threeRow = "院（系、所）负责人签字：                                 填表人：                                  " +
                 "                                                      年    月   日                                ";
         //第一列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"序号", "序号", "序号"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "序号", "序号", "序号"));
         //第2-6列
-        ArrayList<String> basicInfoCol = Lists.newArrayList("姓名", "出生年月", "最后学位", "职称", "申请学科或类别");
+        ArrayList<String> basicInfoCol = Lists.newArrayList("工号", "姓名", "性别","联系方式","出生年月", "最后学位", "职称", "申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称");
         basicInfoCol.forEach(title -> {
-            headTitles.add(Lists.newArrayList(firstRow,secondRow,threeRow,"基本情况",title,title));
+            headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "基本情况", title, title));
         });
         //第7列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"导师上岗类型","导师上岗类型","导师上岗类型"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "导师上岗类型", "导师上岗类型", "导师上岗类型"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "科研情况汇总", "科研情况汇总", "科研情况汇总"));
 
-        //第8列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","学术论文（篇）","SCI/权威"));
-        //第9列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","学术论文（篇）","核心"));
-        //第10列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","科研项目（项）","国家"));
-        //第11列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","科研项目（项）","省部"));
-        //第12列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","科研经费（万元）","纵向"));
-        //第13列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"科研情况","科研经费（万元）","横向"));
+//        //第8列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "科研情况", "学术论文（篇）", "SCI/权威"));
+//        //第9列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "科研情况", "学术论文（篇）", "核心"));
+//        //第10列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "科研情况", "科研项目（项）", "国家"));
+//        //第11列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "科研情况", "科研项目（项）", "省部"));
+//        //第12列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "科研情况", "科研经费（万元）", "纵向"));
+//        //第13列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "科研情况", "科研经费（万元）", "横向"));
         //第14列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,"备注", "备注", "备注"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow, "备注", "备注", "备注"));
 
 
         this.headData = headTitles;
@@ -116,22 +117,40 @@ public class DeliberationExportExcel {
     //将数据库查出的符合前端规则的数据，转换成Excel表格的数据格式。
     public void exchangeData(List<QueryDepartmentSecretaryInit> list) {
         int i = 1;
+        String primaryDisciplineCode = null;
+        String PrimaryDisciplineName = null;
         for (QueryDepartmentSecretaryInit queryDepartmentSecretaryInit : list) {
+            //判断学硕（博导）和专硕，一级学科字段不同
+            if (queryDepartmentSecretaryInit.getApplyTypeId() > 6) {
+                //专硕
+                primaryDisciplineCode = queryDepartmentSecretaryInit.getProfessionalApplicationSubjectCode();// 专硕一级学科代码
+                PrimaryDisciplineName = queryDepartmentSecretaryInit.getProfessionalApplicationSubjectName();//专硕一级学科名称
+            } else {
+                primaryDisciplineCode = queryDepartmentSecretaryInit.getDoctoralMasterSubjectCode();//一级学科代码
+                PrimaryDisciplineName = queryDepartmentSecretaryInit.getDoctoralMasterSubjectName();//一级学科名称
+            }
             this.contentList.add(
                     Lists.newArrayList(
                             String.valueOf(i++),  //序号
+                            queryDepartmentSecretaryInit.getTutorId(), //工号
                             queryDepartmentSecretaryInit.getName(),  //姓名
+                            queryDepartmentSecretaryInit.getGender(),//性别
+                            queryDepartmentSecretaryInit.getPhone(),//联系方式
                             queryDepartmentSecretaryInit.getBirthday(), //出生年月
                             queryDepartmentSecretaryInit.getFinalDegree(), //最后学位
                             queryDepartmentSecretaryInit.getTitle(), //职称
-                            queryDepartmentSecretaryInit.getApplySubject(), //申请学科或类别
+                            primaryDisciplineCode,
+                            PrimaryDisciplineName,
+                            queryDepartmentSecretaryInit.getProfessionalFieldCode(),//专硕二级代码
+                            queryDepartmentSecretaryInit.getProfessionalFieldName(),//专硕二级名称
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
-                            queryDepartmentSecretaryInit.getSsciAmount() + "/" + queryDepartmentSecretaryInit.getAuthorityAmount(),//SCI/权威   学术论文（篇）
-                            queryDepartmentSecretaryInit.getFirstAuthorPaper(),//核心  学术论文（篇）
-                            queryDepartmentSecretaryInit.getProjectNationalLevel(),//国家  科研项目（项）
-                            queryDepartmentSecretaryInit.getProjectProvinceLevel(),//省部  科研项目（项）
-                            queryDepartmentSecretaryInit.getAccumulatedFunds(),//纵向  科研经费（万元）
-                            queryDepartmentSecretaryInit.getHorizontalProject(),// 横向 科研经费（万元）
+                            queryDepartmentSecretaryInit.getSummary(),//科研情况汇总
+//                            queryDepartmentSecretaryInit.getSsciAmount() + "/" + queryDepartmentSecretaryInit.getAuthorityAmount(),//SCI/权威   学术论文（篇）
+//                            queryDepartmentSecretaryInit.getFirstAuthorPaper(),//核心  学术论文（篇）
+//                            queryDepartmentSecretaryInit.getProjectNationalLevel(),//国家  科研项目（项）
+//                            queryDepartmentSecretaryInit.getProjectProvinceLevel(),//省部  科研项目（项）
+//                            queryDepartmentSecretaryInit.getAccumulatedFunds(),//纵向  科研经费（万元）
+//                            queryDepartmentSecretaryInit.getHorizontalProject(),// 横向 科研经费（万元）
                             queryDepartmentSecretaryInit.getCommitYxXy()  //备注
                     )
             );

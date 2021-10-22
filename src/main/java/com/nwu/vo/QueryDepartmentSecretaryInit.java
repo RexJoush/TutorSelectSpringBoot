@@ -74,4 +74,9 @@ public class QueryDepartmentSecretaryInit implements Serializable {
 
     private boolean isNoInspect;    // 是否为免审申请
     private int organizationId; // 导师所在院系 id
+
+    private String summary; // 汇总信息
+
+    private String gender; //性别
+    private String phone;//联系方式
 }

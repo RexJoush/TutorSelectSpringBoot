@@ -22,5 +22,8 @@
         <result property="blobImage" column="SHZ"></result>
     </resultMap>
 
+    <select id="getSystemUserInfo" resultType="com.nwu.entities.SystemUser">
+        select XM as userName, DM as organization_id, MC as organization_name from teacher_info WHERE ZGH = #{tutorId}
+    </select>
 
 </mapper>

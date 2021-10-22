@@ -81,8 +81,11 @@ public class PageInit {
         summary.setFirstAuthorPaper(0);
         summary.setAuthorityAmount(0);
         summary.setEiAmount(0);
-        summary.setCssciAmount(0);
         summary.setSsciAmount(0);
+        summary.setAhciAmount(0);
+        summary.setCssciAmount(0);
+        summary.setCscdAmount(0);
+        summary.setCpciAmount(0);
         summary.setDirectProject(0);
         summary.setProjectNationalLevel(0);
         summary.setProjectProvinceLevel(0);

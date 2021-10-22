@@ -32,8 +32,15 @@ logging:
 #上传文件路径
 FilePath: D://RARZIP/uploadFile/
 #图片保存路径
-ImagePath : D://RARZIP/image/
+ImagePath: D://RARZIP/image/
 #配置方言
 pagehelper:
   helper-dialect: mysql
+
+# 统一认证
+union:
+  # 统一认证服务接口
+  casURL: http://authserver.nwu.edu.cn/authserver
+  # 部署统一认证应用接口
+  appURL: http://10.8.47.148:8081/
 

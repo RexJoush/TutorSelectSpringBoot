@@ -86,7 +86,7 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
             }
             else
             {
-                imgFields.put("image","");
+                imgFields.put("image",null);
             }
             //科研项目处理
             PdfTable tableResearchProjects = new PdfTable();
@@ -94,16 +94,19 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
             tableResearchProjects.setColFields("id,projectName,projectChargeName,projectStartTime,projectLevel,projectTotalPrice");
             List<ResearchProject> researchProjectList = JSON.parseArray(pdfTutorNoInspect.getResearchProjects(), ResearchProject.class);
             ArrayList<Map<String,Object>> researchProjectPdfList = new ArrayList<>();
-            for (int i =0 ;i < researchProjectList.size(); i++){
-                HashMap<String , Object> map = new HashMap<>();
-                map.put("id",i+1);
-                map.put("projectName",researchProjectList.get(i).getProjectName());
-                map.put("projectChargeName",researchProjectList.get(i).getProjectChargeName());
-                map.put("projectStartTime",researchProjectList.get(i).getProjectStartTime());
-                map.put("projectLevel",researchProjectList.get(i).getProjectLevel());
-                map.put("projectTotalPrice",researchProjectList.get(i).getProjectTotalPrice());
-                researchProjectPdfList.add(map);
+            if(researchProjectList!=null){
+                for (int i =0 ;i < researchProjectList.size(); i++){
+                    HashMap<String , Object> map = new HashMap<>();
+                    map.put("id",i+1);
+                    map.put("projectName",researchProjectList.get(i).getProjectName());
+                    map.put("projectChargeName",researchProjectList.get(i).getProjectChargeName());
+                    map.put("projectStartTime",researchProjectList.get(i).getProjectStartTime());
+                    map.put("projectLevel",researchProjectList.get(i).getProjectLevel());
+                    map.put("projectTotalPrice",researchProjectList.get(i).getProjectTotalPrice());
+                    researchProjectPdfList.add(map);
+                }
             }
+
             tableResearchProjects.setDataList(researchProjectPdfList);
             //教学奖励处理
             PdfTable tableTeachingAwards = new PdfTable();
@@ -111,15 +114,17 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
             tableTeachingAwards.setColFields("id,awardsName,awardsUnit,awardsLevel,awardsTime,awardsAuthorName");
             List<TeachingAward> teachingAwardList = JSON.parseArray(pdfTutorNoInspect.getTeachingAwards(), TeachingAward.class);
             ArrayList<Map<String,Object>> teachingAwardPdfList = new ArrayList<>();
-            for (int i =0 ;i < teachingAwardList.size(); i++){
-               HashMap<String , Object> map = new HashMap<>();
-               map.put("id",i+1);
-               map.put("awardsName",teachingAwardList.get(i).getAwardsName());
-               map.put("awardsUnit",teachingAwardList.get(i).getAwardsUnit());
-               map.put("awardsLevel",teachingAwardList.get(i).getAwardsLevel());
-               map.put("awardsTime",teachingAwardList.get(i).getAwardsTime());
-               map.put("awardsAuthorName",teachingAwardList.get(i).getAwardsAuthorName());
-               teachingAwardPdfList.add(map);
+            if (teachingAwardList!=null){
+                for (int i =0 ;i < teachingAwardList.size(); i++){
+                    HashMap<String , Object> map = new HashMap<>();
+                    map.put("id",i+1);
+                    map.put("awardsName",teachingAwardList.get(i).getAwardsName());
+                    map.put("awardsUnit",teachingAwardList.get(i).getAwardsUnit());
+                    map.put("awardsLevel",teachingAwardList.get(i).getAwardsLevel());
+                    map.put("awardsTime",teachingAwardList.get(i).getAwardsTime());
+                    map.put("awardsAuthorName",teachingAwardList.get(i).getAwardsAuthorName());
+                    teachingAwardPdfList.add(map);
+                }
             }
             tableTeachingAwards.setDataList(teachingAwardPdfList);
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.ApplyInfo;
 import com.nwu.entities.Organization;
 import com.nwu.entities.PdfEntity.PdfTutorInspect;
+import com.nwu.entities.Summary;
 import com.nwu.entities.TutorInspect;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.SecondPage;
@@ -11,6 +12,7 @@ import com.nwu.mapper.TutorInspectMapper;
 import com.nwu.service.OrganizationService;
 import com.nwu.service.TutorInspectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.nwu.service.tutor.SummaryService;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.TutorQuery;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,9 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
 
     @Resource
     private OrganizationService organizationService;
+
+    @Resource
+    private SummaryService summaryService;
 
     @Override
     public FirstPage getFirstPage(int applyId) {
@@ -135,6 +140,14 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
                     }
                     // 标识非免审
                     tutorInspectApplyInitDetails.setNoInspect(false);
+
+                    // 获取汇总信息
+                    QueryWrapper<Summary> queryWrapper = new QueryWrapper<>();
+                    queryWrapper.eq("tutor_id", tutorInspectApplyInitDetails.getTutorId());
+                    queryWrapper.eq("apply_id", tutorInspectApplyInitDetails.getApplyId());
+                    Summary summary = summaryService.getOne(queryWrapper);
+
+                    tutorInspectApplyInitDetails.setSummary(summary.getSummaryString());
                 }
 
                 tutorInspect.add(tutorInspectApplyInitDetails);
@@ -214,6 +227,13 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
                 }
                 // 标识非免审
                 queryDepartmentSecretaryInit.setNoInspect(false);
+                // 获取汇总信息
+                QueryWrapper<Summary> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("tutor_id", queryDepartmentSecretaryInit.getTutorId());
+                queryWrapper.eq("apply_id", queryDepartmentSecretaryInit.getApplyId());
+                Summary summary = summaryService.getOne(queryWrapper);
+
+                queryDepartmentSecretaryInit.setSummary(summary.getSummaryString());
             }
 
             // 获取免审的信息

@@ -12,10 +12,10 @@ import java.io.IOException;
  * @author Rex Joush
  * @time 2021.08.13 15:47
  */
-@Configuration
-public class SecurityFilter implements Filter {
+//@Configuration
+public class SecurityFilter /*implements Filter*/ {
 
-    @Override
+//    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -23,6 +23,11 @@ public class SecurityFilter implements Filter {
 
         // 获取请求的 uri
         String requestURI = request.getRequestURI();
+
+        if ("/".equals(requestURI.split(";")[0])) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // 获取请求的前缀地址，/user, /user/a 获取到 user
         String requestPrefix = requestURI.split("/")[1];
@@ -35,6 +40,10 @@ public class SecurityFilter implements Filter {
             filterChain.doFilter(request, response);
             return;
         }
+        if ("static".equals(requestPrefix)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // 图片和压缩包等资源直接放行
         if (requestURI.endsWith(".ico") ||
@@ -42,7 +51,8 @@ public class SecurityFilter implements Filter {
                 requestURI.endsWith("png") ||
                 requestURI.endsWith("rar") ||
                 requestURI.endsWith("zip") ||
-                requestURI.endsWith("pdf"))
+                requestURI.endsWith("pdf") ||
+                requestURI.endsWith(".html"))
         {
             filterChain.doFilter(request, response);
             return;

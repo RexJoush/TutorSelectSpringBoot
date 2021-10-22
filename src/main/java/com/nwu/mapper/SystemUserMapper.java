@@ -23,4 +23,8 @@ public interface SystemUserMapper extends BaseMapper<SystemUser> {
     void updateUserById(SystemUser user);
 
     List<SystemUser> getAll(@Param("query") UserQuery query, int pageStart);
+
+    List<String> getQueryTutorId(String tutorId);
+
+    SystemUser getSystemUserByTutorId(String tutorId);
 }

@@ -78,12 +78,12 @@ public class UpdateStatusController {
         return Result.SUCCESS();
     }
 
-    //提交按钮后的更新操作，将符合条件以及不符合条件的一起提交给研究生院主管
+    //提交按钮后的更新操作，将符合条件的变为同意上校分会状态
     @Transactional
     @PostMapping("/submitUpdate")
     public Result updateStatusBySubmit() throws Exception {
             applyService.updateApply388to38();
-            applyService.updateApply399to39();
+       //     applyService.updateApply399to39();
             return Result.SUCCESS();
     }
     //研究生院管理员修改备注
