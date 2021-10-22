@@ -22,12 +22,12 @@ import java.util.List;
 
 /**
  * @program: TutorSelectSpringBoot
- * @description: 上岗资格审核表
+ * @description: 研究生管理员导出最后名单
  * @author: dynamic
  * @create: 2021-09-04 10:32
  **/
 
-public class QualificationExamExportExcel {
+public class FirstInspectExportExcelGraduate {
     private List<QueryDepartmentSecretaryInit> originList;
     private HorizontalCellStyleStrategy horizontalCellStyleStrategy;
     private List<List<Object>> contentList = Lists.newArrayList();
@@ -43,9 +43,9 @@ public class QualificationExamExportExcel {
      * @param schoolName 学校名字
      * @param originList 原始数据
      */
-    public QualificationExamExportExcel(HttpServletResponse response,
-                                String schoolName,
-                                List<QueryDepartmentSecretaryInit> originList) {
+    public FirstInspectExportExcelGraduate(HttpServletResponse response,
+                                           String schoolName,
+                                           List<QueryDepartmentSecretaryInit> originList) {
         //1、生成年份
         Calendar instance = Calendar.getInstance();
         this.year = instance.get(Calendar.YEAR) + "";
@@ -82,7 +82,7 @@ public class QualificationExamExportExcel {
         response.setCharacterEncoding("utf-8");
 
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
-        String name = this.schoolName + this.year + "年" + this.departmentName + "学位评定分委员会推荐汇总表";
+        String name = this.schoolName + this.year + "年"  + "导师遴选最终通过名单";
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(name, "UTF-8") + ".xlsx");
 
@@ -97,7 +97,7 @@ public class QualificationExamExportExcel {
 
         //2、构造表头
         List<List<String>> headTitles = Lists.newArrayList();
-        String firstRow = schoolName + this.year + "年"  + "研究生导师上岗资格审核汇总表";
+        String firstRow = schoolName + this.year + "年"  + "导师遴选最终通过名单";
         String secondRow = "（首次上岗研究生导师/增列学科岗位认定）";
         //前7列
         ArrayList<String> sevenCol = Lists.newArrayList("序号", "工号","姓名", "出生日期","性别","联系方式","所在单位", "职称", "最后学位", "申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称","导师上岗类别");

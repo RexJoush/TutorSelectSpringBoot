@@ -107,11 +107,11 @@ public class RecommendExportExcel {
             headTitles.add(Lists.newArrayList(firstRow, secondRow, title, title, title));
         });
         //第8列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, "学位评定委员会审议情况", "应到委员", "应到委员"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "学位评定分委员会审议情况", "应到委员", "应到委员"));
         //第9列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, "学位评定委员会审议情况", "实到委员", "实到委员"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "学位评定分委员会审议情况", "实到委员", "实到委员"));
         //第10列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, "学位评定委员会审议情况", "表决结果", "同意/不同意/弃权"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "学位评定分委员会审议情况", "表决结果", "同意/不同意/弃权"));
         //第11列
         headTitles.add(Lists.newArrayList(firstRow, secondRow, "备注", "备注", "备注"));
 
