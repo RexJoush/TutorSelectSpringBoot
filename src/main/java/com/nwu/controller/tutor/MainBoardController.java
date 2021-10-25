@@ -3,7 +3,6 @@ package com.nwu.controller.tutor;
 import com.alibaba.fastjson.JSONObject;
 import com.nwu.entities.Apply;
 import com.nwu.entities.tutor.FirstPage;
-import com.nwu.entities.tutor.noInspect.NoFirstPage;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.TutorInspectService;
@@ -136,7 +135,7 @@ public class MainBoardController {
         String tutorId = IdUtils.getTutorId(request);
 
         FirstPage firstPage;
-        NoFirstPage noFirstPage;
+        FirstPage noFirstPage;
         try {
             if (applyCondition == 102) {
                 //未申请过 查找teacherInfo

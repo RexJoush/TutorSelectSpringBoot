@@ -1,4 +1,4 @@
-package com.nwu.entities.tutor.noInspect;
+package com.nwu.entities.tutor;
 
 import com.nwu.entities.tutor.childSubject.ResearchProject;
 import com.nwu.entities.tutor.childSubject.TeachingAward;
@@ -41,7 +41,7 @@ public class NoSecondPage {
     private String exemptionConditionsMaterials;
 
     //申请类别 文史 理工 交叉
-    private String applySubject;
+    private Integer applySubject;
 
     /* 科研教学情况 */
 

@@ -3,9 +3,8 @@ package com.nwu.service.tutor.noInspectApply.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.Apply;
 import com.nwu.entities.Organization;
-import com.nwu.entities.tutor.noInspect.NoFirstPage;
+import com.nwu.entities.tutor.FirstPage;
 import com.nwu.mapper.TutorNoInspectMapper;
-import com.nwu.mapper.tutor.common.TutorApplyMapper;
 import com.nwu.service.OrganizationService;
 import com.nwu.service.tutor.noInspectApply.NoFirstService;
 import com.nwu.util.SaveImage;
@@ -21,13 +20,13 @@ public class NoFirstServiceImpl implements NoFirstService {
     private OrganizationService organizationService;
 
     @Resource
-    TutorNoInspectMapper noInspectMapper;
+    private TutorNoInspectMapper noInspectMapper;
 
     @Resource
-    TutorNoInspectMapper tutorNoInspectMapper;
+    private TutorNoInspectMapper tutorNoInspectMapper;
 
     @Override
-    public int saveNoFirstPage(NoFirstPage noFirstPage, HttpServletRequest request) throws Exception {
+    public int saveNoFirstPage(FirstPage noFirstPage, HttpServletRequest request) throws Exception {
         int i=0;
         try{
             //添加教师基本表 院系名字
@@ -60,9 +59,14 @@ public class NoFirstServiceImpl implements NoFirstService {
     }
 
     @Override
-    public NoFirstPage getNoFirstPage(int applyId) throws Exception {
+    public int updateNoFirstPage(String applyId, String phone, String email, String evaluateTime, String awardingUnitTime) {
+        return tutorNoInspectMapper.updateNoFirstPage(applyId, phone, email, evaluateTime, awardingUnitTime);
+    }
+
+    @Override
+    public FirstPage getNoFirstPage(int applyId) throws Exception {
         try {
-            NoFirstPage noFirstPage = noInspectMapper.getNoFirstPage(applyId);
+            FirstPage noFirstPage = noInspectMapper.getNoFirstPage(applyId);
             //查询所在院系
             QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("organization_id", noFirstPage.getOrganizationId());

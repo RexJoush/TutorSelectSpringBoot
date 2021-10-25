@@ -25,7 +25,6 @@ public class IdUtils {
         return "202032972";
 //        return "202032939";
 
-
 //        Assertion assertion = (Assertion) request.getSession().getAttribute(AbstractCasFilter.CONST_CAS_ASSERTION);
 //        if (assertion != null) {
 //            AttributePrincipal principal = assertion.getPrincipal();

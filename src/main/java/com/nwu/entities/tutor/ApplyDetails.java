@@ -1,7 +1,5 @@
 package com.nwu.entities.tutor;
 
-import com.nwu.entities.tutor.noInspect.NoFirstPage;
-import com.nwu.entities.tutor.noInspect.NoSecondPage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,7 +26,7 @@ public class ApplyDetails implements Serializable {
     private FourthPage fourthPage;
 
     // 免审
-    private NoFirstPage noFirstPage;
+    private FirstPage noFirstPage;
     private NoSecondPage noSecondPage;
 
 }

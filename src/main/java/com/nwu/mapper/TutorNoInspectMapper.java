@@ -2,8 +2,8 @@ package com.nwu.mapper;
 
 import com.nwu.entities.Apply;
 import com.nwu.entities.PdfEntity.PdfNoTutorInspect;
-import com.nwu.entities.tutor.noInspect.NoFirstPage;
-import com.nwu.entities.tutor.noInspect.NoSecondPage;
+import com.nwu.entities.tutor.FirstPage;
+import com.nwu.entities.tutor.NoSecondPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,21 +15,21 @@ public interface TutorNoInspectMapper {
      * @param applyId
      * @return
      */
-    NoSecondPage getSecondPage(@Param("applyId") String applyId);
+    NoSecondPage getSecondPage(@Param("applyId") int applyId);
 
     /**
      * 根据applyId查询免审第一页信息
      * @param applyId
      * @return
      */
-    NoFirstPage getNoFirstPage(@Param("applyId") int applyId);
+    FirstPage getNoFirstPage(@Param("applyId") int applyId);
 
     /**
      * 保存免审第一页信息 tutor_no_inspect
      * @param noFirstPage
      * @return
      */
-    int saveTutorNoInspectFirstPage(@Param("noFirstPage") NoFirstPage noFirstPage);
+    int saveTutorNoInspectFirstPage(@Param("noFirstPage") FirstPage noFirstPage);
 
     /**
      * 更新免审第二页信息
@@ -60,4 +60,15 @@ public interface TutorNoInspectMapper {
      * @return  实体类
      */
     PdfNoTutorInspect getPdfTutorNoInspect(@Param("applyId") String applyId);
+
+    /**
+     * 更新第一页的信息
+     * @param applyId   申请表 id
+     * @param phone     电话
+     * @param email     邮箱
+     * @param evaluateTime      职称评定时间
+     * @param awardingUnitTime  学位授予单位及时间
+     * @return 修改结果
+     */
+    int updateNoFirstPage(String applyId, String phone, String email, String evaluateTime, String awardingUnitTime);
 }

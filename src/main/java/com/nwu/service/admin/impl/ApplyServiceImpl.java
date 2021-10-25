@@ -3,8 +3,8 @@ package com.nwu.service.admin.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nwu.entities.Apply;
 import com.nwu.entities.tutor.*;
-import com.nwu.entities.tutor.noInspect.NoFirstPage;
-import com.nwu.entities.tutor.noInspect.NoSecondPage;
+import com.nwu.entities.tutor.FirstPage;
+import com.nwu.entities.tutor.NoSecondPage;
 import com.nwu.mapper.admin.ApplyMapper;
 import com.nwu.service.TutorInspectService;
 import com.nwu.service.admin.ApplyService;
@@ -95,10 +95,13 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
 
                 // 设置基本信息
                 applyDisplay.setApplyId(display.getApplyId());
+                applyDisplay.setTutorId(display.getTutorId());
                 applyDisplay.setApplyTypeId(display.getApplyTypeId());
                 applyDisplay.setApplyName(display.getApplyName());
                 applyDisplay.setStatus(display.getStatus());
                 applyDisplay.setStatusDisplay(display.getStatusDisplay());
+                applyDisplay.setCommitGraduate(display.getCommitGraduate());
+                applyDisplay.setCommitSocial(display.getCommitSocial());
                 applyDisplay.setCommit(display.getCommit());
 
                 // 填写申请的专业信息
@@ -147,10 +150,13 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
 
                 // 设置基本信息
                 applyDisplay.setApplyId(display.getApplyId());
+                applyDisplay.setTutorId(display.getTutorId());
                 applyDisplay.setApplyTypeId(display.getApplyTypeId());
                 applyDisplay.setApplyName(display.getApplyName());
                 applyDisplay.setStatus(display.getStatus());
                 applyDisplay.setStatusDisplay(display.getStatusDisplay());
+                applyDisplay.setCommitGraduate(display.getCommitGraduate());
+                applyDisplay.setCommitSocial(display.getCommitSocial());
                 applyDisplay.setCommit(display.getCommit());
 
                 // 设置申请的学院和专业
@@ -203,7 +209,7 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
 
             } else {
                 // 获取免审第一页
-                NoFirstPage noFirstPage = noFirstService.getNoFirstPage(applyId);
+                FirstPage noFirstPage = noFirstService.getNoFirstPage(applyId);
                 details.setNoFirstPage(noFirstPage);
 
                 // 获取免审第二页

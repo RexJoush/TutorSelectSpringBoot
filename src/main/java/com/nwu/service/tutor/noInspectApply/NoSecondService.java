@@ -1,6 +1,6 @@
 package com.nwu.service.tutor.noInspectApply;
 
-import com.nwu.entities.tutor.noInspect.NoSecondPage;
+import com.nwu.entities.tutor.NoSecondPage;
 
 /**
  * @author zjz
@@ -10,22 +10,14 @@ import com.nwu.entities.tutor.noInspect.NoSecondPage;
 public interface NoSecondService {
 
     /**
-     * 免审第二页初始化 不查询数据库
-     * @return 免审SecondPage
-     */
-    NoSecondPage getSecondPageInit();
-
-    /**
      * 获取第二页信息 查询数据库
-     * @param applyId
-     * @return
+     * @param applyId 申请 id
      */
-    NoSecondPage getSecondPage(Integer applyId);
+    NoSecondPage getSecondPage(int applyId);
 
     /**
      * 更新第二页信息
-     * @param noSecondPage
-     * @return
+     * @param noSecondPage 免审第二页
      */
-    void updateNoSecondPage(NoSecondPage noSecondPage,Integer applyId);
+    void updateNoSecondPage(NoSecondPage noSecondPage, int applyId);
 }

@@ -20,12 +20,14 @@ import java.io.Serializable;
 public class ApplyDisplay implements Serializable {
 
     private int applyId;            // 申请表的 id
+    private String tutorId;         // 教师工号
     private int applyTypeId;        // 申请的类型 id
     private int status;             // 当前的状态 id
     private String applyName;       // 申请类型
     private String statusDisplay;   // 当前状态
-    private String commit;          // 评论
-    private String commitSocial;        //社科处备注
+    private String commitGraduate;  // 研究生院备注
+    private String commitSocial;    // 社科处/科研处 备注
+    private String commit;          // 院系备注
 
     private boolean isNoInspect;    // 是否为免审申请
 

@@ -51,16 +51,24 @@ public class MyApplyController {
     }
 
     /**
-     * 将当前的申请表状态改为 0，使得教师可以进行修改
-     *
+     * 将当前的申请表状态改为 0，使得教师可以进行修改，或将填写完成的申请交由院系秘书审核
      * @param applyId 申请表 id
+     * @param status 类型，1，将申请由 14 改为 0
+     *                    2，将申请由 6 改为 10
      */
-    @GetMapping("/tutor/changeStatus/{applyId}")
-    public Result change10To0(@PathVariable("applyId") int applyId) {
-        // 将状态码 14 改为 0，让教师修改被驳回的申请
+    @GetMapping("/tutor/changeStatus/{applyId}/{status}")
+    public Result changeStatus(@PathVariable("applyId") int applyId,
+                              @PathVariable("status") int status) {
+
         System.out.println(applyId);
         try {
-            applyService.updateApplyStatus(applyId, 0, "");
+            if (status == 1) {
+                // 将状态码 14 改为 0，让教师修改被驳回的申请
+                applyService.updateApplyStatus(applyId, 0, "");
+            } else {
+                // 将状态码 6 改为 10，提交申请至院系秘书
+                applyService.updateApplyStatus(applyId, 10, "");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             JSONObject jsonObject = new JSONObject();
@@ -71,6 +79,7 @@ public class MyApplyController {
         }
         return new Result(ResultCode.SUCCESS);
     }
+
 
     @GetMapping("/tutor/getOrganizationTime/{organizationId}")
     public Result getTime(@PathVariable Integer organizationId) {

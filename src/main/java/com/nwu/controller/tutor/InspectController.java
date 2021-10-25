@@ -288,7 +288,7 @@ public class InspectController {
         }
 
         // 修改 apply 表，提交成功
-        applyService.updateApplyStatus(applyId, 10, "");
+        applyService.updateApplyStatus(applyId, 6, "");
 
         // 返回第四页插入成功，且包含第四页信息
         return new Result(ResultCode.SUCCESS, 1200);

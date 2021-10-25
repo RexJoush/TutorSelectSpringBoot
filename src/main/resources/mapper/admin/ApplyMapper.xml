@@ -73,10 +73,13 @@
 
     <select id="getInspectApply" resultType="com.nwu.vo.ApplyDisplayVo">
         SELECT a.apply_id,
+               a.tutor_id,
                a.apply_type_id,
                a.status,
                apt.apply_name,
                sc.status_display,
+               a.commit_yjsy_cs as commitGraduate,
+               a.commit_social,
                a.commit,
                t.doctoral_master_application_subject_unit,
                t.doctoral_master_subject_code,
@@ -95,10 +98,13 @@
 
     <select id="getNoInspectApply" resultType="com.nwu.vo.ApplyDisplayVo">
         SELECT a.apply_id,
+               a.tutor_id,
                a.apply_type_id,
                a.status,
                apt.apply_name,
                sc.status_display,
+               a.commit_yjsy_cs as commitGraduate,
+               a.commit_social,
                a.commit,
                t.applied_subject_unit,
                t.applied_subject_code,

@@ -10,6 +10,7 @@ import com.nwu.entities.Summary;
 import com.nwu.entities.tutor.FourthPage;
 import com.nwu.entities.tutor.SecondPage;
 import com.nwu.entities.tutor.ThirdPage;
+import com.nwu.entities.tutor.NoSecondPage;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,17 @@ public class PageInit {
 
     }
 
+    /**
+     * 获取免审第二页的空对象
+     * @return 面审第二页的空对象
+     */
+    public static NoSecondPage getNoSecondPage() {
+
+        NoSecondPage secondPage = new NoSecondPage();
+        secondPage.setResearchProjects(new ArrayList<>());
+        secondPage.setTeachingAwards(new ArrayList<>());
+        return secondPage;
+    }
 
     /**
      * 获取第三页的初始化空对象

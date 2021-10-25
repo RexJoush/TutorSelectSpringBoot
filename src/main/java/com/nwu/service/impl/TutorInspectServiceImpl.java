@@ -57,7 +57,7 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
             firstPage.setOrganizationName(one.getOrganizationName());
 
             // 设置对应的授予单位及时间
-            if (!"".equals(firstPage.getAwardingUnitTime()) || firstPage.getAwardingUnitTime() != null) {
+            if (!"".equals(firstPage.getAwardingUnitTime()) && firstPage.getAwardingUnitTime() != null) {
                 firstPage.setAwardDepartment(firstPage.getAwardingUnitTime().split(" ")[0]);
                 firstPage.setAwardTime(firstPage.getAwardingUnitTime().split(" ")[1]);
             }
