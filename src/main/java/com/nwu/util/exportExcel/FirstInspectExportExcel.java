@@ -86,7 +86,7 @@ public class FirstInspectExportExcel {
         response.setCharacterEncoding("utf-8");
 
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
-        String name = this.schoolName + this.year + "年" + this.departmentName + "学位评定分委员会推荐汇总表";
+        String name = this.schoolName + this.year + "年" + this.departmentName + "学位评定汇总表";
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(name, "UTF-8") + ".xlsx");
 

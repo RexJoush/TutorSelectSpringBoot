@@ -100,10 +100,34 @@ public class QualificationExamExportExcel {
         String firstRow = schoolName + this.year + "年"  + "研究生导师上岗资格审核汇总表";
         String secondRow = "（首次上岗研究生导师/增列学科岗位认定）";
         //前7列
-        ArrayList<String> sevenCol = Lists.newArrayList("序号", "工号","姓名", "出生日期","性别","联系方式","所在单位", "职称", "最后学位", "申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称","导师上岗类别","科研汇总信息","备注");
+        ArrayList<String> sevenCol = Lists.newArrayList("序号", "工号","姓名", "出生日期","性别","联系方式","所在单位", "职称", "最后学位", "申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称","导师上岗类别");
         sevenCol.forEach(title -> {
             headTitles.add(Lists.newArrayList(firstRow, secondRow, title, title, title));
         });
+        //第8列
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "科研情况", "学术论文"));
+        //第9列
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "科研情况", "科研项目"));
+        //第10列
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "科研情况", "教材或学术著作"));
+        //第11列
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "科研情况", "科研教学奖励"));
+        //第12列
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "科研情况", "发明专利"));
+//        //第8列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","学术论文（篇）","SCI/权威"));
+//        //第9列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","学术论文（篇）","核心"));
+//        //第10列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","科研项目（项）","国家"));
+//        //第11列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","科研项目（项）","省部"));
+//        //第12列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","科研经费（万元）","纵向"));
+//        //第13列
+//        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","科研经费（万元）","横向"));
+        //第14列
+        headTitles.add(Lists.newArrayList(firstRow, secondRow,"备注", "备注", "备注"));
         this.headData = headTitles;
     }
 
@@ -142,7 +166,18 @@ public class QualificationExamExportExcel {
                             queryDepartmentSecretaryInit.getProfessionalFieldName(),//专硕二级名称
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
                             // TODO 汇总字段李工给
-                            queryDepartmentSecretaryInit.getSummary(),//科研情况汇总
+//                            queryDepartmentSecretaryInit.getSummary(),//科研情况汇总
+//                            queryDepartmentSecretaryInit.getSsciAmount() + "/" + queryDepartmentSecretaryInit.getAuthorityAmount(),//SCI/权威   学术论文（篇）
+//                            queryDepartmentSecretaryInit.getFirstAuthorPaper(),//核心  学术论文（篇）
+//                            queryDepartmentSecretaryInit.getProjectNationalLevel(),//国家  科研项目（项）
+//                            queryDepartmentSecretaryInit.getProjectProvinceLevel(),//省部  科研项目（项）
+//                            queryDepartmentSecretaryInit.getAccumulatedFunds(),//纵向  科研经费（万元）
+//                            queryDepartmentSecretaryInit.getHorizontalProject(),// 横向 科研经费（万元）
+                            queryDepartmentSecretaryInit.getPaper(),
+                            queryDepartmentSecretaryInit.getProject(),
+                            queryDepartmentSecretaryInit.getWork(),
+                            queryDepartmentSecretaryInit.getAwards(),
+                            queryDepartmentSecretaryInit.getInvention(),
                             queryDepartmentSecretaryInit.getCommitYjsySfh()//备注 commit_yjsy_lr
                     )
             );

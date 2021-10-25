@@ -2,13 +2,9 @@ package com.nwu.controller.admin;
 
 import com.nwu.service.admin.impl.ExportExcelServiceImpl;
 import com.nwu.service.impl.TutorInspectServiceImpl;
-import com.nwu.util.exportExcel.DeliberationExportExcel;
-import com.nwu.util.exportExcel.FirstInspectExportExcel;
-import com.nwu.util.exportExcel.QualificationExamExportExcel;
-import com.nwu.util.exportExcel.RecommendExportExcel;
+import com.nwu.util.exportExcel.*;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.TutorQuery;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -100,7 +96,27 @@ public class ExportExcelController {
     }
 
     /**
-     * 研究生院导出excel
+     * 院系秘书导出该院最后通过名单
+     * * @param response
+     * @param tutorQuery 封装对象
+     * @throws IOException
+     */
+    @PostMapping("/finalOrg")
+    public void exportFinalDepartment(HttpServletResponse response,@RequestBody TutorQuery tutorQuery) throws IOException {
+        //TODO 用户保存excel路径，前端需传 部门名、符合条件的状态码（一个或多个）
+        //1.查询数据
+        List<QueryDepartmentSecretaryInit> list = tutorInspectService.exportTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
+        //2.输出Excel
+        try {
+            new FinalExportExcelDepartment(response, "西北大学", tutorQuery.getOrganizationName(), list).execute();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return;
+    }
+
+    /**
+     * 研究生院上校会导出excel
      * @param response
      * @param tutorQuery 封装对象
      * @throws IOException
@@ -110,6 +126,23 @@ public class ExportExcelController {
         List<QueryDepartmentSecretaryInit> list = tutorInspectService.exportTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
         try {
             new QualificationExamExportExcel(response,"西北大学",list).execute();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return;
+    }
+
+    /**
+     * 研究生院导出最终名单excel
+     * @param response
+     * @param tutorQuery 封装对象
+     * @throws IOException
+     */
+    @PostMapping ("/finalListGraduate")
+    public void finalListExportExcelGraduate(HttpServletResponse response,@RequestBody TutorQuery tutorQuery) throws IOException{
+        List<QueryDepartmentSecretaryInit> list = tutorInspectService.exportTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
+        try {
+            new FinalExportExcelGraduate(response,"西北大学",list).execute();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

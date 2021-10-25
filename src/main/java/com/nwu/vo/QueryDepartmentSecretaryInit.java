@@ -76,6 +76,11 @@ public class QueryDepartmentSecretaryInit implements Serializable {
     private int organizationId; // 导师所在院系 id
 
     private String summary; // 汇总信息
+    private String paper;   //论文汇总信息
+    private String project; //项目汇总信息
+    private String work;  //教材或学术著作汇总信息
+    private String awards; //教学奖励汇总信息
+    private String invention;//专利汇总信息
 
     private String gender; //性别
     private String phone;//联系方式

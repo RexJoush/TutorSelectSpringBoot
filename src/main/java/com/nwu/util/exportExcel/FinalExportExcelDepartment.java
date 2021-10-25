@@ -21,10 +21,10 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * 学位评定分委员会推荐汇总表
+ * 院系秘书导出最终通过名单
  */
 
-public class RecommendExportExcel {
+public class FinalExportExcelDepartment {
 
     private List<QueryDepartmentSecretaryInit> originList;
     private HorizontalCellStyleStrategy horizontalCellStyleStrategy;
@@ -42,10 +42,10 @@ public class RecommendExportExcel {
      * @param departmentName 院系名称
      * @param originList 原始数据
      */
-    public RecommendExportExcel(HttpServletResponse response,
-                                String schoolName,
-                                String departmentName,
-                                List<QueryDepartmentSecretaryInit> originList) {
+    public FinalExportExcelDepartment(HttpServletResponse response,
+                                      String schoolName,
+                                      String departmentName,
+                                      List<QueryDepartmentSecretaryInit> originList) {
         //1、生成年份
         Calendar instance = Calendar.getInstance();
         this.year = instance.get(Calendar.YEAR) + "";
@@ -83,7 +83,7 @@ public class RecommendExportExcel {
         response.setCharacterEncoding("utf-8");
 
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
-        String name = this.schoolName + this.year + "年" + this.departmentName + "学位评定分委员会推荐汇总表";
+        String name = this.schoolName + this.year + "年" + this.departmentName + "导师遴选最终通过名单";
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(name, "UTF-8") + ".xlsx");
 
@@ -99,22 +99,16 @@ public class RecommendExportExcel {
 
         //2、构造表头
         List<List<String>> headTitles = Lists.newArrayList();
-        String firstRow = schoolName + this.year + "年" + departmentName + "学位评定分委员会推荐汇总表";
+        String firstRow = schoolName + this.year + "年" + departmentName + "导师遴选最终通过名单";
         String secondRow = "（首次上岗研究生导师/增列学科岗位认定）";
-        //前8列
-        ArrayList<String> sevenCol = Lists.newArrayList("序号","工号", "姓名","最后学位", "职称","申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称", "导师上岗类别", "科研信息汇总");
-        sevenCol.forEach(title -> {
-            headTitles.add(Lists.newArrayList(firstRow, secondRow, title, title, title));
-        });
-        //第8列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, "学位评定分委员会审议情况", "应到委员", "应到委员"));
-        //第9列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, "学位评定分委员会审议情况", "实到委员", "实到委员"));
-        //第10列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, "学位评定分委员会审议情况", "表决结果", "同意/不同意/弃权"));
-        //第11列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow, "备注", "备注", "备注"));
+        String threeRow = "单位名称（公章）：                                                                         " +
+                " 评定分委员会签名：                                  " ;
 
+                //前8列
+        ArrayList<String> sevenCol = Lists.newArrayList("序号","工号", "姓名", "职称","申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称", "导师上岗类别", "科研信息汇总");
+        sevenCol.forEach(title -> {
+            headTitles.add(Lists.newArrayList(firstRow, secondRow, threeRow,title, title, title));
+        });
         this.headData = headTitles;
     }
 
@@ -141,16 +135,14 @@ public class RecommendExportExcel {
                             String.valueOf(i++),  //序号
                             queryDepartmentSecretaryInit.getTutorId(),//导师工号
                             queryDepartmentSecretaryInit.getName(),  //姓名
-                            queryDepartmentSecretaryInit.getFinalDegree(), //最后学位
                             queryDepartmentSecretaryInit.getTitle(), //职称
                             primaryDisciplineCode,
                             PrimaryDisciplineName,
                             queryDepartmentSecretaryInit.getProfessionalFieldCode(),//专硕二级代码
                             queryDepartmentSecretaryInit.getProfessionalFieldName(),//专硕二级名称
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
-                            queryDepartmentSecretaryInit.getSummary(),//科研信息汇总
-                            null, null, null,
-                            queryDepartmentSecretaryInit.getCommitYxSfh() //秘书初审备注
+                            queryDepartmentSecretaryInit.getSummary()//科研信息汇总
+
                     )
             );
         }
