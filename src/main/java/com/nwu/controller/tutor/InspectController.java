@@ -5,7 +5,9 @@ package com.nwu.controller.tutor;
  * @time 2021.09.11 20:55
  */
 
+import com.alibaba.fastjson.JSONObject;
 import com.nwu.entities.Apply;
+import com.nwu.entities.Summary;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.FourthPage;
 import com.nwu.entities.tutor.SecondPage;
@@ -15,6 +17,7 @@ import com.nwu.results.ResultCode;
 import com.nwu.service.TutorInspectService;
 import com.nwu.service.admin.ApplyService;
 import com.nwu.service.tutor.PageInit;
+import com.nwu.service.tutor.SummaryService;
 import com.nwu.service.tutor.common.*;
 import com.nwu.util.IdUtils;
 import com.nwu.util.TimeUtils;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 非免审信息的相关控制器
@@ -52,6 +56,8 @@ public class InspectController {
     @Resource
     private FourthService fourthService;
 
+    @Resource
+    private SummaryService summaryService; // 汇总服务类
     /**
      * 获取第一页导师基本信息
      *
@@ -189,25 +195,60 @@ public class InspectController {
     }
 
     /**
-     * 第三页信息的提交
+     * 提交第三页每一项
+     *
+     * @param applyId
+     * @param applyCondition
+     * @param learningType
+     * @param thirdPage
+     * @param request
+     * @return
+     */
+    @PostMapping("inspect/saveLearning/{applyId}/{applyCondition}/{learningType}")
+    public Result saveLearning(@PathVariable("applyId") int applyId,
+                                    @PathVariable("applyCondition") int applyCondition,
+                                    @PathVariable("learningType") int learningType,
+                                    @RequestBody ThirdPage thirdPage,
+                                    HttpServletRequest request){
+        String tutorId = IdUtils.getTutorId(request);
+        ThirdPage thirdPageOne = new ThirdPage();
+        if ("".equals(String.valueOf(learningType))){
+            return new Result(ResultCode.SUCCESS, Map.of("code",1201));
+        }
+        // 根据提交类别分别保存每一项
+        try {
+            thirdPageOne = thirdService.updateOrSaveThirdPage(applyId, tutorId, thirdPage, learningType);
+        } catch (Exception e) {
+            return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code",1200);
+        jsonObject.put("data",thirdPageOne);
+        //成功返回
+        return new Result(ResultCode.SUCCESS,jsonObject);
+    }
+
+    /**
+     * 第三页科研汇总信息的提交
      *
      * @param applyId   apply 表的 id 值
-     * @param thirdPage 基本信息
+     * @param summary 汇总信息
      * @return 结果
      */
     @PostMapping("/inspect/submitThirdPage/{applyId}/{applyCondition}")
     public Result thirdPage(@PathVariable("applyId") int applyId,
                             @PathVariable("applyCondition") int applyCondition,
-                            @RequestBody ThirdPage thirdPage,
+                            @RequestBody Summary summary,
                             HttpServletRequest request) {
 
         String tutorId = IdUtils.getTutorId(request);
-
-        // 存储第三页信息
         try {
-            thirdService.updateOrSaveThirdPage(applyId, tutorId, thirdPage);
-        } catch (Exception e) {
-            return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
+            //保存summary表
+            summary.setApplyId(applyId);
+            summary.setTutorId(tutorId);
+            summaryService.saveOrUpdate(summary);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
         }
 
         // 没有申请过此岗位，返回空对象，填写新值
