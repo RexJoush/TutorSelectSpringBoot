@@ -102,7 +102,7 @@ public class RecommendExportExcel {
         String firstRow = schoolName + this.year + "年" + departmentName + "学位评定分委员会推荐汇总表";
         String secondRow = "（首次上岗研究生导师/增列学科岗位认定）";
         //前8列
-        ArrayList<String> sevenCol = Lists.newArrayList("序号","工号", "姓名","性别","联系方式", "出生年月", "最后学位", "职称","申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称", "导师上岗类别", "科研信息汇总");
+        ArrayList<String> sevenCol = Lists.newArrayList("序号","工号", "姓名","最后学位", "职称","申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称", "导师上岗类别", "科研信息汇总");
         sevenCol.forEach(title -> {
             headTitles.add(Lists.newArrayList(firstRow, secondRow, title, title, title));
         });
@@ -141,9 +141,6 @@ public class RecommendExportExcel {
                             String.valueOf(i++),  //序号
                             queryDepartmentSecretaryInit.getTutorId(),//导师工号
                             queryDepartmentSecretaryInit.getName(),  //姓名
-                            queryDepartmentSecretaryInit.getGender(),//性别
-                            queryDepartmentSecretaryInit.getPhone(),//联系方式
-                           queryDepartmentSecretaryInit.getBirthday(), //出生年月
                             queryDepartmentSecretaryInit.getFinalDegree(), //最后学位
                             queryDepartmentSecretaryInit.getTitle(), //职称
                             primaryDisciplineCode,
