@@ -22,11 +22,9 @@ public class IdUtils {
      * @return 工号
      */
     public static String getTutorId(HttpServletRequest request) {
-        return "20133220";
-//        return "20175128";
+        return "202032972";
+//        return "202032939";
 
-//        return "202032972";
-        //return "202032939";
 
 //        Assertion assertion = (Assertion) request.getSession().getAttribute(AbstractCasFilter.CONST_CAS_ASSERTION);
 //        if (assertion != null) {
