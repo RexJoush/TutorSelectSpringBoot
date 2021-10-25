@@ -27,7 +27,7 @@ import java.util.List;
  * @create: 2021-09-04 10:32
  **/
 
-public class FirstInspectExportExcelGraduate {
+public class FinalExportExcelGraduate {
     private List<QueryDepartmentSecretaryInit> originList;
     private HorizontalCellStyleStrategy horizontalCellStyleStrategy;
     private List<List<Object>> contentList = Lists.newArrayList();
@@ -38,14 +38,15 @@ public class FirstInspectExportExcelGraduate {
     private String year;
 
     /**
-     *构造函数
-     * @param response 请求头
+     * 构造函数
+     *
+     * @param response   请求头
      * @param schoolName 学校名字
      * @param originList 原始数据
      */
-    public FirstInspectExportExcelGraduate(HttpServletResponse response,
-                                           String schoolName,
-                                           List<QueryDepartmentSecretaryInit> originList) {
+    public FinalExportExcelGraduate(HttpServletResponse response,
+                                    String schoolName,
+                                    List<QueryDepartmentSecretaryInit> originList) {
         //1、生成年份
         Calendar instance = Calendar.getInstance();
         this.year = instance.get(Calendar.YEAR) + "";
@@ -56,6 +57,7 @@ public class FirstInspectExportExcelGraduate {
 
     /**
      * 执行函数，写入excel
+     *
      * @throws IOException
      */
 
@@ -74,6 +76,7 @@ public class FirstInspectExportExcelGraduate {
 
     /**
      * 浏览器默认下载位置
+     *
      * @throws UnsupportedEncodingException
      */
     private void setResponse() throws UnsupportedEncodingException {
@@ -82,7 +85,7 @@ public class FirstInspectExportExcelGraduate {
         response.setCharacterEncoding("utf-8");
 
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
-        String name = this.schoolName + this.year + "年"  + "导师遴选最终通过名单";
+        String name = this.schoolName + this.year + "年" + "导师遴选最终通过名单";
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(name, "UTF-8") + ".xlsx");
 
@@ -91,39 +94,39 @@ public class FirstInspectExportExcelGraduate {
 
     /**
      * 创建表头
+     *
      * @param schoolName 学校名称
      */
     private void setHead(String schoolName) {
 
         //2、构造表头
         List<List<String>> headTitles = Lists.newArrayList();
-        String firstRow = schoolName + this.year + "年"  + "导师遴选最终通过名单";
+        String firstRow = schoolName + this.year + "年" + "导师遴选最终通过名单";
         String secondRow = "（首次上岗研究生导师/增列学科岗位认定）";
         //前7列
-        ArrayList<String> sevenCol = Lists.newArrayList("序号", "工号","姓名", "出生日期","性别","联系方式","所在单位", "职称", "最后学位", "申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称","导师上岗类别");
+        ArrayList<String> sevenCol = Lists.newArrayList("序号", "工号", "姓名", "出生日期", "性别", "联系方式", "所在单位", "职称", "最后学位", "申请一级学科代码", "申请一级学科名称", "申请二级学科代码", "申请二级学科名称", "导师上岗类别");
         sevenCol.forEach(title -> {
             headTitles.add(Lists.newArrayList(firstRow, secondRow, title, title, title));
         });
 
         //第8列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","学术论文（篇）","SCI/权威"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "科研情况", "学术论文"));
         //第9列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","学术论文（篇）","核心"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "科研情况", "科研项目"));
         //第10列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","科研项目（项）","国家"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "科研情况", "教材或学术著作"));
         //第11列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","科研项目（项）","省部"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "科研情况", "科研教学奖励"));
         //第12列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","科研经费（万元）","纵向"));
-        //第13列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow,"科研情况","科研经费（万元）","横向"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "科研情况", "发明专利"));
         //第14列
-        headTitles.add(Lists.newArrayList(firstRow, secondRow,"备注", "备注", "备注"));
+        headTitles.add(Lists.newArrayList(firstRow, secondRow, "备注", "备注", "备注"));
         this.headData = headTitles;
     }
 
     /**
      * 将数据库查出的符合前端规则的数据，转换成Excel表格的数据格式
+     *
      * @param list 数据库查出符合的数据列表
      */
     public void exchangeData(List<QueryDepartmentSecretaryInit> list) {
@@ -158,12 +161,18 @@ public class FirstInspectExportExcelGraduate {
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
                             // TODO 汇总字段李工给
 //                            queryDepartmentSecretaryInit.getSummary(),//科研情况汇总
-                            queryDepartmentSecretaryInit.getSsciAmount() + "/" + queryDepartmentSecretaryInit.getAuthorityAmount(),//SCI/权威   学术论文（篇）
-                            queryDepartmentSecretaryInit.getFirstAuthorPaper(),//核心  学术论文（篇）
-                            queryDepartmentSecretaryInit.getProjectNationalLevel(),//国家  科研项目（项）
-                            queryDepartmentSecretaryInit.getProjectProvinceLevel(),//省部  科研项目（项）
-                            queryDepartmentSecretaryInit.getAccumulatedFunds(),//纵向  科研经费（万元）
-                            queryDepartmentSecretaryInit.getHorizontalProject(),// 横向 科研经费（万元）
+//                            queryDepartmentSecretaryInit.getSsciAmount() + "/" + queryDepartmentSecretaryInit.getAuthorityAmount(),//SCI/权威   学术论文（篇）
+//                            queryDepartmentSecretaryInit.getFirstAuthorPaper(),//核心  学术论文（篇）
+//                            queryDepartmentSecretaryInit.getProjectNationalLevel(),//国家  科研项目（项）
+//                            queryDepartmentSecretaryInit.getProjectProvinceLevel(),//省部  科研项目（项）
+//                            queryDepartmentSecretaryInit.getAccumulatedFunds(),//纵向  科研经费（万元）
+//                            queryDepartmentSecretaryInit.getHorizontalProject(),// 横向 科研经费（万元）
+//                            queryDepartmentSecretaryInit.getSummary(),
+                            queryDepartmentSecretaryInit.getPaper(),
+                            queryDepartmentSecretaryInit.getProject(),
+                            queryDepartmentSecretaryInit.getWork(),
+                            queryDepartmentSecretaryInit.getAwards(),
+                            queryDepartmentSecretaryInit.getInvention(),
                             queryDepartmentSecretaryInit.getCommitYjsySfh()//备注 commit_yjsy_lr
                     )
             );

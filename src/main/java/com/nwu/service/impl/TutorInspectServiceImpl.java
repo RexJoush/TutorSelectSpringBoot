@@ -234,6 +234,11 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
                 Summary summary = summaryService.getOne(queryWrapper);
 
                 queryDepartmentSecretaryInit.setSummary(summary.getSummaryString());
+                queryDepartmentSecretaryInit.setPaper(summary.getSummaryAcademicPaperString());
+                queryDepartmentSecretaryInit.setWork(summary.getSummaryAcademicWorksString());
+                queryDepartmentSecretaryInit.setAwards(summary.getSummaryTeachingAwardsString());
+                queryDepartmentSecretaryInit.setInvention(summary.getSummaryInventionPatentsString());
+                queryDepartmentSecretaryInit.setProject(summary.getSummaryResearchProjectsString());
             }
 
             // 获取免审的信息
