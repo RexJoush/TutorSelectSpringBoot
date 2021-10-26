@@ -5,11 +5,9 @@ package com.nwu.controller.tutor;
  * @time 2021.09.12 17:29
  */
 
-import com.alibaba.fastjson.JSONObject;
 import com.nwu.entities.Apply;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.entities.tutor.NoSecondPage;
-import com.nwu.entities.tutor.SecondPage;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.tutor.PageInit;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * 免审相关控制器

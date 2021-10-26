@@ -60,19 +60,34 @@ public class NoSecondServiceImpl implements NoSecondService {
 
         NoSecondPage secondPage = tutorNoInspectMapper.getSecondPage(applyId);
 
-        //获取一级学科代码及名称
+        // 处理学硕申请一级学科代码及名称
         if (secondPage.getAppliedSubjectCode() == null) {
             secondPage.setDoctoralMasterSubjectCodeName("");
         } else {
             secondPage.setDoctoralMasterSubjectCodeName(secondPage.getAppliedSubjectCode() + " " + secondPage.getAppliedSubjectName());
         }
-        //科研项目
+
+        // 处理专业硕士的申请类别代码和名字
+        if (secondPage.getProfessionalAppliedSubjectCode() == null) {
+            secondPage.setProfessionalAppliedSubjectCodeName("");
+        } else {
+            secondPage.setProfessionalAppliedSubjectCodeName(secondPage.getProfessionalAppliedSubjectCode() + " " + secondPage.getProfessionalAppliedSubjectName());
+        }
+
+        // 处理专业硕士的申请领域代码和名字
+        if (secondPage.getProfessionalFieldCode() == null) {
+            secondPage.setProfessionalFieldCodeName("");
+        } else {
+            secondPage.setProfessionalFieldCodeName(secondPage.getProfessionalFieldCode() + " " + secondPage.getProfessionalFieldName());
+        }
+
+        // 科研项目
         if (secondPage.getResearchProjectsJson() == null) {
             secondPage.setResearchProjects(new ArrayList<>());
         } else {
             secondPage.setResearchProjects(JSON.parseArray(secondPage.getResearchProjectsJson(), ResearchProject.class));
         }
-        //教学奖励
+        // 教学奖励
         if (secondPage.getTeachingAwardsJson() == null) {
             secondPage.setTeachingAwards(new ArrayList<>());
         } else {

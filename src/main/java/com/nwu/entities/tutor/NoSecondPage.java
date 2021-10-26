@@ -15,69 +15,36 @@ import java.util.List;
 public class NoSecondPage {
 
     // 免审
+    private int applyId;        // 申请 id
+    private String researchDirections;  // 主要研究方向
 
-    // 申请 id
-    private int applyId;
+    private String appliedSubjectUnit;  // 学硕申请学科负责单位
+    private String doctoralMasterSubjectCodeName;   // 一级学科代码及名称 辅助字段
+    private String appliedSubjectCode;  // 学硕申请学科代码
+    private String appliedSubjectName;  // 学硕申请学科名称
 
-    // 主要研究方向
-    private String researchDirections;
 
-    // 申请学科负责单位
-    private String appliedSubjectUnit;
+    private String professionalAppliedSubjectUnit; // 申请类别负责单位
+    private String professionalAppliedSubjectCode; // 类别代码
+    private String professionalAppliedSubjectName;  // 类别名称
+    private String professionalAppliedSubjectCodeName; // 申请类别代码 + " " + 类别名称
+    private String professionalFieldCode;   // 领域代码
+    private String professionalFieldName;   // 领域名称
+    private String professionalFieldCodeName; // 领域代码 + " " + 领域名称
 
-    // 一级学科代码
-    private String appliedSubjectCode;
-
-    // 一级学科名称
-    private String appliedSubjectName;
-
-    // 申请类别负责单位
-    private String professionalAppliedSubjectUnit;
-
-    // 类别代码
-    private String professionalAppliedSubjectCode;
-
-    // 类别名称
-    private String professionalAppliedSubjectName;
-
-    // 领域代码
-    private String professionalFieldCode;
-
-    // 领域名称
-    private String professionalFieldName;
-
-    // 一级学科代码及名称 辅助字段
-    private String doctoralMasterSubjectCodeName;
-
-    // 免审条件
-    private String exemptionConditions;
-
-    // 免审条件路径
-    private String exemptionConditionsMaterials;
-
-    // 申请类别 文史 理工 交叉
-    private Integer applySubject;
+    private String exemptionConditions; // 免审条件
+    private String exemptionConditionsMaterials;    // 免审条件路径
+    private int applySubject;   // 申请类别 文史 理工 交叉
 
     /* 科研教学情况 */
-
-    // 科研项目 存入数据库
-    private String researchProjectsJson;
-
-    // 科研项目 辅助字段
-    private List<ResearchProject> researchProjects;
-
-    // 科研教学情况 存入数据库
-    private String teachingAwardsJson;
-
-    // 科研教学情况 辅助字段
-    private List<TeachingAward> teachingAwards;
+    private String researchProjectsJson;    // 科研项目 存入数据库
+    private List<ResearchProject> researchProjects; // 科研项目 辅助字段
+    private String teachingAwardsJson;  // 科研教学情况 存入数据库
+    private List<TeachingAward> teachingAwards; // 科研教学情况 辅助字段
 
     /* 博导免审 */
-
-    // 硕导上岗时间
-    private String masterDirectorTime;
-    // 硕士招生学科
-    private String masterDirectorSubject;
+    private String masterDirectorTime;  // 硕导上岗时间
+    private String masterDirectorSubject;   // 硕士招生学科
 
 
 }
