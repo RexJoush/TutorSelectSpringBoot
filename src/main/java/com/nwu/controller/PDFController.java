@@ -39,6 +39,7 @@ public class PDFController {
             case 6: pdfTemplate = "pdfTemplates/noInspectApplyMaster.pdf"; break;
             case 7: pdfTemplate = "pdfTemplates/firstApplyProfessional.pdf"; break;
             case 8: pdfTemplate = "pdfTemplates/addApplyProfessional.pdf"; break;
+            case 9: pdfTemplate = "pdfTemplates/noInspectApplyProfessional.pdf"; break;
         }
         String pdfPath = "";
         if (applyTypeId == 1 || applyTypeId ==2 || applyTypeId == 4 || applyTypeId ==5 || applyTypeId == 7 || applyTypeId == 8){

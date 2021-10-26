@@ -95,7 +95,6 @@ public class PDFTemplates {
             for (Map.Entry<String, Object> entry : imgFields.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue().toString();
-                System.out.println(value);
                 //获取属性类型
                 if(value != null && acroFields.getField(key) != null && !"".equals(value)){
                     AcroFields.FieldPosition fieldPosition = acroFields.getFieldPositions(key).get(0);

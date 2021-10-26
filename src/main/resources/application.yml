@@ -33,6 +33,8 @@ logging:
 FilePath: D://RARZIP/uploadFile/
 #图片保存路径
 ImagePath: D://RARZIP/image/
+#pdf生成路径
+PdfPath: D://RARZIP/PDF/
 #配置方言
 pagehelper:
   helper-dialect: mysql

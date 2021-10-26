@@ -114,6 +114,11 @@
                t.master_director_subject,
                t.teaching_awards,
                t.research_projects
+               t.professional_applied_subject_unit
+               t.professional_applied_subject_code
+               t.professional_applied_subject_name
+               t.professional_field_code
+               t.professional_field_name
         FROM tutor_no_inspect t
                  LEFT JOIN organization o ON t.organization_id = o.organization_id
         WHERE t.apply_id = #{applyId}

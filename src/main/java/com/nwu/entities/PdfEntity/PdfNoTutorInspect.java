@@ -44,6 +44,18 @@ public class PdfNoTutorInspect {
     //免审条件
     private String exemptionConditions;
 
+    /* 专硕免审 */
+    // 申请类别负责单位
+    private String professionalAppliedSubjectUnit;
+    // 类别代码
+    private String professionalAppliedSubjectCode;
+    // 类别名称
+    private String professionalAppliedSubjectName;
+    // 领域代码
+    private String professionalFieldCode;
+    // 领域名称
+    private String professionalFieldName;
+
     /* 博导免审 */
     //硕导上岗时间
     private String masterDirectorTime;

@@ -12,6 +12,7 @@ import com.nwu.mapper.TutorNoInspectMapper;
 import com.nwu.service.PdfNoInspectService;
 import com.nwu.util.PDFTemplates;
 import com.nwu.util.TimeUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -24,6 +25,9 @@ import java.util.*;
 
 @Service
 public class PdfNoInspectServiceImpl implements PdfNoInspectService {
+
+    @Value("${PdfPath}")
+    private String path;
 
     @Resource
     TutorNoInspectMapper tutorNoInspectMapper;
@@ -78,7 +82,15 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
                 textFields.put("masterDirectorTime", pdfTutorNoInspect.getEvaluateTime());
                 textFields.put("masterDirectorSubject", pdfTutorNoInspect.getEvaluateTime());
             }
+            if (applyTypeId == 9){
+                /* 专硕免审 */
+                textFields.put("professionalAppliedSubjectUnit",pdfTutorNoInspect.getProfessionalAppliedSubjectUnit());
+                textFields.put("professionalAppliedSubjectCode",pdfTutorNoInspect.getProfessionalAppliedSubjectCode());
+                textFields.put("professionalAppliedSubjectName",pdfTutorNoInspect.getProfessionalAppliedSubjectName());
+                textFields.put("professionalFieldCode",pdfTutorNoInspect.getProfessionalFieldCode());
+                textFields.put("professionalFieldName",pdfTutorNoInspect.getProfessionalFieldName());
 
+            }
             //图片处理
             HashMap<String, Object> imgFields = new HashMap<>();
             if (pdfTutorNoInspect.getImage() != null) {
@@ -128,18 +140,18 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
             }
             tableTeachingAwards.setDataList(teachingAwardPdfList);
 
-
             HashMap<String, PdfTable> tableFields = new HashMap<>();
             tableFields.put("tableNoResearchProjects",tableResearchProjects);
             tableFields.put("tableNoTeachingAwards",tableTeachingAwards);
 
         //创建pdf生成路径
         try{
-            String path="D:\\RARZIP\\PDF\\";
+//            String path="D:\\RARZIP\\PDF\\";
             String pdfName = pdfTutorNoInspect.getName();
             switch (applyTypeId){
                 case 3: pdfName = pdfName + "博导免审表"; break;
                 case 6: pdfName = pdfName + "学硕免审表"; break;
+                case 9: pdfName = pdfName + "专硕免审表"; break;
             }
             pdfName = pdfName +".pdf";   //pdf名称
             path = path + pdfName;
