@@ -24,10 +24,10 @@ public class NoSecondPage {
     private String appliedSubjectName;  // 学硕申请学科名称
 
 
-    private String professionalAppliedSubjectUnit; // 申请类别负责单位
-    private String professionalAppliedSubjectCode; // 类别代码
-    private String professionalAppliedSubjectName;  // 类别名称
-    private String professionalAppliedSubjectCodeName; // 申请类别代码 + " " + 类别名称
+    private String professionalApplicationSubjectUnit; // 申请类别负责单位
+    private String professionalApplicationSubjectCode; // 类别代码
+    private String professionalApplicationSubjectName;  // 类别名称
+    private String professionalApplicationSubjectCodeName; // 申请类别代码 + " " + 类别名称
     private String professionalFieldCode;   // 领域代码
     private String professionalFieldName;   // 领域名称
     private String professionalFieldCodeName; // 领域代码 + " " + 领域名称

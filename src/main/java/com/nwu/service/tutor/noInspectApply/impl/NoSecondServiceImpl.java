@@ -39,11 +39,23 @@ public class NoSecondServiceImpl implements NoSecondService {
         } else {
             noSecondPage.setTeachingAwardsJson("[]");
         }
-        // 分别设置一级学科代码和名称
+        // 分别设置学硕申请学科代码和名称
         if (noSecondPage.getDoctoralMasterSubjectCodeName() != null && !"".equals(noSecondPage.getDoctoralMasterSubjectCodeName())) {
             noSecondPage.setAppliedSubjectCode(noSecondPage.getDoctoralMasterSubjectCodeName().split(" ")[0]);
             noSecondPage.setAppliedSubjectName(noSecondPage.getDoctoralMasterSubjectCodeName().split(" ")[1]);
         }
+
+        // 设置专业硕士的类别代码
+        if (!"".equals(noSecondPage.getProfessionalApplicationSubjectCodeName()) && noSecondPage.getProfessionalApplicationSubjectCodeName() != null) {
+            noSecondPage.setProfessionalApplicationSubjectCode(noSecondPage.getProfessionalApplicationSubjectCodeName().split(" ")[0]);
+            noSecondPage.setProfessionalApplicationSubjectName(noSecondPage.getProfessionalApplicationSubjectCodeName().split(" ")[1]);
+        }
+        // 设置专业硕士的领域代码
+        if (!"".equals(noSecondPage.getProfessionalFieldCodeName()) && noSecondPage.getProfessionalFieldCodeName() != null) {
+            noSecondPage.setProfessionalFieldCode(noSecondPage.getProfessionalFieldCodeName().split(" ")[0]);
+            noSecondPage.setProfessionalFieldName(noSecondPage.getProfessionalFieldCodeName().split(" ")[1]);
+        }
+        
         try {
             // 更新第二页
             tutorNoInspectMapper.updateTutorNoInspectSecondPage(noSecondPage, applyId);
@@ -68,10 +80,10 @@ public class NoSecondServiceImpl implements NoSecondService {
         }
 
         // 处理专业硕士的申请类别代码和名字
-        if (secondPage.getProfessionalAppliedSubjectCode() == null) {
-            secondPage.setProfessionalAppliedSubjectCodeName("");
+        if (secondPage.getProfessionalApplicationSubjectCode() == null) {
+            secondPage.setProfessionalApplicationSubjectCodeName("");
         } else {
-            secondPage.setProfessionalAppliedSubjectCodeName(secondPage.getProfessionalAppliedSubjectCode() + " " + secondPage.getProfessionalAppliedSubjectName());
+            secondPage.setProfessionalApplicationSubjectCodeName(secondPage.getProfessionalApplicationSubjectCode() + " " + secondPage.getProfessionalApplicationSubjectName());
         }
 
         // 处理专业硕士的申请领域代码和名字

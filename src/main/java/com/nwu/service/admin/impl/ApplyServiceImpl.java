@@ -159,18 +159,40 @@ public class ApplyServiceImpl extends ServiceImpl<ApplyMapper, Apply> implements
                 applyDisplay.setCommitSocial(display.getCommitSocial());
                 applyDisplay.setCommit(display.getCommit());
 
-                // 设置申请的学院和专业
-                if (!"".equals(display.getAppliedSubjectUnit()) && display.getAppliedSubjectUnit() != null) {
-                    applyDisplay.setApplyDepartment(display.getAppliedSubjectUnit());
-                } else {
-                    applyDisplay.setApplyDepartment("");
+
+                switch (display.getApplyTypeId()) {
+                    case 3:
+                    case 6:
+                        // 设置申请的学院和专业
+                        if (!"".equals(display.getAppliedSubjectUnit()) && display.getAppliedSubjectUnit() != null) {
+                            applyDisplay.setApplyDepartment(display.getAppliedSubjectUnit());
+                        } else {
+                            applyDisplay.setApplyDepartment("");
+                        }
+
+                        if (!"".equals(display.getAppliedSubjectCode()) && display.getAppliedSubjectCode() != null) {
+                            applyDisplay.setApplySubject(display.getAppliedSubjectCode() + " " + display.getAppliedSubjectName());
+                        } else {
+                            applyDisplay.setApplySubject("");
+                        }
+                        break;
+                    case 9:
+                        applyDisplay.setApplyDepartment(display.getProfessionalApplicationSubjectUnit());
+                        if (display.getProfessionalApplicationSubjectCode() == null) {
+                            applyDisplay.setApplySubject("");
+                        } else {
+                            if (display.getProfessionalFieldCode() == null) {
+                                applyDisplay.setApplySubject(display.getProfessionalApplicationSubjectCode() + " " + display.getProfessionalApplicationSubjectName());
+                            } else {
+                                applyDisplay.setApplySubject(display.getProfessionalFieldCode() + " " + display.getProfessionalFieldName());
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
 
-                if (!"".equals(display.getAppliedSubjectCode()) && display.getAppliedSubjectCode() != null) {
-                    applyDisplay.setApplySubject(display.getAppliedSubjectCode() + " " + display.getAppliedSubjectName());
-                } else {
-                    applyDisplay.setApplySubject("");
-                }
+
 
                 // 标识免审
                 applyDisplay.setNoInspect(true);

@@ -98,6 +98,7 @@ public class MainBoardController {
                 case 5:
                 case 6:
                 case 8:
+                case 9:
                     for (Apply apply : applyList) {
                         // 查到有在申请中的申请，返回当前申请
                         if (apply.getStatus() == 0) {
@@ -123,10 +124,9 @@ public class MainBoardController {
     /**
      * 导师免审
      *
-     * @param applyTypeId
-     * @param applyCondition
-     * @param applyId
-     * @return
+     * @param applyTypeId 申请类型 id
+     * @param applyCondition 申请状态
+     * @param applyId 申请 id
      */
     @GetMapping("/tutor/getNoFirstPage/{applyTypeId}/{applyCondition}/{applyId}")
     public Result getNoFirstPage(@PathVariable("applyTypeId") int applyTypeId,
@@ -140,17 +140,17 @@ public class MainBoardController {
         FirstPage noFirstPage;
         try {
             if (applyCondition == 102) {
-                //未申请过 查找teacherInfo
+                // 未申请过 查找teacherInfo
                 firstPage = teacherInfoService.getTeacherInfo(tutorId);
                 return new Result(ResultCode.SUCCESS, firstPage);
             } else if (applyCondition == 101) {
-                //已申请过 查询对应的主键 导师增列
-                if (applyTypeId == 3 || applyTypeId == 6) {
-                    //导师免审 查询tutor_no_inspect
+                // 已申请过 查询对应的主键 导师增列
+                if (applyTypeId == 3 || applyTypeId == 6 || applyTypeId == 9) {
+                    // 导师免审 查询 tutor_no_inspect
                     noFirstPage = noFirstService.getNoFirstPage(applyId);
                     return new Result(ResultCode.SUCCESS, noFirstPage);
                 } else {
-                    //查询tutorInspect
+                    // 查询 tutorInspect
                     firstPage = tutorInspectService.getFirstPage(applyId);
                     return new Result(ResultCode.SUCCESS, firstPage);
                 }

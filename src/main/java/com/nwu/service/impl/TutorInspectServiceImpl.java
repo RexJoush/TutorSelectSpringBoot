@@ -87,9 +87,10 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
             for (ApplyInfo applyInfo : applyInfos) {
                 QueryDepartmentSecretaryInit tutorInspectApplyInitDetails = null;
 
-                // 免审
+                // 学硕博导免审
                 if (applyInfo.getApplyTypeId() == 3 || applyInfo.getApplyTypeId() == 6) {
                     tutorInspectApplyInitDetails = tutorInspectMapper.getTutorNoInspectApplyInitDetails(applyInfo.getApplyId());
+
                     // 设置申请的学院和专业
                     if (!"".equals(tutorInspectApplyInitDetails.getAppliedSubjectUnit()) && tutorInspectApplyInitDetails.getAppliedSubjectUnit() != null) {
                         tutorInspectApplyInitDetails.setApplyDepartment(tutorInspectApplyInitDetails.getAppliedSubjectUnit());
@@ -104,6 +105,20 @@ public class TutorInspectServiceImpl extends ServiceImpl<TutorInspectMapper, Tut
                     }
 
                     // 标识免审
+                    tutorInspectApplyInitDetails.setNoInspect(true);
+                }
+                // 专硕免审
+                else if (applyInfo.getApplyTypeId() == 9) {
+                    tutorInspectApplyInitDetails = tutorInspectMapper.getTutorNoInspectApplyInitDetails(applyInfo.getApplyId());
+                    if (tutorInspectApplyInitDetails.getProfessionalApplicationSubjectCode() == null) {
+                        tutorInspectApplyInitDetails.setApplySubject("");
+                    } else {
+                        if (tutorInspectApplyInitDetails.getProfessionalFieldCode() == null) {
+                            tutorInspectApplyInitDetails.setApplySubject(tutorInspectApplyInitDetails.getProfessionalApplicationSubjectCode() + " " + tutorInspectApplyInitDetails.getProfessionalApplicationSubjectName());
+                        } else {
+                            tutorInspectApplyInitDetails.setApplySubject(tutorInspectApplyInitDetails.getProfessionalFieldCode() + " " + tutorInspectApplyInitDetails.getProfessionalFieldName());
+                        }
+                    }
                     tutorInspectApplyInitDetails.setNoInspect(true);
                 }
                 // 非免审

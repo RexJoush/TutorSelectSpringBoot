@@ -108,7 +108,12 @@
                a.commit,
                t.applied_subject_unit,
                t.applied_subject_code,
-               t.applied_subject_name
+               t.applied_subject_name,
+               t.professional_application_subject_unit,
+               t.professional_application_subject_code,
+               t.professional_application_subject_name,
+               t.professional_field_code,
+               t.professional_field_name
         FROM tutor_no_inspect t
                  LEFT JOIN apply a ON a.apply_id = t.apply_id
                  LEFT JOIN apply_type apt ON a.apply_type_id = apt.apply_type_id

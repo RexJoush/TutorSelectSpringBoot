@@ -3,36 +3,41 @@
 <mapper namespace="com.nwu.mapper.TutorNoInspectMapper">
 
     <select id="getSecondPage" parameterType="int" resultType="com.nwu.entities.tutor.NoSecondPage">
-        SELECT a.apply_id,
-               subject as applySubject,
-               research_directions,
-               applied_subject_unit,
-               applied_subject_code,
-               applied_subject_name,
-               exemption_conditions,
-               exemption_conditions_materials,
-               teaching_awards as teachingAwardsJson,
-               research_projects as researchProjectsJson,
-               master_director_time,
-               master_director_subject
+            SELECT a.apply_id,
+                   subject           as applySubject,
+                   research_directions,
+                   applied_subject_unit,
+                   applied_subject_code,
+                   applied_subject_name,
+                   professional_application_subject_unit,
+                   professional_application_subject_code,
+                   professional_application_subject_name,
+                   professional_field_code,
+                   professional_field_name,
+                   exemption_conditions,
+                   exemption_conditions_materials,
+                   teaching_awards   as teachingAwardsJson,
+                   research_projects as researchProjectsJson,
+                   master_director_time,
+                   master_director_subject
         FROM apply a
                  LEFT JOIN tutor_no_inspect t ON a.apply_id = t.apply_id
         WHERE a.apply_id = #{applyId}
     </select>
-<!--    <resultMap id="noSecondInfo" type="com.nwu.entities.tutor.NoSecondPage">-->
-<!--        <id property="applyId" column="apply_id"></id>-->
-<!--        <result property="researchDirections" column="research_directions"></result>-->
-<!--        <result property="appliedSubjectUnit" column="applied_subject_unit"></result>-->
-<!--        <result property="appliedSubjectCode" column="applied_subject_code"></result>-->
-<!--        <result property="appliedSubjectName" column="applied_subject_name"></result>-->
-<!--        <result property="exemptionConditions" column="exemption_conditions"></result>-->
-<!--        <result property="exemptionConditionsMaterials" column="exemption_conditions_materials"></result>-->
-<!--        <result property="researchProjectsJson" column="research_projects"></result>-->
-<!--        <result property="teachingAwardsJson" column="teaching_awards"></result>-->
-<!--        <result property="masterDirectorTime" column="master_director_time"></result>-->
-<!--        <result property="masterDirectorSubject" column="master_director_subject"></result>-->
-<!--        <result property="applySubject" column="subject"></result>-->
-<!--    </resultMap>-->
+    <!--    <resultMap id="noSecondInfo" type="com.nwu.entities.tutor.NoSecondPage">-->
+    <!--        <id property="applyId" column="apply_id"></id>-->
+    <!--        <result property="researchDirections" column="research_directions"></result>-->
+    <!--        <result property="appliedSubjectUnit" column="applied_subject_unit"></result>-->
+    <!--        <result property="appliedSubjectCode" column="applied_subject_code"></result>-->
+    <!--        <result property="appliedSubjectName" column="applied_subject_name"></result>-->
+    <!--        <result property="exemptionConditions" column="exemption_conditions"></result>-->
+    <!--        <result property="exemptionConditionsMaterials" column="exemption_conditions_materials"></result>-->
+    <!--        <result property="researchProjectsJson" column="research_projects"></result>-->
+    <!--        <result property="teachingAwardsJson" column="teaching_awards"></result>-->
+    <!--        <result property="masterDirectorTime" column="master_director_time"></result>-->
+    <!--        <result property="masterDirectorSubject" column="master_director_subject"></result>-->
+    <!--        <result property="applySubject" column="subject"></result>-->
+    <!--    </resultMap>-->
 
     <select id="getNoFirstPage" parameterType="int" resultType="com.nwu.entities.tutor.FirstPage">
         SELECT apply_id,
@@ -61,16 +66,21 @@
 
     <update id="updateTutorNoInspectSecondPage">
         UPDATE tutor_no_inspect
-        SET research_directions            = #{noSecondPage.researchDirections},
-            applied_subject_unit           = #{noSecondPage.appliedSubjectUnit},
-            applied_subject_code           = #{noSecondPage.appliedSubjectCode},
-            applied_subject_name           = #{noSecondPage.appliedSubjectName},
-            exemption_conditions           = #{noSecondPage.exemptionConditions},
-            teaching_awards                = #{noSecondPage.teachingAwardsJson},
-            master_director_time           = #{noSecondPage.masterDirectorTime},
-            master_director_subject        = #{noSecondPage.masterDirectorSubject},
-            exemption_conditions_materials = #{noSecondPage.exemptionConditionsMaterials},
-            research_projects              = #{noSecondPage.researchProjectsJson}
+        SET research_directions                   = #{noSecondPage.researchDirections},
+            applied_subject_unit                  = #{noSecondPage.appliedSubjectUnit},
+            applied_subject_code                  = #{noSecondPage.appliedSubjectCode},
+            applied_subject_name                  = #{noSecondPage.appliedSubjectName},
+            exemption_conditions                  = #{noSecondPage.exemptionConditions},
+            teaching_awards                       = #{noSecondPage.teachingAwardsJson},
+            master_director_time                  = #{noSecondPage.masterDirectorTime},
+            master_director_subject               = #{noSecondPage.masterDirectorSubject},
+            exemption_conditions_materials        = #{noSecondPage.exemptionConditionsMaterials},
+            research_projects                     = #{noSecondPage.researchProjectsJson},
+            professional_application_subject_unit = #{noSecondPage.professionalApplicationSubjectUnit},
+            professional_application_subject_code = #{noSecondPage.professionalApplicationSubjectCode},
+            professional_application_subject_name = #{noSecondPage.professionalApplicationSubjectName},
+            professional_field_code               = #{noSecondPage.professionalFieldCode},
+            professional_field_name               = #{noSecondPage.professionalFieldName}
         WHERE apply_id = #{applyId}
     </update>
 
@@ -114,11 +124,11 @@
                t.master_director_subject,
                t.teaching_awards,
                t.research_projects
-               t.professional_applied_subject_unit
-               t.professional_applied_subject_code
-               t.professional_applied_subject_name
-               t.professional_field_code
-               t.professional_field_name
+            t.professional_applied_subject_unit
+            t.professional_applied_subject_code
+            t.professional_applied_subject_name
+            t.professional_field_code
+            t.professional_field_name
         FROM tutor_no_inspect t
                  LEFT JOIN organization o ON t.organization_id = o.organization_id
         WHERE t.apply_id = #{applyId}
