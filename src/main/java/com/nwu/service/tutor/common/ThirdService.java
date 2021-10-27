@@ -6,6 +6,9 @@ package com.nwu.service.tutor.common;
  */
 
 import com.nwu.entities.tutor.ThirdPage;
+import org.springframework.stereotype.Repository;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 第三页的服务类
@@ -18,7 +21,7 @@ public interface ThirdService {
      * @param tutorId 申请的教师工号
      * @param thirdPage 第三页信息
      */
-    ThirdPage updateOrSaveThirdPage(int applyId, String tutorId, ThirdPage thirdPage,int learningType);
+    ThirdPage updateOrSaveThirdPage(int applyId, String tutorId, ThirdPage thirdPage, int learningType,HttpServletRequest request);
 
     /**
      * 获取第三页的初始信息

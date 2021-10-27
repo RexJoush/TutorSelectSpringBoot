@@ -6,6 +6,7 @@ import com.nwu.entities.tutor.FirstPage;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.TutorInspectService;
+import com.nwu.service.tutor.PageInit;
 import com.nwu.service.tutor.common.DeleteFileService;
 import com.nwu.service.tutor.common.MainBoardService;
 import com.nwu.service.tutor.common.TeacherInfoService;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Rex Joush
@@ -217,7 +219,6 @@ public class MainBoardController {
                 }
             }
             String path = loadFile.upload(uploadFile, request, typeName, tutorId);
-            System.out.println(path);
             if (!"".equals(path)) {
                 //路径不为空
                 HashMap<String, Object> map = new HashMap<>();
@@ -240,12 +241,15 @@ public class MainBoardController {
      */
     @ApiOperation("文件删除")
     @PostMapping("/user/delFile")
-    public Result delFile(@RequestBody String httpPath) throws UnsupportedEncodingException {
-        String s = deleteFileService.delFile(httpPath);
-        if ("ok".equals(s)) {
-            return Result.SUCCESS();
+    public Result delFile(@RequestBody String httpPath ,HttpServletRequest request) throws UnsupportedEncodingException {
+        try {
+            deleteFileService.delFile(httpPath,request);
         }
-        return Result.FAIL();
+        catch (Exception e){
+            return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e)); //1201
+        }
+        return new Result(ResultCode.SUCCESS, Map.of("code",1200));
+
     }
 
 }

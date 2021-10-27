@@ -46,11 +46,11 @@ public class PdfNoTutorInspect {
 
     /* 专硕免审 */
     // 申请类别负责单位
-    private String professionalAppliedSubjectUnit;
+    private String professionalApplicationSubjectUnit;
     // 类别代码
-    private String professionalAppliedSubjectCode;
+    private String professionalApplicationSubjectCode;
     // 类别名称
-    private String professionalAppliedSubjectName;
+    private String professionalApplicationSubjectName;
     // 领域代码
     private String professionalFieldCode;
     // 领域名称

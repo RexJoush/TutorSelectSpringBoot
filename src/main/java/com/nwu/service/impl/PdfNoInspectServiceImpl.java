@@ -84,12 +84,11 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
             }
             if (applyTypeId == 9){
                 /* 专硕免审 */
-                textFields.put("professionalAppliedSubjectUnit",pdfTutorNoInspect.getProfessionalAppliedSubjectUnit());
-                textFields.put("professionalAppliedSubjectCode",pdfTutorNoInspect.getProfessionalAppliedSubjectCode());
-                textFields.put("professionalAppliedSubjectName",pdfTutorNoInspect.getProfessionalAppliedSubjectName());
+                textFields.put("professionalApplicationSubjectUnit",pdfTutorNoInspect.getProfessionalApplicationSubjectUnit());
+                textFields.put("professionalApplicationSubjectCode",pdfTutorNoInspect.getProfessionalApplicationSubjectCode());
+                textFields.put("professionalApplicationSubjectName",pdfTutorNoInspect.getProfessionalApplicationSubjectName());
                 textFields.put("professionalFieldCode",pdfTutorNoInspect.getProfessionalFieldCode());
                 textFields.put("professionalFieldName",pdfTutorNoInspect.getProfessionalFieldName());
-
             }
             //图片处理
             HashMap<String, Object> imgFields = new HashMap<>();

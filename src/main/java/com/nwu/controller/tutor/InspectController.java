@@ -217,7 +217,7 @@ public class InspectController {
         }
         // 根据提交类别分别保存每一项
         try {
-            thirdPageOne = thirdService.updateOrSaveThirdPage(applyId, tutorId, thirdPage, learningType);
+            thirdPageOne = thirdService.updateOrSaveThirdPage(applyId, tutorId, thirdPage, learningType,request);
         } catch (Exception e) {
             return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
         }

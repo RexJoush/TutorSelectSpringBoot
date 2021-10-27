@@ -5,6 +5,7 @@ import com.nwu.util.UpLoadFile;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -21,21 +22,21 @@ public class DeleteFileServiceImpl implements DeleteFileService{
      * @return ok err
      */
     @Override
-    public String delFile(String httpPath) {
+    public void delFile(String httpPath,HttpServletRequest request) {
 
         if (!"".equals(httpPath)) {
             try {
                 String path = URLDecoder.decode(httpPath, "UTF-8");
-                String realPath= upLoadFile.getFilePath() + path.substring(44, path.length() - 1);
+                //处理字符串
+                String res =  request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/downFile/uploadFile/";
+                String realPath= upLoadFile.getFilePath() + path.substring(res.length(), path.length() - 1);
                 File file = new File(realPath);
                 if (file.exists()){
                     file.delete();
-                    return "ok";
                 }
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                throw new RuntimeException("删除文件错误！"+"!"+e.getMessage());
             }
         }
-        return "err";
     }
 }

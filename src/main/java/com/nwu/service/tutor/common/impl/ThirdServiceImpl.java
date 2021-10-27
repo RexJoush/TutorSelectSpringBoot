@@ -13,6 +13,7 @@ import com.nwu.service.tutor.common.ThirdService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class ThirdServiceImpl implements ThirdService {
     private DeleteFileService deleteFileService; //删除文件
 
     @Override
-    public ThirdPage updateOrSaveThirdPage(int applyId, String tutorId, ThirdPage thirdPage,int learningType) {
+    public ThirdPage updateOrSaveThirdPage(int applyId, String tutorId, ThirdPage thirdPage, int learningType,HttpServletRequest request) {
 
         ThirdPage thirdPageOne = new ThirdPage();
         switch (learningType){  //保存类别
@@ -69,7 +70,7 @@ public class ThirdServiceImpl implements ThirdService {
                                 //String path = deleteItem.getDeletePath();
                                 //删除文件
                                 System.out.println(item.getDeletePath());
-                                String result = deleteFileService.delFile(item.getDeletePath());
+                                deleteFileService.delFile(item.getDeletePath(),request);
                             }
                         }
                     }
@@ -96,7 +97,7 @@ public class ThirdServiceImpl implements ThirdService {
                             if(item.getDeleteType() == 3 && item.getDeleteId() != -1){
                                 //根据id删除
                                 researchProjectService.removeById(item.getDeleteId());
-                                String result = deleteFileService.delFile(item.getDeletePath());
+                                deleteFileService.delFile(item.getDeletePath(),request);
                             }
                         }
                     }
@@ -123,7 +124,7 @@ public class ThirdServiceImpl implements ThirdService {
                             if(item.getDeleteType() == 4 && item.getDeleteId() != -1){
                                 //根据id删除
                                 academicWorksService.removeById(item.getDeleteId());
-                                String result = deleteFileService.delFile(item.getDeletePath());
+                                deleteFileService.delFile(item.getDeletePath(),request);
                             }
                         }
                     }
@@ -152,7 +153,7 @@ public class ThirdServiceImpl implements ThirdService {
                             if(item.getDeleteType() == 5 && item.getDeleteId() != -1){
                                 //根据id删除
                                 teachingAwardsService.removeById(item.getDeleteId());
-                                String result = deleteFileService.delFile(item.getDeletePath());
+                                deleteFileService.delFile(item.getDeletePath(),request);
                             }
                         }
                     }
@@ -179,7 +180,7 @@ public class ThirdServiceImpl implements ThirdService {
                             if(item.getDeleteType() == 6 && item.getDeleteId() != -1){
                                 //根据id删除
                                 inventionPatentService.removeById(item.getDeleteId());
-                                String result = deleteFileService.delFile(item.getDeletePath());
+                                deleteFileService.delFile(item.getDeletePath(),request);
                             }
                         }
                     }
