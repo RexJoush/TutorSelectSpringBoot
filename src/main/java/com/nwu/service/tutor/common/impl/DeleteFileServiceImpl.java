@@ -1,5 +1,6 @@
 package com.nwu.service.tutor.common.impl;
 
+import com.nwu.mapper.TutorNoInspectMapper;
 import com.nwu.service.tutor.common.DeleteFileService;
 import com.nwu.util.UpLoadFile;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class DeleteFileServiceImpl implements DeleteFileService{
 
     @Resource
     UpLoadFile upLoadFile;
+
+    @Resource
+    TutorNoInspectMapper tutorNoInspectMapper;
 
     /**
      * 删除文件
@@ -35,6 +39,26 @@ public class DeleteFileServiceImpl implements DeleteFileService{
                     file.delete();
                 }
             } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException("删除文件错误！"+"!"+e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void noDelFile(String httpPath, HttpServletRequest request, String applyId) {
+        if (!"".equals(httpPath)) {
+            try {
+                String path = URLDecoder.decode(httpPath, "UTF-8");
+                //处理字符串
+                String res =  request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/downFile/uploadFile/";
+                String realPath= upLoadFile.getFilePath() + path.substring(res.length(), path.length() - 1);
+                File file = new File(realPath);
+                if (file.exists()){
+                    file.delete();
+                }
+                //数据库删除
+                tutorNoInspectMapper.updateTutorNoInspectFilePath(applyId,"");
+            } catch (Exception e) {
                 throw new RuntimeException("删除文件错误！"+"!"+e.getMessage());
             }
         }

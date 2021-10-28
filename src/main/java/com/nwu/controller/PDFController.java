@@ -52,12 +52,12 @@ public class PDFController {
             pdfPath = pdfNoInspectService.getTutorNoInspect(applyId,applyTypeId,pdfTemplate,request);
         }
         HashMap<String, Object> map = new HashMap<>();
-        if (pdfPath != ""){
+        if (!"".equals(pdfPath)){
             map.put("code",1201);
             map.put("pdfPath",pdfPath);
         }
         else {
-            map.put("code","1200");
+            map.put("code",1200);
             map.put("pdfPath",pdfPath);
         }
         return new Result(ResultCode.SUCCESS,map);

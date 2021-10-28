@@ -71,4 +71,12 @@ public interface TutorNoInspectMapper {
      * @return 修改结果
      */
     int updateNoFirstPage(String applyId, String phone, String email, String evaluateTime, String awardingUnitTime);
+
+    /**
+     * 根据主键id更新免审表中文件的url
+     * @param applyId
+     * @param exemptionConditionsMaterials
+     * @return
+     */
+    int updateTutorNoInspectFilePath(@Param("applyId") String applyId,@Param("exemptionConditionsMaterials") String exemptionConditionsMaterials);
 }

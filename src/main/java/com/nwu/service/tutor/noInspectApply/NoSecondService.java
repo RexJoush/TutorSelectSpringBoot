@@ -20,4 +20,5 @@ public interface NoSecondService {
      * @param noSecondPage 免审第二页
      */
     void updateNoSecondPage(NoSecondPage noSecondPage, int applyId);
+
 }

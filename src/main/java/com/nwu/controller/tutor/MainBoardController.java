@@ -251,5 +251,16 @@ public class MainBoardController {
         return new Result(ResultCode.SUCCESS, Map.of("code",1200));
 
     }
+    @ApiOperation("文件删除")
+    @PostMapping("/user/noDelFile/{applyId}")
+    public Result noDelFile(@PathVariable("applyId") String applyId, @RequestBody String httpPath ,HttpServletRequest request) throws UnsupportedEncodingException {
+        try {
+            deleteFileService.noDelFile(httpPath, request, applyId);
+        }
+        catch (Exception e){
+            return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e)); //1201
+        }
+        return new Result(ResultCode.SUCCESS, Map.of("code",1200));
 
+    }
 }

@@ -26,8 +26,8 @@ import java.util.*;
 @Service
 public class PdfNoInspectServiceImpl implements PdfNoInspectService {
 
-    @Value("${PdfPath}")
-    private String path;
+//    @Value("${PdfPath}")
+//    private String path;
 
     @Resource
     TutorNoInspectMapper tutorNoInspectMapper;
@@ -145,7 +145,7 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
 
         //创建pdf生成路径
         try{
-//            String path="D:\\RARZIP\\PDF\\";
+            String path="D:\\RARZIP\\PDF\\";
             String pdfName = pdfTutorNoInspect.getName();
             switch (applyTypeId){
                 case 3: pdfName = pdfName + "博导免审表"; break;
@@ -153,7 +153,7 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
                 case 9: pdfName = pdfName + "专硕免审表"; break;
             }
             pdfName = pdfName +".pdf";   //pdf名称
-            path = path + pdfName;
+            path = path  + pdfName;
             File file = new File(path);
             if (!file.getParentFile().exists()){
                 file.getParentFile().mkdirs();
