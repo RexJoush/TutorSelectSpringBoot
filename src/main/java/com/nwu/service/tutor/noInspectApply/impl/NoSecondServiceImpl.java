@@ -105,6 +105,7 @@ public class NoSecondServiceImpl implements NoSecondService {
         } else {
             secondPage.setTeachingAwards(JSON.parseArray(secondPage.getTeachingAwardsJson(), TeachingAward.class));
         }
+
         return secondPage;
     }
 }
