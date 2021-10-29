@@ -501,6 +501,7 @@ public class PdfInspectServiceImpl implements PdfInspectService {
         try{
 //            String path="D:\\RARZIP\\PDF\\";
             String path = DataUtils.pdfPath;
+
             String pdfName = pdfTutorInspect.getName();
             switch (applyTypeId){
                 case 1: pdfName = pdfName + "首次博导表"; break;

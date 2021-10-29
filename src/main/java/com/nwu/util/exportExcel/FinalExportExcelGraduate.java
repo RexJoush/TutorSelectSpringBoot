@@ -140,8 +140,13 @@ public class FinalExportExcelGraduate {
                 primaryDisciplineCode = queryDepartmentSecretaryInit.getProfessionalApplicationSubjectCode();// 专硕一级学科代码
                 PrimaryDisciplineName = queryDepartmentSecretaryInit.getProfessionalApplicationSubjectName();//专硕一级学科名称
             } else {
-                primaryDisciplineCode = queryDepartmentSecretaryInit.getDoctoralMasterSubjectCode();//一级学科代码
-                PrimaryDisciplineName = queryDepartmentSecretaryInit.getDoctoralMasterSubjectName();//一级学科名称
+                if(queryDepartmentSecretaryInit.getApplyTypeId() == 3 || queryDepartmentSecretaryInit.getApplyTypeId() == 6){
+                    primaryDisciplineCode = queryDepartmentSecretaryInit.getAppliedSubjectCode();//一级学科代码
+                    PrimaryDisciplineName = queryDepartmentSecretaryInit.getAppliedSubjectName();//一级学科名称
+                }else {
+                    primaryDisciplineCode = queryDepartmentSecretaryInit.getDoctoralMasterSubjectCode();//一级学科代码
+                    PrimaryDisciplineName = queryDepartmentSecretaryInit.getDoctoralMasterSubjectName();//一级学科名称
+                }
             }
             this.contentList.add(
                     Lists.newArrayList(
@@ -173,7 +178,7 @@ public class FinalExportExcelGraduate {
                             queryDepartmentSecretaryInit.getWork(),
                             queryDepartmentSecretaryInit.getAwards(),
                             queryDepartmentSecretaryInit.getInvention(),
-                            queryDepartmentSecretaryInit.getCommitYjsySfh()//备注 commit_yjsy_lr
+                            queryDepartmentSecretaryInit.getCommitYjsyLr()//备注 commit_yjsy_lr
                     )
             );
         }

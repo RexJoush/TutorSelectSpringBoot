@@ -108,10 +108,10 @@ public class MainBoardController {
                             break;
                         }
                     }
-                    // 所有申请均已提交，返回未申请
+                    // 所有申请均已提交，返回申请过此类岗位
                     if (flag) {
                         map.put("applyId", -1);
-                        map.put("applyCondition", 102);
+                        map.put("applyCondition", 100);
                     }
                     break;
             }

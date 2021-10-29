@@ -44,6 +44,7 @@ public class NoInspectController {
 
     /**
      * 获取第一页导师基本信息
+     *
      * @param applyId 申请表 id
      * @return firstPage
      */
@@ -76,11 +77,12 @@ public class NoInspectController {
 
     /**
      * 保存第一页免审信息
-     * @param noFirstPage 第一页具体信息
-     * @param applyId 申请 id
-     * @param applyTypeId 申请类型 id
+     *
+     * @param noFirstPage    第一页具体信息
+     * @param applyId        申请 id
+     * @param applyTypeId    申请类型 id
      * @param applyCondition 申请状态
-     * @param request request 对象
+     * @param request        request 对象
      */
     @PostMapping("/noInspect/saveFirstPage/{applyId}/{applyTypeId}/{applyCondition}")
     public Result saveFirstPage(@RequestBody FirstPage noFirstPage,
@@ -97,6 +99,8 @@ public class NoInspectController {
             noFirstService.updateNoFirstPage(noFirstPage.getApplyId(), noFirstPage.getPhone(), noFirstPage.getEmail(), noFirstPage.getEvaluateTime(), noFirstPage.getAwardDepartment() + " " + noFirstPage.getAwardTime());
             // 读取第二页
             NoSecondPage secondPage = noSecondService.getSecondPage(applyId);
+            System.out.println("secondPage");
+            System.out.println(secondPage);
             return new Result(ResultCode.SUCCESS, secondPage);
         }
 
@@ -137,6 +141,7 @@ public class NoInspectController {
             e.printStackTrace();
             return new Result(ResultCode.FAIL, e.getMessage());
         }
+        System.out.println(secondPage);
         return new Result(ResultCode.SUCCESS, secondPage);
 
     }
