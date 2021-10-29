@@ -17,6 +17,7 @@ import com.nwu.service.scientificResearchManager.*;
 import com.nwu.service.tutor.SummaryService;
 import com.nwu.service.tutor.common.CourseTeachingService;
 import com.nwu.service.tutor.common.GuidingStudentService;
+import com.nwu.util.DataUtils;
 import com.nwu.util.PDFTemplates;
 import com.nwu.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,8 +61,8 @@ public class PdfInspectServiceImpl implements PdfInspectService {
     @Resource
     CourseTeachingService courseTeachingService;
 
-    @Value("${PdfPath}")
-    private String path;
+//    @Value("${PdfPath}")
+//    private String path;
 
     @Override
     public String getTutorInspectPdf(Integer applyId, Integer applyTypeId, String pdfTemplate, HttpServletRequest request) {
@@ -499,6 +500,7 @@ public class PdfInspectServiceImpl implements PdfInspectService {
         //创建pdf生成路径
         try{
 //            String path="D:\\RARZIP\\PDF\\";
+            String path = DataUtils.pdfPath;
             String pdfName = pdfTutorInspect.getName();
             switch (applyTypeId){
                 case 1: pdfName = pdfName + "首次博导表"; break;

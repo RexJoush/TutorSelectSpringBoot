@@ -10,6 +10,7 @@ import com.nwu.entities.tutor.childSubject.ResearchProject;
 import com.nwu.entities.tutor.childSubject.TeachingAward;
 import com.nwu.mapper.TutorNoInspectMapper;
 import com.nwu.service.PdfNoInspectService;
+import com.nwu.util.DataUtils;
 import com.nwu.util.PDFTemplates;
 import com.nwu.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +34,7 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
     TutorNoInspectMapper tutorNoInspectMapper;
 
     @Override
-    public String getTutorNoInspect(Integer applyId, Integer applyTypeId, String pdfTemplate, HttpServletRequest request) {
+    public String  getTutorNoInspect(Integer applyId, Integer applyTypeId, String pdfTemplate, HttpServletRequest request) {
 
         try
         {   //尝试进行读取资源文件
@@ -145,7 +146,8 @@ public class PdfNoInspectServiceImpl implements PdfNoInspectService {
 
         //创建pdf生成路径
         try{
-            String path="D:\\RARZIP\\PDF\\";
+//            String path="D:\\RARZIP\\PDF\\";
+            String path = DataUtils.pdfPath;
             String pdfName = pdfTutorNoInspect.getName();
             switch (applyTypeId){
                 case 3: pdfName = pdfName + "博导免审表"; break;
