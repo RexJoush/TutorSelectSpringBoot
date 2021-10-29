@@ -1,11 +1,14 @@
 package com.nwu.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.additional.update.impl.LambdaUpdateChainWrapper;
 import com.nwu.entities.Apply;
+import com.nwu.mapper.admin.ApplyMapper;
 import com.nwu.vo.QueryDepartmentSecretaryInit;
 import com.nwu.vo.UpdateStatus;
 import com.nwu.results.Result;
 import com.nwu.service.admin.ApplyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +26,8 @@ import java.util.List;
 public class UpdateStatusController {
     @Resource
     public ApplyService applyService;
+    @Autowired
+    private ApplyMapper applyMapper;
 
     //院系秘书初审页面的更新操作，修改状态，添加备注
     @PostMapping("/update")
@@ -89,19 +94,18 @@ public class UpdateStatusController {
     //研究生院管理员修改备注
     @PostMapping("/updateCommitByGraduate")
     public Result updateCommitByGraduate(@RequestBody QueryDepartmentSecretaryInit submit) throws Exception {
-        Apply apply = new Apply();
-        apply.setApplyTypeId(submit.getApplyTypeId());
-        apply.setStatus(submit.getStatus());
-        apply.setOrganizationId(submit.getOrganizationId());
-//        apply.setProfessional(submit.getProfessional());
-//        apply.setSubject(submit.getSubject());
-        apply.setCommitYjsyCs(submit.getCommitYjsyCs());
-        apply.setCommitYjsyLr(submit.getCommitYjsyLr());
-        apply.setCommitYjsySfh(submit.getCommitYjsySfh());
-        UpdateWrapper<Apply> applyUpdateWrapper = new UpdateWrapper<>();
-        applyUpdateWrapper.eq("apply_id",submit.getApplyId());
-        applyService.update(apply,applyUpdateWrapper);
-        return Result.SUCCESS();
+        LambdaUpdateChainWrapper<Apply> lambdaUpdateChainWrapper = new LambdaUpdateChainWrapper<>(applyMapper);
+
+
+        boolean res = lambdaUpdateChainWrapper.eq(Apply::getApplyId,submit.getApplyId())
+                .set(Apply::getCommitYjsyCs,submit.getCommitYjsyCs())
+                .set(Apply::getCommitYjsyLr,submit.getCommitYjsyLr())
+                .set(Apply::getCommitYjsySfh,submit.getCommitYjsySfh()).update();
+        if(res) {
+            return Result.SUCCESS();
+        }else{
+            return Result.FAIL();
+        }
     }
 
 }
