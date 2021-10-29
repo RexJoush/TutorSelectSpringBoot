@@ -58,7 +58,7 @@ public class QueryDepartmentSecretaryInit implements Serializable {
     private String commitYjsySfh; //研究生院管理员提交分会页面的备注
     private String commitYjsyLr; //研究生院管理员录入分会意见页面的备注
 
-    /* 免审表的信息 */
+    /* 学硕博士免审表的信息 */
     private String appliedSubjectUnit;     // 申请学科_申请学科负责单位
     private String appliedSubjectCode;     // 申请学科_一级学科代码
     private String appliedSubjectName;     // 申请学科_一级学科名称

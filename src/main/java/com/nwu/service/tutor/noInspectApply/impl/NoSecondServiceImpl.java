@@ -60,7 +60,7 @@ public class NoSecondServiceImpl implements NoSecondService {
             // 更新第二页
             tutorNoInspectMapper.updateTutorNoInspectSecondPage(noSecondPage, applyId);
             // 更新第一页申请学科类别信息
-            tutorNoInspectMapper.updateApplySubjectStatusTimeByApplyId(noSecondPage.getApplySubject(), 6, TimeUtils.sdf.format(new Date()), applyId);
+            tutorNoInspectMapper.updateApplySubjectStatusTimeByApplyId(Integer.parseInt(noSecondPage.getApplySubject()), 6, TimeUtils.sdf.format(new Date()), applyId);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("信息填写出错，请重新尝试" + "!" + e.getMessage());

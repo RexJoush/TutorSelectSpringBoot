@@ -34,7 +34,7 @@ public class NoSecondPage {
 
     private String exemptionConditions; // 免审条件
     private String exemptionConditionsMaterials;    // 免审条件路径
-    private int applySubject;   // 申请类别 文史 理工 交叉
+    private String applySubject;   // 申请类别 文史 理工 交叉
 
     /* 科研教学情况 */
     private String researchProjectsJson;    // 科研项目 存入数据库

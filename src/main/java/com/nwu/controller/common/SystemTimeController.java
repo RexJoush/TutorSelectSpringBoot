@@ -74,13 +74,16 @@ public class SystemTimeController {
         QueryWrapper<SystemTime> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("organization_id",orgId);
         SystemTime res = systemTimeService.getOne(queryWrapper);
-        String start = res.getStartTime();
-        String end = res.getEndTime();
-        ArrayList<String> list = new ArrayList<>();
-        list.add(start);
-        list.add(end);
-        return new Result(ResultCode.SUCCESS,list);
-
+        if (res == null) {
+            return new Result(ResultCode.SUCCESS);
+        } else {
+            String start = res.getStartTime();
+            String end = res.getEndTime();
+            ArrayList<String> list = new ArrayList<>();
+            list.add(start);
+            list.add(end);
+            return new Result(ResultCode.SUCCESS,list);
+        }
     }
 }
 

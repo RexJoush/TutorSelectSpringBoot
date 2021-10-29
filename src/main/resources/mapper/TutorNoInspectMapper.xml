@@ -24,20 +24,6 @@
                  LEFT JOIN tutor_no_inspect t ON a.apply_id = t.apply_id
         WHERE a.apply_id = #{applyId}
     </select>
-    <!--    <resultMap id="noSecondInfo" type="com.nwu.entities.tutor.NoSecondPage">-->
-    <!--        <id property="applyId" column="apply_id"></id>-->
-    <!--        <result property="researchDirections" column="research_directions"></result>-->
-    <!--        <result property="appliedSubjectUnit" column="applied_subject_unit"></result>-->
-    <!--        <result property="appliedSubjectCode" column="applied_subject_code"></result>-->
-    <!--        <result property="appliedSubjectName" column="applied_subject_name"></result>-->
-    <!--        <result property="exemptionConditions" column="exemption_conditions"></result>-->
-    <!--        <result property="exemptionConditionsMaterials" column="exemption_conditions_materials"></result>-->
-    <!--        <result property="researchProjectsJson" column="research_projects"></result>-->
-    <!--        <result property="teachingAwardsJson" column="teaching_awards"></result>-->
-    <!--        <result property="masterDirectorTime" column="master_director_time"></result>-->
-    <!--        <result property="masterDirectorSubject" column="master_director_subject"></result>-->
-    <!--        <result property="applySubject" column="subject"></result>-->
-    <!--    </resultMap>-->
 
     <select id="getNoFirstPage" parameterType="int" resultType="com.nwu.entities.tutor.FirstPage">
         SELECT apply_id,

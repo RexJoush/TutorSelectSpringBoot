@@ -126,8 +126,13 @@ public class DeliberationExportExcel {
                 primaryDisciplineCode = queryDepartmentSecretaryInit.getProfessionalApplicationSubjectCode();// 专硕一级学科代码
                 PrimaryDisciplineName = queryDepartmentSecretaryInit.getProfessionalApplicationSubjectName();//专硕一级学科名称
             } else {
-                primaryDisciplineCode = queryDepartmentSecretaryInit.getDoctoralMasterSubjectCode();//一级学科代码
-                PrimaryDisciplineName = queryDepartmentSecretaryInit.getDoctoralMasterSubjectName();//一级学科名称
+                if(queryDepartmentSecretaryInit.getApplyTypeId() == 3 || queryDepartmentSecretaryInit.getApplyTypeId() == 6){
+                    primaryDisciplineCode = queryDepartmentSecretaryInit.getAppliedSubjectCode();//一级学科代码
+                    PrimaryDisciplineName = queryDepartmentSecretaryInit.getAppliedSubjectName();//一级学科名称
+                }else {
+                    primaryDisciplineCode = queryDepartmentSecretaryInit.getDoctoralMasterSubjectCode();//一级学科代码
+                    PrimaryDisciplineName = queryDepartmentSecretaryInit.getDoctoralMasterSubjectName();//一级学科名称
+                }
             }
             this.contentList.add(
                     Lists.newArrayList(

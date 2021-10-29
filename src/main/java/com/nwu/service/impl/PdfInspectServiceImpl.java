@@ -60,8 +60,8 @@ public class PdfInspectServiceImpl implements PdfInspectService {
     @Resource
     CourseTeachingService courseTeachingService;
 
-    @Value("${PdfPath}")
-    private String path;
+//    @Value("${PdfPath}")
+//    private String path;
 
     @Override
     public String getTutorInspectPdf(Integer applyId, Integer applyTypeId, String pdfTemplate, HttpServletRequest request) {
@@ -498,7 +498,7 @@ public class PdfInspectServiceImpl implements PdfInspectService {
 
         //创建pdf生成路径
         try{
-//            String path="D:\\RARZIP\\PDF\\";
+            String path="D:\\RARZIP\\PDF\\";
             String pdfName = pdfTutorInspect.getName();
             switch (applyTypeId){
                 case 1: pdfName = pdfName + "首次博导表"; break;

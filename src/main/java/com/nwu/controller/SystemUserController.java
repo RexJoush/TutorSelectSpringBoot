@@ -152,7 +152,8 @@ public class SystemUserController {
     public Result deleteSystemUser(@PathVariable("tutorId") String tutorId){
 
         UpdateWrapper<SystemUser> wrapper = new UpdateWrapper<>();
-        wrapper.set("status", 0);
+        wrapper.set("role_name", "导师");
+        wrapper.set("role_id", 1);
         wrapper.eq("tutor_id", tutorId);
         systemUserService.update(wrapper);
 
