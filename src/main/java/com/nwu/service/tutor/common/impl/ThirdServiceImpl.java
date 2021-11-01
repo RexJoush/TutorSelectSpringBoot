@@ -1,7 +1,6 @@
 package com.nwu.service.tutor.common.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.nwu.entities.*;
 import com.nwu.entities.tutor.ThirdPage;
 import com.nwu.entities.tutor.childSubject.DeleteItem;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,10 +44,10 @@ public class ThirdServiceImpl implements ThirdService {
     private DeleteFileService deleteFileService; //删除文件
 
     @Override
-    public ThirdPage updateOrSaveThirdPage(int applyId, String tutorId, ThirdPage thirdPage, int learningType,HttpServletRequest request) {
+    public ThirdPage updateOrSaveThirdPage(int applyId, String tutorId, ThirdPage thirdPage, int learningType, HttpServletRequest request) {
 
         ThirdPage thirdPageOne = new ThirdPage();
-        switch (learningType){  //保存类别
+        switch (learningType) {  //保存类别
             case 1:
             case 2:
                 // 设置论文
@@ -58,24 +56,26 @@ public class ThirdServiceImpl implements ThirdService {
                         for (AcademicPaper academicPaper : thirdPage.getAcademicPapers()) {
                             academicPaper.setApplyId(applyId);
                             academicPaper.setTutorId(tutorId);
+                            academicPaper.setCol1("");
+                            academicPaper.setCol2("");
                             academicPaperService.saveOrUpdate(academicPaper);
                         }
                     }
-                    if(thirdPage.getDeleteItems()!=null){
+                    if (thirdPage.getDeleteItems() != null) {
                         //获取论文项 删除论文 删除的类型
                         for (DeleteItem item : thirdPage.getDeleteItems()) {
-                            if(item.getDeleteType() == 1 && item.getDeleteId() != -1){
-                                //根据id删除
+                            if (item.getDeleteType() == 1 && item.getDeleteId() != -1) {
+                                // 根据id删除
                                 academicPaperService.removeById(item.getDeleteId());
-                                //String path = deleteItem.getDeletePath();
-                                //删除文件
+                                // String path = deleteItem.getDeletePath();
+                                // 删除文件
                                 System.out.println(item.getDeletePath());
-                                deleteFileService.delFile(item.getDeletePath(),request);
+                                deleteFileService.delFile(item.getDeletePath(), request);
                             }
                         }
                     }
                     QueryWrapper<AcademicPaper> queryWrapper = new QueryWrapper<>();
-                    queryWrapper.eq("tutor_id",tutorId).eq("apply_id",applyId);
+                    queryWrapper.eq("tutor_id", tutorId).eq("apply_id", applyId);
                     thirdPageOne.setAcademicPapers(academicPaperService.list(queryWrapper));
                 } catch (Exception e) {
                     throw new RuntimeException("论文信息填写错误，请检查" + "!" + e.getMessage());
@@ -88,21 +88,23 @@ public class ThirdServiceImpl implements ThirdService {
                         for (ResearchProject researchProject : thirdPage.getResearchProjects()) {
                             researchProject.setApplyId(applyId);
                             researchProject.setTutorId(tutorId);
+                            researchProject.setCol1("");
+                            researchProject.setCol2("");
                             researchProjectService.saveOrUpdate(researchProject);
                         }
                     }
-                    if(thirdPage.getDeleteItems()!=null){
-                        //获取论文项 删除论文 删除的类型
+                    if (thirdPage.getDeleteItems() != null) {
+                        // 获取论文项 删除论文 删除的类型
                         for (DeleteItem item : thirdPage.getDeleteItems()) {
-                            if(item.getDeleteType() == 3 && item.getDeleteId() != -1){
-                                //根据id删除
+                            if (item.getDeleteType() == 3 && item.getDeleteId() != -1) {
+                                // 根据id删除
                                 researchProjectService.removeById(item.getDeleteId());
-                                deleteFileService.delFile(item.getDeletePath(),request);
+                                deleteFileService.delFile(item.getDeletePath(), request);
                             }
                         }
                     }
                     QueryWrapper<ResearchProject> queryWrapper = new QueryWrapper<>();
-                    queryWrapper.eq("tutor_id",tutorId).eq("apply_id",applyId);
+                    queryWrapper.eq("tutor_id", tutorId).eq("apply_id", applyId);
                     thirdPageOne.setResearchProjects(researchProjectService.list(queryWrapper));
                 } catch (Exception e) {
                     throw new RuntimeException("科研项目填写错误，请检查" + "!" + e.getMessage());
@@ -115,50 +117,53 @@ public class ThirdServiceImpl implements ThirdService {
                         for (AcademicWorks academicWork : thirdPage.getAcademicWorks()) {
                             academicWork.setApplyId(applyId);
                             academicWork.setTutorId(tutorId);
+                            academicWork.setCol1("");
+                            academicWork.setCol2("");
                             academicWorksService.saveOrUpdate(academicWork);
                         }
                     }
-                    if(thirdPage.getDeleteItems()!=null){
-                        //获取论文项 删除论文 删除的类型
+                    if (thirdPage.getDeleteItems() != null) {
+                        // 获取论文项 删除论文 删除的类型
                         for (DeleteItem item : thirdPage.getDeleteItems()) {
-                            if(item.getDeleteType() == 4 && item.getDeleteId() != -1){
-                                //根据id删除
+                            if (item.getDeleteType() == 4 && item.getDeleteId() != -1) {
+                                // 根据id删除
                                 academicWorksService.removeById(item.getDeleteId());
-                                deleteFileService.delFile(item.getDeletePath(),request);
+                                deleteFileService.delFile(item.getDeletePath(), request);
                             }
                         }
                     }
                     QueryWrapper<AcademicWorks> queryWrapper = new QueryWrapper<>();
-                    queryWrapper.eq("tutor_id",tutorId).eq("apply_id",applyId);
+                    queryWrapper.eq("tutor_id", tutorId).eq("apply_id", applyId);
                     thirdPageOne.setAcademicWorks(academicWorksService.list(queryWrapper));
                 } catch (Exception e) {
                     throw new RuntimeException("教材或学术著作填写错误，请检查" + "!" + e.getMessage());
                 }
                 break;
             case 5:
-
                 // 设置科研教学奖励
                 try {
                     if (thirdPage.getTeachingAwards() != null) {
                         for (TeachingAwards teachingAward : thirdPage.getTeachingAwards()) {
                             teachingAward.setApplyId(applyId);
                             teachingAward.setTutorId(tutorId);
+                            teachingAward.setCol1("");
+                            teachingAward.setCol2("");
                             System.out.println(teachingAward);
                             teachingAwardsService.saveOrUpdate(teachingAward);
                         }
                     }
-                    if(thirdPage.getDeleteItems()!=null){
+                    if (thirdPage.getDeleteItems() != null) {
                         //获取论文项 删除论文 删除的类型
                         for (DeleteItem item : thirdPage.getDeleteItems()) {
-                            if(item.getDeleteType() == 5 && item.getDeleteId() != -1){
+                            if (item.getDeleteType() == 5 && item.getDeleteId() != -1) {
                                 //根据id删除
                                 teachingAwardsService.removeById(item.getDeleteId());
-                                deleteFileService.delFile(item.getDeletePath(),request);
+                                deleteFileService.delFile(item.getDeletePath(), request);
                             }
                         }
                     }
                     QueryWrapper<TeachingAwards> queryWrapper = new QueryWrapper<>();
-                    queryWrapper.eq("tutor_id",tutorId).eq("apply_id",applyId);
+                    queryWrapper.eq("tutor_id", tutorId).eq("apply_id", applyId);
                     thirdPageOne.setTeachingAwards(teachingAwardsService.list(queryWrapper));
                 } catch (Exception e) {
                     throw new RuntimeException("科研教学奖励填写错误，请检查" + "!" + e.getMessage());
@@ -171,21 +176,23 @@ public class ThirdServiceImpl implements ThirdService {
                         for (InventionPatent inventionPatent : thirdPage.getInventionPatents()) {
                             inventionPatent.setApplyId(applyId);
                             inventionPatent.setTutorId(tutorId);
+                            inventionPatent.setCol1("");
+                            inventionPatent.setCol2("");
                             inventionPatentService.saveOrUpdate(inventionPatent);
                         }
                     }
-                    if(thirdPage.getDeleteItems()!=null){
-                        //获取论文项 删除论文 删除的类型
+                    if (thirdPage.getDeleteItems() != null) {
+                        // 获取论文项 删除论文 删除的类型
                         for (DeleteItem item : thirdPage.getDeleteItems()) {
-                            if(item.getDeleteType() == 6 && item.getDeleteId() != -1){
-                                //根据id删除
+                            if (item.getDeleteType() == 6 && item.getDeleteId() != -1) {
+                                // 根据id删除
                                 inventionPatentService.removeById(item.getDeleteId());
-                                deleteFileService.delFile(item.getDeletePath(),request);
+                                deleteFileService.delFile(item.getDeletePath(), request);
                             }
                         }
                     }
                     QueryWrapper<InventionPatent> queryWrapper = new QueryWrapper<>();
-                    queryWrapper.eq("tutor_id",tutorId).eq("apply_id",applyId);
+                    queryWrapper.eq("tutor_id", tutorId).eq("apply_id", applyId);
                     thirdPageOne.setInventionPatents(inventionPatentService.list(queryWrapper));
                 } catch (Exception e) {
                     throw new RuntimeException("发明专利填写错误，请检查" + "!" + e.getMessage());
@@ -282,7 +289,7 @@ public class ThirdServiceImpl implements ThirdService {
             // 获取汇总信息,需要用户手动点击汇总信息，所以不查询数据库
             Summary summary = summaryService.getOne(queryWrapper);
 
-            if (summary == null){
+            if (summary == null) {
                 thirdPage.setSummary(PageInit.getSummary());
             } else {
                 thirdPage.setSummary(summary);

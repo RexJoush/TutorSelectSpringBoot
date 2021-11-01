@@ -21,6 +21,7 @@ import com.nwu.service.tutor.SummaryService;
 import com.nwu.service.tutor.common.*;
 import com.nwu.util.IdUtils;
 import com.nwu.util.TimeUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -58,6 +59,7 @@ public class InspectController {
 
     @Resource
     private SummaryService summaryService; // 汇总服务类
+
     /**
      * 获取第一页导师基本信息
      *
@@ -99,6 +101,7 @@ public class InspectController {
      * @param firstPage      基本信息
      * @return 结果
      */
+    @Transactional
     @PostMapping("/inspect/submitFirstPage/{applyId}/{applyTypeId}/{applyCondition}")
     public Result submitFirstPage(@PathVariable("applyId") int applyId,
                                   @PathVariable("applyTypeId") int applyTypeId,
@@ -129,17 +132,18 @@ public class InspectController {
         apply.setStatus(0);
         apply.setSubmitTime(TimeUtils.sdf.format(new Date()));
 
-        // 添加申请表
-        firstService.saveApplyInfo(apply);
-
-        // 设置 id 值
-        firstPage.setApplyId(String.valueOf(apply.getApplyId()));
-
         /*
             返回第二页的结果
         */
         SecondPage secondPage;
         try {
+
+            // 添加申请表
+            firstService.saveApplyInfo(apply);
+
+            // 设置 id 值
+            firstPage.setApplyId(String.valueOf(apply.getApplyId()));
+
             // 插入基本信息表
             firstService.saveFirstPage(firstPage, request);
             // 102 表示未申请过，第二页无信息，否则取读取第二页信息
@@ -206,32 +210,32 @@ public class InspectController {
      */
     @PostMapping("inspect/saveLearning/{applyId}/{applyCondition}/{learningType}")
     public Result saveLearning(@PathVariable("applyId") int applyId,
-                                    @PathVariable("applyCondition") int applyCondition,
-                                    @PathVariable("learningType") int learningType,
-                                    @RequestBody ThirdPage thirdPage,
-                                    HttpServletRequest request){
+                               @PathVariable("applyCondition") int applyCondition,
+                               @PathVariable("learningType") int learningType,
+                               @RequestBody ThirdPage thirdPage,
+                               HttpServletRequest request) {
         String tutorId = IdUtils.getTutorId(request);
         ThirdPage thirdPageOne = new ThirdPage();
-        if ("".equals(String.valueOf(learningType))){
-            return new Result(ResultCode.SUCCESS, Map.of("code",1201));
+        if ("".equals(String.valueOf(learningType))) {
+            return new Result(ResultCode.SUCCESS, Map.of("code", 1201));
         }
         // 根据提交类别分别保存每一项
         try {
-            thirdPageOne = thirdService.updateOrSaveThirdPage(applyId, tutorId, thirdPage, learningType,request);
+            thirdPageOne = thirdService.updateOrSaveThirdPage(applyId, tutorId, thirdPage, learningType, request);
         } catch (Exception e) {
             return new Result(ResultCode.SUCCESS, PageInit.getErrorMessage(e));
         }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("code",1200);
-        jsonObject.put("data",thirdPageOne);
+        jsonObject.put("code", 1200);
+        jsonObject.put("data", thirdPageOne);
         //成功返回
-        return new Result(ResultCode.SUCCESS,jsonObject);
+        return new Result(ResultCode.SUCCESS, jsonObject);
     }
 
     /**
      * 第三页科研汇总信息的提交
      *
-     * @param applyId   apply 表的 id 值
+     * @param applyId apply 表的 id 值
      * @param summary 汇总信息
      * @return 结果
      */
@@ -247,7 +251,7 @@ public class InspectController {
             summary.setApplyId(applyId);
             summary.setTutorId(tutorId);
             summaryService.saveOrUpdate(summary);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
 

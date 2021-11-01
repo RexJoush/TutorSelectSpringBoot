@@ -77,4 +77,5 @@ public interface ApplyService extends IService<Apply> {
 
      int updateApply399to39();
      int updateApply388to38();
+
 }

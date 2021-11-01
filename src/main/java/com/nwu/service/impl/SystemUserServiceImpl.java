@@ -1,7 +1,6 @@
 package com.nwu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nwu.entities.SystemUser;
 import com.nwu.mapper.SystemUserMapper;
@@ -10,8 +9,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nwu.service.tutor.common.TeacherInfoService;
 import com.nwu.util.TimeUtils;
 import com.nwu.vo.UserQuery;
-import com.nwu.vo.UserVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,10 +16,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p>
- *  服务实现类
- * </p>
- *
  * @author dynamic
  * @since 2021-08-10
  */
@@ -73,7 +66,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             query.setTutorId(query.getTutorId() + "%");
         }
         queryWrapper.eq("status", 1);
-        queryWrapper.in("role_id", 2, 4, 5, 6, 7);
+        queryWrapper.in("role_id", 2, 4, 6, 7);
 
         List<SystemUser> users = systemUserMapper.getAll(query, (query.getPageNum() - 1) * 10);
 
@@ -92,22 +85,4 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public SystemUser getSystemUserByTutorId(String tutorId) {
         return systemUserMapper.getSystemUserByTutorId(tutorId);
     }
-
-//    int getCount(UserQuery query){
-//        QueryWrapper<SystemUser> queryWrapper = new QueryWrapper<>();
-//        if (!"".equals(query.getName())) {
-//            queryWrapper.eq("name", query.getName());
-//        }
-//        if (!"".equals(query.getRoleId())) {
-//            queryWrapper.eq("role_id", query.getRoleId());
-//        }
-//        if (!"".equals(query.getTutorId())) {
-//            queryWrapper.eq("tutor_id", query.getTutorId());
-//        }
-//        return systemUserMapper.selectCount(queryWrapper);
-//    }
-
-//    public boolean updateUserByUserId(SystemUser user) {
-//        return systemUserMapper.updateUserById(user);
-//    }
 }

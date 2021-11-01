@@ -2,6 +2,8 @@ package com.nwu.controller.tutor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.nwu.entities.Apply;
 import com.nwu.entities.SystemTime;
 import com.nwu.entities.tutor.ApplyDetails;
 import com.nwu.entities.tutor.ApplyDisplay;
@@ -67,7 +69,17 @@ public class MyApplyController {
                 applyService.updateApplyStatus(applyId, 0, "");
             } else {
                 // 将状态码 6 改为 10，提交申请至院系秘书
-                applyService.updateApplyStatus(applyId, 10, "");
+                UpdateWrapper<Apply> wrapper = new UpdateWrapper<>();
+                wrapper.set("status", 10);
+                wrapper.set("commit", "");
+                wrapper.set("commit_yjsy_cs", "");
+                wrapper.set("commit_yjsy_lr", "");
+                wrapper.set("commit_yjsy_sfh", "");
+                wrapper.set("commit_social", "");
+                wrapper.set("commit_yx_xy", "");
+                wrapper.set("commit_yx_sfh", "");
+                wrapper.eq("apply_id", applyId);
+                applyService.update(wrapper);
             }
         } catch (Exception e) {
             e.printStackTrace();

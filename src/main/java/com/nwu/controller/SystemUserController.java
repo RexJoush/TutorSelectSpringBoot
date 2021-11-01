@@ -1,31 +1,20 @@
 package com.nwu.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nwu.entities.SystemUser;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.SystemUserService;
-import com.nwu.service.impl.SystemUserServiceImpl;
 import com.nwu.util.TimeUtils;
 import com.nwu.vo.UserQuery;
-import com.nwu.vo.UserVo;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.*;
 
 /**
- * <p>
- * 前端控制器
- * </p>
- *
  * @author dynamic
  * @since 2021-08-10
  */
@@ -69,7 +58,6 @@ public class SystemUserController {
     public Result getSystemUserByTutorId(@PathVariable("tutorId") String tutorId) {
 
         SystemUser user = systemUserService.getSystemUserByTutorId(tutorId);
-
         return new Result(ResultCode.SUCCESS, user);
     }
 
@@ -89,33 +77,33 @@ public class SystemUserController {
         SystemUser user = systemUserService.getById(systemUser.getTutorId());
 
         if (user != null) {
-            // 如果当前查到的用户，status 为 1，则提示已经存在
-            if (user.getStatus() == 1) {
-                return new Result(ResultCode.FAIL);
+            UpdateWrapper<SystemUser> wrapper = new UpdateWrapper<>();
+            switch (roleId) {
+                case 1: wrapper.set("role_name", "导师"); break;
+                case 2: wrapper.set("role_name", "院系秘书"); break;
+                case 4: wrapper.set("role_name", "研究生院管理员"); break;
+                // case 5: wrapper.set("role_name", "研究生院学硕管理员"); break;
+                case 6: wrapper.set("role_name", "社科处管理员"); break;
+                case 7: wrapper.set("role_name", "科研处管理员"); break;
             }
-            // 否则，表示此用户被删除，将此用户 status 更新为 1
-            else {
-                UpdateWrapper<SystemUser> wrapper = new UpdateWrapper<>();
-                wrapper.set("status", 1);
-                wrapper.eq("tutor_id", user.getTutorId());
-                systemUserService.update(wrapper);
-                return new Result(ResultCode.SUCCESS);
-            }
+            wrapper.set("role_id", roleId);
+            wrapper.eq("tutor_id", user.getTutorId());
+            systemUserService.update(wrapper);
         } else {
             systemUser.setRoleId(roleId);
             switch (roleId) {
                 case 1: systemUser.setRoleName("导师"); break;
                 case 2: systemUser.setRoleName("院系秘书"); break;
-                case 4: systemUser.setRoleName("研究生院专硕管理员"); break;
-                case 5: systemUser.setRoleName("研究生院学硕管理员"); break;
+                case 4: systemUser.setRoleName("研究生院管理员"); break;
+                // case 5: systemUser.setRoleName("研究生院学硕管理员"); break;
                 case 6: systemUser.setRoleName("社科处管理员"); break;
                 case 7: systemUser.setRoleName("科研处管理员"); break;
             }
             systemUser.setStatus(1);
             systemUser.setCreateTime(TimeUtils.sdf.format(new Date()));
             systemUserService.save(systemUser);
-            return new Result(ResultCode.SUCCESS);
         }
+        return new Result(ResultCode.SUCCESS);
     }
 
     /**
@@ -133,15 +121,13 @@ public class SystemUserController {
         switch (roleId) {
             case 1: wrapper.set("role_name", "导师"); break;
             case 2: wrapper.set("role_name", "院系秘书"); break;
-            case 4: wrapper.set("role_name", "研究生院专硕管理员"); break;
-            case 5: wrapper.set("role_name", "研究生院学硕管理员"); break;
+            case 4: wrapper.set("role_name", "研究生院管理员"); break;
+            // case 5: wrapper.set("role_name", "研究生院学硕管理员"); break;
             case 6: wrapper.set("role_name", "社科处管理员"); break;
             case 7: wrapper.set("role_name", "科研处管理员"); break;
         }
         systemUserService.update(wrapper);
-
         return new Result(ResultCode.SUCCESS);
-
     }
 
     /**
@@ -160,59 +146,5 @@ public class SystemUserController {
         return new Result(ResultCode.SUCCESS);
 
     }
-
-//    @ApiOperation("修改系统用户状态")
-//    @PostMapping("/updateUser")
-//    public Result updateUserStatus(@RequestBody UserVo userVo) {
-//        SystemUser user = new SystemUser();
-//        user.setName(userVo.getUserName());
-//        user.setTutorId(userVo.getUserId());
-//        user.setRoleId(Integer.parseInt(userVo.getUserRole()));
-//        user.setCreateTime(userVo.getCreateTime());
-//        user.setStatus(userVo.getStatus());
-//        //   boolean res = systemUserService.updateUserByUserId(user);
-//        boolean res = true;
-//        String s = "";
-//        if (res) {
-//            s = "20000";
-//        } else {
-//            s = "20001";
-//        }
-//        return new Result(ResultCode.SUCCESS, s);
-//    }
-//
-//    @ApiOperation("删除系统用户状态")
-//    @PostMapping("/delUser/{userId}")
-//    public Result delUser(@PathVariable String userId) {
-//        QueryWrapper queryWrapper = new QueryWrapper();
-//        queryWrapper.eq("tutor_id", userId);
-//        boolean res = systemUserService.remove(queryWrapper);
-//        String s = "";
-//        if (res) {
-//            s = "20000";
-//        } else {
-//            s = "20001";
-//        }
-//        return new Result(ResultCode.SUCCESS, s);
-//    }
-//
-//    @Transactional
-//    @ApiOperation("删除系统用户状态")
-//    @PostMapping("/delUsers")
-//    public Result delUsers(@RequestBody ArrayList<String> userId) {
-//        boolean res = true;
-//        for (String id : userId) {
-//            QueryWrapper queryWrapper = new QueryWrapper();
-//            queryWrapper.eq("tutor_id", id);
-//            res = systemUserService.remove(queryWrapper);
-//        }
-//        String s = "";
-//        if (res) {
-//            s = "20000";
-//        } else {
-//            s = "20001";
-//        }
-//        return new Result(ResultCode.SUCCESS, s);
-//    }
 }
 

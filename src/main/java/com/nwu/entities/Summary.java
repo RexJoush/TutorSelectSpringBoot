@@ -38,10 +38,10 @@ public class Summary {
     private int directProject          ; // 主持科研项目
     private int projectNationalLevel   ; // 国家级项目
     private int projectProvinceLevel   ; // 省部级项目
-    private int accumulatedFunds       ; // 累计科研经费，万元
-    private int horizontalProject      ; // 横向项目到款经费，万元
+    private double accumulatedFunds    ; // 累计科研经费，万元
+    private double horizontalProject   ; // 横向项目到款经费，万元
     private int publishWorks           ; // 出版专业领域专著数
-    private int publishWorksWords      ; // 本人完成字数
+    private double publishWorksWords   ; // 本人完成字数
     private int scientificAwards       ; // 科研教学获奖项数
     private int awardsNationalLevel    ; // 国家级奖项
     private int awardsProvinceLevel    ; // 省部级奖项

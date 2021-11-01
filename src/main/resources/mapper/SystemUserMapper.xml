@@ -2,19 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nwu.mapper.SystemUserMapper">
 
-    <update id="updateUserByUserId">
-        UPDATE system_user
-        SET role_id = #{roleId},
-            status  = #{status},
-            name    = #{name},
-            WHERE tutor_id = #{tutorId}
-    </update>
-
     <select id="getAll" resultType="com.nwu.entities.SystemUser">
         SELECT *
         FROM system_user
         WHERE status = 1
-          AND role_id in (2, 4, 5, 6, 7)
+          AND role_id in (2, 4, 6, 7)
         <if test="query.tutorId != ''">
             AND tutor_id like #{query.tutorId}
         </if>
@@ -26,7 +18,6 @@
         </if>
         LIMIT ${pageStart}, 10
     </select>
-
 
     <select id="getQueryTutorId" resultType="string">
         SELECT ZGH

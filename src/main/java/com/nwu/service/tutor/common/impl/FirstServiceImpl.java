@@ -59,7 +59,8 @@ public class FirstServiceImpl implements FirstService {
             firstPage.setImage(httpPath);
             i = tutorInspectMapper.saveTutorInspectBaseInfo(firstPage);
         } catch (Exception e) {
-            throw new RuntimeException("网络异常，请稍后再" + "!" + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("网络异常，请稍后再试" + "!" + e.getMessage());
         }
         return i;
     }
