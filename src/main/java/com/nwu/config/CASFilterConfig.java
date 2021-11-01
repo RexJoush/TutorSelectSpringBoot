@@ -16,7 +16,7 @@ import org.springframework.core.Ordered;
  * @author Rex Joush
  * @time 2021.06.23 20:28
  */
-//@Configuration
+@Configuration
 public class CASFilterConfig {
 
     @Value("${union.casURL}")
@@ -24,7 +24,7 @@ public class CASFilterConfig {
     @Value("${union.appURL}")
     private String APP_URL;
 
-//    @Bean
+    @Bean
     public ServletListenerRegistrationBean servletListenerRegistrationBean(){
         ServletListenerRegistrationBean  listenerRegistrationBean = new ServletListenerRegistrationBean();
         listenerRegistrationBean.setListener(new SingleSignOutHttpSessionListener());
@@ -36,7 +36,7 @@ public class CASFilterConfig {
      * 单点登录退出
      * @return
      */
-//    @Bean
+    @Bean
     public FilterRegistrationBean singleSignOutFilter(){
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new SingleSignOutFilter());
@@ -51,7 +51,7 @@ public class CASFilterConfig {
      * 单点登录认证
      * @return
      */
-//    @Bean
+    @Bean
     public FilterRegistrationBean AuthenticationFilter(){
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new AuthenticationFilter());
@@ -68,7 +68,7 @@ public class CASFilterConfig {
      * 单点登录校验
      * @return
      */
-//    @Bean
+    @Bean
     public FilterRegistrationBean cas20ProxyReceivingTicketValidationFilter(){
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new Cas20ProxyReceivingTicketValidationFilter());
@@ -84,7 +84,7 @@ public class CASFilterConfig {
      * 单点登录请求包装
      * @return
      */
-//    @Bean
+    @Bean
     public FilterRegistrationBean httpServletRequestWrapperFilter(){
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new HttpServletRequestWrapperFilter());

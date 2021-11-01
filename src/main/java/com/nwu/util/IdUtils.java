@@ -23,13 +23,13 @@ public class IdUtils {
      */
     public static String getTutorId(HttpServletRequest request) {
 
-        return "202032982";
+//        return "202032982";
 
-//        Assertion assertion = (Assertion) request.getSession().getAttribute(AbstractCasFilter.CONST_CAS_ASSERTION);
-//        if (assertion != null) {
-//            AttributePrincipal principal = assertion.getPrincipal();
-//            return principal.getName();
-//        } else return null;
+        Assertion assertion = (Assertion) request.getSession().getAttribute(AbstractCasFilter.CONST_CAS_ASSERTION);
+        if (assertion != null) {
+            AttributePrincipal principal = assertion.getPrincipal();
+            return principal.getName();
+        } else return null;
     }
 
 }
