@@ -1,11 +1,11 @@
 package com.nwu.config;
 
+import com.nwu.util.DataUtils;
 import org.jasig.cas.client.authentication.AuthenticationFilter;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.util.HttpServletRequestWrapperFilter;
 import org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -18,11 +18,6 @@ import org.springframework.core.Ordered;
  */
 @Configuration
 public class CASFilterConfig {
-
-    @Value("${union.casURL}")
-    private String CAS_URL;
-    @Value("${union.appURL}")
-    private String APP_URL;
 
     @Bean
     public ServletListenerRegistrationBean servletListenerRegistrationBean(){
@@ -41,7 +36,7 @@ public class CASFilterConfig {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new SingleSignOutFilter());
         registrationBean.addUrlPatterns("/*");
-        registrationBean.addInitParameter("casServerUrlPrefix", CAS_URL );
+        registrationBean.addInitParameter("casServerUrlPrefix", DataUtils.casURL);
         registrationBean.setName("CAS Single Sign Out Filter");
         registrationBean.setOrder(2);
         return registrationBean;
@@ -58,8 +53,8 @@ public class CASFilterConfig {
         registrationBean.addInitParameter("excludedPages", "/test.html");
         registrationBean.addUrlPatterns("/*");
         registrationBean.setName("CAS Filter");
-        registrationBean.addInitParameter("casServerLoginUrl",CAS_URL);
-        registrationBean.addInitParameter("serverName", APP_URL );
+        registrationBean.addInitParameter("casServerLoginUrl",DataUtils.casURL);
+        registrationBean.addInitParameter("serverName", DataUtils.appURL );
         registrationBean.setOrder(3);
         return registrationBean;
     }
@@ -74,8 +69,8 @@ public class CASFilterConfig {
         registrationBean.setFilter(new Cas20ProxyReceivingTicketValidationFilter());
         registrationBean.addUrlPatterns("/*");
         registrationBean.setName("CAS Validation Filter");
-        registrationBean.addInitParameter("casServerUrlPrefix", CAS_URL );
-        registrationBean.addInitParameter("serverName", APP_URL );
+        registrationBean.addInitParameter("casServerUrlPrefix", DataUtils.casURL );
+        registrationBean.addInitParameter("serverName", DataUtils.appURL );
         registrationBean.setOrder(4);
         return registrationBean;
     }

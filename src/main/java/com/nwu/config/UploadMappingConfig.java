@@ -1,5 +1,6 @@
 package com.nwu.config;
 
+import com.nwu.util.DataUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -13,7 +14,8 @@ public class UploadMappingConfig implements WebMvcConfigurer {
         //Windows用
         registry
                 .addResourceHandler("/downFile/**")
-                .addResourceLocations("file:D:/RARZIP/");
+                .addResourceLocations("file:"+ DataUtils.basePath);
+        //                .addResourceLocations("file:D:/RARZIP/");
 //        registry
 //                .addResourceHandler("/downImage/**")
 //                .addResourceLocations("file:E:/RARZIP/");

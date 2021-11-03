@@ -103,7 +103,9 @@ public class PDFTemplates {
 
                     String substring = value.substring(value.lastIndexOf('/'));
 
-                    Image image = Image.getInstance(DataUtils.imagePath + "\\" + substring);
+//                    Image image = Image.getInstance(DataUtils.imagePath + "\\" + substring);
+                    //TODO 切换系统的路径斜杠
+                    Image image = Image.getInstance(DataUtils.imagePath + "/" + substring);
 
 //                BufferedImage bufferedImage = ImageIO.read(new File());
 //                BufferedImage bufferedImage = new BufferedImage(75, 100, BufferedImage.TYPE_INT_RGB);

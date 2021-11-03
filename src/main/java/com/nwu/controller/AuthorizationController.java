@@ -7,6 +7,7 @@ import com.nwu.entities.SystemUser;
 import com.nwu.service.AuthorizationService;
 import com.nwu.service.SystemUserService;
 import com.nwu.util.AESUtil;
+import com.nwu.util.DataUtils;
 import com.nwu.util.IdUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -36,13 +37,6 @@ public class AuthorizationController {
 
     @Resource
     private SystemUserService systemUserService;
-
-    @Value("${union.casURL}")
-    private String CAS_URL;
-
-    @Value("${union.appURL}")
-    private String APP_URL;
-
 
 //    @GetMapping("/")
 //    public void index(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -125,8 +119,8 @@ public class AuthorizationController {
     @PostMapping("/user/logout")
     public Map<String, Object> logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession().invalidate();
-        String casLogoutUrl = CAS_URL + "/logout";
-        String redirectURL = casLogoutUrl + "?service="+ URLEncoder.encode(APP_URL);
+        String casLogoutUrl = DataUtils.casURL + "/logout";
+        String redirectURL = casLogoutUrl + "?service="+ URLEncoder.encode(DataUtils.appURL);
         Map<String, Object> result = new HashMap<>();
 
         result.put("code", 20000);

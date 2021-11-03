@@ -164,7 +164,6 @@ public class FinalExportExcelGraduate {
                             queryDepartmentSecretaryInit.getProfessionalFieldCode(),//专硕二级代码
                             queryDepartmentSecretaryInit.getProfessionalFieldName(),//专硕二级名称
                             queryDepartmentSecretaryInit.getApplyName(),//导师上岗类别
-                            // TODO 汇总字段李工给
 //                            queryDepartmentSecretaryInit.getSummary(),//科研情况汇总
 //                            queryDepartmentSecretaryInit.getSsciAmount() + "/" + queryDepartmentSecretaryInit.getAuthorityAmount(),//SCI/权威   学术论文（篇）
 //                            queryDepartmentSecretaryInit.getFirstAuthorPaper(),//核心  学术论文（篇）

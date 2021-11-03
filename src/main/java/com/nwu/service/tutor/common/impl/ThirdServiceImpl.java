@@ -213,47 +213,6 @@ public class ThirdServiceImpl implements ThirdService {
 
         }
         return thirdPageOne;
-        // 删除信息
-//        if (thirdPage.getDeleteItems() != null) {
-//            for (DeleteItem deleteItem : thirdPage.getDeleteItems()) {
-//            /*
-//                1,2, 论文
-//                3, 科研项目
-//                4, 教材或学术著作
-//                5, 科研或教学奖励
-//                6, 发明专利
-//             */
-//                // 删除对应的数据库信息
-//                if (deleteItem.getDeleteId() != -1) {
-//                    // 获取 id 值
-//                    int id = deleteItem.getDeleteId();
-//                    switch (deleteItem.getDeleteType()) {
-//                        case 1:
-//                        case 2:
-//                            academicPaperService.removeById(id);
-//                            break;
-//                        case 3:
-//                            researchProjectService.removeById(id);
-//                            break;
-//                        case 4:
-//                            academicWorksService.removeById(id);
-//                            break;
-//                        case 5:
-//                            teachingAwardsService.removeById(id);
-//                            break;
-//                        case 6:
-//                            inventionPatentService.removeById(id);
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//                }
-//                // 删除文件
-//                // todo 删除文件
-//                String path = deleteItem.getDeletePath();
-//            }
-//        }
-
     }
 
     @Override

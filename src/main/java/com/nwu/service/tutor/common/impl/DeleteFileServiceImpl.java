@@ -2,6 +2,7 @@ package com.nwu.service.tutor.common.impl;
 
 import com.nwu.mapper.TutorNoInspectMapper;
 import com.nwu.service.tutor.common.DeleteFileService;
+import com.nwu.util.DataUtils;
 import com.nwu.util.UpLoadFile;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class DeleteFileServiceImpl implements DeleteFileService{
                 String path = URLDecoder.decode(httpPath, "UTF-8");
                 //处理字符串
                 String res =  request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/downFile/uploadFile/";
-                String realPath= upLoadFile.getFilePath() + path.substring(res.length(), path.length() - 1);
+                String realPath= DataUtils.FilePath + path.substring(res.length(), path.length() - 1);
                 File file = new File(realPath);
                 if (file.exists()){
                     file.delete();
@@ -51,7 +52,7 @@ public class DeleteFileServiceImpl implements DeleteFileService{
                 String path = URLDecoder.decode(httpPath, "UTF-8");
                 //处理字符串
                 String res =  request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/downFile/uploadFile/";
-                String realPath= upLoadFile.getFilePath() + path.substring(res.length(), path.length() - 1);
+                String realPath= DataUtils.FilePath + path.substring(res.length(), path.length() - 1);
                 File file = new File(realPath);
                 if (file.exists()){
                     file.delete();
