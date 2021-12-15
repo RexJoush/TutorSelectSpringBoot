@@ -174,8 +174,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>9</source>
+                    <target>9</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -185,7 +185,6 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
-                    <include>**/*.yml</include>
                 </includes>
             </resource>
             <resource>
@@ -193,12 +192,6 @@
                 <excludes>
                     <exclude>**/*.xml</exclude>
                 </excludes>
-            </resource>
-            <resource>
-                <directory>src/resources</directory>
-                <includes>
-                    <include>**</include>
-                </includes>
             </resource>
         </resources>
     </build>

@@ -1,11 +1,13 @@
 package com.nwu.controller.tutor;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nwu.entities.Apply;
 import com.nwu.entities.tutor.FirstPage;
 import com.nwu.results.Result;
 import com.nwu.results.ResultCode;
 import com.nwu.service.TutorInspectService;
+import com.nwu.service.admin.ApplyService;
 import com.nwu.service.tutor.PageInit;
 import com.nwu.service.tutor.common.DeleteFileService;
 import com.nwu.service.tutor.common.MainBoardService;
@@ -50,9 +52,34 @@ public class MainBoardController {
     @Resource
     private DeleteFileService deleteFileService;
 
+    @Resource
+    private ApplyService applyService;
+
+    /**
+     * 修复第一次申请刷新页面的 bug
+     * @param applyTypeId 申请 id
+     * @param request 请求对象
+     */
+    @GetMapping("/tutor/getApplyId/{applyTypeId}")
+    public Result getApplyId(@PathVariable("applyTypeId") int applyTypeId,
+                             HttpServletRequest request) {
+        String tutorId = IdUtils.getTutorId(request);
+
+        QueryWrapper<Apply> wrapper = new QueryWrapper<>();
+        wrapper.eq("tutor_id", tutorId);
+        wrapper.eq("status", 0);
+        wrapper.eq("apply_type_id", applyTypeId);
+
+        Apply apply = applyService.getOne(wrapper);
+        if (apply == null) {
+            return new Result(ResultCode.SUCCESS, -1);
+        } else {
+            return new Result(ResultCode.SUCCESS, apply.getApplyId());
+        }
+    }
+
     /**
      * 判断申请状态
-     *
      * @param applyTypeId 申请类别Id
      * @return data
      */
