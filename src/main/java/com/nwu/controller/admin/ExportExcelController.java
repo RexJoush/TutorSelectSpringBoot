@@ -107,6 +107,23 @@ public class ExportExcelController {
     }
 
     /**
+     * 研究生院初审导出excel
+     * @param response
+     * @param tutorQuery 封装对象
+     * @throws IOException
+     */
+    @PostMapping ("/firstcheck")
+    public void firstcheckExportExcel(HttpServletResponse response,@RequestBody TutorQuery tutorQuery) throws IOException{
+        List<QueryDepartmentSecretaryInit> list = tutorInspectService.exportTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
+        try {
+            new QualificationExamExportExcel(response,"西北大学",list).execute();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return;
+    }
+
+    /**
      * 研究生院上校会导出excel
      * @param response
      * @param tutorQuery 封装对象
