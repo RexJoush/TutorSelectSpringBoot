@@ -116,7 +116,7 @@ public class ExportExcelController {
     public void firstcheckExportExcel(HttpServletResponse response,@RequestBody TutorQuery tutorQuery) throws IOException{
         List<QueryDepartmentSecretaryInit> list = tutorInspectService.exportTutorInitOrSearch(tutorQuery.getOrganization(), tutorQuery.getApplyStatuss(), tutorQuery, 1);
         try {
-            new QualificationExamExportExcel(response,"西北大学",list).execute();
+            new FirstCheckExamExportExcel(response,"西北大学",list).execute();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
